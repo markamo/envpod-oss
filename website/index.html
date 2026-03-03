@@ -155,44 +155,6 @@ h2{font-size:clamp(26px,4vw,42px);font-weight:700;letter-spacing:-0.03em;margin-
 .arch-kernel-items{font-family:var(--mono);font-size:10px;color:var(--dim)}
 @media(max-width:640px){.arch-pods-row{grid-template-columns:1fr}.arch-runtime,.arch-kernel{flex-direction:column;gap:6px}}
 
-/* ── ARCH CAROUSEL ── */
-.arch-carousel{position:relative;margin-bottom:6px;user-select:none}
-.arch-carousel-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.arch-carousel-title{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:1.5px;text-transform:uppercase}
-.arch-carousel-arrows{display:flex;gap:6px}
-.arch-arrow{background:none;border:1px solid var(--border);border-radius:5px;color:var(--muted);width:26px;height:26px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .15s;line-height:1;padding:0}
-.arch-arrow:hover{border-color:var(--green);color:var(--green)}
-.arch-track-wrap{overflow:hidden;border-radius:8px}
-.arch-track{display:flex;transition:transform .55s cubic-bezier(.4,0,.2,1)}
-.arch-slide{flex:0 0 100%;display:flex;justify-content:center;padding:0 8px}
-.arch-slide .arch-pod{width:100%;max-width:380px}
-.arch-dots{display:flex;justify-content:center;gap:8px;margin-top:14px}
-.arch-dot{width:8px;height:8px;border-radius:50%;border:1px solid var(--border-hi);background:transparent;cursor:pointer;transition:all .2s;padding:0}
-.arch-dot.active{background:var(--green);border-color:var(--green);box-shadow:0 0 8px rgba(34,197,94,0.3)}
-
-/* ── DOCKER VS ENVPOD DIAGRAM ── */
-.vs-diagram{display:grid;grid-template-columns:1fr 64px 1fr;gap:0;align-items:center;margin-bottom:48px}
-.vs-stack{display:flex;flex-direction:column;gap:3px}
-.vs-stack-label{font-family:var(--mono);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;text-align:center;margin-bottom:10px}
-.vs-stack-label.docker{color:var(--blue)}
-.vs-stack-label.envpod{color:var(--green)}
-.vs-box{border-radius:5px;padding:10px 14px;text-align:center;border:1px solid transparent}
-.vs-box-name{font-family:var(--mono);font-size:11px;font-weight:700;display:block;letter-spacing:.8px;text-transform:uppercase}
-.vs-box-sub{font-family:var(--mono);font-size:9px;opacity:.6;margin-top:2px;display:block}
-.vsb-app{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.1);color:var(--text)}
-.vsb-container{background:rgba(88,166,255,0.07);border-color:rgba(88,166,255,0.2);color:var(--blue)}
-.vsb-engine{background:rgba(88,166,255,0.04);border-color:rgba(88,166,255,0.12);color:var(--muted)}
-.vsb-os{background:rgba(255,255,255,0.02);border-color:var(--border);color:var(--dim)}
-.vs-missing{border-radius:5px;padding:8px 14px;text-align:center;background:rgba(239,68,68,0.04);border:1px dashed rgba(239,68,68,0.2)}
-.vs-missing-text{font-family:var(--mono);font-size:10px;color:rgba(239,68,68,0.7)}
-.vsb-gov{background:linear-gradient(135deg,rgba(34,197,94,0.14),rgba(34,197,94,0.05));border-color:rgba(34,197,94,0.4);color:var(--green)}
-.vsb-runtime{background:rgba(88,166,255,0.06);border-color:rgba(88,166,255,0.2);color:var(--blue)}
-.vsb-kernel{background:rgba(255,255,255,0.02);border-color:var(--border);color:var(--dim)}
-.vs-check{border-radius:5px;padding:8px;text-align:center;background:rgba(34,197,94,0.04);border:1px solid rgba(34,197,94,0.15)}
-.vs-check-text{font-family:var(--mono);font-size:10px;color:var(--green)}
-.vs-divider{display:flex;align-items:center;justify-content:center;font-weight:800;font-size:22px;color:var(--dim);padding-bottom:36px}
-@media(max-width:640px){.vs-diagram{grid-template-columns:1fr;gap:24px}.vs-divider{display:none}.arch-slide{padding:0}}
-
 
 /* ── FEATURE GRID ── */
 .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:20px}
@@ -461,82 +423,15 @@ footer{border-top:1px solid var(--border);padding:44px 0}
     <p class="section-sub">You write <code>pod.yaml</code>. The agent runs with kernel-level isolation on all sides and a governance layer that intercepts every significant action.</p>
 
     <div class="arch-diagram">
-      <!-- Pod carousel -->
-      <div class="arch-carousel" id="arch-carousel">
-        <div class="arch-carousel-nav">
-          <span class="arch-carousel-title">Running pods</span>
-          <div class="arch-carousel-arrows">
-            <button class="arch-arrow" onclick="podCarousel(-1)">&#8249;</button>
-            <button class="arch-arrow" onclick="podCarousel(1)">&#8250;</button>
+      <!-- Three pods side by side -->
+      <div class="arch-pods-row">
+        <!-- Pod 1: Claude Code -->
+        <div class="arch-pod">
+          <div class="arch-agent-layer">
+            <span class="arch-emoji">🤖</span>
+            <span class="arch-agent-name">Claude Code</span>
+            <span class="arch-agent-sub">coding agent</span>
           </div>
-        </div>
-        <div class="arch-track-wrap">
-          <div class="arch-track" id="arch-track">
-            <div class="arch-slide">
-              <div class="arch-pod">
-                <div class="arch-agent-layer">
-                  <span class="arch-emoji">🤖</span>
-                  <span class="arch-agent-name">Claude Code</span>
-                  <span class="arch-agent-sub">coding agent</span>
-                </div>
-                <div class="arch-gov-layer">
-                  <span class="arch-gov-label">Governance ▲</span>
-                  <span class="arch-gov-sub">policy · audit · vault · queue</span>
-                </div>
-                <div class="arch-walls">
-                  <div class="arch-wall aw-net"><span class="aw-label">Network</span><span class="aw-sub">DNS filter</span></div>
-                  <div class="arch-wall aw-proc"><span class="aw-label">Processor</span><span class="aw-sub">cgroups v2</span></div>
-                  <div class="arch-wall aw-fs"><span class="aw-label">Filesystem</span><span class="aw-sub">OverlayFS COW</span></div>
-                  <div class="arch-wall aw-mem"><span class="aw-label">Memory</span><span class="aw-sub">namespace</span></div>
-                </div>
-              </div>
-            </div>
-            <div class="arch-slide">
-              <div class="arch-pod">
-                <div class="arch-agent-layer">
-                  <span class="arch-emoji">🌐</span>
-                  <span class="arch-agent-name">Chrome + Wayland</span>
-                  <span class="arch-agent-sub">browser agent</span>
-                </div>
-                <div class="arch-gov-layer">
-                  <span class="arch-gov-label">Governance ▲</span>
-                  <span class="arch-gov-sub">policy · audit · vault · queue</span>
-                </div>
-                <div class="arch-walls">
-                  <div class="arch-wall aw-net"><span class="aw-label">Network</span><span class="aw-sub">DNS filter</span></div>
-                  <div class="arch-wall aw-proc"><span class="aw-label">Processor</span><span class="aw-sub">cgroups v2</span></div>
-                  <div class="arch-wall aw-fs"><span class="aw-label">Filesystem</span><span class="aw-sub">OverlayFS COW</span></div>
-                  <div class="arch-wall aw-dev"><span class="aw-label">Devices</span><span class="aw-sub">Wayland · GPU</span></div>
-                </div>
-              </div>
-            </div>
-            <div class="arch-slide">
-              <div class="arch-pod">
-                <div class="arch-agent-layer">
-                  <span class="arch-emoji">⚡</span>
-                  <span class="arch-agent-name">ML Training</span>
-                  <span class="arch-agent-sub">GPU agent</span>
-                </div>
-                <div class="arch-gov-layer">
-                  <span class="arch-gov-label">Governance ▲</span>
-                  <span class="arch-gov-sub">policy · audit · vault · queue</span>
-                </div>
-                <div class="arch-walls">
-                  <div class="arch-wall aw-net"><span class="aw-label">Network</span><span class="aw-sub">DNS filter</span></div>
-                  <div class="arch-wall aw-proc"><span class="aw-label">Processor</span><span class="aw-sub">cgroups v2</span></div>
-                  <div class="arch-wall aw-fs"><span class="aw-label">Filesystem</span><span class="aw-sub">OverlayFS COW</span></div>
-                  <div class="arch-wall aw-dev"><span class="aw-label">Devices</span><span class="aw-sub">NVIDIA GPU</span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="arch-dots" id="arch-dots">
-          <button class="arch-dot active" onclick="podGoTo(0)"></button>
-          <button class="arch-dot" onclick="podGoTo(1)"></button>
-          <button class="arch-dot" onclick="podGoTo(2)"></button>
-        </div>
-      </div>
           <div class="arch-gov-layer">
             <span class="arch-gov-label">Governance ▲</span>
             <span class="arch-gov-sub">policy · audit · vault · queue</span>
@@ -1008,27 +903,6 @@ function copyBlock(btn){const b=btn.closest('.code-block');const t=Array.from(b.
 
 // ══ SCROLL REVEAL ══
 (function(){const o=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis')})},{threshold:0.1});document.querySelectorAll('.reveal').forEach(el=>o.observe(el))})();
-
-// ══ POD CAROUSEL ══
-(function(){
-  let cur=0,n=3,timer=null;
-  function go(i){
-    cur=(i%n+n)%n;
-    const t=document.getElementById('arch-track');
-    if(t)t.style.transform='translateX(-'+cur*100+'%)';
-    document.querySelectorAll('.arch-dot').forEach((d,j)=>d.classList.toggle('active',j===cur));
-    resetTimer();
-  }
-  function resetTimer(){clearInterval(timer);timer=setInterval(()=>go(cur+1),3200)}
-  window.podCarousel=function(d){go(cur+d)};
-  window.podGoTo=function(i){go(i)};
-  const c=document.getElementById('arch-carousel');
-  if(c){
-    c.addEventListener('mouseenter',()=>clearInterval(timer));
-    c.addEventListener('mouseleave',()=>resetTimer());
-  }
-  resetTimer();
-})();
 
 function copyHeroInstall(btn){
   navigator.clipboard.writeText('curl -fsSL https://envpod.dev/install.sh | sh')
