@@ -119,41 +119,42 @@ h2{font-size:clamp(26px,4vw,42px);font-weight:700;letter-spacing:-0.03em;margin-
 /* ── LOGO CE BADGE ── */
 .logo-ce{font-size:10px;font-weight:700;color:var(--green);background:var(--green-glow);border:1px solid rgba(34,197,94,0.2);padding:2px 8px;border-radius:100px;letter-spacing:1.5px;margin-left:6px;vertical-align:2px}
 
-/* ── 3D BUILDING ── */
-.building-wrap{margin-bottom:56px}
-.building-scene{perspective:960px;perspective-origin:50% 32%;height:380px;display:flex;align-items:center;justify-content:center;position:relative;overflow:visible}
-.building-3d{width:200px;height:150px;position:relative;transform-style:preserve-3d;transform:rotateX(28deg) rotateY(40deg);animation:b-drift 9s ease-in-out infinite}
-@keyframes b-drift{0%,100%{transform:rotateX(28deg) rotateY(40deg)}50%{transform:rotateX(28deg) rotateY(40deg) translateY(-9px)}}
-.b-face{position:absolute;left:0;top:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;border-radius:2px;opacity:0;transition:opacity .7s ease}.b-face.b-vis{opacity:1}
-.b-lbl{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-align:center;pointer-events:none}
-.b-sub{font-family:var(--mono);font-size:8px;opacity:.65;text-align:center;letter-spacing:.5px;pointer-events:none}
-/* Front — Network — blue glass */
-.b-front{width:200px;height:150px;transform:translateZ(75px);background:rgba(88,166,255,0.07);border:1px solid rgba(88,166,255,0.28);color:var(--blue)}
-/* Back — Memory — purple */
-.b-back{width:200px;height:150px;transform:rotateY(180deg) translateZ(75px);background:rgba(188,140,255,0.13);border:1px solid rgba(188,140,255,0.32);color:var(--purple)}
-/* Left — Filesystem — green */
-.b-left{width:150px;height:150px;transform:rotateY(-90deg) translateZ(100px);background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.32);color:var(--green)}
-/* Right — Processor — orange (main visible wall) */
-.b-right{width:150px;height:150px;transform:rotateY(90deg) translateZ(100px);background:rgba(245,158,11,0.13);border:1px solid rgba(245,158,11,0.38);color:var(--orange)}
-/* Top — Governance ceiling — green glow */
-.b-top{width:200px;height:150px;transform:rotateX(-90deg) translateZ(75px);background:linear-gradient(135deg,rgba(34,197,94,0.22),rgba(34,197,94,0.06));border:1.5px solid rgba(34,197,94,0.7);box-shadow:0 0 60px rgba(34,197,94,0.22),inset 0 0 24px rgba(34,197,94,0.08);color:var(--green)}
-/* Bottom — floor / Filesystem base */
-.b-bottom{width:200px;height:150px;transform:rotateX(90deg) translateZ(75px);background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.22);color:var(--green)}
-/* Agent inside the building */
-.b-agent{position:absolute;left:50%;top:50%;transform:translateX(-50%) translateY(-50%) translateZ(32px);font-size:38px;filter:drop-shadow(0 0 14px rgba(34,197,94,.65));animation:b-glow 3s ease-in-out infinite;opacity:0;transition:opacity 1.1s ease}
-.b-agent.b-vis{opacity:1}
-@keyframes b-glow{0%,100%{filter:drop-shadow(0 0 14px rgba(34,197,94,.6)) drop-shadow(0 4px 8px rgba(0,0,0,.5))}50%{filter:drop-shadow(0 0 28px rgba(34,197,94,1)) drop-shadow(0 4px 8px rgba(0,0,0,.5))}}
-.b-dev-badge{font-family:var(--mono);font-size:8px;font-weight:700;padding:2px 7px;border-radius:3px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.28);color:var(--red);letter-spacing:1px;text-transform:uppercase;margin-top:4px}
-/* Building legend */
-.b-legend{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;padding-bottom:0}
-.b-leg{font-family:var(--mono);font-size:11px;font-weight:600;padding:5px 12px;border-radius:100px;display:flex;align-items:center;gap:5px;letter-spacing:.3px}
-.b-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.b-leg-fs{color:var(--green);background:var(--green-glow);border:1px solid rgba(34,197,94,.2)}.b-leg-fs .b-dot{background:var(--green)}
-.b-leg-net{color:var(--blue);background:var(--blue-glow);border:1px solid rgba(88,166,255,.2)}.b-leg-net .b-dot{background:var(--blue)}
-.b-leg-proc{color:var(--orange);background:rgba(245,158,11,.05);border:1px solid rgba(245,158,11,.2)}.b-leg-proc .b-dot{background:var(--orange)}
-.b-leg-mem{color:var(--purple);background:rgba(188,140,255,.05);border:1px solid rgba(188,140,255,.2)}.b-leg-mem .b-dot{background:var(--purple)}
-.b-leg-dev{color:var(--red);background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.2)}.b-leg-dev .b-dot{background:var(--red)}
-.b-leg-gov{color:var(--green);background:var(--green-glow);border:1px solid rgba(34,197,94,.35)}.b-leg-gov .b-dot{background:var(--green);box-shadow:0 0 6px var(--green)}
+/* ── HERO INSTALL LINE ── */
+.hero-install{margin-top:28px;animation:fadeUp .7s .3s both}
+.hero-install-row{display:inline-flex;align-items:center;background:#010409;border:1px solid var(--border-hi);border-radius:8px;overflow:hidden;max-width:480px}
+.hero-install-cmd{font-family:var(--mono);font-size:13px;color:var(--green);padding:11px 16px;flex:1;white-space:nowrap;user-select:all}
+.hero-install-copy{background:var(--surface);border:none;border-left:1px solid var(--border);color:var(--muted);font-family:var(--mono);font-size:11px;padding:11px 14px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.hero-install-copy:hover{color:var(--green);background:var(--surface2)}
+.hero-install-note{display:block;font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:9px}
+
+/* ── ARCH STACK DIAGRAM ── */
+.arch-diagram{margin-bottom:56px}
+.arch-pods-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:6px}
+.arch-pod{display:flex;flex-direction:column;gap:3px}
+.arch-agent-layer{border-radius:6px;padding:13px 8px;text-align:center;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09)}
+.arch-emoji{font-size:22px;display:block;margin-bottom:5px}
+.arch-agent-name{font-family:var(--mono);font-size:10px;font-weight:700;color:var(--text);display:block}
+.arch-agent-sub{font-family:var(--mono);font-size:8px;color:var(--dim);margin-top:2px;display:block}
+.arch-gov-layer{border-radius:6px;padding:10px 8px;text-align:center;background:linear-gradient(135deg,rgba(34,197,94,0.12),rgba(34,197,94,0.04));border:1px solid rgba(34,197,94,0.38);box-shadow:0 0 14px rgba(34,197,94,0.06)}
+.arch-gov-label{font-family:var(--mono);font-size:9px;font-weight:700;color:var(--green);letter-spacing:1.5px;text-transform:uppercase;display:block}
+.arch-gov-sub{font-family:var(--mono);font-size:7.5px;color:var(--green);opacity:.55;margin-top:2px;display:block}
+.arch-walls{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.arch-wall{border-radius:4px;padding:8px 4px;text-align:center;border:1px solid transparent}
+.aw-label{font-family:var(--mono);font-size:8.5px;font-weight:700;display:block;letter-spacing:.8px;text-transform:uppercase}
+.aw-sub{font-family:var(--mono);font-size:7px;opacity:.58;margin-top:2px;display:block}
+.aw-net{background:rgba(88,166,255,0.09);border-color:rgba(88,166,255,0.24);color:var(--blue)}
+.aw-proc{background:rgba(245,158,11,0.09);border-color:rgba(245,158,11,0.24);color:var(--orange)}
+.aw-fs{background:rgba(34,197,94,0.07);border-color:rgba(34,197,94,0.22);color:var(--green)}
+.aw-mem{background:rgba(188,140,255,0.07);border-color:rgba(188,140,255,0.22);color:var(--purple)}
+.aw-dev{background:rgba(239,68,68,0.07);border-color:rgba(239,68,68,0.2);color:var(--red)}
+.arch-runtime{border-radius:8px;padding:14px 20px;background:rgba(88,166,255,0.05);border:1px solid rgba(88,166,255,0.18);display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:6px}
+.arch-runtime-name{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--blue);letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+.arch-runtime-items{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.arch-kernel{border-radius:8px;padding:12px 20px;background:rgba(255,255,255,0.018);border:1px solid var(--border);display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.arch-kernel-name{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--dim);letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+.arch-kernel-items{font-family:var(--mono);font-size:10px;color:var(--dim)}
+@media(max-width:640px){.arch-pods-row{grid-template-columns:1fr}.arch-runtime,.arch-kernel{flex-direction:column;gap:6px}}
+
 
 /* ── FEATURE GRID ── */
 .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:20px}
@@ -355,6 +356,13 @@ footer{border-top:1px solid var(--border);padding:44px 0}
       View on GitHub
     </a>
   </div>
+  <div class="hero-install">
+    <div class="hero-install-row">
+      <span class="hero-install-cmd">curl -fsSL https://envpod.dev/install.sh | sh</span>
+      <button class="hero-install-copy" onclick="copyHeroInstall(this)">Copy</button>
+    </div>
+    <span class="hero-install-note">Linux · x86_64 or ARM64 · requires root · ~12 MB</span>
+  </div>
 </section>
 
 <!-- ═══ NUMBERS ═══ -->
@@ -414,51 +422,73 @@ footer{border-top:1px solid var(--border);padding:44px 0}
     <h2>One YAML file. Five walls. A governance ceiling.</h2>
     <p class="section-sub">You write <code>pod.yaml</code>. The agent runs with kernel-level isolation on all sides and a governance layer that intercepts every significant action.</p>
 
-    <div class="building-wrap">
-      <div class="building-scene">
-        <div class="building-3d" id="building-3d">
-          <!-- AI agent inside — visible through glass front wall -->
-          <div class="b-agent" id="b-agent">🤖</div>
-          <!-- Floor: Filesystem -->
-          <div class="b-face b-bottom">
-            <span class="b-lbl">Filesystem</span>
-            <span class="b-sub">OverlayFS · copy-on-write</span>
+    <div class="arch-diagram">
+      <!-- Three pods side by side -->
+      <div class="arch-pods-row">
+        <!-- Pod 1: Claude Code -->
+        <div class="arch-pod">
+          <div class="arch-agent-layer">
+            <span class="arch-emoji">🤖</span>
+            <span class="arch-agent-name">Claude Code</span>
+            <span class="arch-agent-sub">coding agent</span>
           </div>
-          <!-- Back: Memory -->
-          <div class="b-face b-back">
-            <span class="b-lbl">Memory</span>
-            <span class="b-sub">namespace · /proc isolated</span>
+          <div class="arch-gov-layer">
+            <span class="arch-gov-label">Governance ▲</span>
+            <span class="arch-gov-sub">policy · audit · vault · queue</span>
           </div>
-          <!-- Left: Filesystem (side wall) -->
-          <div class="b-face b-left">
-            <span class="b-lbl">Filesystem</span>
-            <span class="b-sub">floor · base layer</span>
+          <div class="arch-walls">
+            <div class="arch-wall aw-net"><span class="aw-label">Network</span><span class="aw-sub">DNS filter</span></div>
+            <div class="arch-wall aw-proc"><span class="aw-label">Processor</span><span class="aw-sub">cgroups v2</span></div>
+            <div class="arch-wall aw-fs"><span class="aw-label">Filesystem</span><span class="aw-sub">OverlayFS COW</span></div>
+            <div class="arch-wall aw-mem"><span class="aw-label">Memory</span><span class="aw-sub">namespace</span></div>
           </div>
-          <!-- Right: Processor (main visible wall from this angle) -->
-          <div class="b-face b-right">
-            <span class="b-lbl">Processor</span>
-            <span class="b-sub">cgroups v2 · seccomp-BPF</span>
-            <span class="b-dev-badge">+ Devices</span>
+        </div>
+        <!-- Pod 2: browser-use + Wayland -->
+        <div class="arch-pod">
+          <div class="arch-agent-layer">
+            <span class="arch-emoji">🌐</span>
+            <span class="arch-agent-name">Chrome + Wayland</span>
+            <span class="arch-agent-sub">browser agent</span>
           </div>
-          <!-- Front: Network (glass wall) -->
-          <div class="b-face b-front">
-            <span class="b-lbl">Network</span>
-            <span class="b-sub">netns · DNS filter · veth</span>
+          <div class="arch-gov-layer">
+            <span class="arch-gov-label">Governance ▲</span>
+            <span class="arch-gov-sub">policy · audit · vault · queue</span>
           </div>
-          <!-- Top: Governance ceiling -->
-          <div class="b-face b-top">
-            <span class="b-lbl">Governance</span>
-            <span class="b-sub">policy · audit · vault · queue</span>
+          <div class="arch-walls">
+            <div class="arch-wall aw-net"><span class="aw-label">Network</span><span class="aw-sub">DNS filter</span></div>
+            <div class="arch-wall aw-proc"><span class="aw-label">Processor</span><span class="aw-sub">cgroups v2</span></div>
+            <div class="arch-wall aw-fs"><span class="aw-label">Filesystem</span><span class="aw-sub">OverlayFS COW</span></div>
+            <div class="arch-wall aw-dev"><span class="aw-label">Devices</span><span class="aw-sub">Wayland · GPU</span></div>
+          </div>
+        </div>
+        <!-- Pod 3: ML training -->
+        <div class="arch-pod">
+          <div class="arch-agent-layer">
+            <span class="arch-emoji">⚡</span>
+            <span class="arch-agent-name">ML Training</span>
+            <span class="arch-agent-sub">GPU agent</span>
+          </div>
+          <div class="arch-gov-layer">
+            <span class="arch-gov-label">Governance ▲</span>
+            <span class="arch-gov-sub">policy · audit · vault · queue</span>
+          </div>
+          <div class="arch-walls">
+            <div class="arch-wall aw-net"><span class="aw-label">Network</span><span class="aw-sub">DNS filter</span></div>
+            <div class="arch-wall aw-proc"><span class="aw-label">Processor</span><span class="aw-sub">cgroups v2</span></div>
+            <div class="arch-wall aw-fs"><span class="aw-label">Filesystem</span><span class="aw-sub">OverlayFS COW</span></div>
+            <div class="arch-wall aw-dev"><span class="aw-label">Devices</span><span class="aw-sub">NVIDIA GPU</span></div>
           </div>
         </div>
       </div>
-      <div class="b-legend">
-        <span class="b-leg b-leg-fs"><span class="b-dot"></span>Filesystem</span>
-        <span class="b-leg b-leg-net"><span class="b-dot"></span>Network</span>
-        <span class="b-leg b-leg-proc"><span class="b-dot"></span>Processor</span>
-        <span class="b-leg b-leg-mem"><span class="b-dot"></span>Memory</span>
-        <span class="b-leg b-leg-dev"><span class="b-dot"></span>Devices</span>
-        <span class="b-leg b-leg-gov"><span class="b-dot"></span>Governance ceiling</span>
+      <!-- Shared runtime -->
+      <div class="arch-runtime">
+        <span class="arch-runtime-name">envpod CE</span>
+        <span class="arch-runtime-items">Vault · Action Queue · Audit log · DNS daemon · Port forwarding · Pod discovery · seccomp-BPF</span>
+      </div>
+      <!-- Linux kernel -->
+      <div class="arch-kernel">
+        <span class="arch-kernel-name">Linux Kernel</span>
+        <span class="arch-kernel-items">Namespaces (PID, net, mount, UTS, user) · cgroups v2 · OverlayFS · Network namespaces · veth pairs</span>
       </div>
     </div>
 
@@ -817,19 +847,11 @@ function copyBlock(btn){const b=btn.closest('.code-block');const t=Array.from(b.
 // ══ SCROLL REVEAL ══
 (function(){const o=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis')})},{threshold:0.1});document.querySelectorAll('.reveal').forEach(el=>o.observe(el))})();
 
-// ══ 3D BUILDING ANIMATION ══
-(function(){
-  const bld=document.getElementById('building-3d');
-  const agent=document.getElementById('b-agent');
-  if(!bld)return;
-  const seq=['.b-bottom','.b-left','.b-back','.b-right','.b-front','.b-top'];
-  const o=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){
-    seq.forEach((sel,i)=>setTimeout(()=>bld.querySelector(sel)?.classList.add('b-vis'),i*260));
-    setTimeout(()=>agent?.classList.add('b-vis'),seq.length*260+320);
-    o.unobserve(bld);
-  }})},{threshold:0.25});
-  o.observe(bld);
-})();
+function copyHeroInstall(btn){
+  navigator.clipboard.writeText('curl -fsSL https://envpod.dev/install.sh | sh')
+    .then(()=>{btn.textContent='Copied!';setTimeout(()=>btn.textContent='Copy',2000)})
+    .catch(()=>{btn.textContent='Copied!';setTimeout(()=>btn.textContent='Copy',2000)});
+}
 </script>
 </body>
 </html>
