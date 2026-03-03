@@ -747,6 +747,14 @@ footer{border-top:1px solid var(--border);padding:44px 0}
       <div class="code-block"><div><span class="pr">$ </span><span class="cl">sudo envpod init hello</span></div><div><span class="pr">$ </span><span class="cl">sudo envpod run hello -- bash -c "echo 'governed' > /home/agent/hello.txt"</span></div><div><span class="pr">$ </span><span class="cl">sudo envpod diff hello</span></div><div><span class="pr">$ </span><span class="cl">sudo envpod commit hello   # or: sudo envpod rollback hello</span></div></div>
     </div>
 
+    <div style="margin-top:32px">
+      <p style="font-size:14px;color:var(--muted);margin-bottom:14px">Launch Chrome with display + audio in a governed pod:</p>
+      <div class="code-block"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><div class="cp"># pod.yaml</div><div><span class="cl">network:</span></div><div><span class="cl">  mode: Filtered</span></div><div><span class="cl">  dns:</span></div><div><span class="cl">    mode: Whitelist</span></div><div><span class="cl">    allow: ["*.google.com", "*.youtube.com",</span></div><div><span class="cl">            "api.anthropic.com", "api.openai.com"]</span></div><div><span class="cl">devices:</span></div><div><span class="cl">  display: true    # Wayland forwarding</span></div><div><span class="cl">  audio: true      # PipeWire / PulseAudio</span></div><div><span class="cl">  gpu: true</span></div><div><span class="cl">security:</span></div><div><span class="cl">  seccomp_profile: browser</span></div><div><span class="cl">processor:</span></div><div><span class="cl">  cores: 2.0</span></div><div><span class="cl">  memory: "4GB"</span></div></div>
+    </div>
+    <div style="margin-top:14px">
+      <div class="code-block"><div><span class="pr">$ </span><span class="cl">sudo envpod init chrome -c pod.yaml</span></div><div><span class="pr">$ </span><span class="cl">sudo envpod run chrome -d -a -- google-chrome \</span></div><div><span class="cl">    --no-sandbox --ozone-platform=wayland https://claude.ai</span></div><div><span class="pr">$ </span><span class="cl">sudo envpod diff chrome    # see what Chrome changed on disk</span></div></div>
+    </div>
+
     <div class="req-box">
       <strong>Requirements:</strong> Linux kernel 5.15+ · cgroups v2 · OverlayFS · root (for namespace setup) · ~12 MB disk
       <br><br>
