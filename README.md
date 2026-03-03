@@ -145,7 +145,7 @@ You are free to:
 **The copyleft condition:** If you distribute envpod (bundled in a product, a Docker image, a cloud service, etc.) you must release the complete source code of the combined work under AGPL v3 — not just your changes, but the whole thing.
 
 **What this means for large companies:**
-Docker, AWS, Google, and similar companies *can* include envpod, but doing so requires open-sourcing their entire combined product under AGPL v3. In practice this is incompatible with commercial closed-source products, which is intentional — it prevents tech giants from embedding envpod into proprietary offerings without contributing back.
+Docker Engine is already open source (Apache 2.0) — but that is not sufficient. AGPL v3 requires the *entire combined work* to be licensed under AGPL v3 specifically, not just "open sourced." For Docker, this would mean relicensing Docker Engine from Apache 2.0 to AGPL v3, which would ripple through the entire container ecosystem (Kubernetes, containerd, every tool that builds on Docker) and destroy their commercial business model (Docker Desktop). AWS, Google, and other cloud providers face the same problem with their managed container offerings. In practice, no large company will accept this, which is intentional — it prevents tech giants from embedding envpod into their platforms without contributing back or paying for a commercial license.
 
 **For everyone else** (independent developers, startups, researchers, internal tooling): AGPL places no practical restriction. Use it freely.
 
