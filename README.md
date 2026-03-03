@@ -112,7 +112,7 @@ processor:
 
 ## Documentation
 
-- `docs/FEATURES.md` — full feature list (OSS vs Premium)
+- `docs/FEATURES.md` — full feature list (CE vs Premium)
 - `docs/CLI-BLACKBOOK.md` — complete CLI reference
 - `docs/TUTORIALS.md` — step-by-step tutorials
 - `docs/ACTION-CATALOG.md` — action type reference
@@ -133,12 +133,24 @@ The binary is at `target/release/envpod`.
 
 ## License
 
-[GNU Affero General Public License v3.0](LICENSE) — free to use (including production),
-Copyleft — competitors must open-source their changes. Tech giants cannot incorporate without open-sourcing.
-Free to use, modify, and distribute. Cannot be used to build competing products without open-sourcing your changes.
+**[GNU Affero General Public License v3.0](LICENSE) (AGPL-3.0-only)**
 
 Copyright 2026 Xtellix Inc.
 
+You are free to:
+- Use envpod in production — personal, commercial, internal — at no cost
+- Study, modify, and distribute the source code
+- Build on it for your own products
+
+**The copyleft condition:** If you distribute envpod (bundled in a product, a Docker image, a cloud service, etc.) you must release the complete source code of the combined work under AGPL v3 — not just your changes, but the whole thing.
+
+**What this means for large companies:**
+Docker, AWS, Google, and similar companies *can* include envpod, but doing so requires open-sourcing their entire combined product under AGPL v3. In practice this is incompatible with commercial closed-source products, which is intentional — it prevents tech giants from embedding envpod into proprietary offerings without contributing back.
+
+**For everyone else** (independent developers, startups, researchers, internal tooling): AGPL places no practical restriction. Use it freely.
+
+Commercial licenses (for companies that want to include envpod in closed-source products) are available at [envpod.com](https://envpod.com).
+
 ---
 
-Premium features (vault proxy injection, AI monitoring agent, messaging/database actions) available at [envpod.com](https://envpod.com)
+Premium features (AI monitoring agent, prompt screening, TLS inspection, messaging/database actions) available at [envpod.com](https://envpod.com)
