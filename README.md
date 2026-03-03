@@ -28,9 +28,8 @@ Every agent session runs inside a pod. Filesystem writes go to a copy-on-write o
 ## Quick Start
 
 ```bash
-# Install (Linux x86_64)
-curl -L https://github.com/markamo/envpod-oss/releases/latest/download/envpod-linux-x86_64.tar.gz | tar xz
-sudo ./install.sh
+# Install (Linux x86_64 or ARM64 — auto-detects arch)
+curl -L https://envpod.dev/install.sh | sudo sh
 
 # Create a pod from a config file
 sudo envpod init my-agent --config pod.yaml

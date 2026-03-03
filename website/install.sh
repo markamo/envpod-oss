@@ -1,0 +1,100 @@
+#!/usr/bin/env sh
+#
+# envpod installer — https://envpod.dev/install.sh
+#
+# Downloads the right pre-built binary for your system, runs the bundled
+# installer, and cleans up. No Rust toolchain required.
+#
+# Usage:
+#   curl -L https://envpod.dev/install.sh | sudo sh
+#
+# Supports: Linux x86_64 and ARM64 (Raspberry Pi, Jetson Orin, etc.)
+#
+set -e
+
+REPO="markamo/envpod-oss"
+BASE_URL="https://github.com/${REPO}/releases/latest/download"
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BOLD='\033[1m'
+NC='\033[0m'
+
+info()  { printf "${GREEN}[✓]${NC} %s\n" "$*"; }
+warn()  { printf "${YELLOW}[!]${NC} %s\n" "$*"; }
+fail()  { printf "${RED}[✗]${NC} %s\n" "$*"; exit 1; }
+
+printf "${BOLD}"
+printf "  ┌──────────────────────────────────────┐\n"
+printf "  │      envpod — downloading installer  │\n"
+printf "  │    https://envpod.dev                │\n"
+printf "  └──────────────────────────────────────┘\n"
+printf "${NC}\n"
+
+# ---------------------------------------------------------------------------
+# Checks
+# ---------------------------------------------------------------------------
+
+if [ "$(uname -s)" != "Linux" ]; then
+    fail "envpod requires Linux. Detected: $(uname -s)"
+fi
+
+if [ "$(id -u)" -ne 0 ]; then
+    fail "Run this script as root: curl -L https://envpod.dev/install.sh | sudo sh"
+fi
+
+MACHINE=$(uname -m)
+case "$MACHINE" in
+    x86_64|amd64)   ARCH="x86_64" ;;
+    aarch64|arm64)  ARCH="arm64"  ;;
+    *)
+        fail "Unsupported architecture: $MACHINE (envpod supports x86_64 and arm64)"
+        ;;
+esac
+info "Architecture: ${ARCH}"
+
+# Check for download tool
+if command -v curl >/dev/null 2>&1; then
+    DOWNLOAD="curl -fsSL"
+    DOWNLOAD_FILE="curl -fSL -o"
+elif command -v wget >/dev/null 2>&1; then
+    DOWNLOAD="wget -qO-"
+    DOWNLOAD_FILE="wget -qO"
+else
+    fail "curl or wget is required. Install one and retry."
+fi
+
+# ---------------------------------------------------------------------------
+# Download
+# ---------------------------------------------------------------------------
+
+TARBALL="envpod-linux-${ARCH}.tar.gz"
+URL="${BASE_URL}/${TARBALL}"
+
+TMPDIR=$(mktemp -d)
+trap 'rm -rf "${TMPDIR}"' EXIT
+
+info "Downloading ${TARBALL}..."
+if command -v curl >/dev/null 2>&1; then
+    curl -fSL -o "${TMPDIR}/${TARBALL}" "${URL}" || fail "Download failed: ${URL}"
+else
+    wget -qO "${TMPDIR}/${TARBALL}" "${URL}" || fail "Download failed: ${URL}"
+fi
+info "Downloaded to ${TMPDIR}/${TARBALL}"
+
+# ---------------------------------------------------------------------------
+# Extract and install
+# ---------------------------------------------------------------------------
+
+info "Extracting..."
+tar xzf "${TMPDIR}/${TARBALL}" -C "${TMPDIR}"
+
+RELEASE_DIR=$(find "${TMPDIR}" -maxdepth 1 -type d -name "envpod-*" | head -1)
+if [ -z "${RELEASE_DIR}" ]; then
+    fail "Could not find extracted release directory in ${TMPDIR}"
+fi
+info "Extracted to ${RELEASE_DIR}"
+
+info "Running installer..."
+sh "${RELEASE_DIR}/install.sh"
