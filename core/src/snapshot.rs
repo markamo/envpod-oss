@@ -1,5 +1,5 @@
 // Copyright 2026 Xtellix Inc.
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: BUSL-1.1
 
 //! Pod overlay snapshots — named checkpoints of the overlay upper/ directory.
 //!

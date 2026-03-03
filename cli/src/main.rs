@@ -1,5 +1,5 @@
 // Copyright 2026 Xtellix Inc.
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: BUSL-1.1
 
 use std::io::Seek;
 use std::path::{Path, PathBuf};
@@ -2030,7 +2030,7 @@ fn print_welcome_banner(pod_dir: &std::path::Path) {
         color::cyan("audit"),
     );
     eprintln!();
-    eprintln!("  {}", color::dim("© 2026 Mark Amo-Boateng / Xtellix Inc. — Apache-2.0 License"));
+    eprintln!("  {}", color::dim("© 2026 Xtellix Inc. — Business Source License 1.1"));
     eprintln!("  {}", color::dim("https://envpod.com"));
     eprintln!();
 

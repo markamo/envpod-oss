@@ -133,7 +133,9 @@ The binary is at `target/release/envpod`.
 
 ## License
 
-Apache-2.0
+[Business Source License 1.1](LICENSE) — free to use (including production),
+source-available. Cannot be resold as a competing product.
+Converts to Apache-2.0 on 2030-01-01.
 
 Copyright 2026 Xtellix Inc.
 

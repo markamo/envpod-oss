@@ -1,6 +1,6 @@
 #!/bin/bash
 # Copyright 2026 Xtellix Inc.
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: BUSL-1.1
 
 # envpod jailbreak test v0.1.0
 # Probes all isolation boundaries inside an envpod pod.

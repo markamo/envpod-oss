@@ -2,7 +2,7 @@
 
 > **EnvPod v0.2.0** — Zero-trust governance environments for AI agents
 > Author: Mark Amoboateng · mark@envpod.com · m.amoboateng@gmail.com
-> Copyright 2026 Xtellix Inc. · Licensed under Apache-2.0
+> Copyright 2026 Xtellix Inc. · Business Source License 1.1
 
 ---
 

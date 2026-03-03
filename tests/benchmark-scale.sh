@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 Xtellix Inc.
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: BUSL-1.1
 
 # Scale benchmark: create N instances and measure creation time, disk usage,
 # and cleanup time.  Compares Docker vs Podman vs Envpod clone scaling.

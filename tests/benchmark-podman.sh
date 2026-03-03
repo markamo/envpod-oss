@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 Xtellix Inc.
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: BUSL-1.1
 
 # Podman vs Docker vs Envpod comparison benchmark.
 # Requires: sudo, Podman, Docker, envpod release build or installed binary.

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 Xtellix Inc.
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: BUSL-1.1
 
 # Docker vs Envpod comparison benchmark.
 # Requires: sudo, Docker, envpod release build or installed binary.

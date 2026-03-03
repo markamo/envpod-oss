@@ -1,5 +1,5 @@
 // Copyright 2026 Xtellix Inc.
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: BUSL-1.1
 
 //! State reading helpers for the dashboard.
 //!
