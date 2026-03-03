@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Copyright 2026 Xtellix Inc.
+# Copyright 2026 Mark Amo-Boateng / Xtellix Inc.
 # SPDX-License-Identifier: BUSL-1.1
 
 # GPU benchmark script for envpod — measures GPU passthrough overhead.

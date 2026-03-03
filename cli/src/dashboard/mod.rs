@@ -1,4 +1,4 @@
-// Copyright 2026 Xtellix Inc.
+// Copyright 2026 Mark Amo-Boateng / Xtellix Inc.
 // SPDX-License-Identifier: BUSL-1.1
 
 //! Web dashboard for envpod — fleet overview, pod detail, audit, diff.

@@ -1,4 +1,4 @@
-// Copyright 2026 Xtellix Inc.
+// Copyright 2026 Mark Amo-Boateng / Xtellix Inc.
 // SPDX-License-Identifier: BUSL-1.1
 
 //! cgroup v2 management for pod resource limits and process control.

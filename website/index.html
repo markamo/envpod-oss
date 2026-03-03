@@ -824,16 +824,18 @@
     <div id="tab-x86">
       <div class="code-block">
         <button class="copy-btn" onclick="copyBlock(this)">Copy</button>
-<div class="cp"># One command — detects your architecture, downloads and installs</div>
-<div><span class="pr">$ </span><span class="cl">curl -fsSL https://envpod.dev/install.sh | sudo sh</span></div>
+<div class="cp"># Download installer (auto-detects x86_64 or ARM64)</div>
+<div><span class="pr">$ </span><span class="cl">curl -fsSL https://envpod.dev/install.sh -o /tmp/envpod-install.sh</span></div>
+<div><span class="pr">$ </span><span class="cl">sudo bash /tmp/envpod-install.sh</span></div>
       </div>
     </div>
 
     <div id="tab-arm64" style="display:none">
       <div class="code-block">
         <button class="copy-btn" onclick="copyBlock(this)">Copy</button>
-<div class="cp"># Raspberry Pi 4/5 (64-bit OS) or NVIDIA Jetson Orin — same command</div>
-<div><span class="pr">$ </span><span class="cl">curl -fsSL https://envpod.dev/install.sh | sudo sh</span></div>
+<div class="cp"># Raspberry Pi 4/5 (64-bit OS) or NVIDIA Jetson Orin</div>
+<div><span class="pr">$ </span><span class="cl">curl -fsSL https://envpod.dev/install.sh -o /tmp/envpod-install.sh</span></div>
+<div><span class="pr">$ </span><span class="cl">sudo bash /tmp/envpod-install.sh</span></div>
       </div>
     </div>
 
