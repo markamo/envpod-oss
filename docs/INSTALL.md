@@ -127,6 +127,27 @@ What each option removes:
 | Shell completions | ✓ | ✓ |
 | `/var/lib/envpod/` (pod data, vaults, audit logs) | kept | ✓ |
 
+**Manual uninstall** (if the script isn't available):
+
+```bash
+# Binary and completions
+sudo rm -f /usr/local/bin/envpod
+sudo rm -rf /usr/local/share/envpod
+sudo rm -f /etc/bash_completion.d/envpod
+sudo rm -f /usr/share/bash-completion/completions/envpod
+sudo rm -f ~/.zfunc/_envpod
+
+# System config (IP forwarding)
+sudo rm -f /etc/sysctl.d/99-envpod.conf
+sudo sysctl -w net.ipv4.ip_forward=0   # optional — only if you want to revert
+
+# Pod data (optional — this deletes all pods, vaults, and audit logs)
+sudo rm -rf /var/lib/envpod
+
+# Leftover iptables rules (cleans up any envpod NAT/FORWARD/INPUT rules)
+sudo iptables-save | grep -v "10.200\." | sudo iptables-restore
+```
+
 ---
 
 ## Next Steps
