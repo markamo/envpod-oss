@@ -1,3 +1,6 @@
+// Copyright 2026 Xtellix Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 //! Pod overlay snapshots — named checkpoints of the overlay upper/ directory.
 //!
 //! A snapshot is a copy of `{pod_dir}/upper/` taken at a point in time.

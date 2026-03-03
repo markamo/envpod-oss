@@ -1,3 +1,6 @@
+// Copyright 2026 Xtellix Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 //! File-based credential vault for pods with encryption at rest.
 //!
 //! Secrets are stored as individual files under `{pod_dir}/vault/`,

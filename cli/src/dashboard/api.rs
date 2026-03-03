@@ -1,3 +1,6 @@
+// Copyright 2026 Xtellix Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 //! REST API handlers for the dashboard.
 
 use std::path::PathBuf;

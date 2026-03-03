@@ -1,3 +1,6 @@
+// Copyright 2026 Xtellix Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 //! Network namespace creation, veth setup, NAT, and iptables operations.
 //!
 //! Uses `ip` and `iptables` commands for MVP reliability and debuggability.

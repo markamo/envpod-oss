@@ -1,3 +1,6 @@
+// Copyright 2026 Xtellix Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 use std::io::Seek;
 use std::path::{Path, PathBuf};
 use std::process::ExitCode;

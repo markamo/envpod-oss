@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>envpod — Zero-trust governance for AI agents</title>
+  <meta name="description" content="Docker isolates. Envpod governs. Copy-on-write filesystem review, encrypted credential vault, action approval queue, and DNS filtering for AI agents. Free and open source.">
+  <meta property="og:title" content="envpod — Zero-trust governance for AI agents">
+  <meta property="og:description" content="Docker isolates. Envpod governs. Every file change reviewed. Every action approved. Every secret protected.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0d1117;
+      --surface:  #161b22;
+      --surface2: #1c2128;
+      --border:   #30363d;
+      --text:     #e6edf3;
+      --muted:    #8b949e;
+      --blue:     #58a6ff;
+      --green:    #3fb950;
+      --orange:   #d29922;
+      --red:      #f78166;
+      --purple:   #bc8cff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code { font-family: 'SF Mono', 'Cascadia Code', 'Fira Code', monospace; font-size: 0.875em; background: rgba(88,166,255,0.1); color: var(--blue); padding: 2px 6px; border-radius: 4px; }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── NAV ──────────────────────────────────────────── */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+      position: sticky;
+      top: 0;
+      background: rgba(13, 17, 23, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .nav-inner { display: flex; align-items: center; }
+    .nav-logo {
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .nav-logo em { color: var(--blue); font-style: normal; }
+    .nav-links { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+    .nav-links a {
+      color: var(--muted);
+      font-size: 14px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: color 0.15s, background 0.15s;
+    }
+    .nav-links a:hover { color: var(--text); background: var(--surface); text-decoration: none; }
+    .nav-gh {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--text) !important;
+      font-size: 13px;
+      font-weight: 500;
+      margin-left: 8px;
+      transition: border-color 0.15s !important;
+    }
+    .nav-gh:hover { border-color: var(--blue) !important; text-decoration: none !important; }
+
+    /* ── HERO ─────────────────────────────────────────── */
+    .hero {
+      padding: 88px 0 72px;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 28px;
+      background: var(--surface);
+    }
+    .badge-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+    h1 {
+      font-size: clamp(40px, 7vw, 72px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin-bottom: 20px;
+    }
+    h1 .dim { color: var(--muted); }
+    h1 .accent { color: var(--blue); }
+    .hero-sub {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: var(--muted);
+      max-width: 580px;
+      margin: 0 auto 44px;
+      line-height: 1.65;
+    }
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 56px;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 22px;
+      background: var(--blue);
+      color: #0d1117;
+      font-weight: 700;
+      font-size: 15px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-primary:hover { background: #79b8ff; text-decoration: none; color: #0d1117; }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 22px;
+      background: var(--surface);
+      color: var(--text);
+      font-size: 15px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      transition: border-color 0.15s;
+    }
+    .btn-secondary:hover { border-color: var(--blue); text-decoration: none; }
+
+    /* ── TERMINAL ─────────────────────────────────────── */
+    .terminal-wrap { max-width: 740px; margin: 0 auto; }
+    .terminal {
+      background: #010409;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      text-align: left;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+    }
+    .terminal-bar {
+      background: var(--surface2);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      border-bottom: 1px solid var(--border);
+    }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-r { background: #ff5f57; }
+    .dot-y { background: #ffbd2e; }
+    .dot-g { background: #28ca42; }
+    .t-label { font-size: 12px; color: var(--muted); margin-left: 8px; font-family: 'SF Mono', monospace; }
+    .terminal-body {
+      padding: 24px;
+      font-family: 'SF Mono', 'Cascadia Code', 'Fira Code', monospace;
+      font-size: 13px;
+      line-height: 1.75;
+    }
+    .t-comment { color: #6e7681; }
+    .t-prompt   { color: var(--green); user-select: none; }
+    .t-cmd      { color: var(--text); }
+    .t-out      { color: var(--muted); }
+    .t-add      { color: var(--green); }
+    .t-mod      { color: var(--orange); }
+    .t-del      { color: var(--red); }
+    .t-ok       { color: var(--green); }
+    .t-blue     { color: var(--blue); }
+
+    /* ── SECTIONS ─────────────────────────────────────── */
+    .section       { padding: 88px 0; }
+    .section-tinted { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 88px 0; }
+
+    h2 {
+      font-size: clamp(26px, 4vw, 42px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+    }
+    .section-sub {
+      color: var(--muted);
+      font-size: 18px;
+      max-width: 560px;
+      margin-bottom: 56px;
+      line-height: 1.6;
+    }
+
+    /* ── FEATURE GRID ─────────────────────────────────── */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 20px;
+    }
+    .feature-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .feature-card:hover { border-color: var(--blue); transform: translateY(-2px); }
+    .feature-icon { font-size: 30px; margin-bottom: 14px; }
+    .feature-title { font-weight: 600; font-size: 16px; margin-bottom: 8px; }
+    .feature-desc { color: var(--muted); font-size: 14px; line-height: 1.65; }
+
+    /* ── EXAMPLES ────────────────────────────────────── */
+    .agent-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .agent-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      background: var(--surface);
+      transition: border-color 0.2s;
+    }
+    .agent-card:hover { border-color: var(--blue); }
+    .agent-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+    .agent-name { font-weight: 600; font-size: 15px; }
+    .agent-tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .tag-coding  { border-color: rgba(88,166,255,0.3);  color: var(--blue); }
+    .tag-browser { border-color: rgba(63,185,80,0.3);   color: var(--green); }
+    .tag-gpu     { border-color: rgba(188,140,255,0.3); color: var(--purple); }
+    .tag-sandbox { border-color: rgba(247,129,102,0.3); color: var(--red); }
+    .agent-desc { font-size: 13px; color: var(--muted); margin-bottom: 14px; line-height: 1.5; }
+    .agent-cmd {
+      font-family: 'SF Mono', 'Cascadia Code', 'Fira Code', monospace;
+      font-size: 11px;
+      background: #010409;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 12px;
+      line-height: 1.7;
+    }
+    .agent-cmd .pr { color: var(--green); user-select: none; }
+    .agent-cmd .cm { color: var(--text); }
+    .more-examples {
+      text-align: center;
+      margin-top: 32px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .more-examples a { color: var(--blue); }
+
+    /* ── STEPS ────────────────────────────────────────── */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 40px;
+      counter-reset: step;
+    }
+    .step { position: relative; }
+    .step-num {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: rgba(88,166,255,0.12);
+      border: 1px solid rgba(88,166,255,0.3);
+      color: var(--blue);
+      font-weight: 700; font-size: 18px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 16px;
+    }
+    .step-title { font-weight: 600; font-size: 15px; margin-bottom: 8px; }
+    .step-body { color: var(--muted); font-size: 14px; line-height: 1.6; margin-bottom: 12px; }
+    .step-cmd {
+      font-family: 'SF Mono', 'Cascadia Code', monospace;
+      font-size: 12px;
+      color: var(--blue);
+      background: rgba(88,166,255,0.08);
+      border: 1px solid rgba(88,166,255,0.15);
+      padding: 6px 12px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+
+    /* ── COMPARE ──────────────────────────────────────── */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .compare-col {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+    }
+    .compare-col h3 { font-weight: 600; font-size: 16px; margin-bottom: 20px; }
+    .compare-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .compare-col li {
+      font-size: 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+    .compare-col li .icon { flex-shrink: 0; font-size: 15px; margin-top: 1px; }
+    .col-docker li { color: var(--muted); }
+    .col-envpod { background: rgba(88,166,255,0.03); border-color: rgba(88,166,255,0.25); }
+    .col-envpod h3 { color: var(--blue); }
+    .col-envpod li { color: var(--text); }
+
+    /* ── INSTALL ──────────────────────────────────────── */
+    .install-tabs { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+    .itab {
+      padding: 6px 16px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: none;
+      color: var(--muted);
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .itab.active { background: var(--surface); border-color: var(--blue); color: var(--text); }
+    .itab:hover:not(.active) { border-color: var(--muted); color: var(--text); }
+    .code-block {
+      background: #010409;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      font-family: 'SF Mono', 'Cascadia Code', 'Fira Code', monospace;
+      font-size: 13px;
+      line-height: 1.8;
+      position: relative;
+      overflow-x: auto;
+    }
+    .code-block .cp { color: #6e7681; }
+    .code-block .cl { color: var(--text); white-space: pre; }
+    .code-block .pr { color: var(--green); user-select: none; }
+    .copy-btn {
+      position: absolute;
+      top: 12px; right: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--muted);
+      padding: 4px 10px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+    .copy-btn:hover { color: var(--text); border-color: var(--blue); }
+
+    .req-box {
+      margin-top: 28px;
+      padding: 20px 24px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .req-box strong { color: var(--text); }
+    .req-box a { margin: 0 4px; }
+
+    /* ── FOOTER ───────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 44px 0;
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .footer-logo { font-weight: 700; font-size: 16px; letter-spacing: -0.02em; }
+    .footer-logo em { color: var(--blue); font-style: normal; }
+    .footer-copy { color: var(--muted); font-size: 12px; margin-top: 4px; }
+    .footer-links { display: flex; gap: 6px; flex-wrap: wrap; }
+    .footer-links a {
+      color: var(--muted);
+      font-size: 13px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      transition: color 0.15s, background 0.15s;
+    }
+    .footer-links a:hover { color: var(--text); background: var(--surface); text-decoration: none; }
+
+    /* ── RESPONSIVE ───────────────────────────────────── */
+    @media (max-width: 768px) {
+      .hero { padding: 56px 0 48px; }
+      .section, .section-tinted { padding: 64px 0; }
+      .nav-links a:not(.nav-gh) { display: none; }
+      .compare-grid { grid-template-columns: 1fr; }
+      .terminal-body { font-size: 11px; padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════ NAV ═══════════════════════════ -->
+<nav>
+  <div class="container">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo"><em>env</em>pod</a>
+      <div class="nav-links">
+        <a href="https://github.com/markamo/envpod-oss/blob/main/docs/FEATURES.md">Features</a>
+        <a href="https://github.com/markamo/envpod-oss/blob/main/docs/TUTORIALS.md">Tutorials</a>
+        <a href="https://github.com/markamo/envpod-oss/blob/main/docs/CLI-BLACKBOOK.md">CLI</a>
+        <a href="https://github.com/markamo/envpod-oss" class="nav-gh">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════ HERO ══════════════════════════ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Open Source · Apache-2.0 · Linux x86_64 &amp; ARM64
+    </div>
+
+    <h1>
+      <span class="dim">Docker isolates.</span><br>
+      <span class="accent">Envpod governs.</span>
+    </h1>
+
+    <p class="hero-sub">
+      The agent thinks it's on your real system —
+      but every write is captured, diffable, and reversible.
+      Nothing reaches your filesystem until you approve it.
+      One 12&thinsp;MB static binary. Zero dependencies.
+    </p>
+
+    <div class="hero-ctas">
+      <a href="#install" class="btn-primary">
+        Get started &darr;
+      </a>
+      <a href="https://github.com/markamo/envpod-oss" class="btn-secondary">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+        </svg>
+        View on GitHub
+      </a>
+    </div>
+
+    <!-- Terminal demo -->
+    <div class="terminal-wrap">
+      <div class="terminal">
+        <div class="terminal-bar">
+          <div class="dot dot-r"></div>
+          <div class="dot dot-y"></div>
+          <div class="dot dot-g"></div>
+          <span class="t-label">terminal</span>
+        </div>
+        <div class="terminal-body">
+<div class="t-comment"># Create a governed pod — define network policy, vault, resource limits</div>
+<div><span class="t-prompt">$ </span><span class="t-cmd">sudo envpod init my-agent -c agent.yaml</span></div>
+<div class="t-out">  ✓ Overlay filesystem ready   ✓ Network namespace created   ✓ Vault initialized</div>
+<br>
+<div class="t-comment"># Store your API key — encrypted at rest, never in config files or logs</div>
+<div><span class="t-prompt">$ </span><span class="t-cmd">echo "sk-..." | sudo envpod vault my-agent set ANTHROPIC_API_KEY</span></div>
+<br>
+<div class="t-comment"># Run the agent — all writes go to the overlay, host filesystem untouched</div>
+<div><span class="t-prompt">$ </span><span class="t-cmd">sudo envpod run my-agent -- claude</span></div>
+<br>
+<div class="t-comment"># Review exactly what the agent changed before anything reaches your host</div>
+<div><span class="t-prompt">$ </span><span class="t-cmd">sudo envpod diff my-agent</span></div>
+<div><span class="t-add">+ /workspace/auth.py              </span><span class="t-out">(2.1 KB, new)</span></div>
+<div><span class="t-mod">~ /workspace/tests/test_auth.py  </span><span class="t-out">(modified)</span></div>
+<div><span class="t-del">- /workspace/old_auth.py         </span><span class="t-out">(deleted)</span></div>
+<br>
+<div class="t-comment"># Apply approved changes — or discard everything with: envpod rollback my-agent</div>
+<div><span class="t-prompt">$ </span><span class="t-cmd">sudo envpod commit my-agent</span></div>
+<div class="t-ok">  ✓ 3 changes applied to host filesystem</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ FEATURES ══════════════════════ -->
+<section class="section-tinted">
+  <div class="container">
+    <h2>One YAML file. Five walls. A governance ceiling.</h2>
+    <p class="section-sub">You write <code>pod.yaml</code>. The agent runs with kernel-level isolation on all sides and a governance layer that intercepts every significant action.</p>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🗂️</div>
+        <div class="feature-title">Copy-on-Write Filesystem</div>
+        <div class="feature-desc">
+          Every agent write goes into an OverlayFS overlay. Your host filesystem is untouched until you explicitly approve.
+          <code>envpod diff</code> shows the exact changeset. <code>envpod commit</code> or <code>envpod rollback</code> in one command.
+          Named snapshots let you restore any point mid-run.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🔐</div>
+        <div class="feature-title">Encrypted Credential Vault</div>
+        <div class="feature-desc">
+          Secrets encrypted at rest with ChaCha20-Poly1305. Injected as environment variables at runtime only — they never appear in <code>pod.yaml</code>, command lines, shell history, or audit logs.
+          <code>envpod vault import .env</code> to bulk-load from existing files.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📋</div>
+        <div class="feature-title">Action Queue &amp; Approval</div>
+        <div class="feature-desc">
+          20 built-in action types: HTTP (6), filesystem (7), git (6), custom (1). Every call is validated, tiered, and audited. Four tiers: <code>immediate</code>, <code>delayed</code>, <code>staged</code> (human approval), <code>blocked</code>. Hot-reload — change tiers without restarting.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🌐</div>
+        <div class="feature-title">DNS Filtering</div>
+        <div class="feature-desc">
+          Each pod runs its own embedded DNS resolver. Define an exact allow-list of domains the agent can reach. Anti-DNS-tunneling protection built in. Live mutation — add or remove domains on a running pod with no restart.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">Structured Audit Log</div>
+        <div class="feature-desc">
+          Every lifecycle event recorded in an append-only JSONL file: actions, approvals, vault access, DNS queries — all timestamped.
+          <code>envpod audit --security</code> runs static analysis on your <code>pod.yaml</code> for misconfigurations before you ever run.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🖥️</div>
+        <div class="feature-title">Web Dashboard</div>
+        <div class="feature-desc">
+          <code>envpod dashboard</code> starts a local web UI on port&nbsp;9090.
+          Fleet overview with live cgroup stats, filterable audit timeline, diff viewer with commit and rollback buttons.
+          No database, no external dependencies — reads pod state directly.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <div class="feature-title">Process Isolation</div>
+        <div class="feature-desc">
+          PID namespace, cgroups&nbsp;v2 CPU/memory/IO limits, seccomp-BPF syscall filtering, UTS and user namespaces.
+          A runaway agent cannot starve the host. A compromised agent cannot see host processes or call dangerous syscalls.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-title">Base Pods &amp; Fast Cloning</div>
+        <div class="feature-desc">
+          Run <code>envpod init</code> once with all your setup commands. That becomes a base.
+          Clone from it in ~130&thinsp;ms — 10× faster than re-running setup.
+          Spin up a fleet of identical agents in seconds, each with its own isolated overlay.
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📡</div>
+        <div class="feature-title">ARM64 &amp; Embedded</div>
+        <div class="feature-desc">
+          The same static musl binary runs on x86_64 and ARM64 with no runtime dependencies.
+          Tested on Raspberry Pi&nbsp;4/5 and NVIDIA Jetson Orin with full GPU passthrough via <code>/dev/nvhost-*</code>.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ EXAMPLES ═════════════════════ -->
+<section class="section">
+  <div class="container">
+    <h2>Works with every major AI agent</h2>
+    <p class="section-sub">25 ready-made pod configs in <code>examples/</code>. Three commands to go from zero to governed.</p>
+
+    <div class="agent-grid">
+
+      <div class="agent-card">
+        <div class="agent-header">
+          <span class="agent-name">Claude Code</span>
+          <span class="agent-tag tag-coding">Coding</span>
+        </div>
+        <div class="agent-desc">Anthropic's official CLI coding agent. DNS-locked to api.anthropic.com, GitHub, and package registries.</div>
+        <div class="agent-cmd">
+<div><span class="pr">$ </span><span class="cm">envpod init claude-code -c examples/claude-code.yaml</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod setup claude-code</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod run claude-code -- claude</span></div>
+        </div>
+      </div>
+
+      <div class="agent-card">
+        <div class="agent-header">
+          <span class="agent-name">OpenAI Codex</span>
+          <span class="agent-tag tag-coding">Coding</span>
+        </div>
+        <div class="agent-desc">OpenAI's CLI coding agent. Envpod wraps Codex's own internal sandbox as the outer governance layer.</div>
+        <div class="agent-cmd">
+<div><span class="pr">$ </span><span class="cm">envpod init codex -c examples/codex.yaml</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod setup codex</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod run codex -- codex</span></div>
+        </div>
+      </div>
+
+      <div class="agent-card">
+        <div class="agent-header">
+          <span class="agent-name">Aider</span>
+          <span class="agent-tag tag-coding">Coding</span>
+        </div>
+        <div class="agent-desc">Open-source AI pair programmer. Supports Anthropic, OpenAI, DeepSeek, Google, and OpenRouter via litellm.</div>
+        <div class="agent-cmd">
+<div><span class="pr">$ </span><span class="cm">envpod init aider -c examples/aider.yaml</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod setup aider</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod run aider -- aider --model sonnet</span></div>
+        </div>
+      </div>
+
+      <div class="agent-card">
+        <div class="agent-header">
+          <span class="agent-name">OpenCode</span>
+          <span class="agent-tag tag-coding">Coding</span>
+        </div>
+        <div class="agent-desc">Go-based TUI coding agent. 75+ LLM providers including Anthropic, OpenAI, Groq, OpenRouter, and local Ollama.</div>
+        <div class="agent-cmd">
+<div><span class="pr">$ </span><span class="cm">envpod init opencode -c examples/opencode.yaml</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod setup opencode</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod run opencode -- opencode</span></div>
+        </div>
+      </div>
+
+      <div class="agent-card">
+        <div class="agent-header">
+          <span class="agent-name">SWE-agent</span>
+          <span class="agent-tag tag-coding">Coding</span>
+        </div>
+        <div class="agent-desc">Princeton's autonomous software engineering agent. Clones repos, analyzes code, and submits patches for GitHub issues.</div>
+        <div class="agent-cmd">
+<div><span class="pr">$ </span><span class="cm">envpod init swe-agent -c examples/swe-agent.yaml</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod setup swe-agent</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod run swe-agent -- python -m swe_agent.run</span></div>
+        </div>
+      </div>
+
+      <div class="agent-card">
+        <div class="agent-header">
+          <span class="agent-name">browser-use</span>
+          <span class="agent-tag tag-browser">Browser</span>
+        </div>
+        <div class="agent-desc">Python agent that controls headless Chromium to browse the web autonomously. Browser seccomp profile, 256 MB /dev/shm.</div>
+        <div class="agent-cmd">
+<div><span class="pr">$ </span><span class="cm">envpod init browser-use -c examples/browser-use.yaml</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod setup browser-use</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod run browser-use -- python run_agent.py</span></div>
+        </div>
+      </div>
+
+      <div class="agent-card">
+        <div class="agent-header">
+          <span class="agent-name">ML Training</span>
+          <span class="agent-tag tag-gpu">GPU</span>
+        </div>
+        <div class="agent-desc">PyTorch / TensorFlow training with full NVIDIA GPU passthrough. 16 GB memory, 8-hour budget, HuggingFace + PyPI access.</div>
+        <div class="agent-cmd">
+<div><span class="pr">$ </span><span class="cm">envpod init ml-trainer -c examples/ml-training.yaml</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod run ml-trainer -- python train.py</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod diff ml-trainer</span></div>
+        </div>
+      </div>
+
+      <div class="agent-card">
+        <div class="agent-header">
+          <span class="agent-name">Hardened Sandbox</span>
+          <span class="agent-tag tag-sandbox">Sandbox</span>
+        </div>
+        <div class="agent-desc">Maximum isolation. No network. No GPU. 256 MB memory. 64 PID cap. For untrusted code, CTF challenges, and security analysis.</div>
+        <div class="agent-cmd">
+<div><span class="pr">$ </span><span class="cm">envpod init sandbox -c examples/hardened-sandbox.yaml</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod run sandbox -- /bin/sh</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="more-examples">
+      25 configs total — also includes
+      <a href="https://github.com/markamo/envpod-oss/tree/main/examples">Aider, OpenClaw, Jetson Orin, Raspberry Pi, browser-wayland, Node.js, Python, devbox&nbsp;→</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ HOW IT WORKS ══════════════════ -->
+<section class="section">
+  <div class="container">
+    <h2>The governance workflow</h2>
+    <p class="section-sub">Four commands cover the entire agent lifecycle — from creation to review to commit.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-title">Define the pod</div>
+        <div class="step-body">Declare isolation rules, DNS allow-list, resource limits, and vault keys in a single <code>pod.yaml</code>. Run setup commands to install dependencies — snapshot the result as a base.</div>
+        <div class="step-cmd">envpod init my-agent</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-title">Run the agent</div>
+        <div class="step-body">The agent runs inside the pod. All writes go to the overlay. The host filesystem is completely untouched. DNS filtering blocks unexpected network calls.</div>
+        <div class="step-cmd">envpod run my-agent -- claude</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-title">Review changes</div>
+        <div class="step-body">Inspect every file the agent created, modified, or deleted. Nothing is permanent yet. Approve staged actions in the queue. Check the audit log for the full timeline.</div>
+        <div class="step-cmd">envpod diff my-agent</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-title">Commit or rollback</div>
+        <div class="step-body">Apply approved changes to the host filesystem. Or discard everything in one command — the host is exactly as it was before the run.</div>
+        <div class="step-cmd">envpod commit my-agent</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ COMPARE ═══════════════════════ -->
+<section class="section-tinted">
+  <div class="container">
+    <h2>Nothing else does both</h2>
+    <p class="section-sub">No other tool combines OS-level isolation with governance. The intersection is where envpod lives.</p>
+
+    <div class="compare-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 48px">
+      <div class="compare-col" style="border-color: var(--border)">
+        <h3 style="color:var(--muted); font-size:14px; text-transform:uppercase; letter-spacing:.06em; margin-bottom:12px">Docker</h3>
+        <p style="font-size:22px; font-weight:700; margin-bottom:10px; color:var(--text)">Isolates.</p>
+        <p style="font-size:14px; color:var(--muted); line-height:1.6">Draws a box around the process. Doesn't govern what happens inside it. Container writes are permanent. No action approval. No credential interception. No audit trail.</p>
+      </div>
+      <div class="compare-col" style="border-color: var(--border)">
+        <h3 style="color:var(--muted); font-size:14px; text-transform:uppercase; letter-spacing:.06em; margin-bottom:12px">E2B / Daytona</h3>
+        <p style="font-size:22px; font-weight:700; margin-bottom:10px; color:var(--text)">Governs.</p>
+        <p style="font-size:14px; color:var(--muted); line-height:1.6">Managed sandboxes in the cloud. Your agent's code runs on their infrastructure. Requires a network connection, an account, and trust in a third party.</p>
+      </div>
+      <div class="compare-col" style="border-color: var(--border)">
+        <h3 style="color:var(--muted); font-size:14px; text-transform:uppercase; letter-spacing:.06em; margin-bottom:12px">Firejail</h3>
+        <p style="font-size:22px; font-weight:700; margin-bottom:10px; color:var(--text)">Sandboxes.</p>
+        <p style="font-size:14px; color:var(--muted); line-height:1.6">Syscall filtering and filesystem restrictions. No action queue. No credential vault. No overlay-as-review-gate. No way to inspect and approve what the process did.</p>
+      </div>
+      <div class="compare-col col-envpod">
+        <h3 style="font-size:14px; text-transform:uppercase; letter-spacing:.06em; margin-bottom:12px; color:var(--blue)">envpod</h3>
+        <p style="font-size:22px; font-weight:700; margin-bottom:10px; color:var(--text)">Isolates <em style="font-style:normal; color:var(--blue)">and</em> governs.</p>
+        <p style="font-size:14px; color:var(--muted); line-height:1.6">OS-level isolation on your own machine. Plus: every write captured in overlay, every action queued and tiered, every secret protected, every decision audited. On-premise. No third party.</p>
+      </div>
+    </div>
+
+    <div style="border: 1px solid var(--border); border-radius: 10px; padding: 28px; background: rgba(88,166,255,0.03); max-width: 640px; margin: 0 auto; text-align: center">
+      <p style="font-size: 18px; line-height: 1.7; color: var(--text)">
+        The agent thinks it's on your real system —<br>
+        but every write is captured, diffable, and reversible.<br>
+        <span style="color: var(--muted)">Nobody else has this model.</span>
+      </p>
+    </div>
+
+    <p style="margin-top:24px; text-align:center">
+      <a href="https://github.com/markamo/envpod-oss/blob/main/docs/FOR-DOCKER-USERS.md" style="color:var(--muted); font-size:14px">
+        Full comparison for Docker users →
+      </a>
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ INSTALL ═══════════════════════ -->
+<section class="section" id="install">
+  <div class="container" style="max-width: 740px">
+    <h2>Install</h2>
+    <p class="section-sub" style="margin-bottom:36px">
+      Single static binary. No daemon, no runtime dependencies. Requires Linux with cgroups&nbsp;v2.
+    </p>
+
+    <div class="install-tabs">
+      <button class="itab active" onclick="showTab('x86')">x86_64</button>
+      <button class="itab" onclick="showTab('arm64')">ARM64</button>
+      <button class="itab" onclick="showTab('src')">Build from source</button>
+    </div>
+
+    <div id="tab-x86">
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyBlock(this)">Copy</button>
+<div class="cp"># Download latest release and install (x86_64 Linux)</div>
+<div><span class="pr">$ </span><span class="cl">curl -L https://github.com/markamo/envpod-oss/releases/latest/download/envpod-linux-x86_64.tar.gz \
+    | tar xz &amp;&amp; sudo ./envpod-*/install.sh</span></div>
+      </div>
+    </div>
+
+    <div id="tab-arm64" style="display:none">
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyBlock(this)">Copy</button>
+<div class="cp"># Raspberry Pi 4/5 (64-bit OS) or NVIDIA Jetson Orin</div>
+<div><span class="pr">$ </span><span class="cl">curl -L https://github.com/markamo/envpod-oss/releases/latest/download/envpod-linux-arm64.tar.gz \
+    | tar xz &amp;&amp; sudo ./envpod-*/install.sh</span></div>
+      </div>
+    </div>
+
+    <div id="tab-src" style="display:none">
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyBlock(this)">Copy</button>
+<div class="cp"># Requires Rust toolchain — rustup.rs</div>
+<div><span class="pr">$ </span><span class="cl">git clone https://github.com/markamo/envpod-oss</span></div>
+<div><span class="pr">$ </span><span class="cl">cd envpod-oss &amp;&amp; cargo build --release</span></div>
+<div><span class="pr">$ </span><span class="cl">sudo cp target/release/envpod /usr/local/bin/</span></div>
+      </div>
+    </div>
+
+    <div style="margin-top:32px">
+      <p style="font-size:14px; color:var(--muted); margin-bottom:14px">Try it in 30 seconds:</p>
+      <div class="code-block">
+<div><span class="pr">$ </span><span class="cl">sudo envpod init hello</span></div>
+<div><span class="pr">$ </span><span class="cl">sudo envpod run hello -- bash -c "echo 'governed' > /home/agent/hello.txt"</span></div>
+<div><span class="pr">$ </span><span class="cl">sudo envpod diff hello</span></div>
+<div><span class="pr">$ </span><span class="cl">sudo envpod commit hello   # or: sudo envpod rollback hello</span></div>
+      </div>
+    </div>
+
+    <div class="req-box">
+      <strong>Requirements:</strong> Linux kernel 5.15+ &nbsp;·&nbsp; cgroups&nbsp;v2 &nbsp;·&nbsp; OverlayFS &nbsp;·&nbsp; root (for namespace setup) &nbsp;·&nbsp; ~12&thinsp;MB disk
+      <br style="margin-bottom:10px">
+      <a href="https://github.com/markamo/envpod-oss/blob/main/docs/INSTALL.md">Installation guide</a> &nbsp;·&nbsp;
+      <a href="https://github.com/markamo/envpod-oss/blob/main/docs/QUICKSTART.md">Quick start</a> &nbsp;·&nbsp;
+      <a href="https://github.com/markamo/envpod-oss/blob/main/docs/TUTORIALS.md">Tutorials</a> &nbsp;·&nbsp;
+      <a href="https://github.com/markamo/envpod-oss/blob/main/uninstall.sh">Uninstall</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ FOOTER ════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo"><em>env</em>pod</div>
+        <div class="footer-copy">Copyright 2026 Xtellix Inc. &nbsp;·&nbsp; Apache-2.0</div>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/markamo/envpod-oss">GitHub</a>
+        <a href="https://github.com/markamo/envpod-oss/blob/main/docs/FEATURES.md">Features</a>
+        <a href="https://github.com/markamo/envpod-oss/blob/main/docs/TUTORIALS.md">Tutorials</a>
+        <a href="https://github.com/markamo/envpod-oss/blob/main/docs/CLI-BLACKBOOK.md">CLI Ref</a>
+        <a href="https://github.com/markamo/envpod-oss/blob/main/docs/ACTION-CATALOG.md">Actions</a>
+        <a href="https://github.com/markamo/envpod-oss/issues">Issues</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function showTab(name) {
+    ['x86','arm64','src'].forEach(t => {
+      document.getElementById('tab-' + t).style.display = (t === name) ? '' : 'none';
+    });
+    document.querySelectorAll('.itab').forEach((el, i) => {
+      el.classList.toggle('active', ['x86','arm64','src'][i] === name);
+    });
+  }
+
+  function copyBlock(btn) {
+    const block = btn.closest('.code-block');
+    // Collect text from .cl spans (the actual commands)
+    const lines = block.querySelectorAll('.cl');
+    const text = Array.from(lines).map(el => el.textContent).join('\n').trim();
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy', 2000);
+    }).catch(() => {
+      // Fallback for older browsers
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy', 2000);
+    });
+  }
+</script>
+</body>
+</html>

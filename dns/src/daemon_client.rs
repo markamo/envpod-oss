@@ -1,3 +1,6 @@
+// Copyright 2026 Xtellix Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 //! Minimal client for querying the envpod-dns daemon from the per-pod DNS server.
 //!
 //! Kept intentionally minimal — just enough to send a lookup request and parse

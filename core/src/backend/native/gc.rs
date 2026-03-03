@@ -1,3 +1,6 @@
+// Copyright 2026 Xtellix Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 //! Garbage collection for orphaned pod resources.
 //!
 //! `envpod gc` cleans up resources left behind by destroyed pods:

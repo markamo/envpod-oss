@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Copyright 2026 Xtellix Inc.
+# SPDX-License-Identifier: Apache-2.0
+
 # Benchmark: envpod clone vs envpod init
 # Measures the wall-clock time difference between creating a pod from scratch
 # (init) versus cloning from an existing pod (clone).

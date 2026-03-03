@@ -1,3 +1,6 @@
+// Copyright 2026 Xtellix Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 //! Unix domain socket server for the action queue.
 //!
 //! When `queue.socket: true` in pod.yaml, envpod pre-creates a socket at

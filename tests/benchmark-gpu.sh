@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Copyright 2026 Xtellix Inc.
+# SPDX-License-Identifier: Apache-2.0
+
 # GPU benchmark script for envpod — measures GPU passthrough overhead.
 # Requires: sudo, NVIDIA GPU, nvidia-smi, a release build or installed envpod binary.
 #

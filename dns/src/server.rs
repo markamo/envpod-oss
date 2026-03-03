@@ -1,3 +1,6 @@
+// Copyright 2026 Xtellix Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 //! Async UDP DNS server with policy-based filtering.
 //!
 //! Binds to a specific IP:53, receives DNS queries, checks them against

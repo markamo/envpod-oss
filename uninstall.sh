@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Copyright 2026 Xtellix Inc.
+# SPDX-License-Identifier: Apache-2.0
+
 # uninstall.sh — Remove envpod OSS from this system
 #
 # Removes:

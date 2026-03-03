@@ -1,3 +1,6 @@
+// Copyright 2026 Xtellix Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 //! Web dashboard for envpod — fleet overview, pod detail, audit, diff.
 //!
 //! Single binary, embedded static assets. `envpod dashboard` starts an

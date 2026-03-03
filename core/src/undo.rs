@@ -1,3 +1,6 @@
+// Copyright 2026 Xtellix Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 //! Undo registry for reversible pod actions.
 //!
 //! Tracks executed actions and how to reverse them. Each pod gets an

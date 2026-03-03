@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>envpod — Zero-trust pods for AI agents</title>
+<meta name="description" content="Every action isolated, reviewable, and reversible. 32 commands. 20 built-in action types. Encrypted credential vault. Four-tier approval queue. Sub-second start. One binary. Zero dependencies.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0b;
+  --bg-elevated: #111113;
+  --bg-card: #16161a;
+  --border: #1e1e24;
+  --border-accent: #2a2a32;
+  --text: #e8e8ed;
+  --text-secondary: #8b8b98;
+  --text-dim: #5a5a66;
+  --accent: #22c55e;
+  --accent-dim: #16a34a;
+  --accent-glow: rgba(34, 197, 94, 0.08);
+  --red: #ef4444;
+  --amber: #f59e0b;
+  --blue: #3b82f6;
+  --purple: #a78bfa;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'DM Sans', -apple-system, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; width: 100%; z-index: 100;
+  padding: 16px 0;
+  background: rgba(10, 10, 11, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner {
+  max-width: 1100px; margin: 0 auto; padding: 0 32px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.logo {
+  font-family: var(--mono); font-weight: 700; font-size: 18px;
+  color: var(--text); text-decoration: none; letter-spacing: -0.5px;
+}
+.logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 28px; align-items: center; }
+.nav-links a {
+  font-size: 14px; color: var(--text-secondary);
+  text-decoration: none; transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-cta {
+  font-family: var(--mono) !important; font-size: 13px !important;
+  color: var(--accent) !important;
+  border: 1px solid var(--accent-dim); padding: 6px 16px;
+  border-radius: 6px; transition: all 0.2s;
+}
+.nav-cta:hover { background: var(--accent-glow); }
+
+/* ── HERO ── */
+.hero {
+  max-width: 1100px; margin: 0 auto; padding: 160px 32px 80px;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 12px; color: var(--accent);
+  background: var(--accent-glow);
+  border: 1px solid rgba(34, 197, 94, 0.15);
+  padding: 6px 14px; border-radius: 100px; margin-bottom: 32px;
+  animation: fadeIn 0.6s ease-out;
+}
+.hero-badge::before {
+  content: ''; width: 6px; height: 6px;
+  background: var(--accent); border-radius: 50%;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+.hero h1 {
+  font-family: var(--sans);
+  font-size: clamp(42px, 6vw, 72px); font-weight: 700;
+  line-height: 1.05; letter-spacing: -2px;
+  color: var(--text); margin-bottom: 28px; max-width: 800px;
+  animation: fadeUp 0.7s ease-out;
+}
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero-sub {
+  font-size: 19px; color: var(--text-secondary);
+  max-width: 580px; line-height: 1.65; margin-bottom: 48px;
+  animation: fadeUp 0.7s ease-out 0.1s both;
+}
+.hero-actions {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  animation: fadeUp 0.7s ease-out 0.2s both;
+}
+
+/* ── BUTTONS ── */
+.btn-primary {
+  font-family: var(--mono); font-size: 14px; font-weight: 600;
+  color: var(--bg); background: var(--accent); border: none;
+  padding: 14px 28px; border-radius: 8px; cursor: pointer;
+  text-decoration: none; transition: all 0.2s;
+}
+.btn-primary:hover {
+  background: #2dd468; transform: translateY(-1px);
+  box-shadow: 0 8px 30px rgba(34, 197, 94, 0.2);
+}
+.btn-secondary {
+  font-family: var(--mono); font-size: 14px; font-weight: 500;
+  color: var(--text-secondary); background: var(--bg-card);
+  border: 1px solid var(--border); padding: 14px 28px;
+  border-radius: 8px; cursor: pointer; text-decoration: none;
+  transition: all 0.2s;
+}
+.btn-secondary:hover { color: var(--text); border-color: var(--border-accent); }
+
+/* ── INSTALL ── */
+.install-bar {
+  max-width: 1100px; margin: 0 auto;
+  padding: 0 32px 60px;
+  animation: fadeUp 0.7s ease-out 0.3s both;
+}
+.install-cmd {
+  display: inline-flex; align-items: center; gap: 12px;
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-radius: 8px; padding: 14px 20px;
+  font-family: var(--mono); font-size: 14px; color: var(--text-secondary);
+}
+.install-cmd .prompt { color: var(--accent); }
+.install-cmd .cmd { color: var(--text); }
+
+/* ── NUMBERS BAR ── */
+.numbers {
+  max-width: 1100px; margin: 0 auto;
+  padding: 0 32px 100px;
+  animation: fadeUp 0.7s ease-out 0.4s both;
+}
+.numbers-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.number-item {
+  background: var(--bg-card);
+  padding: 28px 20px;
+  text-align: center;
+}
+.number-item .num {
+  font-family: var(--mono);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 4px;
+}
+.number-item .label {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* ── TERMINAL ── */
+.demo-section {
+  max-width: 1100px; margin: 0 auto; padding: 0 32px 120px;
+}
+.terminal {
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+}
+.terminal-header {
+  display: flex; align-items: center; gap: 8px;
+  padding: 14px 20px; background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+}
+.terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+.terminal-dot.r { background: #ef4444; }
+.terminal-dot.y { background: #f59e0b; }
+.terminal-dot.g { background: #22c55e; }
+.terminal-title {
+  font-family: var(--mono); font-size: 12px;
+  color: var(--text-dim); margin-left: 8px;
+}
+.terminal-body {
+  padding: 24px; font-family: var(--mono);
+  font-size: 13px; line-height: 1.8; overflow-x: auto;
+}
+.terminal-body .line { white-space: pre; }
+.terminal-body .prompt-char { color: var(--accent); }
+.terminal-body .cmd-text { color: var(--text); }
+.terminal-body .flag { color: var(--blue); }
+.terminal-body .arg { color: var(--amber); }
+.terminal-body .output { color: var(--text-dim); }
+.terminal-body .output-accent { color: var(--accent); }
+.terminal-body .output-red { color: var(--red); }
+.terminal-body .output-amber { color: var(--amber); }
+.terminal-body .output-blue { color: var(--blue); }
+.terminal-body .comment { color: var(--text-dim); font-style: italic; }
+.terminal-body .spacer { height: 12px; }
+
+/* ── SECTIONS ── */
+.philosophy {
+  max-width: 1100px; margin: 0 auto;
+  padding: 0 32px 120px; text-align: center;
+}
+.philosophy-line {
+  font-size: clamp(20px, 3vw, 30px); font-weight: 600;
+  line-height: 1.5; letter-spacing: -0.5px;
+  color: var(--text); max-width: 700px; margin: 0 auto 12px;
+}
+.philosophy-line.dim { color: var(--text-dim); }
+
+section.padded {
+  max-width: 1100px; margin: 0 auto; padding: 0 32px 120px;
+}
+.section-label {
+  font-family: var(--mono); font-size: 12px; font-weight: 600;
+  color: var(--accent); text-transform: uppercase;
+  letter-spacing: 2px; margin-bottom: 16px;
+}
+.section-title {
+  font-size: clamp(28px, 4vw, 40px); font-weight: 700;
+  letter-spacing: -1px; margin-bottom: 16px;
+}
+.section-desc {
+  font-size: 17px; color: var(--text-secondary);
+  max-width: 520px; margin-bottom: 56px; line-height: 1.65;
+}
+
+/* ── FEATURES GRID ── */
+.features-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+}
+.feature-card {
+  background: var(--bg-card); padding: 36px 32px;
+  transition: background 0.3s;
+}
+.feature-card:hover { background: var(--bg-elevated); }
+.feature-icon {
+  font-family: var(--mono); font-size: 12px; font-weight: 600;
+  color: var(--bg); background: var(--accent);
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 8px; margin-bottom: 20px;
+}
+.feature-icon.blue { background: var(--blue); }
+.feature-icon.amber { background: var(--amber); }
+.feature-icon.purple { background: var(--purple); }
+.feature-card h3 {
+  font-size: 16px; font-weight: 600;
+  margin-bottom: 10px; letter-spacing: -0.3px;
+}
+.feature-card p {
+  font-size: 14px; color: var(--text-secondary); line-height: 1.6;
+}
+
+/* ── STEPS ── */
+.steps { display: grid; gap: 0; }
+.step {
+  display: grid; grid-template-columns: 60px 1fr;
+  gap: 24px; padding: 32px 0;
+  border-bottom: 1px solid var(--border);
+}
+.step:last-child { border-bottom: none; }
+.step-num {
+  font-family: var(--mono); font-size: 13px;
+  font-weight: 600; color: var(--accent); padding-top: 2px;
+}
+.step-content h3 {
+  font-size: 18px; font-weight: 600;
+  margin-bottom: 6px; letter-spacing: -0.3px;
+}
+.step-content p {
+  font-size: 15px; color: var(--text-secondary); line-height: 1.6;
+}
+.step-content code {
+  font-family: var(--mono); font-size: 13px; color: var(--accent);
+  background: var(--accent-glow); padding: 2px 8px; border-radius: 4px;
+}
+
+/* ── COMPARISON TABLE ── */
+.comp-table {
+  width: 100%; border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden; border-spacing: 0;
+}
+.comp-table thead th {
+  background: var(--bg-card); font-family: var(--mono);
+  font-size: 13px; font-weight: 600; text-align: left;
+  padding: 18px 24px; border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+.comp-table thead th:last-child { color: var(--accent); }
+.comp-table tbody td {
+  padding: 16px 24px; font-size: 14px;
+  border-bottom: 1px solid var(--border); color: var(--text-secondary);
+}
+.comp-table tbody tr:last-child td { border-bottom: none; }
+.comp-table tbody td:first-child { font-weight: 500; color: var(--text); }
+.comp-table tbody td:last-child { color: var(--text); }
+.comp-table tbody tr { transition: background 0.2s; }
+.comp-table tbody tr:hover { background: var(--bg-elevated); }
+.check { color: var(--accent); font-weight: 600; }
+.cross { color: var(--text-dim); }
+
+/* ── CONFIG ── */
+.config-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 32px; align-items: start;
+}
+.config-text { padding-top: 20px; }
+.config-text h3 {
+  font-size: 24px; font-weight: 700;
+  margin-bottom: 16px; letter-spacing: -0.5px;
+}
+.config-text p {
+  font-size: 15px; color: var(--text-secondary);
+  line-height: 1.7; margin-bottom: 16px;
+}
+.config-examples { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+.config-tag {
+  font-family: var(--mono); font-size: 12px; color: var(--text-secondary);
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  padding: 6px 12px; border-radius: 6px;
+}
+
+.yaml-block {
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden;
+}
+.yaml-header {
+  display: flex; align-items: center; padding: 12px 20px;
+  background: var(--bg-card); border-bottom: 1px solid var(--border);
+  font-family: var(--mono); font-size: 12px; color: var(--text-dim);
+}
+.yaml-body {
+  padding: 20px; font-family: var(--mono);
+  font-size: 13px; line-height: 1.7; overflow-x: auto;
+  white-space: pre;
+}
+.yaml-body .key { color: var(--blue); }
+.yaml-body .val { color: var(--accent); }
+.yaml-body .str { color: var(--amber); }
+
+/* ── ARCH ── */
+.arch-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+}
+.arch-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 28px 24px; transition: all 0.3s;
+}
+.arch-card:hover { border-color: var(--border-accent); transform: translateY(-2px); }
+.arch-card.available { border-color: var(--accent-dim); }
+.arch-badge {
+  font-family: var(--mono); font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 1px;
+  padding: 4px 10px; border-radius: 4px;
+  display: inline-block; margin-bottom: 16px;
+}
+.arch-badge.live {
+  color: var(--accent); background: var(--accent-glow);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+.arch-badge.roadmap {
+  color: var(--text-dim); background: rgba(90, 90, 102, 0.1);
+  border: 1px solid var(--border);
+}
+.arch-card h3 {
+  font-family: var(--mono); font-size: 16px;
+  font-weight: 600; margin-bottom: 8px;
+}
+.arch-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+.arch-footer {
+  text-align: center; margin-top: 32px;
+  font-size: 15px; color: var(--text-secondary); line-height: 1.6;
+}
+.arch-footer em { font-style: normal; color: var(--text); }
+
+/* ── AARM ── */
+.aarm-bar {
+  max-width: 1100px; margin: 0 auto; padding: 0 32px 120px;
+}
+.aarm-inner {
+  display: flex; align-items: center; gap: 20px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 24px 32px;
+}
+.aarm-badge {
+  font-family: var(--mono); font-size: 11px; font-weight: 600;
+  color: var(--accent); background: var(--accent-glow);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  padding: 6px 14px; border-radius: 6px; white-space: nowrap;
+}
+.aarm-text { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+.aarm-text a { color: var(--text); text-decoration: underline; text-underline-offset: 2px; }
+
+/* ── CTA ── */
+.cta-section { max-width: 1100px; margin: 0 auto; padding: 0 32px 120px; }
+.cta-box {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 72px 48px;
+  text-align: center; position: relative; overflow: hidden;
+}
+.cta-box::before {
+  content: ''; position: absolute; top: 0; left: 50%;
+  transform: translateX(-50%); width: 400px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+.cta-box h2 {
+  font-size: clamp(26px, 4vw, 36px); font-weight: 700;
+  letter-spacing: -1px; margin-bottom: 16px;
+}
+.cta-box p {
+  font-size: 16px; color: var(--text-secondary);
+  margin-bottom: 36px; max-width: 500px;
+  margin-left: auto; margin-right: auto;
+}
+.cta-actions {
+  display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+}
+
+/* ── FOOTER ── */
+footer {
+  max-width: 1100px; margin: 0 auto; padding: 0 32px 48px;
+}
+.footer-inner {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 32px; border-top: 1px solid var(--border);
+}
+.footer-left {
+  font-family: var(--mono); font-size: 13px; color: var(--text-dim);
+}
+.footer-links { display: flex; gap: 24px; }
+.footer-links a {
+  font-size: 13px; color: var(--text-dim);
+  text-decoration: none; transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--text-secondary); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .features-grid { grid-template-columns: 1fr; }
+  .config-grid { grid-template-columns: 1fr; }
+  .arch-grid { grid-template-columns: 1fr; }
+  .numbers-grid { grid-template-columns: repeat(3, 1fr); }
+  .nav-links a:not(.nav-cta) { display: none; }
+  .hero { padding: 120px 20px 60px; }
+  .comp-table { font-size: 13px; }
+  .comp-table thead th, .comp-table tbody td { padding: 12px 14px; }
+  .cta-box { padding: 48px 24px; }
+  .footer-inner { flex-direction: column; gap: 16px; }
+  .terminal-body { font-size: 11px; }
+  .aarm-inner { flex-direction: column; text-align: center; }
+}
+@media (max-width: 480px) {
+  .numbers-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo"><span>env</span>pod</a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#governance">Governance</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#comparison">Compare</a>
+      <a href="https://github.com/xtellix/envpod" class="nav-cta">GitHub →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-badge">Open Source · Apache 2.0</div>
+  <h1>Zero-trust pods<br>for <em>AI agents</em></h1>
+  <p class="hero-sub">Every action is isolated, reviewable, and reversible. Your agent works on your real system through a governed overlay — nothing persists without your approval.</p>
+  <div class="hero-actions">
+    <a href="https://github.com/xtellix/envpod" class="btn-primary">View on GitHub</a>
+    <a href="#how-it-works" class="btn-secondary">See how it works</a>
+  </div>
+</section>
+
+<!-- ═══ INSTALL ═══ -->
+<div class="install-bar">
+  <div class="install-cmd">
+    <span class="prompt">$</span>
+    <span class="cmd">curl -fsSL https://envpod.com/install.sh | sh</span>
+  </div>
+</div>
+
+<!-- ═══ NUMBERS ═══ -->
+<div class="numbers">
+  <div class="numbers-grid">
+    <div class="number-item">
+      <span class="num">32</span>
+      <span class="label">CLI commands</span>
+    </div>
+    <div class="number-item">
+      <span class="num">20</span>
+      <span class="label">built-in action types</span>
+    </div>
+    <div class="number-item">
+      <span class="num">130ms</span>
+      <span class="label">pod clone time</span>
+    </div>
+    <div class="number-item">
+      <span class="num">0</span>
+      <span class="label">dependencies</span>
+    </div>
+    <div class="number-item">
+      <span class="num">1</span>
+      <span class="label">static binary</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TERMINAL DEMO ═══ -->
+<section class="demo-section">
+  <div class="terminal">
+    <div class="terminal-header">
+      <div class="terminal-dot r"></div>
+      <div class="terminal-dot y"></div>
+      <div class="terminal-dot g"></div>
+      <span class="terminal-title">envpod — governed agent session</span>
+    </div>
+    <div class="terminal-body">
+<div class="line"><span class="comment"># Create a governed pod from one YAML file</span></div>
+<div class="line"><span class="prompt-char">$ </span><span class="cmd-text">envpod init</span> <span class="arg">claude-code</span> <span class="flag">-c</span> <span class="arg">examples/claude-code.yaml</span></div>
+<div class="line"><span class="output">Pod </span><span class="output-accent">"claude-code"</span><span class="output"> created · overlay ready · DNS resolver started</span></div>
+<div class="spacer"></div>
+<div class="line"><span class="comment"># Store credentials — encrypted at rest, injected at runtime</span></div>
+<div class="line"><span class="prompt-char">$ </span><span class="cmd-text">echo</span> <span class="str">"sk-..."</span> <span class="cmd-text">|</span> <span class="cmd-text">envpod vault</span> <span class="arg">claude-code</span> <span class="cmd-text">set</span> <span class="arg">ANTHROPIC_API_KEY</span></div>
+<div class="line"><span class="output-accent">✓</span><span class="output"> Stored ANTHROPIC_API_KEY (encrypted, ChaCha20-Poly1305)</span></div>
+<div class="spacer"></div>
+<div class="line"><span class="comment"># Run the agent with display and audio</span></div>
+<div class="line"><span class="prompt-char">$ </span><span class="cmd-text">envpod run</span> <span class="arg">claude-code</span> <span class="flag">-d -a</span> <span class="flag">--</span> <span class="arg">claude</span></div>
+<div class="line"><span class="output">Overlay: read-only host snapshot · Network: whitelist mode</span></div>
+<div class="line"><span class="output">Display: wayland (per-window isolation) · Audio: pipewire (playback only)</span></div>
+<div class="line"><span class="output">Vault: 1 secret injected · Agent session active.</span></div>
+<div class="spacer"></div>
+<div class="line"><span class="comment"># Agent requests to push to git — goes to approval queue</span></div>
+<div class="line"><span class="prompt-char">$ </span><span class="cmd-text">envpod queue</span> <span class="arg">claude-code</span></div>
+<div class="line"><span class="output-amber">a7f3c1  staged  git_push  origin main "Add OAuth flow"</span></div>
+<div class="line"><span class="prompt-char">$ </span><span class="cmd-text">envpod approve</span> <span class="arg">claude-code</span> <span class="arg">a7f3c1</span></div>
+<div class="line"><span class="output-accent">✓</span><span class="output"> Executed: git_push (credentials injected from vault)</span></div>
+<div class="spacer"></div>
+<div class="line"><span class="comment"># Review filesystem changes, commit or rollback</span></div>
+<div class="line"><span class="prompt-char">$ </span><span class="cmd-text">envpod diff</span> <span class="arg">claude-code</span></div>
+<div class="line"><span class="output-accent">A  src/auth/oauth.rs</span><span class="output">       (2.1 KB)</span></div>
+<div class="line"><span class="output-amber">M  src/auth/handler.rs</span><span class="output">    (840 B)</span></div>
+<div class="line"><span class="output-red">D  src/auth/legacy.rs</span></div>
+<div class="line"><span class="prompt-char">$ </span><span class="cmd-text">envpod commit</span> <span class="arg">claude-code</span> <span class="arg">src/auth/oauth.rs</span></div>
+<div class="line"><span class="output-accent">✓</span><span class="output"> Committed 1 file · 2 changes discarded</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PHILOSOPHY ═══ -->
+<section class="philosophy">
+  <p class="philosophy-line dim">Containers isolate processes.</p>
+  <p class="philosophy-line">Envpod governs autonomous side effects.</p>
+</section>
+
+<!-- ═══ ISOLATION — FIVE WALLS ═══ -->
+<section class="padded" id="features">
+  <div class="section-label">Isolation</div>
+  <h2 class="section-title">Five walls</h2>
+  <p class="section-desc">Every attack surface isolated. The agent runs inside a pod with hard boundaries enforced by the Linux kernel.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">FS</div>
+      <h3>Filesystem</h3>
+      <p>Copy-on-write overlay. Agent sees a read-only snapshot. Every write captured in a private layer. Diff, commit individual files, or rollback everything.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">NET</div>
+      <h3>Network</h3>
+      <p>Own network namespace with dedicated veth pair. Default deny. Per-pod DNS whitelist with anti-tunneling protection. Raw IP connections blocked.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">PID</div>
+      <h3>Process</h3>
+      <p>PID + UTS + user namespace isolation. cgroup v2 hard limits on CPU, memory, I/O, and process count. Seccomp-BPF syscall filtering.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">DEV</div>
+      <h3>Devices</h3>
+      <p>Selective device passthrough. GPUs work out of the box — NVIDIA and AMD. No drivers, no toolkit, no configuration. Real hardware through the overlay.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">DSP</div>
+      <h3>Display</h3>
+      <p>Governed Wayland forwarding with per-window isolation. X11 fallback available. Agents can run browsers and GUI apps inside governed pods.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">SND</div>
+      <h3>Audio</h3>
+      <p>PipeWire or PulseAudio forwarding. Playback only by default — microphone requires explicit opt-in. Auto-detected, one toggle in pod.yaml.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ GOVERNANCE — THE CEILING ═══ -->
+<section class="padded" id="governance">
+  <div class="section-label">Governance</div>
+  <h2 class="section-title">One ceiling</h2>
+  <p class="section-desc">Isolation prevents escape. Governance prevents damage. Every action goes through your approval before it becomes permanent.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon blue">Q</div>
+      <h3>Action Queue</h3>
+      <p>Four tiers: immediate, delayed, staged, blocked. The agent submits actions through a Unix socket. You decide what runs, what waits, and what's denied. Every action is undoable.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon blue">CAT</div>
+      <h3>Action Catalog</h3>
+      <p>20 built-in action types — HTTP, filesystem, git, and custom. The agent discovers available tools at runtime (MCP-style). It can only call what you've explicitly listed. Hot-reload without restart.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon blue">VLT</div>
+      <h3>Credential Vault</h3>
+      <p>ChaCha20-Poly1305 encrypted at rest. Secrets injected as env vars at runtime — never in config files, CLI args, or logs. Import from .env files. Bind credentials to specific domains.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon amber">SNP</div>
+      <h3>Snapshots</h3>
+      <p>Named checkpoints of overlay state. Auto-snapshot before every run. Restore to any point. Promote snapshots to base pods for instant cloning. Configurable retention.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon amber">CLN</div>
+      <h3>Base Pods &amp; Cloning</h3>
+      <p>Run setup once, clone instantly. 130ms clone time — 10× faster than re-init. Spin up 50 identical agents in under a minute. Each gets its own isolated overlay.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon amber">AUD</div>
+      <h3>Audit &amp; Monitoring</h3>
+      <p>Append-only JSONL audit trail. Static security analysis of pod.yaml before deployment. Runtime monitoring with configurable thresholds — auto-freeze, log, kill, or restrict on alert.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ OPERATIONS ═══ -->
+<section class="padded">
+  <div class="section-label">Operations</div>
+  <h2 class="section-title">Built for production</h2>
+  <p class="section-desc">Remote control, live mutation, web dashboard, pod discovery, and fleet management — without restarting anything.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon purple">RC</div>
+      <h3>Remote Control</h3>
+      <p>Freeze, resume, kill, or restrict a pod live via Unix socket. Update DNS rules, port forwarding, and resource limits on a running pod. No restart required.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon purple">WEB</div>
+      <h3>Web Dashboard</h3>
+      <p>Fleet overview, pod detail with live cgroup stats, audit timeline, diff viewer with commit and rollback buttons. No database, no external dependencies.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon purple">DSC</div>
+      <h3>Pod Discovery</h3>
+      <p>Pods find each other by name via <code style="font-size:12px;color:var(--accent);background:var(--accent-glow);padding:1px 6px;border-radius:3px;">agent-b.pods.local</code>. Bilateral — both pods must opt in. Central DNS daemon with live mutation. Revoke access instantly.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HOW IT WORKS ═══ -->
+<section class="padded" id="how-it-works">
+  <div class="section-label">Workflow</div>
+  <h2 class="section-title">How envpod works</h2>
+  <p class="section-desc">Complete agent lifecycle — sandboxed, governed, auditable, reversible.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <h3>Define the pod</h3>
+        <p>One YAML file: network policy, resource limits, device access, action catalog, security profile, audit settings. <code>envpod audit --security</code> checks for misconfigurations before you deploy.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <h3>Agent sees your system through a governed overlay</h3>
+        <p>Host filesystem is the read-only base layer. Agent reads your codebase, runs your tools, installs packages — all writes go to the overlay. Sub-second start, no images to pull.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <h3>Every action goes through the queue</h3>
+        <p>Agent requests to push code, send an email, or call an API — each action hits the four-tier queue. Immediate actions execute. Staged actions wait for your <code>envpod approve</code>. Blocked actions are denied.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-content">
+        <h3>Credentials are invisible to the agent</h3>
+        <p>API keys live in the encrypted vault. When an action needs credentials, envpod injects them at execution time. The agent never sees the real secret — only the result.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">05</div>
+      <div class="step-content">
+        <h3>You review the diff</h3>
+        <p><code>envpod diff</code> shows every file the agent added, modified, or deleted. Commit individual files with <code>envpod commit path/to/file</code>. Export to a staging directory first with <code>--output</code>.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">06</div>
+      <div class="step-content">
+        <h3>Nothing persists without your approval</h3>
+        <p><code>envpod rollback</code> discards everything. <code>envpod snapshot restore</code> returns to any checkpoint. <code>envpod destroy</code> removes the pod entirely. No traces on the host.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ COMPARISON TABLE ═══ -->
+<section class="padded" id="comparison">
+  <div class="section-label">Why envpod</div>
+  <h2 class="section-title">Not another container</h2>
+  <p class="section-desc">Containers were designed for applications. Envpod was designed for autonomous agents.</p>
+  <table class="comp-table">
+    <thead>
+      <tr>
+        <th>Capability</th>
+        <th>Containers</th>
+        <th>envpod</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Isolation model</td><td>Process isolation</td><td>Isolation + governance ceiling</td></tr>
+      <tr><td>Filesystem</td><td>Writable container FS</td><td>Overlay-only transactional writes</td></tr>
+      <tr><td>Commit gate</td><td class="cross">None</td><td class="check">Host-controlled per-file approval</td></tr>
+      <tr><td>Rollback</td><td class="cross">None built-in</td><td class="check">Native diff + rollback + snapshots</td></tr>
+      <tr><td>Action queue</td><td class="cross">None</td><td class="check">Four-tier approval with undo</td></tr>
+      <tr><td>Credential management</td><td class="cross">Env vars in plaintext</td><td class="check">Encrypted vault, runtime injection</td></tr>
+      <tr><td>GPU access</td><td>Requires toolkit + config</td><td>Works out of the box</td></tr>
+      <tr><td>Display forwarding</td><td>Manual socket hack</td><td>First-class Wayland with isolation</td></tr>
+      <tr><td>Audio forwarding</td><td>Manual PulseAudio hack</td><td>First-class, playback-default</td></tr>
+      <tr><td>Startup</td><td>Pull image → build → start</td><td>Sub-second · 130ms clone</td></tr>
+      <tr><td>Audit trail</td><td class="cross">Optional logging</td><td class="check">Mandatory, action-level + security scan</td></tr>
+      <tr><td>Network default</td><td>Open</td><td>Blocked (whitelist + anti-tunneling)</td></tr>
+      <tr><td>Agent tool control</td><td class="cross">None</td><td class="check">20 built-in types, MCP discovery</td></tr>
+      <tr><td>Live mutation</td><td>Restart required</td><td>DNS, ports, limits — no restart</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══ CONFIG ═══ -->
+<section class="padded">
+  <div class="config-grid">
+    <div class="config-text">
+      <div class="section-label">Configuration</div>
+      <h3>One YAML file. Total control.</h3>
+      <p>Network policy, resource limits, device access, security profiles, action catalog, credential vault, monitoring thresholds, audit settings — all in pod.yaml. No Dockerfile. No build step.</p>
+      <p>Ship example configs for the agents your team already uses. Copy, customize, deploy in seconds.</p>
+      <div class="config-examples">
+        <span class="config-tag">Claude Code</span>
+        <span class="config-tag">Codex</span>
+        <span class="config-tag">Aider</span>
+        <span class="config-tag">Open Claw</span>
+        <span class="config-tag">Browser Use</span>
+        <span class="config-tag">Python</span>
+        <span class="config-tag">CLI</span>
+      </div>
+    </div>
+    <div class="yaml-block">
+      <div class="yaml-header">claude-code.yaml</div>
+      <div class="yaml-body"><span class="key">name:</span> <span class="val">claude-code</span>
+<span class="key">backend:</span> <span class="val">native</span>
+
+<span class="key">network:</span>
+  <span class="key">mode:</span> <span class="val">Filtered</span>
+  <span class="key">dns:</span>
+    <span class="key">mode:</span> <span class="val">Whitelist</span>
+    <span class="key">allow:</span>
+      - <span class="str">api.anthropic.com</span>
+      - <span class="str">github.com</span>
+      - <span class="str">registry.npmjs.org</span>
+
+<span class="key">resources:</span>
+  <span class="key">cpu_shares:</span> <span class="val">512</span>
+  <span class="key">memory_mb:</span> <span class="val">4096</span>
+  <span class="key">pids_max:</span> <span class="val">256</span>
+
+<span class="key">devices:</span>
+  <span class="key">gpu:</span> <span class="val">true</span>
+  <span class="key">display:</span> <span class="val">true</span>
+  <span class="key">audio:</span> <span class="val">true</span>
+
+<span class="key">queue:</span>
+  <span class="key">socket:</span> <span class="val">true</span>
+
+<span class="key">snapshot:</span>
+  <span class="key">auto:</span> <span class="val">true</span>
+  <span class="key">keep_last:</span> <span class="val">5</span>
+
+<span class="key">audit:</span>
+  <span class="key">action_log:</span> <span class="val">true</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ARCHITECTURE ═══ -->
+<section class="padded">
+  <div class="section-label">Architecture</div>
+  <h2 class="section-title">Pluggable isolation backends</h2>
+  <p class="section-desc">Choose your isolation level. The governance ceiling stays the same.</p>
+  <div class="arch-grid">
+    <div class="arch-card available">
+      <span class="arch-badge live">Available now</span>
+      <h3>native</h3>
+      <p>Linux namespaces + cgroups v2 + overlayfs. Fastest start, lowest overhead. GPUs work natively. x86_64 and ARM64 — laptops, servers, Raspberry Pi, NVIDIA Jetson.</p>
+    </div>
+    <div class="arch-card">
+      <span class="arch-badge roadmap">Roadmap</span>
+      <h3>gvisor</h3>
+      <p>User-space kernel intercepts all syscalls. No shared kernel risk. Stronger isolation for production agents where kernel exploits are a concern.</p>
+    </div>
+    <div class="arch-card">
+      <span class="arch-badge roadmap">Roadmap</span>
+      <h3>firecracker</h3>
+      <p>MicroVM with dedicated kernel. Hardware-level isolation. For regulated industries, defense, and maximum-security deployments.</p>
+    </div>
+  </div>
+  <div class="arch-footer">
+    All backends share the same governance ceiling:<br>
+    <em>action queue · credential vault · action catalog · audit log · overlay review · DNS filtering · monitoring · remote lockdown · pod discovery</em>
+  </div>
+</section>
+
+<!-- ═══ AARM ═══ -->
+<div class="aarm-bar">
+  <div class="aarm-inner">
+    <span class="aarm-badge">AARM R1–R6</span>
+    <span class="aarm-text">envpod satisfies <a href="https://aarm.dev" target="_blank">AARM Core</a> conformance requirements for autonomous action runtime security — pre-execution interception, context accumulation, policy evaluation, five authorization decisions, tamper-evident audit, and identity binding.</span>
+  </div>
+</div>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta-section">
+  <div class="cta-box">
+    <h2>Autonomous systems should not have<br>irrevocable side effects.</h2>
+    <p>Envpod makes autonomy safe by default. Open source. Single binary. Zero dependencies. Apache 2.0 forever.</p>
+    <div class="cta-actions">
+      <a href="https://github.com/xtellix/envpod" class="btn-primary">Get started →</a>
+      <a href="https://github.com/xtellix/envpod/tree/main/examples" class="btn-secondary">Browse examples</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">© 2026 Xtellix Inc. · envpod is Apache 2.0 licensed</div>
+    <div class="footer-links">
+      <a href="https://github.com/xtellix/envpod">GitHub</a>
+      <a href="https://github.com/xtellix/envpod/blob/main/docs/SECURITY.md">Security</a>
+      <a href="https://github.com/xtellix/envpod/blob/main/LICENSE">License</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

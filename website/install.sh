@@ -1,4 +1,7 @@
 #!/usr/bin/env sh
+# Copyright 2026 Xtellix Inc.
+# SPDX-License-Identifier: Apache-2.0
+
 #
 # envpod installer — https://envpod.dev/install.sh
 #

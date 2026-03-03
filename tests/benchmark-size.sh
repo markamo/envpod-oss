@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Copyright 2026 Xtellix Inc.
+# SPDX-License-Identifier: Apache-2.0
+
 # Disk footprint comparison: Docker vs Podman vs Envpod.
 # Requires: sudo, Docker, Podman, envpod release build or installed binary.
 #

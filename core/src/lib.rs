@@ -1,3 +1,6 @@
+// Copyright 2026 Xtellix Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 pub mod actions;
 pub mod action_types;
 pub mod audit;

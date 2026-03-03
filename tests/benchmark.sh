@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Copyright 2026 Xtellix Inc.
+# SPDX-License-Identifier: Apache-2.0
+
 # Benchmark script for envpod pod startup times.
 # Requires: sudo, a release build or installed envpod binary.
 #

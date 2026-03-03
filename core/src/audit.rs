@@ -1,3 +1,6 @@
+// Copyright 2026 Xtellix Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 //! Action-level audit log for pods.
 //!
 //! Each pod gets an append-only `audit.jsonl` file (one JSON object per line).

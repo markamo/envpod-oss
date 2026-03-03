@@ -1,3 +1,6 @@
+// Copyright 2026 Xtellix Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 //! Central pod discovery DNS daemon.
 //!
 //! Runs as a persistent host-side process. All running pods register their

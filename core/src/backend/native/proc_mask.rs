@@ -1,3 +1,6 @@
+// Copyright 2026 Xtellix Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 //! /proc masking for resource-aware pods.
 //!
 //! After mounting a fresh procfs in the overlay, this module generates masked

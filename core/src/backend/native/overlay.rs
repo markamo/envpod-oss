@@ -1,3 +1,6 @@
+// Copyright 2026 Xtellix Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 //! OverlayFS management for copy-on-write filesystem isolation.
 //!
 //! Overlay layout per pod:

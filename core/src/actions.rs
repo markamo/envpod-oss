@@ -1,3 +1,6 @@
+// Copyright 2026 Xtellix Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 //! Action catalog for pod governance.
 //!
 //! The catalog is the host-defined menu of what agents are *allowed to do*.

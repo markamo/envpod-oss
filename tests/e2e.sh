@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Copyright 2026 Xtellix Inc.
+# SPDX-License-Identifier: Apache-2.0
+
 # End-to-end tests for envpod CLI.
 # Requires: sudo, a release build (cargo build --release).
 #

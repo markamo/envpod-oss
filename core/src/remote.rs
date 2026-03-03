@@ -1,3 +1,6 @@
+// Copyright 2026 Xtellix Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 //! Remote control server — per-pod Unix domain socket for external tools to
 //! freeze/resume/kill/restrict/query a running pod.
 //!

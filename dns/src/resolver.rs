@@ -1,3 +1,6 @@
+// Copyright 2026 Xtellix Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 //! DNS policy engine — pure logic, no I/O.
 //!
 //! Decides whether a DNS query should be allowed, denied, or remapped

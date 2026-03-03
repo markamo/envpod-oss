@@ -1,3 +1,6 @@
+// Copyright 2026 Xtellix Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 use std::path::PathBuf;
 
 use serde::{Deserialize, Serialize};

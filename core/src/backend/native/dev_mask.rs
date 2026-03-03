@@ -1,3 +1,6 @@
+// Copyright 2026 Xtellix Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 //! Device masking for pod isolation.
 //!
 //! Replaces the blanket host `/dev` bind-mount with a minimal `/dev` tree

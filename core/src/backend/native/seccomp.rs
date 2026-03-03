@@ -1,3 +1,6 @@
+// Copyright 2026 Xtellix Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 //! seccomp-BPF syscall filtering for pods.
 //!
 //! Applies an allowlist of ~130 safe syscalls. Any syscall not on the list

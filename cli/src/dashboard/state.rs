@@ -1,3 +1,6 @@
+// Copyright 2026 Xtellix Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 //! State reading helpers for the dashboard.
 //!
 //! Wraps core functions to read pod state from the filesystem.

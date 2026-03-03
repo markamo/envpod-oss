@@ -1,3 +1,6 @@
+// Copyright 2026 Xtellix Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 //! DNS query audit logging.
 //!
 //! Structured log entries for every DNS query a pod makes,

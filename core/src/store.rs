@@ -1,3 +1,6 @@
+// Copyright 2026 Xtellix Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 //! Pod handle persistence.
 //!
 //! Saves/loads `PodHandle` as JSON files in a state directory so pods

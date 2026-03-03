@@ -1,3 +1,6 @@
+// Copyright 2026 Xtellix Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 //! Linux namespace creation and isolated process spawning.
 //!
 //! Spawns the agent process inside fully isolated namespaces:
