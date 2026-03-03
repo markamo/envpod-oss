@@ -65,8 +65,8 @@ const DEFAULT_BASE_DIR: &str = "/var/lib/envpod";
 
 #[derive(Parser)]
 #[command(name = "envpod")]
-#[command(about = "Zero trust environments for AI agents")]
-#[command(version)]
+#[command(about = "Zero-trust governance environments for AI agents (OSS)")]
+#[command(version = concat!(env!("CARGO_PKG_VERSION"), " (OSS)"))]
 struct Cli {
     /// Base directory for envpod state and pod data
     #[arg(long, env = "ENVPOD_DIR", default_value = DEFAULT_BASE_DIR, global = true)]
@@ -728,7 +728,7 @@ async fn cmd_init(
 
     // ── Banner ──
     let version = env!("CARGO_PKG_VERSION");
-    let tag = format!("envpod v{version} — Zero-trust governance for AI agents");
+    let tag = format!("envpod OSS v{version} — Zero-trust governance for AI agents");
     // Use char count (not byte len) so multi-byte chars like — don't widen the box
     let display_width = tag.chars().count();
     let inner_width = display_width + 2; // 1 space padding each side
@@ -1997,7 +1997,7 @@ fn print_welcome_banner(pod_dir: &std::path::Path) {
 
     let version = env!("CARGO_PKG_VERSION");
 
-    let title = format!("envpod v{version} — Zero-trust governance for AI agents");
+    let title = format!("envpod OSS v{version} — Zero-trust governance for AI agents");
     // Box width = title display width + 2 padding (not byte length — em dash is multi-byte)
     let inner_width = title.chars().count() + 2;
     let top = format!("┌{}┐", "─".repeat(inner_width));

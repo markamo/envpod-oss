@@ -53,9 +53,7 @@ function renderPodCard(pod) {
     const diffBadge = pod.diff_count > 0
         ? `<span class="badge yellow">${pod.diff_count} changes</span>`
         : '';
-    const vaultBadge = pod.vault_proxy
-        ? `<span class="badge purple">${pod.vault_binding_count} bindings</span>`
-        : '';
+    const vaultBadge = '';
 
     return `
         <a href="/pod.html?name=${encodeURIComponent(pod.name)}" class="pod-card">
