@@ -414,9 +414,10 @@
     </h1>
 
     <p class="hero-sub">
-      Zero-trust governance environments for AI agents.
-      Every file change reviewed. Every action approved.
-      Every secret protected. One 12&thinsp;MB static binary.
+      The agent thinks it's on your real system —
+      but every write is captured, diffable, and reversible.
+      Nothing reaches your filesystem until you approve it.
+      One 12&thinsp;MB static binary. Zero dependencies.
     </p>
 
     <div class="hero-ctas">
@@ -469,8 +470,8 @@
 <!-- ═══════════════════════════ FEATURES ══════════════════════ -->
 <section class="section-tinted">
   <div class="container">
-    <h2>The governance ceiling Docker doesn't have</h2>
-    <p class="section-sub">envpod wraps your agent in four isolation walls and adds a governance layer on top. Each feature is independent — use what you need.</p>
+    <h2>One YAML file. Five walls. A governance ceiling.</h2>
+    <p class="section-sub">You write <code>pod.yaml</code>. The agent runs with kernel-level isolation on all sides and a governance layer that intercepts every significant action.</p>
 
     <div class="feature-grid">
       <div class="feature-card">
@@ -596,39 +597,43 @@
 <!-- ═══════════════════════════ COMPARE ═══════════════════════ -->
 <section class="section-tinted">
   <div class="container">
-    <h2>If you know Docker, you already know half of this</h2>
-    <p class="section-sub">Same Linux primitives. Same mental model for isolation. envpod adds the governance layer Docker doesn't have.</p>
+    <h2>Nothing else does both</h2>
+    <p class="section-sub">No other tool combines OS-level isolation with governance. The intersection is where envpod lives.</p>
 
-    <div class="compare-grid">
-      <div class="compare-col col-docker">
-        <h3 style="color:var(--muted)">Docker</h3>
-        <ul>
-          <li><span class="icon">□</span> Answers: <em>where</em> does this process run?</li>
-          <li><span class="icon">□</span> Container writes are permanent on commit</li>
-          <li><span class="icon">□</span> Secrets in env vars readable by <code>cat /proc/1/environ</code></li>
-          <li><span class="icon">□</span> Container can reach any domain by default</li>
-          <li><span class="icon">□</span> No built-in action approval or tool gating</li>
-          <li><span class="icon">□</span> Logs stdout/stderr only</li>
-          <li><span class="icon">□</span> No "undo" — changes are immediate</li>
-        </ul>
+    <div class="compare-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 48px">
+      <div class="compare-col" style="border-color: var(--border)">
+        <h3 style="color:var(--muted); font-size:14px; text-transform:uppercase; letter-spacing:.06em; margin-bottom:12px">Docker</h3>
+        <p style="font-size:22px; font-weight:700; margin-bottom:10px; color:var(--text)">Isolates.</p>
+        <p style="font-size:14px; color:var(--muted); line-height:1.6">Draws a box around the process. Doesn't govern what happens inside it. Container writes are permanent. No action approval. No credential interception. No audit trail.</p>
+      </div>
+      <div class="compare-col" style="border-color: var(--border)">
+        <h3 style="color:var(--muted); font-size:14px; text-transform:uppercase; letter-spacing:.06em; margin-bottom:12px">E2B / Daytona</h3>
+        <p style="font-size:22px; font-weight:700; margin-bottom:10px; color:var(--text)">Governs.</p>
+        <p style="font-size:14px; color:var(--muted); line-height:1.6">Managed sandboxes in the cloud. Your agent's code runs on their infrastructure. Requires a network connection, an account, and trust in a third party.</p>
+      </div>
+      <div class="compare-col" style="border-color: var(--border)">
+        <h3 style="color:var(--muted); font-size:14px; text-transform:uppercase; letter-spacing:.06em; margin-bottom:12px">Firejail</h3>
+        <p style="font-size:22px; font-weight:700; margin-bottom:10px; color:var(--text)">Sandboxes.</p>
+        <p style="font-size:14px; color:var(--muted); line-height:1.6">Syscall filtering and filesystem restrictions. No action queue. No credential vault. No overlay-as-review-gate. No way to inspect and approve what the process did.</p>
       </div>
       <div class="compare-col col-envpod">
-        <h3>envpod</h3>
-        <ul>
-          <li><span class="icon">✓</span> Answers: <em>what</em> is this process allowed to do?</li>
-          <li><span class="icon">✓</span> All writes staged in overlay until human review</li>
-          <li><span class="icon">✓</span> Secrets encrypted at rest, injected at runtime only</li>
-          <li><span class="icon">✓</span> DNS allow-list — agent can only reach what you permit</li>
-          <li><span class="icon">✓</span> Every tool call queued, tiered, and auditable</li>
-          <li><span class="icon">✓</span> Structured audit log of every action and decision</li>
-          <li><span class="icon">✓</span> <code>envpod rollback</code> — host unchanged, one command</li>
-        </ul>
+        <h3 style="font-size:14px; text-transform:uppercase; letter-spacing:.06em; margin-bottom:12px; color:var(--blue)">envpod</h3>
+        <p style="font-size:22px; font-weight:700; margin-bottom:10px; color:var(--text)">Isolates <em style="font-style:normal; color:var(--blue)">and</em> governs.</p>
+        <p style="font-size:14px; color:var(--muted); line-height:1.6">OS-level isolation on your own machine. Plus: every write captured in overlay, every action queued and tiered, every secret protected, every decision audited. On-premise. No third party.</p>
       </div>
+    </div>
+
+    <div style="border: 1px solid var(--border); border-radius: 10px; padding: 28px; background: rgba(88,166,255,0.03); max-width: 640px; margin: 0 auto; text-align: center">
+      <p style="font-size: 18px; line-height: 1.7; color: var(--text)">
+        The agent thinks it's on your real system —<br>
+        but every write is captured, diffable, and reversible.<br>
+        <span style="color: var(--muted)">Nobody else has this model.</span>
+      </p>
     </div>
 
     <p style="margin-top:24px; text-align:center">
       <a href="https://github.com/markamo/envpod-oss/blob/main/docs/FOR-DOCKER-USERS.md" style="color:var(--muted); font-size:14px">
-        Full guide for Docker users →
+        Full comparison for Docker users →
       </a>
     </p>
   </div>
