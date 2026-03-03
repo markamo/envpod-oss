@@ -232,6 +232,54 @@
     .feature-title { font-weight: 600; font-size: 16px; margin-bottom: 8px; }
     .feature-desc { color: var(--muted); font-size: 14px; line-height: 1.65; }
 
+    /* ── EXAMPLES ────────────────────────────────────── */
+    .agent-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .agent-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      background: var(--surface);
+      transition: border-color 0.2s;
+    }
+    .agent-card:hover { border-color: var(--blue); }
+    .agent-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+    .agent-name { font-weight: 600; font-size: 15px; }
+    .agent-tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .tag-coding  { border-color: rgba(88,166,255,0.3);  color: var(--blue); }
+    .tag-browser { border-color: rgba(63,185,80,0.3);   color: var(--green); }
+    .tag-gpu     { border-color: rgba(188,140,255,0.3); color: var(--purple); }
+    .tag-sandbox { border-color: rgba(247,129,102,0.3); color: var(--red); }
+    .agent-desc { font-size: 13px; color: var(--muted); margin-bottom: 14px; line-height: 1.5; }
+    .agent-cmd {
+      font-family: 'SF Mono', 'Cascadia Code', 'Fira Code', monospace;
+      font-size: 11px;
+      background: #010409;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 12px;
+      line-height: 1.7;
+    }
+    .agent-cmd .pr { color: var(--green); user-select: none; }
+    .agent-cmd .cm { color: var(--text); }
+    .more-examples {
+      text-align: center;
+      margin-top: 32px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .more-examples a { color: var(--blue); }
+
     /* ── STEPS ────────────────────────────────────────── */
     .steps {
       display: grid;
@@ -555,6 +603,126 @@
           Tested on Raspberry Pi&nbsp;4/5 and NVIDIA Jetson Orin with full GPU passthrough via <code>/dev/nvhost-*</code>.
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ EXAMPLES ═════════════════════ -->
+<section class="section">
+  <div class="container">
+    <h2>Works with every major AI agent</h2>
+    <p class="section-sub">25 ready-made pod configs in <code>examples/</code>. Three commands to go from zero to governed.</p>
+
+    <div class="agent-grid">
+
+      <div class="agent-card">
+        <div class="agent-header">
+          <span class="agent-name">Claude Code</span>
+          <span class="agent-tag tag-coding">Coding</span>
+        </div>
+        <div class="agent-desc">Anthropic's official CLI coding agent. DNS-locked to api.anthropic.com, GitHub, and package registries.</div>
+        <div class="agent-cmd">
+<div><span class="pr">$ </span><span class="cm">envpod init claude-code -c examples/claude-code.yaml</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod setup claude-code</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod run claude-code -- claude</span></div>
+        </div>
+      </div>
+
+      <div class="agent-card">
+        <div class="agent-header">
+          <span class="agent-name">OpenAI Codex</span>
+          <span class="agent-tag tag-coding">Coding</span>
+        </div>
+        <div class="agent-desc">OpenAI's CLI coding agent. Envpod wraps Codex's own internal sandbox as the outer governance layer.</div>
+        <div class="agent-cmd">
+<div><span class="pr">$ </span><span class="cm">envpod init codex -c examples/codex.yaml</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod setup codex</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod run codex -- codex</span></div>
+        </div>
+      </div>
+
+      <div class="agent-card">
+        <div class="agent-header">
+          <span class="agent-name">Aider</span>
+          <span class="agent-tag tag-coding">Coding</span>
+        </div>
+        <div class="agent-desc">Open-source AI pair programmer. Supports Anthropic, OpenAI, DeepSeek, Google, and OpenRouter via litellm.</div>
+        <div class="agent-cmd">
+<div><span class="pr">$ </span><span class="cm">envpod init aider -c examples/aider.yaml</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod setup aider</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod run aider -- aider --model sonnet</span></div>
+        </div>
+      </div>
+
+      <div class="agent-card">
+        <div class="agent-header">
+          <span class="agent-name">OpenCode</span>
+          <span class="agent-tag tag-coding">Coding</span>
+        </div>
+        <div class="agent-desc">Go-based TUI coding agent. 75+ LLM providers including Anthropic, OpenAI, Groq, OpenRouter, and local Ollama.</div>
+        <div class="agent-cmd">
+<div><span class="pr">$ </span><span class="cm">envpod init opencode -c examples/opencode.yaml</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod setup opencode</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod run opencode -- opencode</span></div>
+        </div>
+      </div>
+
+      <div class="agent-card">
+        <div class="agent-header">
+          <span class="agent-name">SWE-agent</span>
+          <span class="agent-tag tag-coding">Coding</span>
+        </div>
+        <div class="agent-desc">Princeton's autonomous software engineering agent. Clones repos, analyzes code, and submits patches for GitHub issues.</div>
+        <div class="agent-cmd">
+<div><span class="pr">$ </span><span class="cm">envpod init swe-agent -c examples/swe-agent.yaml</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod setup swe-agent</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod run swe-agent -- python -m swe_agent.run</span></div>
+        </div>
+      </div>
+
+      <div class="agent-card">
+        <div class="agent-header">
+          <span class="agent-name">browser-use</span>
+          <span class="agent-tag tag-browser">Browser</span>
+        </div>
+        <div class="agent-desc">Python agent that controls headless Chromium to browse the web autonomously. Browser seccomp profile, 256 MB /dev/shm.</div>
+        <div class="agent-cmd">
+<div><span class="pr">$ </span><span class="cm">envpod init browser-use -c examples/browser-use.yaml</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod setup browser-use</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod run browser-use -- python run_agent.py</span></div>
+        </div>
+      </div>
+
+      <div class="agent-card">
+        <div class="agent-header">
+          <span class="agent-name">ML Training</span>
+          <span class="agent-tag tag-gpu">GPU</span>
+        </div>
+        <div class="agent-desc">PyTorch / TensorFlow training with full NVIDIA GPU passthrough. 16 GB memory, 8-hour budget, HuggingFace + PyPI access.</div>
+        <div class="agent-cmd">
+<div><span class="pr">$ </span><span class="cm">envpod init ml-trainer -c examples/ml-training.yaml</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod run ml-trainer -- python train.py</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod diff ml-trainer</span></div>
+        </div>
+      </div>
+
+      <div class="agent-card">
+        <div class="agent-header">
+          <span class="agent-name">Hardened Sandbox</span>
+          <span class="agent-tag tag-sandbox">Sandbox</span>
+        </div>
+        <div class="agent-desc">Maximum isolation. No network. No GPU. 256 MB memory. 64 PID cap. For untrusted code, CTF challenges, and security analysis.</div>
+        <div class="agent-cmd">
+<div><span class="pr">$ </span><span class="cm">envpod init sandbox -c examples/hardened-sandbox.yaml</span></div>
+<div><span class="pr">$ </span><span class="cm">envpod run sandbox -- /bin/sh</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="more-examples">
+      25 configs total — also includes
+      <a href="https://github.com/markamo/envpod-oss/tree/main/examples">Aider, OpenClaw, Jetson Orin, Raspberry Pi, browser-wayland, Node.js, Python, devbox&nbsp;→</a>
     </div>
   </div>
 </section>
