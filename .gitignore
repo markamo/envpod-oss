@@ -4,3 +4,4 @@ envpod-*.tar.gz
 *.deb
 *.rpm
 Cargo.lock
+"website/website ideasl/"
