@@ -596,21 +596,7 @@ sudo envpod commit claude
 sudo envpod rollback claude
 ```
 
-### Step 5: Enable Vault Proxy (Optional, v0.2)
-
-For maximum security, enable vault proxy injection so Claude Code never sees the real API key:
-
-```bash
-# Bind the API key to the Anthropic domain
-sudo envpod vault claude bind ANTHROPIC_API_KEY api.anthropic.com "Authorization: Bearer {value}"
-
-# Run — proxy injects the real key at the transport layer
-sudo envpod run claude -- claude
-```
-
-With proxy injection, DNS remap routes `api.anthropic.com` to a transparent proxy on the host side that injects the real `Authorization` header. The agent sends requests with a dummy key — the proxy swaps it for the real one. Even if the agent is compromised, it cannot read or exfiltrate the real key.
-
-### Step 6: Clone for Parallel Tasks
+### Step 5: Clone for Parallel Tasks
 
 Need multiple Claude Code instances working on different tasks?
 

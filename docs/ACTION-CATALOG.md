@@ -52,8 +52,8 @@ This is the same model as [MCP tool use](https://modelcontextprotocol.io/), but 
        │  return: [{name, description, tier, scope, params}, ...]
        ├─────────────────────────────────────────────────────►
                                           │
-                                          │  {"type":"call","action":"send_email",
-                                          │   "params":{"to":"...","subject":"..."}}
+                                          │  {"type":"call","action":"notify_complete",
+                                          │   "params":{"payload":"..."}}
                                           ▼
   validate_call()  ◄────────────────────────────────────────
        │  (check required params, reject unknown keys)
@@ -91,8 +91,8 @@ name: myagent
 network:
   mode: Filtered
   allow:
-    - api.sendgrid.com
     - api.github.com
+    - hooks.example.com
 queue:
   socket: true       # expose /run/envpod/queue.sock inside pod
 ```
@@ -104,14 +104,12 @@ Create `myagent/actions.json` (or use the CLI — see below):
 ```json
 [
   {
-    "name": "send_status_email",
-    "description": "Send a task completion email to the team",
-    "action_type": "send_email",
+    "name": "notify_complete",
+    "description": "POST a completion notification to a webhook",
+    "action_type": "webhook",
     "tier": "staged",
     "config": {
-      "provider": "sendgrid",
-      "auth_vault_key": "SENDGRID_API_KEY",
-      "from": "agent@mycompany.com"
+      "url": "https://hooks.example.com/agent-done"
     }
   },
   {
@@ -338,117 +336,6 @@ Git actions run `git` commands inside the pod workspace. Auth for remote operati
 
 ---
 
-### Messaging
-
-All messaging actions have `staged` default tier — a human sees and approves the message before it is sent. Effects are irreversible (message already delivered) once approved.
-
-| Type | Default Tier | Scope | Description |
-|---|---|---|---|
-| `send_email` | staged | external | Send email via SendGrid, SMTP, or Mailgun |
-| `send_sms` | staged | external | Send SMS via Twilio |
-| `slack_message` | staged | external | Post to Slack via webhook or API |
-| `discord_message` | staged | external | Post to Discord via webhook |
-| `teams_message` | staged | external | Post to Microsoft Teams via webhook |
-
-**`send_email` params:**
-| Param | Required | Description |
-|---|:---:|---|
-| `to` | ✓ | Recipient address (or comma-separated list) |
-| `subject` | ✓ | Email subject |
-| `body` | ✓ | Email body (plain text or HTML) |
-| `cc` | | CC addresses |
-| `bcc` | | BCC addresses |
-| `html` | | `"true"` if body is HTML |
-
-**`send_email` config:**
-| Key | Description |
-|---|---|
-| `provider` | `sendgrid` (default), `smtp`, `mailgun` |
-| `auth_vault_key` | Vault key for API key or SMTP password |
-| `from` | Sender address |
-| `smtp_host` | SMTP host (only for `provider: smtp`) |
-| `smtp_port` | SMTP port (default: 587) |
-
-**`send_sms` params:**
-| Param | Required | Description |
-|---|:---:|---|
-| `to` | ✓ | Recipient phone number (E.164, e.g. `+14155550123`) |
-| `body` | ✓ | Message text (max 160 chars for single segment) |
-
-**`send_sms` config:**
-| Key | Description |
-|---|---|
-| `auth_vault_key` | Vault key for Twilio Auth Token |
-| `account_sid` | Twilio Account SID |
-| `from` | Twilio phone number |
-
-**`slack_message` params:**
-| Param | Required | Description |
-|---|:---:|---|
-| `text` | ✓ | Message text (supports Slack mrkdwn) |
-| `channel` | | Channel or DM override |
-| `username` | | Bot display name override |
-| `icon_emoji` | | Emoji icon (e.g. `:robot_face:`) |
-| `attachments` | | JSON array of Slack attachment objects |
-
-**`slack_message` config:**
-| Key | Description |
-|---|---|
-| `auth_vault_key` | Vault key for webhook URL or Bot token |
-
-**`discord_message` params:**
-| Param | Required | Description |
-|---|:---:|---|
-| `content` | ✓ | Message content (max 2000 chars) |
-| `username` | | Override webhook username |
-| `avatar_url` | | Override webhook avatar URL |
-| `embeds` | | JSON array of Discord embed objects |
-
-**`teams_message` params:**
-| Param | Required | Description |
-|---|:---:|---|
-| `text` | ✓ | Message text (Markdown supported) |
-| `title` | | Card title |
-| `theme_color` | | Card accent color (hex, e.g. `0076D7`) |
-
----
-
-### Database
-
-Database actions connect to external databases. The connection string always comes from the vault — never from the action call itself.
-
-| Type | Default Tier | Scope | Description |
-|---|---|---|---|
-| `db_query` | immediate | external | SQL SELECT (read-only) |
-| `db_execute` | staged | external | SQL INSERT / UPDATE / DELETE |
-
-**`db_query` / `db_execute` params:**
-| Param | Required | Description |
-|---|:---:|---|
-| `query` | ✓ | SQL query or statement |
-| `connection_vault_key` | ✓ | Vault key holding the connection string |
-| `params` | | JSON array of query parameters (parameterized queries) |
-
----
-
-### System
-
-| Type | Default Tier | Scope | Description |
-|---|---|---|---|
-| `shell_command` | **blocked** | internal | Run a shell command inside the pod |
-
-`shell_command` is blocked by default — it would give the agent arbitrary code execution. You can override the tier in the action definition if you have a controlled use case, but think carefully before unblocking it.
-
-**`shell_command` params:**
-| Param | Required | Description |
-|---|:---:|---|
-| `command` | ✓ | Shell command to execute |
-| `args` | | JSON array of arguments |
-| `working_dir` | | Working directory inside pod |
-| `timeout_secs` | | Timeout in seconds (default: 30) |
-
----
-
 ## Action Tiers
 
 Every action has a **reversibility tier** that controls how envpod handles it:
@@ -464,13 +351,13 @@ Built-in types have **default tiers** (shown in the tables above). You can overr
 
 ```json
 {
-  "name": "send_status_email",
-  "action_type": "send_email",
+  "name": "notify_webhook",
+  "action_type": "webhook",
   "tier": "immediate"
 }
 ```
 
-> **Warning:** Overriding `staged` → `immediate` for external actions (email, HTTP POST) means the agent can trigger irreversible effects without any human checkpoint. Only do this for actions where the consequences are fully understood and acceptable.
+> **Warning:** Overriding `staged` → `immediate` for external actions (HTTP POST, webhook) means the agent can trigger irreversible effects without any human checkpoint. Only do this for actions where the consequences are fully understood and acceptable.
 
 ---
 
@@ -481,7 +368,7 @@ Every action has a **scope** that tells you whether it operates inside the pod o
 | Scope | What it means | Examples |
 |---|---|---|
 | `internal` | Operates only within the pod's COW overlay or workspace. Fully reversible via `envpod rollback`. A failed or malicious internal action leaves no external footprint. | `file_create`, `file_delete`, `git_commit`, `git_push` |
-| `external` | Makes calls outside the pod. Effects may be irreversible (money charged, message sent, data written to an external DB). Require stronger governance. | `http_post`, `send_email`, `send_sms`, `db_execute` |
+| `external` | Makes calls outside the pod. Effects may be irreversible (data sent, remote resource modified). Require stronger governance. | `http_post`, `http_put`, `http_delete`, `webhook`, `git_push` |
 
 Scope is shown in the `list_actions` response so agents can understand the weight of each action, and it is shown in the web dashboard queue tab.
 
@@ -498,43 +385,42 @@ Use a built-in type when you want envpod to execute the action for you with a fi
 ```json
 [
   {
-    "name": "notify_slack",
-    "description": "Post a completion message to #agent-updates",
-    "action_type": "slack_message",
+    "name": "notify_webhook",
+    "description": "POST a completion payload to a webhook endpoint",
+    "action_type": "webhook",
     "tier": "staged",
     "config": {
-      "auth_vault_key": "SLACK_WEBHOOK_URL"
+      "url": "https://hooks.example.com/agent-updates"
     }
   }
 ]
 ```
 
-The params schema for `slack_message` is auto-derived — `text` is required, `channel`, `username`, `icon_emoji`, `attachments` are optional. You do not list them in `params`.
+The params schema for `webhook` is auto-derived — `payload` is required. You do not need to list it in `params`.
 
 #### Overriding the schema
 
-If you want to restrict which params the agent can set (for example, lock the `from` address so the agent cannot change it), you can provide explicit `params` even with a built-in type. When `params` is non-empty, it takes precedence:
+If you want to restrict which params the agent can set, you can provide explicit `params` even with a built-in type. When `params` is non-empty, it takes precedence:
 
 ```json
 {
-  "name": "send_status_email",
-  "description": "Send a status update (to/subject/body only — no cc/bcc)",
-  "action_type": "send_email",
+  "name": "post_result",
+  "description": "POST result to API (status and data only — no headers override)",
+  "action_type": "http_post",
   "tier": "staged",
   "config": {
-    "provider": "sendgrid",
-    "auth_vault_key": "SENDGRID_API_KEY",
-    "from": "noreply@mycompany.com"
+    "url": "https://api.example.com/results",
+    "auth_vault_key": "API_TOKEN",
+    "auth_scheme": "bearer"
   },
   "params": [
-    {"name": "to",      "description": "Recipient",     "required": true},
-    {"name": "subject", "description": "Email subject",  "required": true},
-    {"name": "body",    "description": "Plain text body","required": true}
+    {"name": "status", "description": "Result status",  "required": true},
+    {"name": "data",   "description": "Result payload", "required": true}
   ]
 }
 ```
 
-Now the agent cannot pass `cc`, `bcc`, or `html` — those are not in the schema, so envpod rejects them.
+Now the agent cannot pass `url` or `headers` in the call — those are locked in `config`, so envpod rejects them if passed as params.
 
 ---
 
@@ -634,12 +520,12 @@ The catalog is a JSON array of action definitions. File path: `{pod_dir}/actions
 ```json
 [
   {
-    "name": "send_alert",
-    "description": "Send a Slack alert when something goes wrong",
-    "action_type": "slack_message",
+    "name": "notify_webhook",
+    "description": "POST a status update to the team webhook",
+    "action_type": "webhook",
     "tier": "immediate",
     "config": {
-      "auth_vault_key": "SLACK_WEBHOOK_URL"
+      "url": "https://hooks.example.com/agent-status"
     }
   },
   {
@@ -683,7 +569,7 @@ sudo envpod actions myagent ls
 Output:
 ```
 NAME              TIER       SCOPE      TYPE
-send_alert        immediate  external   slack_message
+notify_webhook    immediate  external   webhook
 create_pr         staged     external   http_post
 save_output       immediate  internal   file_write
 log_event         immediate  internal   (custom)
@@ -694,12 +580,12 @@ log_event         immediate  internal   (custom)
 ```bash
 sudo envpod actions myagent add \
   --name notify_complete \
-  --description "Notify team when task finishes" \
-  --type send_email \
+  --description "POST notification when task finishes" \
+  --type webhook \
   --tier staged
 ```
 
-Then edit `myagent/actions.json` to add the `config` block with your vault key references.
+Then edit `myagent/actions.json` to add the `config` block with the webhook URL.
 
 ### Add a custom action
 
@@ -747,17 +633,13 @@ Response:
   "ok": true,
   "actions": [
     {
-      "name": "send_alert",
-      "description": "Send a Slack alert when something goes wrong",
+      "name": "notify_webhook",
+      "description": "POST a status update to the team webhook",
       "tier": "immediate",
       "scope": "external",
-      "action_type": "slack_message",
+      "action_type": "webhook",
       "params": [
-        {"name": "text",        "required": true,  "description": "Message text"},
-        {"name": "channel",     "required": false, "description": "Channel or DM"},
-        {"name": "username",    "required": false, "description": "Bot display name override"},
-        {"name": "icon_emoji",  "required": false, "description": "Emoji icon"},
-        {"name": "attachments", "required": false, "description": "JSON array of Slack attachments"}
+        {"name": "payload", "required": true, "description": "JSON payload to POST"}
       ]
     }
   ]
@@ -771,10 +653,9 @@ Call a catalog action by name:
 ```json
 {
   "type": "call",
-  "action": "send_alert",
+  "action": "notify_webhook",
   "params": {
-    "text": "Task complete: processed 1,423 records",
-    "icon_emoji": ":white_check_mark:"
+    "payload": "{\"status\": \"done\", \"records\": 1423}"
   }
 }
 ```
@@ -835,9 +716,9 @@ This is the low-governance path — the agent controls the label. Use catalog `c
 
 ### Tier override security
 
-If you change a `staged` action to `immediate`, you are trusting that the agent cannot abuse it. For external actions (email, HTTP POST, SMS), consider carefully:
-- Is the endpoint read-only? → `immediate` is fine (`http_get`, `db_query`)
-- Does the action send money or irreversible messages? → keep `staged`
+If you change a `staged` action to `immediate`, you are trusting that the agent cannot abuse it. For external actions (HTTP POST, webhook, git push), consider carefully:
+- Is the endpoint read-only? → `immediate` is fine (`http_get`)
+- Does the action have irreversible effects (push, webhook POST)? → keep `staged`
 - Is the blast radius limited? → use `delayed` so you can cancel within the grace window
 
 ### Blocked actions
@@ -846,9 +727,9 @@ If you change a `staged` action to `immediate`, you are trusting that the agent 
 
 ---
 
-## Full Example: Agent with Email + Git + Slack
+## Full Example: Coding Agent with Git + Webhook
 
-This example defines a catalog for a coding agent that can commit its work, notify the team on Slack, and email a completion report — all with appropriate governance.
+This example defines a catalog for a coding agent that can commit its work, push to GitHub, write a summary file, and notify a webhook — all with appropriate governance.
 
 ### pod.yaml
 
@@ -859,8 +740,7 @@ network:
   allow:
     - github.com
     - api.github.com
-    - api.sendgrid.com
-    - hooks.slack.com
+    - hooks.example.com
 queue:
   socket: true
   require_commit_approval: false
@@ -887,23 +767,12 @@ queue:
     }
   },
   {
-    "name": "notify_team",
-    "description": "Post a Slack update when work is ready for review",
-    "action_type": "slack_message",
+    "name": "notify_complete",
+    "description": "POST completion notification to webhook",
+    "action_type": "webhook",
     "tier": "staged",
     "config": {
-      "auth_vault_key": "SLACK_WEBHOOK_URL"
-    }
-  },
-  {
-    "name": "email_report",
-    "description": "Email a detailed completion report to the project owner",
-    "action_type": "send_email",
-    "tier": "staged",
-    "config": {
-      "provider": "sendgrid",
-      "auth_vault_key": "SENDGRID_API_KEY",
-      "from": "agent@mycompany.com"
+      "url": "https://hooks.example.com/agent-done"
     }
   },
   {
@@ -925,8 +794,6 @@ queue:
 
 ```bash
 sudo envpod vault set coding-agent GITHUB_TOKEN ghp_...
-sudo envpod vault set coding-agent SENDGRID_API_KEY SG....
-sudo envpod vault set coding-agent SLACK_WEBHOOK_URL https://hooks.slack.com/services/...
 ```
 
 ### Run
@@ -938,13 +805,13 @@ sudo envpod run coding-agent -- python agent.py
 ### Approval workflow
 
 ```bash
-# Agent completes work, calls commit_work and notify_team
+# Agent completes work, calls commit_work and notify_complete
 # Both land in the queue as staged
 
 sudo envpod queue coding-agent
 # ID        TIER    STATUS   ACTION
 # a1b2c3    staged  queued   commit_work: "feat: add OAuth2 login flow"
-# a1b2c4    staged  queued   notify_team: "OAuth2 PR ready for review"
+# a1b2c4    staged  queued   notify_complete: payload={"status":"done"}
 
 # Review and approve both
 sudo envpod approve coding-agent a1b2c3
