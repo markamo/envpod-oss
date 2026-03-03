@@ -28,10 +28,25 @@ curl -fsSL https://envpod.dev/install.sh | sh
 The script:
 1. Detects your architecture (x86\_64 or arm64)
 2. Downloads the latest release tarball from GitHub
-3. Prompts for sudo — installs binary, completions, and examples
+3. Prompts for sudo — installs binary, completions, examples, and uninstall script
 4. Enables IP forwarding (required for pod networking)
 
-After installation, `envpod` is available at `/usr/local/bin/envpod`.
+After installation:
+- `envpod` binary → `/usr/local/bin/envpod`
+- Examples → `/usr/local/share/envpod/examples/`
+- Uninstall script → `/usr/local/share/envpod/uninstall.sh`
+
+**Custom examples directory:**
+```bash
+# Install examples to a custom path
+curl -fsSL https://envpod.dev/install.sh | sh -s -- --examples-dir /opt/myproject/examples
+
+# Skip examples entirely
+curl -fsSL https://envpod.dev/install.sh | sh -s -- --no-examples
+
+# Via environment variable
+ENVPOD_EXAMPLES_DIR=/opt/myproject/examples curl -fsSL https://envpod.dev/install.sh | sh
+```
 
 ---
 
@@ -93,12 +108,24 @@ The one-liner auto-detects `aarch64` and downloads the arm64 binary. For buildin
 
 ## Uninstall
 
+The uninstall script is installed alongside the binary:
+
 ```bash
-sudo rm /usr/local/bin/envpod
-sudo rm -rf /var/lib/envpod          # removes all pod state, vaults, audit logs
-sudo rm /etc/bash_completion.d/envpod
-sudo rm /etc/sysctl.d/99-envpod.conf
+# Remove binary, completions, and shared files — keep pod data
+sudo bash /usr/local/share/envpod/uninstall.sh
+
+# Remove everything including all pods, vaults, and audit logs
+sudo bash /usr/local/share/envpod/uninstall.sh --purge
 ```
+
+What each option removes:
+
+| Path | Default | `--purge` |
+|---|---|---|
+| `/usr/local/bin/envpod` | ✓ | ✓ |
+| `/usr/local/share/envpod/` | ✓ | ✓ |
+| Shell completions | ✓ | ✓ |
+| `/var/lib/envpod/` (pod data, vaults, audit logs) | kept | ✓ |
 
 ---
 
