@@ -117,7 +117,7 @@ processor:
 - `docs/CLI-BLACKBOOK.md` — complete CLI reference
 - `docs/TUTORIALS.md` — step-by-step tutorials
 - `docs/ACTION-CATALOG.md` — action type reference
-- `docs/COMPARE-DOCKER.md` — envpod vs Docker
+- `docs/FOR-DOCKER-USERS.md` — envpod for Docker users
 - `docs/EMBEDDED.md` — ARM64 / embedded deployment
 
 ## Building from Source

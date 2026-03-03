@@ -1363,36 +1363,91 @@ No pod restarts needed — the daemon reads their live state from the pod store 
 
 ## Tutorial 12: Action Catalog — Governed Tool Use
 
-Give an AI agent a menu of allowed actions. The agent discovers what it can do, calls actions by name, and envpod executes them — after validation, tier enforcement, and optional human approval. The agent never makes calls directly.
+Give an AI agent a menu of allowed actions. The agent discovers what it can do,
+calls actions by name, and envpod executes them — after validation, tier
+enforcement, and optional human approval. The agent never makes calls directly.
 
 This is the governed equivalent of [MCP tool use](https://modelcontextprotocol.io/).
 
+### Where `actions.json` Lives
+
+The catalog is a plain JSON file that lives inside the pod's state directory
+on the **host** — outside the overlay, outside the agent's reach. The agent
+can read the catalog via the queue socket but cannot write to it.
+
+```
+/var/lib/envpod/pods/<pod-name>/
+  actions.json        ← the action catalog  (host-only)
+  pod.yaml            ← pod config
+  audit.jsonl         ← audit log
+  upper/              ← agent's COW overlay (writes land here)
+  merged/             ← agent's view of the filesystem
+  rootfs/             ← base snapshot (from envpod init)
+```
+
+With a custom `--dir`:
+```
+/tmp/my-dir/pods/<pod-name>/actions.json
+```
+
+### 3 Ways to Add Actions
+
+**Option 1 — CLI (fastest for one-offs):**
+```bash
+sudo envpod actions my-agent add fetch_api \
+  --description "Fetch data from the upstream API" \
+  --type http_get \
+  --tier immediate
+
+sudo envpod actions my-agent set-tier fetch_api staged   # change tier live
+sudo envpod actions my-agent ls                          # verify
+```
+
+**Option 2 — Edit `actions.json` directly (best for a full catalog):**
+```bash
+sudo nano /var/lib/envpod/pods/my-agent/actions.json
+```
+Write a JSON array of action definitions — see Step 2 below for the format.
+Changes are picked up immediately on the agent's next `list_actions` call.
+No pod restart needed.
+
+**Option 3 — `pod.yaml` setup commands (best for reproducible pods):**
+```yaml
+# pod.yaml
+setup:
+  - cp /home/mymark/configs/my-agent-actions.json \
+       /var/lib/envpod/pods/my-agent/actions.json
+```
+The setup command runs once at `envpod init` time, placing your pre-written
+catalog in the right location. Clone the pod later and every clone gets the
+same catalog automatically.
+
 ### What You'll Learn
 
-- Define an action catalog (`actions.json`)
-- Store credentials in the vault and reference them by name
+- Where `actions.json` lives and how to populate it
+- Define a catalog with HTTP, Filesystem, and Git action types
+- Store credentials in the vault
 - Let an agent discover and call actions over the queue socket
 - Approve staged actions from the host
-- Use built-in action types (email, git, Slack, HTTP)
+- Hot-reload the catalog without restarting the pod
 
 ### What You'll Need
 
-- A SendGrid account and API key (for email actions)
-- A Slack webhook URL (for Slack actions)
 - A GitHub personal access token (for git push)
+- A webhook URL for notifications (Slack incoming webhook, Discord, or any HTTP endpoint)
 
 ### 1. Create the Pod
 
 ```yaml
-# my-agent/pod.yaml
+# pod.yaml
 name: my-agent
 network:
   mode: Filtered
   allow:
-    - api.sendgrid.com
-    - hooks.slack.com
     - api.github.com
     - github.com
+    - hooks.slack.com    # webhook notifications (any HTTP endpoint works)
+    - pypi.org           # if the agent installs packages
 queue:
   socket: true
 ```
@@ -1403,71 +1458,98 @@ sudo envpod init my-agent -c pod.yaml
 
 ### 2. Create the Action Catalog
 
-Create `my-agent/actions.json`:
+The catalog lives at `/var/lib/envpod/pods/my-agent/actions.json`.
+Create it directly — no pod restart needed, changes are live immediately.
 
-```json
+```bash
+sudo tee /var/lib/envpod/pods/my-agent/actions.json > /dev/null << 'EOF'
 [
   {
-    "name": "send_completion_email",
-    "description": "Email the team when a task finishes",
-    "action_type": "send_email",
-    "tier": "staged",
-    "config": {
-      "provider": "sendgrid",
-      "auth_vault_key": "SENDGRID_API_KEY",
-      "from": "agent@mycompany.com"
-    }
-  },
-  {
-    "name": "post_slack_update",
-    "description": "Post a progress update to #agent-updates",
-    "action_type": "slack_message",
-    "tier": "staged",
-    "config": {
-      "auth_vault_key": "SLACK_WEBHOOK_URL"
-    }
-  },
-  {
-    "name": "commit_work",
-    "description": "Commit completed changes to the feature branch",
-    "action_type": "git_commit",
-    "tier": "staged"
+    "name": "fetch_data",
+    "description": "Fetch data from the upstream API",
+    "action_type": "http_get",
+    "tier": "immediate",
+    "params": [
+      {"name": "url",     "required": true},
+      {"name": "headers", "required": false}
+    ]
   },
   {
     "name": "save_output",
     "description": "Write results to /workspace/output.json",
     "action_type": "file_write",
-    "tier": "immediate"
+    "tier": "immediate",
+    "params": [
+      {"name": "path",    "required": true},
+      {"name": "content", "required": true},
+      {"name": "append",  "required": false}
+    ]
+  },
+  {
+    "name": "commit_work",
+    "description": "Commit completed changes to the feature branch",
+    "action_type": "git_commit",
+    "tier": "staged",
+    "params": [
+      {"name": "message", "required": true},
+      {"name": "path",    "required": false}
+    ],
+    "config": {
+      "auth_vault_key": "GITHUB_TOKEN"
+    }
+  },
+  {
+    "name": "push_work",
+    "description": "Push committed changes to remote",
+    "action_type": "git_push",
+    "tier": "staged",
+    "config": {
+      "auth_vault_key": "GITHUB_TOKEN"
+    }
+  },
+  {
+    "name": "notify_complete",
+    "description": "POST a completion notification to the team webhook",
+    "action_type": "webhook",
+    "tier": "staged",
+    "params": [
+      {"name": "url",     "required": true},
+      {"name": "payload", "required": true}
+    ]
   }
 ]
+EOF
 ```
 
-Or use the CLI to add actions without editing JSON:
+Verify it loaded:
 
 ```bash
-sudo envpod actions my-agent add \
-  --name post_slack_update \
-  --description "Post a progress update to #agent-updates" \
-  --type slack_message \
-  --tier staged
-
 sudo envpod actions my-agent ls
-# NAME                   TIER       SCOPE      TYPE
-# send_completion_email  staged     external   send_email
-# post_slack_update      staged     external   slack_message
-# commit_work            staged     internal   git_commit
-# save_output            immediate  internal   file_write
+# NAME             TIER       SCOPE      TYPE
+# fetch_data       immediate  external   http_get
+# save_output      immediate  internal   file_write
+# commit_work      staged     internal   git_commit
+# push_work        staged     internal   git_push
+# notify_complete  staged     external   webhook
+```
+
+You can also add actions one at a time with the CLI:
+
+```bash
+sudo envpod actions my-agent add fetch_data \
+  --description "Fetch data from upstream API" \
+  --type http_get \
+  --tier immediate
 ```
 
 ### 3. Store Credentials in the Vault
 
 ```bash
-sudo envpod vault set my-agent SENDGRID_API_KEY SG.xxxxxxxxxxxx
-sudo envpod vault set my-agent SLACK_WEBHOOK_URL https://hooks.slack.com/services/T.../B.../xxx
-sudo envpod vault set my-agent GITHUB_TOKEN ghp_xxxxxxxxxxxx
+echo "ghp_xxxxxxxxxxxx" | sudo envpod vault my-agent set GITHUB_TOKEN
 ```
 
-The keys are encrypted at rest. The agent never sees these values — they are fetched by envpod at execution time.
+The token is encrypted at rest. The agent never sees it — envpod fetches it
+from the vault at execution time when it runs `git_commit` or `git_push`.
 
 ### 4. Write the Agent
 
@@ -1493,56 +1575,57 @@ def send(msg):
     sock.close()
     return json.loads(data.strip())
 
-# Step 1: Discover what we're allowed to do
+# Step 1: Discover the tool menu
 actions = send({"type": "list_actions"})["actions"]
 print("Available actions:")
 for a in actions:
-    print(f"  {a['name']:25} tier={a['tier']:10} scope={a['scope']}")
+    print(f"  {a['name']:20} tier={a['tier']:10} type={a.get('action_type','custom')}")
 
-# Step 2: Do some work
-print("\nWorking...")
-time.sleep(2)
-result_data = {"status": "ok", "records": 1423, "errors": 0}
+# Step 2: Fetch data (immediate — executes without approval)
+print("\nFetching data...")
+r = send({
+    "type": "call",
+    "action": "fetch_data",
+    "params": {"url": "https://api.github.com/repos/torvalds/linux/commits?per_page=5"}
+})
+print(f"fetch_data: {r['status']}  id={r['id']}")
 
-# Step 3: Save the output (immediate — executes right away)
+# Step 3: Save results to the overlay (immediate)
+result = {"fetched_at": "2026-03-03T14:22:00Z", "count": 5}
 r = send({
     "type": "call",
     "action": "save_output",
     "params": {
         "path": "/workspace/output.json",
-        "content": json.dumps(result_data, indent=2)
+        "content": json.dumps(result, indent=2)
     }
 })
-print(f"save_output queued: {r['id']} (status: {r['status']})")
+print(f"save_output: {r['status']}  id={r['id']}")
 
-# Step 4: Post a Slack update (staged — waits for human approval)
+# Step 4: Commit the output (staged — waits for human approval)
 r = send({
     "type": "call",
-    "action": "post_slack_update",
-    "params": {
-        "text": f":white_check_mark: Task complete. Processed {result_data['records']} records.",
-        "icon_emoji": ":robot_face:"
-    }
+    "action": "commit_work",
+    "params": {"message": "feat: add fetched commit data"}
 })
-print(f"post_slack_update queued: {r['id']} (status: {r['status']})")
-slack_id = r["id"]
+print(f"commit_work queued: {r['id']} (status: {r['status']})")
+commit_id = r["id"]
 
-# Step 5: Send completion email (staged)
+# Step 5: Notify via webhook (staged)
 r = send({
     "type": "call",
-    "action": "send_completion_email",
+    "action": "notify_complete",
     "params": {
-        "to": "team@mycompany.com",
-        "subject": "Agent task complete",
-        "body": f"Processed {result_data['records']} records with {result_data['errors']} errors."
+        "url": "https://hooks.slack.com/services/T.../B.../xxx",
+        "payload": json.dumps({"text": f"Agent complete. {result['count']} records saved."})
     }
 })
-print(f"send_completion_email queued: {r['id']} (status: {r['status']})")
-email_id = r["id"]
+print(f"notify_complete queued: {r['id']} (status: {r['status']})")
+notify_id = r["id"]
 
-# Step 6: Wait for approvals
-print("\nWaiting for host approval of staged actions...")
-for action_id in [slack_id, email_id]:
+# Step 6: Poll for staged action approvals
+print("\nWaiting for host approval...")
+for action_id in [commit_id, notify_id]:
     while True:
         status = send({"type": "poll", "id": action_id})["status"]
         if status in ("executed", "cancelled", "blocked"):
@@ -1559,66 +1642,77 @@ print("\nDone.")
 sudo envpod run my-agent -- python3 agent.py
 ```
 
-The agent runs and queues its staged actions. It blocks on the poll loop waiting for approval.
+The `fetch_data` and `save_output` actions execute immediately. `commit_work`
+and `notify_complete` are staged — the agent blocks on the poll loop.
 
 ### 6. Review and Approve from the Host
 
 In another terminal:
 
 ```bash
-# See what's waiting
+# See staged actions waiting for approval
 sudo envpod queue my-agent
 
-# Output:
-# ID        TIER    STATUS   DESCRIPTION
-# a1b2c3    staged  queued   post_slack_update: "#agent-updates — Task complete..."
-# a1b2c4    staged  queued   send_completion_email: "to=team@mycompany.com"
+# ID        TIER    STATUS   ACTION
+# a1b2c3    staged  queued   commit_work    message="feat: add fetched commit data"
+# a1b2c4    staged  queued   notify_complete  url="https://hooks.slack.com/..."
 
-# Inspect the full params
+# Inspect full params before approving
 sudo envpod queue my-agent --id a1b2c3 --json
 
 # Approve
 sudo envpod approve my-agent a1b2c3
 sudo envpod approve my-agent a1b2c4
 
-# Or cancel
+# Or cancel if something looks wrong
 sudo envpod cancel my-agent a1b2c4
 ```
 
-envpod fetches `SENDGRID_API_KEY` from the vault and sends the email. The agent never saw the key.
+envpod fetches `GITHUB_TOKEN` from the vault and runs the git commit.
+The agent never saw the token.
 
 ### 7. View the Audit Log
 
 ```bash
 sudo envpod audit my-agent
-# 2026-03-03 14:22:01  file_write           executed  /workspace/output.json
-# 2026-03-03 14:22:03  slack_message        queued    staged
-# 2026-03-03 14:22:04  send_email           queued    staged
-# 2026-03-03 14:25:11  slack_message        executed  approved_by=host
-# 2026-03-03 14:25:14  send_email           executed  approved_by=host
+# 2026-03-03 14:22:01  queue_submit   fetch_data         executed  immediate
+# 2026-03-03 14:22:02  queue_submit   save_output        executed  immediate
+# 2026-03-03 14:22:03  queue_submit   commit_work        queued    staged
+# 2026-03-03 14:22:04  queue_submit   notify_complete    queued    staged
+# 2026-03-03 14:25:11  queue_approve  commit_work        executed  approved_by=host
+# 2026-03-03 14:25:14  queue_approve  notify_complete    executed  approved_by=host
 ```
 
 ### Hot-Reload the Catalog
 
-The catalog is live-reloaded on every `list_actions` query. You can add, remove, or change action tiers while the pod is running:
+The catalog is re-read on every `list_actions` call. You can add, remove, or
+change tiers while the pod is running — no restart needed.
 
 ```bash
-# Block the email action while the pod is still running
-sudo envpod actions my-agent set-tier send_completion_email blocked
+# Decide mid-run that push should require approval too
+sudo envpod actions my-agent set-tier push_work staged
 
-# The next time the agent calls send_completion_email, it will be queued as Blocked
-# and cannot be approved — the host has permanently denied it for this run
+# Block the webhook entirely for this run
+sudo envpod actions my-agent set-tier notify_complete blocked
+# Next time the agent calls notify_complete, it is queued as Blocked
+# and cannot be approved — permanently denied for this run
 ```
 
 ### Troubleshooting
 
-**"action not found: 'send_completion_email'"** — `actions.json` is missing or has a typo. Run `sudo envpod actions my-agent ls` to verify.
+**"action not found: 'fetch_data'"** — `actions.json` is missing or has a typo.
+Check with `sudo envpod actions my-agent ls` and verify the file exists at
+`/var/lib/envpod/pods/my-agent/actions.json`.
 
-**"missing required param 'subject'"** — The agent did not pass a required parameter. Check the params in `list_actions` output.
+**"missing required param 'url'"** — the agent omitted a required parameter.
+Check the `params` list in `list_actions` output.
 
-**"unknown param 'cc'"** — The catalog schema does not include `cc`. Either add it to the `params` list in `actions.json` (for custom actions) or remove it from the call.
+**"unknown param 'timeout'"** — the catalog schema does not include `timeout`.
+Add it to the `params` list in `actions.json` for custom actions, or remove it
+from the call.
 
-**Staged action never executes** — The agent is waiting for `envpod approve`. Run `sudo envpod queue my-agent` to see pending actions.
+**Staged action never executes** — the agent is waiting for `envpod approve`.
+Run `sudo envpod queue my-agent` to see what is pending.
 
 ---
 
