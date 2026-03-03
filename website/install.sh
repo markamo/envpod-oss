@@ -100,4 +100,4 @@ fi
 info "Extracted to ${RELEASE_DIR}"
 
 info "Running installer..."
-sh "${RELEASE_DIR}/install.sh"
+bash "${RELEASE_DIR}/install.sh"
