@@ -2,7 +2,7 @@
 
 > **EnvPod v0.1.0** — Zero-trust governance environments for AI agents
 > Author: Mark Amoboateng · mark@envpod.com · m.amoboateng@gmail.com
-> Copyright 2026 Xtellix Inc. · Business Source License 1.1
+> Copyright 2026 Xtellix Inc. · GNU Affero General Public License v3.0
 
 ---
 
@@ -1702,4 +1702,4 @@ Run `sudo envpod queue my-agent` to see what is pending.
 
 ---
 
-Copyright 2026 Xtellix Inc. All rights reserved. Licensed under the Business Source License 1.1.
+Copyright 2026 Xtellix Inc. All rights reserved. Licensed under the GNU Affero General Public License v3.0.

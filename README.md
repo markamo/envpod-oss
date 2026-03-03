@@ -133,9 +133,9 @@ The binary is at `target/release/envpod`.
 
 ## License
 
-[Business Source License 1.1](LICENSE) — free to use (including production),
-source-available. Cannot be resold as a competing product.
-Converts to Apache-2.0 on 2030-01-01.
+[GNU Affero General Public License v3.0](LICENSE) — free to use (including production),
+Copyleft — competitors must open-source their changes. Tech giants cannot incorporate without open-sourcing.
+Free to use, modify, and distribute. Cannot be used to build competing products without open-sourcing your changes.
 
 Copyright 2026 Xtellix Inc.
 

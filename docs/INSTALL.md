@@ -1,6 +1,6 @@
 # Installing envpod
 
-> Copyright 2026 Mark Amo-Boateng / Xtellix Inc. · Business Source License 1.1
+> Copyright 2026 Mark Amo-Boateng / Xtellix Inc. · GNU Affero General Public License v3.0
 
 ---
 

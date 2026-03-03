@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 Mark Amo-Boateng / Xtellix Inc.
-# SPDX-License-Identifier: BUSL-1.1
+# SPDX-License-Identifier: AGPL-3.0-only
 
 # Disk footprint comparison: Docker vs Podman vs Envpod.
 # Requires: sudo, Docker, Podman, envpod release build or installed binary.

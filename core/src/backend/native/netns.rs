@@ -1,5 +1,5 @@
 // Copyright 2026 Mark Amo-Boateng / Xtellix Inc.
-// SPDX-License-Identifier: BUSL-1.1
+// SPDX-License-Identifier: AGPL-3.0-only
 
 //! Network namespace creation, veth setup, NAT, and iptables operations.
 //!
@@ -88,9 +88,8 @@ pub fn restore_network(
         .unwrap_or_else(|_| state.host_interface.clone());
 
     // 6. Set up NAT
-    if let Err(e) = setup_host_nat(&host_iface, &veth_config.subnet, &veth_config.host_veth) {
-        tracing::warn!(error = %e, "NAT setup failed during restore — pod may not have internet access");
-    }
+    setup_host_nat(&host_iface, &veth_config.subnet, &veth_config.host_veth)
+        .context("setup host NAT and DNS INPUT rules")?;
 
     // 7. Pod-internal iptables rules (DNS restriction)
     if isolated_mode {
@@ -378,21 +377,40 @@ pub fn setup_veth(config: &VethConfig) -> Result<()> {
 /// 2. FORWARD: Accept pod traffic forwarding through the host to the internet
 /// 3. NAT/POSTROUTING: MASQUERADE pod traffic behind the host's IP
 ///
-/// Uses `iptables-restore --noflush` to load all rules in a single call
-/// instead of 5 sequential `iptables` invocations (~50-80ms saved).
+/// INPUT rules use direct `iptables -I INPUT 1` to guarantee insertion before
+/// UFW reject chains. `iptables-restore --noflush` with `-I` is unreliable on
+/// iptables-nft (Ubuntu 22+) — positional inserts may be silently ignored,
+/// leaving DNS packets dropped by UFW's default INPUT policy.
 pub fn setup_host_nat(host_iface: &str, subnet: &str, host_veth: &str) -> Result<()> {
     // Enable IP forwarding
     std::fs::write("/proc/sys/net/ipv4/ip_forward", "1")
         .context("enable ip_forward")?;
 
-    // Build all rules as iptables-restore format.
-    // -I 1 = insert at top (before UFW reject chains).
+    // INPUT rules: use direct iptables -I INPUT 1 (idempotent via -C check).
+    // Must be at position 1 so they fire before UFW/nftables DROP chains.
+    // iptables-restore --noflush with -I is unreliable on iptables-nft.
+    for proto in &["udp", "tcp"] {
+        let check = Command::new("iptables")
+            .args(["-C", "INPUT", "-i", host_veth, "-p", proto,
+                   "--dport", "53", "-s", subnet, "-j", "ACCEPT"])
+            .output()
+            .context("check iptables INPUT rule")?;
+        if !check.status.success() {
+            // Rule not present — insert at position 1 (before UFW chains)
+            Command::new("iptables")
+                .args(["-I", "INPUT", "1", "-i", host_veth, "-p", proto,
+                       "--dport", "53", "-s", subnet, "-j", "ACCEPT"])
+                .output()
+                .context("insert iptables INPUT DNS rule")?;
+        }
+    }
+
+    // FORWARD and NAT rules: iptables-restore --noflush with -A (append) works
+    // reliably on both iptables-legacy and iptables-nft.
     let rules = format!(
         "*filter\n\
-         -I INPUT 1 -i {veth} -p udp --dport 53 -s {subnet} -j ACCEPT\n\
-         -I INPUT 1 -i {veth} -p tcp --dport 53 -s {subnet} -j ACCEPT\n\
-         -I FORWARD 1 -i {veth} -o {host} -s {subnet} -j ACCEPT\n\
-         -I FORWARD 1 -i {host} -o {veth} -m state --state RELATED,ESTABLISHED -j ACCEPT\n\
+         -A FORWARD -i {veth} -o {host} -s {subnet} -j ACCEPT\n\
+         -A FORWARD -i {host} -o {veth} -m state --state RELATED,ESTABLISHED -j ACCEPT\n\
          COMMIT\n\
          *nat\n\
          -A POSTROUTING -s {subnet} -o {host} -j MASQUERADE\n\
@@ -402,7 +420,7 @@ pub fn setup_host_nat(host_iface: &str, subnet: &str, host_veth: &str) -> Result
         subnet = subnet,
     );
 
-    iptables_restore(&rules).context("setup host NAT rules")?;
+    iptables_restore(&rules).context("setup host FORWARD+NAT rules")?;
 
     Ok(())
 }

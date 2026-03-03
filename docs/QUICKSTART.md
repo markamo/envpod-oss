@@ -1,6 +1,6 @@
 # Quickstart
 
-> Copyright 2026 Mark Amo-Boateng / Xtellix Inc. · Business Source License 1.1
+> Copyright 2026 Mark Amo-Boateng / Xtellix Inc. · GNU Affero General Public License v3.0
 
 Get a governed AI agent pod running in under 60 seconds.
 

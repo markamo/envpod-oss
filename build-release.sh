@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 Mark Amo-Boateng / Xtellix Inc.
-# SPDX-License-Identifier: BUSL-1.1
+# SPDX-License-Identifier: AGPL-3.0-only
 
 #
 # build-release.sh — Build envpod and assemble self-contained release folders.
@@ -167,8 +167,24 @@ set -euo pipefail
 ENVPOD_VERSION="0.1.0"
 INSTALL_DIR="/usr/local/bin"
 STATE_DIR="/var/lib/envpod"
-EXAMPLES_DIR="/usr/local/share/envpod/examples"
+EXAMPLES_DIR="${ENVPOD_EXAMPLES_DIR:-/usr/local/share/envpod/examples}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Argument parsing
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --examples-dir)   EXAMPLES_DIR="$2"; shift 2 ;;
+        --examples-dir=*) EXAMPLES_DIR="${1#*=}"; shift ;;
+        --no-examples)    EXAMPLES_DIR=""; shift ;;
+        --help|-h)
+            echo "Usage: sudo bash install.sh [--examples-dir <path>] [--no-examples]"
+            echo "  --examples-dir <path>  Install examples to <path> (default: /usr/local/share/envpod/examples)"
+            echo "  --no-examples          Skip examples installation"
+            echo "  ENVPOD_EXAMPLES_DIR=<path>  env var also accepted"
+            exit 0 ;;
+        *) echo "Unknown argument: $1"; exit 1 ;;
+    esac
+done
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -324,7 +340,9 @@ fi
 
 step "Installing examples"
 
-if [[ -d "$SCRIPT_DIR/examples" ]]; then
+if [[ -z "$EXAMPLES_DIR" ]]; then
+    info "Examples skipped (--no-examples)"
+elif [[ -d "$SCRIPT_DIR/examples" ]]; then
     mkdir -p "$EXAMPLES_DIR"
     cp "$SCRIPT_DIR/examples/"*.yaml "$EXAMPLES_DIR/"
     cp "$SCRIPT_DIR/examples/"*.sh "$EXAMPLES_DIR/" 2>/dev/null || true
@@ -370,7 +388,7 @@ INSTALL_EOF
 # envpod v${VERSION}
 
 > **Zero-trust governance environments for AI agents**
-> Copyright 2026 Xtellix Inc. · Business Source License 1.1
+> Copyright 2026 Xtellix Inc. · GNU Affero General Public License v3.0
 
 **Docker isolates. Envpod governs.**
 
@@ -383,7 +401,7 @@ ${RELEASE_NAME}/
 ├── envpod          Static binary for ${ARCH_LABEL} Linux (no dependencies)
 ├── install.sh      Installer (copy binary, create dirs, completions, IP forwarding)
 ├── README.md       This file
-├── LICENSE         Business Source License 1.1
+├── LICENSE         GNU Affero General Public License v3.0
 ├── docs/           Documentation
 │   ├── FEATURES.md         Complete feature reference
 │   ├── TUTORIALS.md        Step-by-step tutorials (12 scenarios)
@@ -487,7 +505,7 @@ sudo envpod audit my-agent --security
 
 ## License
 
-Copyright 2026 Xtellix Inc. Licensed under the Business Source License 1.1.
+Copyright 2026 Xtellix Inc. Licensed under the GNU Affero General Public License v3.0.
 See [LICENSE](LICENSE) for the full text. Converts to Apache-2.0 on 2030-01-01.
 
 Source: https://github.com/markamo/envpod-oss

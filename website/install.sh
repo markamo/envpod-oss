@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 # Copyright 2026 Mark Amo-Boateng / Xtellix Inc.
-# SPDX-License-Identifier: BUSL-1.1
+# SPDX-License-Identifier: AGPL-3.0-only
 
 #
 # envpod installer — https://envpod.dev/install.sh
@@ -10,6 +10,9 @@
 #
 # Usage:
 #   curl -fsSL https://envpod.dev/install.sh | sh
+#   curl -fsSL https://envpod.dev/install.sh | sh -s -- --examples-dir /opt/myproject/examples
+#   curl -fsSL https://envpod.dev/install.sh | sh -s -- --no-examples
+#   ENVPOD_EXAMPLES_DIR=/opt/myproject/examples curl -fsSL https://envpod.dev/install.sh | sh
 #
 # Supports: Linux x86_64 and ARM64 (Raspberry Pi, Jetson Orin, etc.)
 #
@@ -97,4 +100,11 @@ info "Extracted to ${RELEASE_DIR}"
 # ---------------------------------------------------------------------------
 
 printf "\n${BOLD}Root access required to install to /usr/local/bin${NC}\n\n"
-sudo bash "${RELEASE_DIR}/install.sh"
+
+# Pass ENVPOD_EXAMPLES_DIR env var and any CLI args through to the bundled installer
+EXTRA_ARGS=""
+if [ -n "${ENVPOD_EXAMPLES_DIR:-}" ]; then
+    EXTRA_ARGS="--examples-dir ${ENVPOD_EXAMPLES_DIR}"
+fi
+
+sudo bash "${RELEASE_DIR}/install.sh" "$@" ${EXTRA_ARGS}

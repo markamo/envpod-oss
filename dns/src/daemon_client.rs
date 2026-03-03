@@ -1,5 +1,5 @@
 // Copyright 2026 Mark Amo-Boateng / Xtellix Inc.
-// SPDX-License-Identifier: BUSL-1.1
+// SPDX-License-Identifier: AGPL-3.0-only
 
 //! Minimal client for querying the envpod-dns daemon from the per-pod DNS server.
 //!

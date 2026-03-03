@@ -296,4 +296,4 @@ envpod gc                                 # clean up stale resources
 
 ---
 
-*Copyright 2026 Xtellix Inc. All rights reserved. Licensed under the Business Source License 1.1.*
+*Copyright 2026 Xtellix Inc. All rights reserved. Licensed under the GNU Affero General Public License v3.0.*

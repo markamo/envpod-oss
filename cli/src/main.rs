@@ -1,5 +1,5 @@
 // Copyright 2026 Mark Amo-Boateng / Xtellix Inc.
-// SPDX-License-Identifier: BUSL-1.1
+// SPDX-License-Identifier: AGPL-3.0-only
 
 use std::io::Seek;
 use std::path::{Path, PathBuf};
@@ -927,13 +927,9 @@ async fn run_setup_commands(
             .with_context(|| format!("parse DNS bind IP: {}", net.host_ip))?;
         let policy = build_dns_policy(net);
         let dns_server = DnsServer::new(bind_ip, policy, upstream, name.to_string());
-        match dns_server.spawn().await {
-            Ok(h) => Some(h),
-            Err(e) => {
-                eprintln!("  warning: DNS server failed to start for setup: {e:#}");
-                None
-            }
-        }
+        let h = dns_server.spawn().await
+            .context("DNS server failed to start (setup phase)")?;
+        Some(h)
     } else {
         None
     };
@@ -1591,14 +1587,9 @@ async fn cmd_run(store: &PodStore, base_dir: &std::path::Path, name: &str, comma
             name.to_string(),
         ).with_audit_path(audit_path)
          .with_daemon_sock(daemon_sock);
-        match dns_server.spawn().await {
-            Ok(handle) => Some(handle),
-            Err(e) => {
-                tracing::warn!(error = %e, "DNS server failed to start");
-                eprintln!("warning: DNS server failed to start: {e:#}");
-                None
-            }
-        }
+        let handle = dns_server.spawn().await
+            .context("DNS server failed to start — pod cannot resolve hostnames")?;
+        Some(handle)
     } else {
         None
     };
@@ -2030,7 +2021,7 @@ fn print_welcome_banner(pod_dir: &std::path::Path) {
         color::cyan("audit"),
     );
     eprintln!();
-    eprintln!("  {}", color::dim("© 2026 Xtellix Inc. — Business Source License 1.1"));
+    eprintln!("  {}", color::dim("© 2026 Xtellix Inc. — GNU Affero General Public License v3.0"));
     eprintln!("  {}", color::dim("https://envpod.com"));
     eprintln!();
 

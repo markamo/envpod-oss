@@ -1,5 +1,5 @@
 // Copyright 2026 Mark Amo-Boateng / Xtellix Inc.
-// SPDX-License-Identifier: BUSL-1.1
+// SPDX-License-Identifier: AGPL-3.0-only
 
 //! Backend-specific state stored in PodHandle.backend_state.
 //! Serialized to JSON so pods survive daemon restarts.

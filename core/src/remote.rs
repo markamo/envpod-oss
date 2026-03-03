@@ -1,5 +1,5 @@
 // Copyright 2026 Mark Amo-Boateng / Xtellix Inc.
-// SPDX-License-Identifier: BUSL-1.1
+// SPDX-License-Identifier: AGPL-3.0-only
 
 //! Remote control server — per-pod Unix domain socket for external tools to
 //! freeze/resume/kill/restrict/query a running pod.

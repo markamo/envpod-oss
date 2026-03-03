@@ -1,6 +1,6 @@
 #!/bin/bash
 # Copyright 2026 Mark Amo-Boateng / Xtellix Inc.
-# SPDX-License-Identifier: BUSL-1.1
+# SPDX-License-Identifier: AGPL-3.0-only
 
 # envpod jailbreak test v0.1.0
 # Probes all isolation boundaries inside an envpod pod.

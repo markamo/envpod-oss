@@ -1,5 +1,5 @@
 // Copyright 2026 Mark Amo-Boateng / Xtellix Inc.
-// SPDX-License-Identifier: BUSL-1.1
+// SPDX-License-Identifier: AGPL-3.0-only
 
 //! Monitoring agent — background task that polls audit logs and resource usage,
 //! evaluates policy rules, and can autonomously freeze or restrict pods.

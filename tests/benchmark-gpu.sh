@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copyright 2026 Mark Amo-Boateng / Xtellix Inc.
-# SPDX-License-Identifier: BUSL-1.1
+# SPDX-License-Identifier: AGPL-3.0-only
 
 # GPU benchmark script for envpod — measures GPU passthrough overhead.
 # Requires: sudo, NVIDIA GPU, nvidia-smi, a release build or installed envpod binary.
