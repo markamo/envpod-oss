@@ -63,9 +63,13 @@ pub fn restore_network(
     base_dir: &Path,
     isolated_mode: bool,
 ) -> Result<()> {
-    // 1. Recreate the network namespace
-    ip_cmd(&["netns", "add", &state.netns_name])
-        .with_context(|| format!("recreate netns {}", state.netns_name))?;
+    // 1. Recreate the network namespace (idempotent: skip if still alive from a crash)
+    if netns_exists(&state.netns_name) {
+        tracing::debug!("netns {} already exists, reusing (pod survived crash)", state.netns_name);
+    } else {
+        ip_cmd(&["netns", "add", &state.netns_name])
+            .with_context(|| format!("recreate netns {}", state.netns_name))?;
+    }
 
     // 2. Ensure pod index file exists
     ensure_pod_index(base_dir, state.pod_index)?;
@@ -80,18 +84,22 @@ pub fn restore_network(
         subnet: format!("{}.{}.0/30", state.subnet_base, state.pod_index),
     };
 
-    // 4. Set up veth pair
-    setup_veth(&veth_config).context("restore veth pair")?;
+    // 4. Set up veth pair (idempotent: skip if already alive from a crash)
+    if veth_exists(&veth_config.host_veth) {
+        tracing::debug!("veth {} already exists, reusing (pod survived crash)", veth_config.host_veth);
+    } else {
+        setup_veth(&veth_config).context("restore veth pair")?;
+    }
 
     // 5. Re-detect host interface (may change after reboot), fallback to persisted
     let host_iface = detect_host_interface_cached(Some(base_dir))
         .unwrap_or_else(|_| state.host_interface.clone());
 
-    // 6. Set up NAT
+    // 6. Set up NAT (already idempotent via -C checks)
     setup_host_nat(&host_iface, &veth_config.subnet, &veth_config.host_veth)
         .context("setup host NAT and DNS INPUT rules")?;
 
-    // 7. Pod-internal iptables rules (DNS restriction)
+    // 7. Pod-internal iptables rules (DNS restriction, already idempotent)
     if isolated_mode {
         setup_pod_iptables(&state.netns_name, &state.host_ip)
             .context("restore pod iptables")?;
