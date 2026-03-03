@@ -232,6 +232,7 @@ h2{font-size:clamp(26px,4vw,42px);font-weight:700;letter-spacing:-0.03em;margin-
 .itab:hover:not(.active){border-color:var(--muted);color:var(--text)}
 .code-block{background:#010409;border:1px solid var(--border);border-radius:10px;padding:20px 24px;font-family:var(--mono);font-size:13px;line-height:1.8;position:relative;overflow-x:auto}
 .code-block .cp{color:#6e7681}
+.yk{color:var(--blue)}.yv{color:var(--green)}.yc{color:#6e7681;font-style:italic}
 .code-block .cl{color:var(--text);white-space:pre}
 .code-block .pr{color:var(--green);user-select:none}
 .copy-btn{position:absolute;top:12px;right:12px;background:var(--surface);border:1px solid var(--border);border-radius:5px;color:var(--muted);padding:4px 10px;font-size:11px;cursor:pointer;transition:all .15s;font-family:var(--mono)}
@@ -240,12 +241,6 @@ h2{font-size:clamp(26px,4vw,42px);font-weight:700;letter-spacing:-0.03em;margin-
 .req-box strong{color:var(--text)}
 .req-box a{margin:0 4px}
 
-/* ── AARM ── */
-.aarm{max-width:1100px;margin:0 auto;padding:0 32px 88px}
-.aarm-inner{display:flex;align-items:center;gap:20px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:24px 32px}
-.aarm-badge{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--green);background:var(--green-glow);border:1px solid rgba(34,197,94,0.2);padding:6px 14px;border-radius:6px;white-space:nowrap}
-.aarm-text{font-size:14px;color:var(--muted);line-height:1.5}
-.aarm-text a{color:var(--text);text-decoration:underline;text-underline-offset:2px}
 
 /* ── AUDIT STRIP ── */
 .audit-strip{position:relative;overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:14px 0;background:var(--surface)}
@@ -712,13 +707,6 @@ footer{border-top:1px solid var(--border);padding:44px 0}
   </div>
 </section>
 
-<!-- ═══ AARM ═══ -->
-<div class="aarm reveal">
-  <div class="aarm-inner">
-    <span class="aarm-badge">AARM R1–R6</span>
-    <span class="aarm-text">envpod satisfies <a href="https://aarm.dev" target="_blank">AARM Core</a> conformance for autonomous action runtime security — pre-execution interception, context accumulation, policy evaluation, five authorization decisions, tamper-evident audit, and identity binding.</span>
-  </div>
-</div>
 
 <!-- ═══ QUICK START ═══ -->
 <section class="section reveal" id="install">
@@ -747,12 +735,13 @@ footer{border-top:1px solid var(--border);padding:44px 0}
       <div class="code-block"><div><span class="pr">$ </span><span class="cl">sudo envpod init hello</span></div><div><span class="pr">$ </span><span class="cl">sudo envpod run hello -- bash -c "echo 'governed' > /home/agent/hello.txt"</span></div><div><span class="pr">$ </span><span class="cl">sudo envpod diff hello</span></div><div><span class="pr">$ </span><span class="cl">sudo envpod commit hello   # or: sudo envpod rollback hello</span></div></div>
     </div>
 
-    <div style="margin-top:32px">
-      <p style="font-size:14px;color:var(--muted);margin-bottom:14px">Launch Chrome with display + audio in a governed pod:</p>
-      <div class="code-block"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><div class="cp"># pod.yaml</div><div><span class="cl">network:</span></div><div><span class="cl">  mode: Filtered</span></div><div><span class="cl">  dns:</span></div><div><span class="cl">    mode: Whitelist</span></div><div><span class="cl">    allow: ["*.google.com", "*.youtube.com",</span></div><div><span class="cl">            "api.anthropic.com", "api.openai.com"]</span></div><div><span class="cl">devices:</span></div><div><span class="cl">  display: true    # Wayland forwarding</span></div><div><span class="cl">  audio: true      # PipeWire / PulseAudio</span></div><div><span class="cl">  gpu: true</span></div><div><span class="cl">security:</span></div><div><span class="cl">  seccomp_profile: browser</span></div><div><span class="cl">processor:</span></div><div><span class="cl">  cores: 2.0</span></div><div><span class="cl">  memory: "4GB"</span></div></div>
+    <div style="margin-top:40px">
+      <p style="font-size:14px;color:var(--muted);margin-bottom:4px">OpenClaw on WhatsApp, Telegram, Discord — finally governed:</p>
+      <p style="font-size:12px;color:var(--dim);margin-bottom:14px">pod.yaml</p>
+      <div class="code-block"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><div><span class="yc"># openclaw — personal AI agent on messaging platforms</span></div><div><span class="yk">network</span><span class="cl">:</span></div><div><span class="cl">  </span><span class="yk">mode</span><span class="cl">: </span><span class="yv">Monitored</span></div><div><span class="cl">  </span><span class="yk">dns</span><span class="cl">:</span></div><div><span class="cl">    </span><span class="yk">mode</span><span class="cl">: </span><span class="yv">Whitelist</span></div><div><span class="cl">    </span><span class="yk">allow</span><span class="cl">:</span></div><div><span class="cl">      - </span><span class="yv">api.anthropic.com</span><span class="cl">       </span><span class="yc"># LLM providers</span></div><div><span class="cl">      - </span><span class="yv">api.openai.com</span></div><div><span class="cl">      - </span><span class="yv">"*.whatsapp.com"</span><span class="cl">        </span><span class="yc"># messaging platforms</span></div><div><span class="cl">      - </span><span class="yv">"*.telegram.org"</span></div><div><span class="cl">      - </span><span class="yv">"*.discord.com"</span></div><div><span class="cl">      - </span><span class="yv">registry.npmjs.org</span><span class="cl">     </span><span class="yc"># npm</span></div><div><span class="yk">processor</span><span class="cl">:</span></div><div><span class="cl">  </span><span class="yk">cores</span><span class="cl">: </span><span class="yv">2.0</span></div><div><span class="cl">  </span><span class="yk">memory</span><span class="cl">: </span><span class="yv">"1GB"</span></div><div><span class="yk">budget</span><span class="cl">:</span></div><div><span class="cl">  </span><span class="yk">max_duration</span><span class="cl">: </span><span class="yv">"24h"</span></div><div><span class="yk">audit</span><span class="cl">:</span></div><div><span class="cl">  </span><span class="yk">action_log</span><span class="cl">: </span><span class="yv">true</span></div><div><span class="yk">setup</span><span class="cl">:</span></div><div><span class="cl">  - </span><span class="yv">"npm install -g openclaw"</span></div></div>
     </div>
     <div style="margin-top:14px">
-      <div class="code-block"><div><span class="pr">$ </span><span class="cl">sudo envpod init chrome -c pod.yaml</span></div><div><span class="pr">$ </span><span class="cl">sudo envpod run chrome -d -a -- google-chrome \</span></div><div><span class="cl">    --no-sandbox --ozone-platform=wayland https://claude.ai</span></div><div><span class="pr">$ </span><span class="cl">sudo envpod diff chrome    # see what Chrome changed on disk</span></div></div>
+      <div class="code-block"><div><span class="pr">$ </span><span class="cl">sudo envpod init openclaw -c pod.yaml</span></div><div><span class="pr">$ </span><span class="cl">sudo envpod setup openclaw</span><span class="cl">                  </span><span class="yc"># runs npm install</span></div><div><span class="pr">$ </span><span class="cl">sudo envpod vault openclaw set ANTHROPIC_API_KEY</span></div><div><span class="pr">$ </span><span class="cl">sudo envpod run openclaw -- openclaw</span></div><div><span class="pr">$ </span><span class="cl">sudo envpod audit openclaw</span><span class="cl">                  </span><span class="yc"># every action logged</span></div></div>
     </div>
 
     <div class="req-box">
