@@ -227,12 +227,12 @@ impl NativeBackend {
             .context("create network namespace")?;
 
         // 3. Allocate a unique pod index for subnet assignment
-        let pod_index = netns::allocate_pod_index(&self.base_dir)
+        let subnet_base = config.network.subnet.as_deref()
+            .unwrap_or(netns::DEFAULT_SUBNET_BASE);
+        let pod_index = netns::allocate_pod_index(&self.base_dir, subnet_base)
             .context("allocate pod network index")?;
 
         // 4. Set up veth pair
-        let subnet_base = config.network.subnet.as_deref()
-            .unwrap_or(netns::DEFAULT_SUBNET_BASE);
         let veth_config = netns::VethConfig::from_index(pod_index, short_id, &netns_name, subnet_base);
         if let Err(e) = netns::setup_veth(&veth_config) {
             // Clean up on failure
@@ -290,10 +290,9 @@ impl NativeBackend {
     /// `restore()` will create netns + veth on first `run`.
     fn deferred_network(&self, short_id: &str, config: &PodConfig) -> Option<NetworkState> {
         let host_interface = netns::detect_host_interface_cached(Some(&self.base_dir)).ok()?;
-        let pod_index = netns::allocate_pod_index(&self.base_dir).ok()?;
-
         let subnet_base = config.network.subnet.as_deref()
             .unwrap_or(netns::DEFAULT_SUBNET_BASE);
+        let pod_index = netns::allocate_pod_index(&self.base_dir, subnet_base).ok()?;
         let veth_config = netns::VethConfig::from_index(pod_index, short_id, &format!("envpod-{short_id}"), subnet_base);
 
         let dns_mode = match config.network.dns.mode {

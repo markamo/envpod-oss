@@ -251,26 +251,51 @@ pub fn gc_iptables() -> Result<usize> {
 ///
 /// Uses a simple file-based approach: creates `{base_dir}/netns_index/{idx}`
 /// files to track which indices are in use.
-pub fn allocate_pod_index(base_dir: &Path) -> Result<u8> {
+///
+/// Also checks the kernel routing table: if a stale veth from a crashed pod
+/// still holds the subnet (e.g. after `envpod run` was killed without cleanup),
+/// the index file may be gone but the route is still live. Skipping live subnets
+/// prevents two pods sharing the same subnet, which causes DNS response misrouting.
+pub fn allocate_pod_index(base_dir: &Path, subnet_base: &str) -> Result<u8> {
     let index_dir = base_dir.join("netns_index");
     std::fs::create_dir_all(&index_dir)
         .context("create netns_index dir")?;
 
     for idx in 1..=254u8 {
         let path = index_dir.join(idx.to_string());
-        // Try to create exclusively — if it exists, index is taken
+        // Try to claim the index file exclusively
         match std::fs::OpenOptions::new()
             .write(true)
             .create_new(true)
             .open(&path)
         {
-            Ok(_) => return Ok(idx),
+            Ok(_) => {
+                // Index file claimed — verify the subnet isn't already live in the
+                // kernel routing table (stale veth from a previously leaked pod).
+                if subnet_route_exists(idx, subnet_base) {
+                    let _ = std::fs::remove_file(&path);
+                    continue;
+                }
+                return Ok(idx);
+            }
             Err(e) if e.kind() == std::io::ErrorKind::AlreadyExists => continue,
             Err(e) => return Err(e).context("allocate pod index"),
         }
     }
 
     anyhow::bail!("no available pod indices (max 254 concurrent network pods)")
+}
+
+/// Return true if the kernel routing table already has a route for the subnet
+/// that would be assigned to `idx` (e.g. `10.200.1.0/30` for idx=1).
+/// This catches stale vetches left behind by crashed or improperly cleaned up pods.
+fn subnet_route_exists(idx: u8, subnet_base: &str) -> bool {
+    let subnet = format!("{subnet_base}.{idx}.0/30");
+    Command::new("ip")
+        .args(["route", "show", &subnet])
+        .output()
+        .map(|o| !o.stdout.is_empty())
+        .unwrap_or(false)
 }
 
 /// Release a pod index.
