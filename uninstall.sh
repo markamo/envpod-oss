@@ -2,7 +2,7 @@
 # Copyright 2026 Mark Amo-Boateng / Xtellix Inc.
 # SPDX-License-Identifier: AGPL-3.0-only
 
-# uninstall.sh — Remove envpod OSS from this system
+# uninstall.sh — Remove envpod CE from this system
 #
 # Removes:
 #   /usr/local/bin/envpod          binary
@@ -60,11 +60,11 @@ echo "  │       envpod CE uninstaller           │"
 echo "  └──────────────────────────────────────┘"
 echo -e "${NC}"
 
-# Verify this is the OSS binary before removing
+# Verify this is the CE binary before removing
 if [[ -f "$INSTALL_DIR/envpod" ]]; then
     installed_ver="$("$INSTALL_DIR/envpod" --version 2>/dev/null || echo "")"
-    if echo "$installed_ver" | grep -qv "OSS"; then
-        warn "Installed binary does not appear to be envpod OSS (got: $installed_ver)"
+    if echo "$installed_ver" | grep -qv "CE"; then
+        warn "Installed binary does not appear to be envpod CE (got: $installed_ver)"
         warn "This may be the private/premium envpod binary."
         read -r -p "  Remove it anyway? [y/N] " confirm
         [[ "${confirm,,}" == "y" ]] || { echo "Aborted."; exit 0; }
@@ -135,7 +135,7 @@ fi
 # ---------------------------------------------------------------------------
 echo ""
 echo -e "${BOLD}──────────────────────────────────────────────${NC}"
-echo -e "${GREEN}  envpod OSS uninstalled${NC}"
+echo -e "${GREEN}  envpod CE uninstalled${NC}"
 if [[ "$PURGE" == false && -d "$STATE_DIR" ]]; then
     echo ""
     echo "  Pod data retained at: $STATE_DIR"

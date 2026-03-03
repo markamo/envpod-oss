@@ -1,4 +1,4 @@
-# envpod OSS — Features
+# envpod CE — Features
 
 > "Docker isolates. Envpod governs."
 
