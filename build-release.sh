@@ -374,7 +374,7 @@ echo "    sudo envpod run my-agent -- bash"
 echo "    sudo envpod diff my-agent"
 echo ""
 echo "  Examples installed to: $EXAMPLES_DIR/"
-echo "  Documentation: https://github.com/markamo/envpod-oss/tree/main/docs"
+echo "  Documentation: https://github.com/markamo/envpod-ce/tree/main/docs"
 echo ""
 INSTALL_EOF
     chmod 755 "${RELEASE_DIR}/install.sh"
@@ -508,7 +508,7 @@ sudo envpod audit my-agent --security
 Copyright 2026 Xtellix Inc. Licensed under the GNU Affero General Public License v3.0.
 See [LICENSE](LICENSE) for the full text. Converts to Apache-2.0 on 2030-01-01.
 
-Source: https://github.com/markamo/envpod-oss
+Source: https://github.com/markamo/envpod-ce
 README_EOF
     info "README.md generated"
 
@@ -574,7 +574,7 @@ README_EOF
     info "Done! Upload ${TARBALL_NAME} to GitHub releases."
     echo ""
     echo "  Install URL:"
-    echo "    https://github.com/markamo/envpod-oss/releases/latest/download/${TARBALL_NAME}"
+    echo "    https://github.com/markamo/envpod-ce/releases/latest/download/${TARBALL_NAME}"
 }
 
 # ---------------------------------------------------------------------------

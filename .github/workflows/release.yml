@@ -168,7 +168,7 @@ jobs:
           \`\`\`
 
           ## Source
-          https://github.com/markamo/envpod-oss
+          https://github.com/markamo/envpod-ce
           EOF
 
           # Create tarball

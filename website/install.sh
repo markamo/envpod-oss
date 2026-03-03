@@ -18,7 +18,7 @@
 #
 set -e
 
-REPO="markamo/envpod-oss"
+REPO="markamo/envpod-ce"
 BASE_URL="https://github.com/${REPO}/releases/latest/download"
 
 RED='\033[0;31m'

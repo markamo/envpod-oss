@@ -62,8 +62,8 @@ cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1 systemd.unified_cgroup
 Requires Rust toolchain — install via [rustup.rs](https://rustup.rs).
 
 ```bash
-git clone https://github.com/markamo/envpod-oss
-cd envpod-oss
+git clone https://github.com/markamo/envpod-ce
+cd envpod-ce
 cargo build --release
 sudo cp target/release/envpod /usr/local/bin/
 sudo chmod 755 /usr/local/bin/envpod

@@ -124,8 +124,8 @@ processor:
 Requires Rust toolchain (rustup).
 
 ```bash
-git clone https://github.com/markamo/envpod-oss
-cd envpod-oss
+git clone https://github.com/markamo/envpod-ce
+cd envpod-ce
 cargo build --release
 ```
 

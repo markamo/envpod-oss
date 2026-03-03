@@ -312,7 +312,7 @@ footer{border-top:1px solid var(--border);padding:44px 0}
       <a href="#benchmarks">Benchmarks</a>
       <a href="#install">Install</a>
       <a href="#pricing">Pricing</a>
-      <a href="https://github.com/markamo/envpod-oss" class="nav-gh">
+      <a href="https://github.com/markamo/envpod-ce" class="nav-gh">
         <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
         GitHub
       </a>
@@ -327,7 +327,7 @@ footer{border-top:1px solid var(--border);padding:44px 0}
   <p class="hero-sub">The agent thinks it's on your real system — but every write is captured, diffable, and reversible. Nothing reaches your filesystem until you approve it. One 12&thinsp;MB static binary. Zero dependencies.</p>
   <div class="hero-ctas">
     <a href="#install" class="btn-p">Get started ↓</a>
-    <a href="https://github.com/markamo/envpod-oss" class="btn-s">
+    <a href="https://github.com/markamo/envpod-ce" class="btn-s">
       <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
       View on GitHub
     </a>
@@ -434,7 +434,7 @@ footer{border-top:1px solid var(--border);padding:44px 0}
       <div class="agent-card"><div class="agent-header"><span class="agent-name">ML Training</span><span class="agent-tag tag-gpu">GPU</span></div><div class="agent-desc">PyTorch / TensorFlow with full NVIDIA GPU passthrough. 16 GB memory, 8-hour budget.</div><div class="agent-cmd"><div><span class="pr">$ </span><span class="cm">envpod init ml-trainer -c examples/ml-training.yaml</span></div><div><span class="pr">$ </span><span class="cm">envpod run ml-trainer -- python train.py</span></div></div></div>
       <div class="agent-card"><div class="agent-header"><span class="agent-name">Hardened Sandbox</span><span class="agent-tag tag-sandbox">Sandbox</span></div><div class="agent-desc">Maximum isolation. No network. No GPU. 256 MB memory. 64 PID cap. For untrusted code.</div><div class="agent-cmd"><div><span class="pr">$ </span><span class="cm">envpod init sandbox -c examples/hardened-sandbox.yaml</span></div><div><span class="pr">$ </span><span class="cm">envpod run sandbox -- /bin/sh</span></div></div></div>
     </div>
-    <div class="more-examples">25 configs total — <a href="https://github.com/markamo/envpod-oss/tree/main/examples">browse all examples →</a></div>
+    <div class="more-examples">25 configs total — <a href="https://github.com/markamo/envpod-ce/tree/main/examples">browse all examples →</a></div>
   </div>
 </section>
 
@@ -561,7 +561,7 @@ footer{border-top:1px solid var(--border);padding:44px 0}
       <div class="code-block"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><div class="cp"># Raspberry Pi 4/5 (64-bit OS) or NVIDIA Jetson Orin</div><div><span class="pr">$ </span><span class="cl">curl -fsSL https://envpod.dev/install.sh | sh</span></div></div>
     </div>
     <div id="tab-src" style="display:none">
-      <div class="code-block"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><div class="cp"># Requires Rust toolchain — rustup.rs</div><div><span class="pr">$ </span><span class="cl">git clone https://github.com/markamo/envpod-oss</span></div><div><span class="pr">$ </span><span class="cl">cd envpod-oss && cargo build --release</span></div><div><span class="pr">$ </span><span class="cl">sudo cp target/release/envpod /usr/local/bin/</span></div></div>
+      <div class="code-block"><button class="copy-btn" onclick="copyBlock(this)">Copy</button><div class="cp"># Requires Rust toolchain — rustup.rs</div><div><span class="pr">$ </span><span class="cl">git clone https://github.com/markamo/envpod-ce</span></div><div><span class="pr">$ </span><span class="cl">cd envpod-ce && cargo build --release</span></div><div><span class="pr">$ </span><span class="cl">sudo cp target/release/envpod /usr/local/bin/</span></div></div>
     </div>
 
     <div style="margin-top:32px">
@@ -572,10 +572,10 @@ footer{border-top:1px solid var(--border);padding:44px 0}
     <div class="req-box">
       <strong>Requirements:</strong> Linux kernel 5.15+ · cgroups v2 · OverlayFS · root (for namespace setup) · ~12 MB disk
       <br><br>
-      <a href="https://github.com/markamo/envpod-oss/blob/main/docs/INSTALL.md">Installation guide</a> ·
-      <a href="https://github.com/markamo/envpod-oss/blob/main/docs/QUICKSTART.md">Quick start</a> ·
-      <a href="https://github.com/markamo/envpod-oss/blob/main/docs/TUTORIALS.md">Tutorials</a> ·
-      <a href="https://github.com/markamo/envpod-oss/blob/main/docs/CLI-BLACKBOOK.md">CLI Reference</a>
+      <a href="https://github.com/markamo/envpod-ce/blob/main/docs/INSTALL.md">Installation guide</a> ·
+      <a href="https://github.com/markamo/envpod-ce/blob/main/docs/QUICKSTART.md">Quick start</a> ·
+      <a href="https://github.com/markamo/envpod-ce/blob/main/docs/TUTORIALS.md">Tutorials</a> ·
+      <a href="https://github.com/markamo/envpod-ce/blob/main/docs/CLI-BLACKBOOK.md">CLI Reference</a>
     </div>
   </div>
 </section>
@@ -661,7 +661,7 @@ footer{border-top:1px solid var(--border);padding:44px 0}
         <p>We're building envpod as a governed execution substrate for agent frameworks. If you need policy, audit, rollback, and a kill switch for agent actions — let's talk integrations and backends.</p>
         <div class="contact-actions">
           <a class="btn-p" href="mailto:mark@xtellix.com" style="font-size:13px;padding:10px 18px">Email us</a>
-          <a class="btn-s" href="https://github.com/markamo/envpod-oss/issues" style="font-size:13px;padding:10px 18px">Open an issue</a>
+          <a class="btn-s" href="https://github.com/markamo/envpod-ce/issues" style="font-size:13px;padding:10px 18px">Open an issue</a>
         </div>
       </div>
       <div class="contact-card">
@@ -682,8 +682,8 @@ footer{border-top:1px solid var(--border);padding:44px 0}
     <h2>Autonomous systems should not have<br>irrevocable side effects.</h2>
     <p>Envpod makes autonomy safe by default. Free to use. Single binary. Zero dependencies. On your own machine.</p>
     <div class="cta-actions">
-      <a href="https://github.com/markamo/envpod-oss" class="btn-p">Get started →</a>
-      <a href="https://github.com/markamo/envpod-oss/tree/main/examples" class="btn-s">Browse examples</a>
+      <a href="https://github.com/markamo/envpod-ce" class="btn-p">Get started →</a>
+      <a href="https://github.com/markamo/envpod-ce/tree/main/examples" class="btn-s">Browse examples</a>
     </div>
   </div>
 </section>
@@ -696,12 +696,12 @@ footer{border-top:1px solid var(--border);padding:44px 0}
       <div class="footer-copy">Copyright 2026 Mark Amo-Boateng / Xtellix Inc. · AGPL v3</div>
     </div>
     <div class="footer-links">
-      <a href="https://github.com/markamo/envpod-oss">GitHub</a>
-      <a href="https://github.com/markamo/envpod-oss/blob/main/docs/FEATURES.md">Features</a>
-      <a href="https://github.com/markamo/envpod-oss/blob/main/docs/TUTORIALS.md">Tutorials</a>
-      <a href="https://github.com/markamo/envpod-oss/blob/main/docs/CLI-BLACKBOOK.md">CLI Ref</a>
-      <a href="https://github.com/markamo/envpod-oss/blob/main/docs/ACTION-CATALOG.md">Actions</a>
-      <a href="https://github.com/markamo/envpod-oss/issues">Issues</a>
+      <a href="https://github.com/markamo/envpod-ce">GitHub</a>
+      <a href="https://github.com/markamo/envpod-ce/blob/main/docs/FEATURES.md">Features</a>
+      <a href="https://github.com/markamo/envpod-ce/blob/main/docs/TUTORIALS.md">Tutorials</a>
+      <a href="https://github.com/markamo/envpod-ce/blob/main/docs/CLI-BLACKBOOK.md">CLI Ref</a>
+      <a href="https://github.com/markamo/envpod-ce/blob/main/docs/ACTION-CATALOG.md">Actions</a>
+      <a href="https://github.com/markamo/envpod-ce/issues">Issues</a>
     </div>
   </div>
 </footer>
