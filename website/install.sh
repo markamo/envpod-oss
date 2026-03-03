@@ -5,11 +5,11 @@
 #
 # envpod installer — https://envpod.dev/install.sh
 #
-# Downloads the right pre-built binary for your system, runs the bundled
-# installer, and cleans up. No Rust toolchain required.
+# Downloads the right pre-built binary for your system, then runs the bundled
+# installer with sudo. No Rust toolchain required.
 #
 # Usage:
-#   curl -L https://envpod.dev/install.sh | sudo sh
+#   curl -fsSL https://envpod.dev/install.sh | sh
 #
 # Supports: Linux x86_64 and ARM64 (Raspberry Pi, Jetson Orin, etc.)
 #
@@ -43,10 +43,6 @@ if [ "$(uname -s)" != "Linux" ]; then
     fail "envpod requires Linux. Detected: $(uname -s)"
 fi
 
-if [ "$(id -u)" -ne 0 ]; then
-    fail "Run this script as root: curl -L https://envpod.dev/install.sh | sudo sh"
-fi
-
 MACHINE=$(uname -m)
 case "$MACHINE" in
     x86_64|amd64)   ARCH="x86_64" ;;
@@ -57,14 +53,11 @@ case "$MACHINE" in
 esac
 info "Architecture: ${ARCH}"
 
-# Check for download tool
-if command -v curl >/dev/null 2>&1; then
-    DOWNLOAD="curl -fsSL"
-    DOWNLOAD_FILE="curl -fSL -o"
-elif command -v wget >/dev/null 2>&1; then
-    DOWNLOAD="wget -qO-"
-    DOWNLOAD_FILE="wget -qO"
-else
+if ! command -v sudo >/dev/null 2>&1; then
+    fail "sudo is required. Install sudo or run as root."
+fi
+
+if ! command -v curl >/dev/null 2>&1 && ! command -v wget >/dev/null 2>&1; then
     fail "curl or wget is required. Install one and retry."
 fi
 
@@ -84,10 +77,10 @@ if command -v curl >/dev/null 2>&1; then
 else
     wget -qO "${TMPDIR}/${TARBALL}" "${URL}" || fail "Download failed: ${URL}"
 fi
-info "Downloaded to ${TMPDIR}/${TARBALL}"
+info "Downloaded ${TARBALL}"
 
 # ---------------------------------------------------------------------------
-# Extract and install
+# Extract
 # ---------------------------------------------------------------------------
 
 info "Extracting..."
@@ -95,9 +88,13 @@ tar xzf "${TMPDIR}/${TARBALL}" -C "${TMPDIR}"
 
 RELEASE_DIR=$(find "${TMPDIR}" -maxdepth 1 -type d -name "envpod-*" | head -1)
 if [ -z "${RELEASE_DIR}" ]; then
-    fail "Could not find extracted release directory in ${TMPDIR}"
+    fail "Could not find extracted release directory"
 fi
 info "Extracted to ${RELEASE_DIR}"
 
-info "Running installer..."
-bash "${RELEASE_DIR}/install.sh"
+# ---------------------------------------------------------------------------
+# Install (requires root — sudo prompts here, after context is shown)
+# ---------------------------------------------------------------------------
+
+printf "\n${BOLD}Root access required to install to /usr/local/bin${NC}\n\n"
+sudo bash "${RELEASE_DIR}/install.sh"
