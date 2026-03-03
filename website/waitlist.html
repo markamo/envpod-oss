@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>envpod Pro — Early Access Waitlist</title>
+<meta name="description" content="Get early access to envpod Pro — vault proxy injection, advanced diff, prompt screening, and TLS inspection for production AI agent deployments.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0b;
+  --surface: #111113;
+  --surface2: #16161a;
+  --border: #1e1e24;
+  --border-hi: #2a2a32;
+  --text: #e8e8ed;
+  --muted: #8b8b98;
+  --dim: #5a5a66;
+  --green: #22c55e;
+  --green-dim: #16a34a;
+  --green-glow: rgba(34,197,94,0.08);
+  --blue: #58a6ff;
+  --blue-glow: rgba(88,166,255,0.08);
+  --purple: #bc8cff;
+  --mono: 'JetBrains Mono', 'SF Mono', monospace;
+  --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(900px 600px at 20% 0%,rgba(34,197,94,0.07),transparent 55%),radial-gradient(700px 500px at 80% 20%,rgba(188,140,255,0.06),transparent 50%),var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ── NAV ── */
+nav{width:100%;padding:14px 0;background:rgba(10,10,11,0.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--mono);font-weight:700;font-size:18px;color:var(--text);text-decoration:none;letter-spacing:-0.5px}
+.logo span{color:var(--green)}
+.nav-back{font-size:14px;color:var(--muted);padding:6px 12px;border-radius:6px;transition:color .15s,background .15s;display:flex;align-items:center;gap:6px}
+.nav-back:hover{color:var(--text);background:var(--surface);text-decoration:none}
+
+/* ── MAIN ── */
+.page{max-width:560px;margin:0 auto;padding:80px 32px 100px}
+
+/* ── BADGE ── */
+.badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;color:var(--purple);background:rgba(188,140,255,0.08);border:1px solid rgba(188,140,255,0.18);padding:5px 14px;border-radius:100px;margin-bottom:28px}
+.badge::before{content:'';width:6px;height:6px;background:var(--purple);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* ── HEADING ── */
+.page h1{font-size:clamp(30px,5vw,44px);font-weight:800;line-height:1.08;letter-spacing:-0.03em;margin-bottom:16px}
+.page h1 .accent{color:var(--green)}
+.page .sub{font-size:17px;color:var(--muted);line-height:1.65;margin-bottom:40px}
+
+/* ── FEATURES ── */
+.feature-list{list-style:none;margin-bottom:40px;display:flex;flex-direction:column;gap:10px}
+.feature-list li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--muted);line-height:1.5}
+.feature-list li::before{content:'→';font-family:var(--mono);color:var(--green);flex-shrink:0;margin-top:1px}
+.feature-list li strong{color:var(--text)}
+
+/* ── FORM ── */
+.form-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px}
+.form-card h2{font-size:18px;font-weight:700;margin-bottom:6px}
+.form-card .form-sub{font-size:13px;color:var(--muted);margin-bottom:24px}
+
+.field{margin-bottom:18px}
+.field label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin-bottom:6px;letter-spacing:0.01em}
+.field input,.field select,.field textarea{
+  width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;
+  padding:10px 14px;color:var(--text);font-family:var(--sans);font-size:14px;
+  outline:none;transition:border-color .15s;appearance:none;-webkit-appearance:none
+}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--green)}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235a5a66' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px;cursor:pointer}
+.field input::placeholder,.field textarea::placeholder{color:var(--dim)}
+.field textarea{resize:vertical;min-height:80px;font-size:14px;line-height:1.5}
+
+.btn-submit{width:100%;padding:13px 24px;background:var(--green);color:var(--bg);font-family:var(--mono);font-weight:700;font-size:14px;border-radius:8px;border:none;cursor:pointer;transition:all .2s;margin-top:4px}
+.btn-submit:hover{background:#2dd468;transform:translateY(-1px);box-shadow:0 8px 30px rgba(34,197,94,0.2)}
+.btn-submit:active{transform:none}
+.btn-submit:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+
+.form-note{text-align:center;font-size:12px;color:var(--dim);margin-top:14px}
+
+/* ── SUCCESS ── */
+#success{display:none;text-align:center;padding:40px 0}
+#success .success-icon{font-size:48px;margin-bottom:20px}
+#success h2{font-size:22px;font-weight:700;margin-bottom:10px}
+#success p{color:var(--muted);font-size:14px;max-width:360px;margin:0 auto 28px}
+.btn-back{display:inline-flex;align-items:center;gap:6px;padding:11px 22px;background:var(--surface);color:var(--text);font-family:var(--mono);font-size:13px;border-radius:8px;border:1px solid var(--border);cursor:pointer;transition:all .2s;text-decoration:none}
+.btn-back:hover{border-color:var(--border-hi);text-decoration:none}
+
+/* ── FOOTER ── */
+.footer{text-align:center;padding:32px;font-size:12px;color:var(--dim);border-top:1px solid var(--border);margin-top:0}
+.footer a{color:var(--dim)}
+.footer a:hover{color:var(--muted)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="logo">env<span>pod</span></a>
+    <a href="/" class="nav-back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to home
+    </a>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="badge">Pro · Early Access</div>
+  <h1>Get early access to<br><span class="accent">envpod Pro</span></h1>
+  <p class="sub">Pro ships August 2026. Leave your details and we'll reach out personally before launch — no spam, one email.</p>
+
+  <ul class="feature-list">
+    <li><strong>Vault proxy injection</strong> — API keys never visible to the agent, not even in env vars</li>
+    <li><strong>Advanced diff dashboard</strong> — per-line staging, per-hunk approval, side-by-side view</li>
+    <li><strong>Prompt &amp; instruction screening</strong> — detect jailbreak attempts before execution</li>
+    <li><strong>TLS packet inspection</strong> — see exactly what the agent sends over HTTPS</li>
+    <li><strong>Base pod export / import</strong> — portable environment snapshots across machines</li>
+    <li><strong>Priority support</strong> — direct line to the team</li>
+  </ul>
+
+  <!-- form -->
+  <div class="form-card">
+    <h2>Join the waitlist</h2>
+    <p class="form-sub">~60 seconds. No card required.</p>
+
+    <form id="waitlist-form" action="https://formspree.io/f/REPLACE_WITH_YOUR_FORMSPREE_ID" method="POST">
+      <div class="field">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Ada Lovelace" required autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="email">Work email</label>
+        <input type="email" id="email" name="email" placeholder="ada@company.com" required autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="use_case">What are you building?</label>
+        <select id="use_case" name="use_case" required>
+          <option value="" disabled selected>Select one</option>
+          <option value="coding_agents">Coding agents (Claude Code, Codex, etc.)</option>
+          <option value="browser_agents">Browser / web automation agents</option>
+          <option value="ml_training">ML training workloads</option>
+          <option value="multi_agent_fleet">Multi-agent fleet / swarm</option>
+          <option value="platform">Embedding envpod in a platform or framework</option>
+          <option value="enterprise_internal">Internal tooling / enterprise deployment</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="team_size">Team size</label>
+        <select id="team_size" name="team_size">
+          <option value="" disabled selected>Select one</option>
+          <option value="solo">Just me</option>
+          <option value="2-5">2–5 people</option>
+          <option value="6-20">6–20 people</option>
+          <option value="21-100">21–100 people</option>
+          <option value="100+">100+ people</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="notes">Anything else? <span style="font-weight:400;color:var(--dim)">(optional)</span></label>
+        <textarea id="notes" name="notes" placeholder="Integrations you need, current pain points, specific use cases..."></textarea>
+      </div>
+      <input type="hidden" name="_subject" value="envpod Pro waitlist">
+      <input type="text" name="_gotcha" style="display:none">
+      <button type="submit" class="btn-submit" id="submit-btn">Join the waitlist →</button>
+      <p class="form-note">No spam. One email when Pro launches. $49 / seat / mo.</p>
+    </form>
+
+    <div id="success">
+      <div class="success-icon">✓</div>
+      <h2>You're on the list.</h2>
+      <p>We'll reach out personally before Pro launches in August 2026. Check your inbox for a confirmation.</p>
+      <a href="/" class="btn-back">← Back to envpod.dev</a>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  Copyright 2026 Mark Amo-Boateng / Xtellix Inc. ·
+  <a href="https://github.com/markamo/envpod-oss/blob/main/LICENSE">BSL 1.1</a> ·
+  <a href="mailto:mark@xtellix.com">mark@xtellix.com</a>
+</div>
+
+<script>
+const form = document.getElementById('waitlist-form');
+const success = document.getElementById('success');
+const submitBtn = document.getElementById('submit-btn');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Submitting…';
+
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      form.style.display = 'none';
+      success.style.display = 'block';
+    } else {
+      throw new Error('Server error');
+    }
+  } catch {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Join the waitlist →';
+    alert('Something went wrong. Please email mark@xtellix.com directly.');
+  }
+});
+</script>
+</body>
+</html>
