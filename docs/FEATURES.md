@@ -1,361 +1,299 @@
-# envpod Feature Tiers
+# envpod OSS — Features
 
 > "Docker isolates. Envpod governs."
 
-envpod follows an open-core model. The full isolation and governance
-primitives are OSS. High-value security and workflow features are Premium.
-Fleet management, compliance, and managed infrastructure are Enterprise.
+envpod gives every AI agent four hard walls and a governance ceiling.
+The agent runs inside a **pod** — isolated, auditable, and fully reversible.
+You stay in control of every change it makes.
 
 ---
 
-## Quick Comparison
+## Filesystem Governance
 
-| | OSS | Premium | Enterprise |
-|---|:---:|:---:|:---:|
-| Price | Free | ~$49–99/seat/mo | Custom / annual |
-| Source | Apache-2.0 | Proprietary | Proprietary |
-| Deployment | Single machine | Single machine | Multi-machine |
-| Support | Community / GitHub | Email | SLA + dedicated |
+**Copy-on-write overlay (OverlayFS)** — every file the agent writes goes into
+a private overlay. The host filesystem is untouched until you explicitly approve
+the changes.
 
----
-
-## Feature Table
-
-### Isolation
-
-| Feature | OSS | Premium | Enterprise |
-|---|:---:|:---:|:---:|
-| Linux namespaces (PID / net / mount / UTS / user) | ✓ | ✓ | ✓ |
-| cgroups v2 (CPU / memory / IO limits) | ✓ | ✓ | ✓ |
-| OverlayFS copy-on-write filesystem | ✓ | ✓ | ✓ |
-| seccomp-BPF syscall filtering | ✓ | ✓ | ✓ |
-| Network namespace + veth pairs | ✓ | ✓ | ✓ |
-| x86\_64 Linux (static musl binary) | ✓ | ✓ | ✓ |
-| ARM64 (Raspberry Pi 4/5, Jetson Orin) | ✓ | ✓ | ✓ |
-| Pod encryption at rest | — | ✓ | ✓ |
-| Custom rootfs (Alpine / debootstrap / OCI image) | — | ✓ | ✓ |
-| Docker backend | — | ✓ | ✓ |
-| Firecracker microVM backend | — | — | ✓ |
-
----
-
-### Filesystem Governance
-
-| Feature | OSS | Premium | Enterprise |
-|---|:---:|:---:|:---:|
-| Diff / Commit / Rollback (CLI) | ✓ | ✓ | ✓ |
-| Selective commit (paths / exclude) | ✓ | ✓ | ✓ |
-| Commit to custom output directory | ✓ | ✓ | ✓ |
-| Basic diff dashboard (file list + kind) | ✓ | ✓ | ✓ |
-| Inline git-style diff (per-hunk +/− lines) | — | ✓ | ✓ |
-| Per-file / per-hunk selective staging | — | ✓ | ✓ |
-| Side-by-side diff view | — | ✓ | ✓ |
-
----
-
-### Snapshots
-
-| Feature | OSS | Premium | Enterprise |
-|---|:---:|:---:|:---:|
-| Create / restore / delete snapshots | ✓ | ✓ | ✓ |
-| Named snapshots (human-readable labels) | ✓ | ✓ | ✓ |
-| Auto-snapshot before each run | ✓ | ✓ | ✓ |
-| Auto-prune (keep N, oldest-auto-first) | ✓ | ✓ | ✓ |
-| Snapshot dashboard tab | ✓ | ✓ | ✓ |
-| Promote snapshot → new clonable base | — | ✓ | ✓ |
-| Diff between two snapshots | — | ✓ | ✓ |
-| Snapshot export / import (`.tar.gz`) | — | ✓ | ✓ |
-| Snapshot timeline visualization | — | ✓ | ✓ |
-
----
-
-### Base Pods & Cloning
-
-| Feature | OSS | Premium | Enterprise |
-|---|:---:|:---:|:---:|
-| Base pod create (init + setup → snapshot) | ✓ | ✓ | ✓ |
-| Fast clone from base (~130 ms) | ✓ | ✓ | ✓ |
-| Clone from current state (`--current`) | ✓ | ✓ | ✓ |
-| Base pod export / import (`.tar.gz`) | — | ✓ | ✓ |
-| Shared base registry (team-wide) | — | — | ✓ |
-
----
-
-### Credential Vault
-
-| Feature | OSS | Premium | Enterprise |
-|---|:---:|:---:|:---:|
-| Encrypted vault (ChaCha20-Poly1305) | ✓ | ✓ | ✓ |
-| Env var injection at run time | ✓ | ✓ | ✓ |
-| **Vault proxy injection** | — | ✓ | ✓ |
-| → Agent-blind API keys (never in env / memory) | — | ✓ | ✓ |
-| → TLS MITM with per-pod ephemeral CA | — | ✓ | ✓ |
-| → SNI-based header injection (any domain) | — | ✓ | ✓ |
-| Vault import from `.env` file | — | ✓ | ✓ |
-| Vault export (encrypted) | — | ✓ | ✓ |
-| HSM / cloud KMS backend | — | — | ✓ |
-
-> **Why vault proxy is Premium:** Once OSS, any container runtime (Docker,
-> cloud providers, e2b, Modal) can absorb the feature in weeks. It is the
-> single strongest argument for security-conscious buyers and must stay
-> proprietary to protect revenue.
-
----
-
-### Network
-
-| Feature | OSS | Premium | Enterprise |
-|---|:---:|:---:|:---:|
-| DNS allow / deny lists | ✓ | ✓ | ✓ |
-| DNS remap / monitor modes | ✓ | ✓ | ✓ |
-| Anti-DNS-tunneling | ✓ | ✓ | ✓ |
-| Port forwarding (localhost / public / pod-to-pod) | ✓ | ✓ | ✓ |
-| Live port mutation (no pod restart) | ✓ | ✓ | ✓ |
-| Pod-to-pod discovery (`*.pods.local`) | ✓ | ✓ | ✓ |
-| Bandwidth / rate limiting | ✓ | ✓ | ✓ |
-| TLS inspection + per-connection audit | — | ✓ | ✓ |
-| Full packet audit (PCAP per pod) | — | — | ✓ |
-| Tailscale VPN integration | — | — | ✓ |
-| Cross-machine pod networking | — | — | ✓ |
-
----
-
-### Action Queue & Reversibility
-
-| Feature | OSS | Premium | Enterprise |
-|---|:---:|:---:|:---:|
-| Staged / delayed / blocked / immediate tiers | ✓ | ✓ | ✓ |
-| Human approval for staged actions | ✓ | ✓ | ✓ |
-| Undo registry (per-action rollback) | ✓ | ✓ | ✓ |
-| Queue Unix socket (`/run/envpod/queue.sock`) | ✓ | ✓ | ✓ |
-| Commit / rollback gated by queue approval | ✓ | ✓ | ✓ |
-| Budget enforcement (action cost caps) | — | ✓ | ✓ |
-| Policy-driven auto-approval rules | — | ✓ | ✓ |
-
----
-
-### Action Catalog
-
-The host-defined menu of what an agent is allowed to do. Agents discover available
-actions at runtime via the queue socket, call them by name, and envpod executes
-them — after validation, tier checks, and any required human approval.
-Credentials are fetched from the vault at execution time; the agent never sees them.
-
-**OSS ships 20 built-in types** covering the full coding and development workflow.
-**Premium adds 8 types** with real-world consequences: messaging (irreversible sends),
-database writes (production data), and system shell (arbitrary execution).
-
-| Feature | OSS | Premium | Enterprise |
-|---|:---:|:---:|:---:|
-| Host-defined action catalog (`actions.json`) | ✓ | ✓ | ✓ |
-| MCP-style tool discovery (`list_actions`) | ✓ | ✓ | ✓ |
-| Param schema validation (required / unknown key rejection) | ✓ | ✓ | ✓ |
-| Action scope: internal (reversible) vs external (irreversible) | ✓ | ✓ | ✓ |
-| Filesystem containment (no `..` traversal, overlay-only) | ✓ | ✓ | ✓ |
-| Auth from vault (`auth_vault_key` in config) | ✓ | ✓ | ✓ |
-| Hot-reload catalog without pod restart | ✓ | ✓ | ✓ |
-| Rate limiting (120 req/min global, 20 submit/min) | ✓ | ✓ | ✓ |
-| **OSS action types — 20 types** | | | |
-| → HTTP: GET / POST / PUT / PATCH / DELETE / webhook (6) | ✓ | ✓ | ✓ |
-| → Filesystem: create / write / delete / copy / move / mkdir / rmdir (7) | ✓ | ✓ | ✓ |
-| → Git: commit / push / pull / checkout / branch / tag (6) | ✓ | ✓ | ✓ |
-| → Custom: host-defined schema, host-side executor (1) | ✓ | ✓ | ✓ |
-| **Premium action types — 8 types** | | | |
-| → Messaging: email / SMS / Slack / Discord / Teams (5) | — | ✓ | ✓ |
-| → Database: query (SELECT) / execute (INSERT·UPDATE·DELETE) (2) | — | ✓ | ✓ |
-| → System: `shell_command` — arbitrary shell, blocked by default (1) | — | ✓ | ✓ |
-
-> **Why Messaging / Database / Shell are Premium:** these actions have consequences
-> outside the pod that cannot be rolled back — a sent message cannot be unsent,
-> a `DELETE FROM orders` cannot be undone, a shell command can do anything.
-> Operators who need them are the same buyers who need governance guarantees,
-> audit trails, and compliance reports. The governance burden matches the risk.
-
----
-
-### Prompt & Tool Screening
-
-| Feature | OSS | Premium | Enterprise |
-|---|:---:|:---:|:---:|
-| Tool call interception hooks | ✓ | ✓ | ✓ |
-| Prompt / instruction screening | — | ✓ | ✓ |
-| Tool call policy engine (allow / deny / rewrite) | — | ✓ | ✓ |
-| FEBO ML-powered policy engine | — | ✓ | ✓ |
-| Custom policy rules (YAML) | — | ✓ | ✓ |
-
----
-
-### AI Monitoring Agent
-
-The governance ceiling includes an AI-powered monitoring layer that the operator
-configures per pod. Unlike rule-based policy engines, the AI monitoring agent
-understands **context** — what the pod is supposed to be doing — and identifies
-deviations based on intent, not just fixed patterns.
-
-**How it works:**
-
-1. Operator defines context in `pod.yaml` — what the agent is, what it's allowed
-   to do, and what counts as suspicious (plain language, like a system prompt).
-2. AI model is configured with BYOK (bring your own key, stored in vault).
-   Supports any model: Claude, GPT-4o, Gemini, or a local Llama endpoint.
-3. **Pre-execution screening** — the AI reviews staged actions *before* the human
-   approval prompt appears. It can pass through, flag as suspicious (with reasoning
-   shown to the operator), or block outright.
-4. **Post-execution audit analysis** — the AI streams `audit.jsonl` in real time,
-   detecting behavioral patterns: rapid deletes, repeated blocked attempts, scope
-   creep into unexpected paths, unusual outbound domains.
-5. **Intervention hooks** — the AI can trigger: escalate tier, freeze pod, call
-   an alert webhook, or append a note to the audit log.
-
-```yaml
-# pod.yaml — AI monitoring agent
-monitoring:
-  ai:
-    enabled: true
-    model: claude-opus-4-6           # or gpt-4o, gemini-1.5-pro, http://localhost:11434
-    auth_vault_key: ANTHROPIC_API_KEY
-    context: |
-      This pod runs a coding assistant working on a Python web app.
-      Normal behaviour: read/write files in /workspace/src, HTTP calls to
-      pypi.org and github.com, git commits to the current branch.
-      Suspicious: writing outside /workspace, deleting .git, HTTP calls to
-      unknown hosts, any attempt to read /etc or environment variables.
-    screen_actions: true    # review staged actions before human sees them
-    screen_audit: true      # analyze audit stream for anomalies
-    intervention:
-      suspicious: escalate  # change tier to staged, show AI reasoning
-      violation: freeze     # freeze pod immediately
-      alert_webhook: https://hooks.slack.com/...
+```bash
+envpod diff   my-agent        # see exactly what the agent changed
+envpod commit my-agent        # apply approved changes to host
+envpod rollback my-agent      # discard everything — host unchanged
 ```
 
-| Feature | OSS | Premium | Enterprise |
-|---|:---:|:---:|:---:|
-| Rule-based anomaly detection (rapid writes, blocked patterns) | ✓ | ✓ | ✓ |
-| AI monitoring agent (BYOK) | — | ✓ | ✓ |
-| → Context definition per pod (plain-language intent + constraints) | — | ✓ | ✓ |
-| → Pre-execution action screening (AI reviews before human prompt) | — | ✓ | ✓ |
-| → AI reasoning shown alongside staged action (operator sees why) | — | ✓ | ✓ |
-| → Post-execution audit log analysis (behavioral pattern detection) | — | ✓ | ✓ |
-| → Intervention hooks (escalate / freeze / alert webhook) | — | ✓ | ✓ |
-| → Any model: Claude / GPT / Gemini / local Llama endpoint | — | ✓ | ✓ |
-| → Auth key stored in vault (model never sees raw key) | — | ✓ | ✓ |
-| Managed AI monitoring (Xtellix-hosted, no user key required) | — | — | ✓ |
-| Cross-pod behavioral correlation (fleet-wide anomaly detection) | — | — | ✓ |
-| Pre-trained agent behavior models (tuned on envpod audit data) | — | — | ✓ |
-
-> **Why BYOK for Premium:** the operator controls model choice and cost. An
-> operator running 50 pods may choose a cheap fast model for routine screening
-> and a powerful model only when the rule-based layer raises a flag. Enterprise
-> removes the key management burden entirely — Xtellix hosts the inference,
-> operators get fleet-wide behavioral intelligence with zero config.
+**Impact:** an agent can run for hours writing thousands of files. Nothing
+reaches your real filesystem until you review and approve it. One command
+to undo everything if it went wrong.
 
 ---
 
-### Monitoring & Audit
+## Credential Vault
 
-| Feature | OSS | Premium | Enterprise |
-|---|:---:|:---:|:---:|
-| Action audit log (`audit.jsonl`) | ✓ | ✓ | ✓ |
-| Static security audit (`--security`) | ✓ | ✓ | ✓ |
-| Live resource monitoring (cgroup stats) | ✓ | ✓ | ✓ |
-| Rule-based anomaly detection | ✓ | ✓ | ✓ |
-| AI monitoring agent (see section above) | — | ✓ | ✓ |
-| Budget tracking (cost per pod) | — | ✓ | ✓ |
-| Tamper-proof signed audit log | — | ✓ | ✓ |
-| Audit retention policy + archival | — | — | ✓ |
-| Compliance report export (SOC2 / HIPAA) | — | — | ✓ |
-| Certified audit (third-party attestation) | — | — | ✓ |
+Secrets are stored encrypted at rest (ChaCha20-Poly1305) in a per-pod vault.
+They are injected as environment variables at run time — they never appear in
+pod.yaml, command lines, or logs.
 
----
+```bash
+echo "sk-..." | envpod vault my-agent set ANTHROPIC_API_KEY
+envpod vault my-agent list      # shows key names, never values
+envpod vault my-agent import .env
+```
 
-### Dashboard & Remote Control
-
-| Feature | OSS | Premium | Enterprise |
-|---|:---:|:---:|:---:|
-| Web dashboard — fleet overview | ✓ | ✓ | ✓ |
-| Web dashboard — pod detail (basic) | ✓ | ✓ | ✓ |
-| Web dashboard — audit tab | ✓ | ✓ | ✓ |
-| Web dashboard — resources tab | ✓ | ✓ | ✓ |
-| Web dashboard — basic diff tab | ✓ | ✓ | ✓ |
-| Web dashboard — snapshots tab | ✓ | ✓ | ✓ |
-| Web dashboard — inline diff (Premium tab) | — | ✓ | ✓ |
-| Remote control API (freeze / kill / restrict) | ✓ | ✓ | ✓ |
-| Slack / Telegram / WhatsApp alerts | — | — | ✓ |
-| Mobile app (iOS / Android) | — | — | ✓ |
+**Impact:** API keys, database passwords, and tokens stay out of config files
+and out of version control. The agent gets its credentials at runtime only.
 
 ---
 
-### Fleet Management (Enterprise only)
+## Action Queue & Human Approval
 
-| Feature | OSS | Premium | Enterprise |
-|---|:---:|:---:|:---:|
-| Single machine | ✓ | ✓ | ✓ |
-| Multi-machine fleet | — | — | ✓ |
-| RBAC / team permissions | — | — | ✓ |
-| SSO / SAML / OIDC | — | — | ✓ |
-| Centralized policy management | — | — | ✓ |
-| Air-gapped / offline deployment | — | — | ✓ |
-| Managed SaaS (hosted envpod) | — | — | ✓ |
-| SLA + dedicated support | — | — | ✓ |
-| Custom integrations | — | — | ✓ |
+Agents submit actions through a Unix socket. You decide what executes
+immediately, what waits for human approval, and what is blocked entirely.
 
----
+Four tiers:
+- **Immediate** — executes without interruption (safe, reversible actions)
+- **Delayed** — executes after a grace period (cancel window)
+- **Staged** — waits for explicit human approval before running
+- **Blocked** — permanently denied
 
-## Why This Split Works
+```bash
+envpod approve my-agent <action-id>
+envpod cancel  my-agent <action-id>
+envpod queue   my-agent ls
+```
 
-### OSS is genuinely useful
-The full isolation stack, diff/commit/rollback, vault (env injection),
-DNS filtering, action queue, 20 built-in action types, snapshots, and web
-dashboard — these are production-ready on their own. Solo developers and
-small teams running coding agents, research agents, or CI/CD automation
-can use envpod for free forever with no artificial limits.
+Every executed action is tracked with an undo mechanism — so even approved
+actions can be reversed.
 
-The OSS action types are not an afterthought. HTTP + Filesystem + Git cover
-the entire coding agent workflow: fetch docs, write code, commit, push. That
-is the primary use case and it is fully unlocked at zero cost.
-
-### Premium solves high-consequence problems
-**Vault proxy injection** is the clearest example: "your agents literally
-cannot exfiltrate API keys, ever" is a statement no OSS tool can make
-once the implementation is public.
-
-**AI monitoring agent** is the second: context-aware pre-execution screening
-that understands *what the agent is supposed to be doing* rather than matching
-fixed rules. This is not reproducible by copying the OSS codebase — the value
-is in the inference layer, the context schema, and the integration between the
-audit stream and the action queue.
-
-**Premium action types** (Messaging / Database / Shell) are gated because the
-operators who need them are also the operators who need governance. A team
-letting an agent send Slack messages or modify a production database needs the
-full premium governance stack — AI screening, signed audit, tamper-proof logs
-— before enabling those capabilities. The gate is intentional: it prevents
-high-consequence actions from being enabled in a low-governance environment.
-
-### Enterprise solves organizational problems
-Compliance, fleet management, and SSO are budget line items in regulated
-industries. These are sold as annual contracts with SLAs, not seat licenses.
-The managed AI monitoring service (no user API key, cross-pod behavioral
-intelligence) is the clearest Enterprise differentiator.
+**Impact:** the agent cannot send a request, push to git, or delete files
+without going through your approval gate. You define the rules per pod.
 
 ---
 
-## Competitive Risk of Going OSS Too Far
+## Action Catalog — 20 Built-in Types
 
-Features that would destroy revenue if released as OSS:
+The host defines a menu of exactly what the agent is allowed to do.
+Agents discover available actions at runtime (MCP-style tool discovery)
+and call them by name. envpod executes them — after validation, tier
+checks, and any required approval. Credentials are fetched from the vault
+at execution time; the agent never sees them.
 
-| Feature | Who Absorbs It | Time to Clone | Revenue Impact |
-|---|---|---|---|
-| Vault proxy injection | Docker, AWS, e2b, Modal | 1–2 weeks | Critical |
-| AI monitoring agent (context-aware screening) | AWS Bedrock Guardrails, Anthropic | 4–8 weeks | Critical |
-| Messaging / Database / Shell action types | Any fork adding 8 executors | 1 week | High |
-| TLS inspection (agent-specific) | Cloudflare, AWS WAF | 2–4 weeks | High |
-| Prompt / tool screening | AWS Guardrails, Azure Content Safety | 2–4 weeks | High |
-| Tamper-proof signed audit | Any fork satisfying SOC2 auditors | 1 week | High |
-| Budget tracking per pod | Datadog, cloud cost tools | 1 week | Medium |
-| Per-hunk diff staging | Any fork with a React dev | 1 week | Medium |
-| FEBO policy engine (framework) | Competitors plug in own models | 2–4 weeks | High |
+**HTTP (6):** `http_get`, `http_post`, `http_put`, `http_patch`, `http_delete`, `webhook`
+
+**Filesystem (7):** `file_create`, `file_write`, `file_delete`, `file_copy`, `file_move`, `dir_create`, `dir_delete`
+
+**Git (6):** `git_commit`, `git_push`, `git_pull`, `git_checkout`, `git_branch`, `git_tag`
+
+**Custom (1):** host-defined schema, host-side executor — bring your own tool
+
+```bash
+envpod actions my-agent ls              # agent discovers available tools
+envpod actions my-agent add            # host adds a new action
+envpod actions my-agent set-tier send_file staged
+```
+
+Hot-reload — update the catalog without restarting the pod.
+
+**Impact:** the agent cannot call tools you have not explicitly listed.
+No surprise API calls, no arbitrary shell commands. The tool menu is
+defined and controlled by you.
 
 ---
 
-*Copyright 2026 Xtellix Inc. All rights reserved.*
+## DNS Filtering
+
+Every pod runs its own embedded DNS resolver. You control what the agent
+can reach on the network.
+
+```yaml
+dns:
+  mode: whitelist
+  allow:
+    - api.anthropic.com
+    - pypi.org
+    - github.com
+```
+
+Modes: `whitelist` (allow-list only), `blacklist` (block specific domains),
+`monitor` (log all queries), `remap` (redirect domains to different IPs).
+
+Anti-DNS-tunneling protection is built in — prevents data exfiltration via
+crafted DNS queries.
+
+**Impact:** the agent cannot phone home, exfiltrate data, or reach unexpected
+services. You define the network surface exactly.
+
+---
+
+## Network Isolation
+
+Each pod gets its own network namespace with a dedicated veth pair.
+Pods are fully isolated from each other and from the host network by default.
+
+**Port forwarding — three scopes:**
+- `ports` — localhost only (your machine, not the LAN)
+- `public_ports` — all network interfaces
+- `internal_ports` — pod-to-pod only (no host involvement, no DNAT)
+
+**Pod discovery** — pods find each other by name (`agent-b.pods.local`)
+when explicitly allowed. Bilateral: both pods must opt in.
+
+---
+
+## Process Isolation
+
+- **PID namespace** — pod processes cannot see host processes
+- **cgroups v2** — hard CPU, memory, and IO limits enforced by the kernel
+- **seccomp-BPF** — syscall filtering blocks dangerous system calls
+- **UTS namespace** — pod has its own hostname
+- **User namespace** — agent runs as an unprivileged user inside the pod
+
+```yaml
+resources:
+  memory_mb: 2048
+  cpu_shares: 512
+  pids_max: 256
+```
+
+**Impact:** a runaway agent cannot starve the host of memory or CPU.
+A compromised agent cannot call dangerous syscalls or see host processes.
+
+---
+
+## Audit Log
+
+Every action in the pod lifecycle is recorded in an append-only JSONL file.
+Create, run, diff, commit, rollback, vault access, queue events, DNS queries
+— all timestamped and structured.
+
+```bash
+envpod audit my-agent              # timeline view
+envpod audit my-agent --json       # machine-readable
+envpod audit my-agent --security   # static security analysis of pod config
+```
+
+The security audit checks your pod.yaml for misconfigurations — unsafe network
+mode, missing resource limits, root execution, and more — before you ever run.
+
+**Impact:** full traceability of everything the agent did and every decision
+you made. If something goes wrong, you have a complete record to investigate.
+
+---
+
+## Snapshots
+
+Save and restore the agent's overlay state at any point.
+
+```bash
+envpod snapshot my-agent create before-refactor
+envpod snapshot my-agent ls
+envpod snapshot my-agent restore before-refactor
+```
+
+Auto-snapshot before every run — a checkpoint always exists from before
+the last execution. Configurable retention (`keep_last: 5`).
+
+**Impact:** experiment freely. The agent tried something destructive?
+Restore to before the run with one command.
+
+---
+
+## Base Pods & Fast Cloning
+
+Run `envpod init` once with all your setup commands (install dependencies,
+configure tools). That becomes a base. Clone from it instantly.
+
+```bash
+envpod base create python-base    # ~1.3s — runs setup once
+envpod clone python-base agent-1  # ~130ms — no setup re-run
+envpod clone python-base agent-2
+envpod clone python-base agent-3
+```
+
+10× faster than re-running setup. Clone a fleet of identical agents in seconds.
+
+**Impact:** spin up 50 identical coding agents in under a minute. Each gets
+its own isolated overlay — changes in one never affect the others.
+
+---
+
+## Web Dashboard
+
+`envpod dashboard` starts a local web interface on `localhost:9090`.
+
+- **Fleet overview** — all pods, status, resource usage, pending changes
+- **Pod detail** — live cgroup stats (CPU / memory / PIDs)
+- **Audit tab** — filterable event timeline
+- **Diff tab** — filesystem changes with commit and rollback buttons
+
+No database, no external dependencies — reads existing pod state directly.
+
+**Impact:** review and approve agent changes from a browser instead of
+the terminal. Useful when managing multiple agents at the same time.
+
+---
+
+## Remote Control
+
+Send control commands to a running pod without stopping it.
+
+```bash
+envpod lock   my-agent            # freeze — pause all processes instantly
+envpod remote my-agent resume     # unfreeze
+envpod remote my-agent kill       # terminate immediately
+envpod remote my-agent restrict network=off
+```
+
+Live mutation — update DNS rules or port forwarding on a running pod
+without restarting it.
+
+**Impact:** something looks wrong mid-run? Freeze the agent in place
+in milliseconds. Inspect, decide, then resume or kill.
+
+---
+
+## Device Passthrough
+
+Selectively forward host devices into the pod.
+
+```yaml
+devices:
+  gpu: true       # NVIDIA / AMD GPU (CUDA, ROCm)
+  display: true   # Wayland or X11 (auto-detected)
+  audio: true     # PipeWire or PulseAudio (auto-detected)
+```
+
+**Impact:** run GUI applications and GPU workloads inside governed pods.
+Agents that manipulate images, video, or use ML inference get hardware access
+without escaping the governance layer.
+
+---
+
+## ARM64
+
+The same static binary runs on x86\_64 and ARM64 with no runtime dependencies.
+
+- **Raspberry Pi 4 / 5** — RPi OS 64-bit or Ubuntu 24.04 (enable cgroups v2 in cmdline.txt)
+- **NVIDIA Jetson Orin** — JetPack 6 (cgroups v2 default, GPU passthrough via `/dev/nvhost-*`)
+
+Single `musl`-linked binary — copies anywhere, runs anywhere.
+
+---
+
+## Pod Lifecycle
+
+```bash
+envpod init      my-agent -c agent.yaml   # create pod
+envpod setup     my-agent                 # run setup commands
+envpod run       my-agent -- claude       # run agent
+envpod diff      my-agent                 # review changes
+envpod commit    my-agent                 # apply to host
+envpod rollback  my-agent                 # discard changes
+envpod snapshot  my-agent create v1       # checkpoint
+envpod clone     my-agent my-agent-2      # duplicate
+envpod audit     my-agent                 # review history
+envpod destroy   my-agent                 # remove pod
+envpod gc                                 # clean up stale resources
+```
+
+---
+
+*Copyright 2026 Xtellix Inc. All rights reserved. Licensed under the Apache License, Version 2.0.*
