@@ -70,6 +70,8 @@ jobs:
           cp "target/${TARGET}/release/envpod" "${RELEASE_DIR}/envpod"
           chmod 755 "${RELEASE_DIR}/envpod"
           cp LICENSE "${RELEASE_DIR}/LICENSE"
+          cp uninstall.sh "${RELEASE_DIR}/uninstall.sh"
+          chmod 755 "${RELEASE_DIR}/uninstall.sh"
 
           # Copy docs
           for doc in FEATURES.md TUTORIALS.md ACTION-CATALOG.md CLI-BLACKBOOK.md FOR-DOCKER-USERS.md EMBEDDED.md; do
@@ -145,11 +147,21 @@ jobs:
             mkdir -p "$EXAMPLES_DIR"; cp "$SCRIPT_DIR/examples/"*.yaml "$EXAMPLES_DIR/"; cp "$SCRIPT_DIR/examples/"*.sh "$EXAMPLES_DIR/" 2>/dev/null || true
             info "Examples installed to $EXAMPLES_DIR/"
           fi
+          step "Installing uninstall script"
+          SHARE_DIR="/usr/local/share/envpod"
+          mkdir -p "$SHARE_DIR"
+          if [[ -f "$SCRIPT_DIR/uninstall.sh" ]]; then
+            cp "$SCRIPT_DIR/uninstall.sh" "$SHARE_DIR/uninstall.sh"
+            chmod 755 "$SHARE_DIR/uninstall.sh"
+            info "Uninstall script: sudo bash $SHARE_DIR/uninstall.sh"
+          fi
           step "Verifying"
           "$INSTALL_DIR/envpod" --version && info "envpod installed successfully"
           echo ""; echo -e "${GREEN}${BOLD}Done!${NC}"; echo ""
           echo "  sudo envpod init my-agent -c pod.yaml"
           echo "  sudo envpod run my-agent -- bash"
+          echo ""
+          echo "  To uninstall: sudo bash /usr/local/share/envpod/uninstall.sh"
           echo ""
           INSTALL_EOF
           sed -i "s/PLACEHOLDER_VERSION/${VERSION}/g" "${RELEASE_DIR}/install.sh"

@@ -351,6 +351,16 @@ else
     warn "No examples directory found — skipping"
 fi
 
+step "Installing uninstall script"
+
+SHARE_DIR="/usr/local/share/envpod"
+mkdir -p "$SHARE_DIR"
+if [[ -f "$SCRIPT_DIR/uninstall.sh" ]]; then
+    cp "$SCRIPT_DIR/uninstall.sh" "$SHARE_DIR/uninstall.sh"
+    chmod 755 "$SHARE_DIR/uninstall.sh"
+    info "Uninstall script: sudo bash $SHARE_DIR/uninstall.sh"
+fi
+
 # ---------------------------------------------------------------------------
 # 7. Verify
 # ---------------------------------------------------------------------------
@@ -375,6 +385,9 @@ echo "    sudo envpod diff my-agent"
 echo ""
 echo "  Examples installed to: $EXAMPLES_DIR/"
 echo "  Documentation: https://github.com/markamo/envpod-ce/tree/main/docs"
+echo ""
+echo "  To uninstall:"
+echo "    sudo bash /usr/local/share/envpod/uninstall.sh"
 echo ""
 INSTALL_EOF
     chmod 755 "${RELEASE_DIR}/install.sh"
@@ -517,7 +530,9 @@ README_EOF
     # -----------------------------------------------------------------------
 
     cp "${SCRIPT_DIR}/LICENSE" "${RELEASE_DIR}/LICENSE"
-    info "LICENSE generated"
+    cp "${SCRIPT_DIR}/uninstall.sh" "${RELEASE_DIR}/uninstall.sh"
+    chmod 755 "${RELEASE_DIR}/uninstall.sh"
+    info "LICENSE + uninstall.sh copied"
 
     # -----------------------------------------------------------------------
     # 6. Copy docs and examples from repo

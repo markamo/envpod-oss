@@ -56,7 +56,7 @@ fi
 
 echo -e "${BOLD}"
 echo "  ┌──────────────────────────────────────┐"
-echo "  │       envpod OSS uninstaller          │"
+echo "  │       envpod CE uninstaller           │"
 echo "  └──────────────────────────────────────┘"
 echo -e "${NC}"
 
