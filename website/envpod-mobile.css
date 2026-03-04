@@ -146,6 +146,19 @@
     padding: 10px 14px !important;
     overflow-x: auto;
   }
+  .hero-install-row {
+    max-width: 100% !important;
+    overflow: visible !important;
+    flex-wrap: wrap;
+  }
+  .hero-install-cmd {
+    white-space: normal !important;
+    word-break: break-all;
+    font-size: 11px !important;
+  }
+  .hero-install-copy {
+    flex-shrink: 0;
+  }
 
   /* ── NUMBERS ── */
   .numbers-grid {
