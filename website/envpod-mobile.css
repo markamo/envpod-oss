@@ -193,19 +193,14 @@
     display: none; /* hide keyboard shortcuts on mobile */
   }
   
-  /* Suggestion pills — horizontal scroll on mobile */
+  /* Suggestion pills — wrap on mobile */
   .pills,
   .term-suggestions {
-    flex-wrap: nowrap !important;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 80px !important;
-    justify-content: flex-start !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
     gap: 6px !important;
-    scrollbar-width: none;
+    padding-bottom: 80px !important;
   }
-  .pills::-webkit-scrollbar,
-  .term-suggestions::-webkit-scrollbar { display: none; }
   .pill,
   .term-pill {
     flex-shrink: 0;
