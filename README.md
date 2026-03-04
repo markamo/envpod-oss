@@ -103,6 +103,17 @@ Ubuntu 24.04, Docker 29.2.1, Podman 4.9.3, NVIDIA TITAN RTX x2, 10 iterations av
 
 Envpod GPU base is **69% smaller** than Docker's — CUDA libraries are bind-mounted from the host, not copied. Clone is ~10x faster than init (rootfs symlinked).
 
+**Real-world DNS + API (what agents actually do):**
+
+| Test | Docker | Podman | Envpod | vs Docker | vs Podman |
+|------|--------|--------|--------|-----------|-----------|
+| fresh: nslookup google.com | 521ms | 504ms | **249ms** | **272ms faster** | **255ms faster** |
+| warm: nslookup google.com | 100ms | 240ms | **72ms** | **28ms faster** | **168ms faster** |
+| fresh: curl GET google.com | 659ms | 694ms | **378ms** | **281ms faster** | **316ms faster** |
+| fresh: curl POST httpbin.org | 642ms | 686ms | **476ms** | **166ms faster** | **210ms faster** |
+
+Envpod resolves DNS through a whitelist filter, logs every query, and still finishes before Docker returns. Docker/Podman pass DNS through unfiltered — no governance.
+
 Raw results from our test machine are in [`results/`](results/) for independent verification.
 
 <details>
@@ -129,6 +140,9 @@ sudo ./tests/benchmark.sh 50 2>&1 | tee results/benchmark-core.txt
 
 # Clone vs init
 sudo ./tests/benchmark-clone.sh 10 2>&1 | tee results/benchmark-clone.txt
+
+# Real-world DNS + HTTPS + API POST
+sudo ./tests/benchmark-dns.sh 10 2>&1 | tee results/benchmark-dns.txt
 ```
 
 Requires: Docker, Podman, envpod installed. NVIDIA GPU for GPU benchmarks. All scripts auto-clean up after themselves.
