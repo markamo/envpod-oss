@@ -206,17 +206,8 @@
   }
   .pills::-webkit-scrollbar,
   .term-suggestions::-webkit-scrollbar { display: none; }
-  .pills::before {
-    content: '← swipe →';
-    display: block;
-    width: 100%;
-    text-align: center;
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--dim);
-    margin-bottom: 6px;
-    flex-shrink: 0;
-    order: -1;
+  .swipe-hint {
+    display: block !important;
   }
   .pill,
   .term-pill {
