@@ -1,7 +1,7 @@
 # Tutorials
 
 > **EnvPod v0.1.0** — Zero-trust governance environments for AI agents
-> Author: Mark Amoboateng · mark@envpod.com · m.amoboateng@gmail.com
+> Author: Mark Amoboateng · mark@envpod.dev
 > Copyright 2026 Xtellix Inc. · GNU Affero General Public License v3.0
 
 ---

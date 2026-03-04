@@ -1,3 +1,8 @@
+[![Release](https://img.shields.io/badge/release-v0.1.0-brightgreen)](https://github.com/markamo/envpod-ce/releases/tag/v0.1.0)
+[![License](https://img.shields.io/badge/license-AGPL--3.0-blue)](LICENSE)
+[![Platform](https://img.shields.io/badge/platform-Linux%20x86__64%20%7C%20ARM64-lightgrey)](docs/EMBEDDED.md)
+[![Built with Rust](https://img.shields.io/badge/built%20with-Rust-orange)](https://www.rust-lang.org/)
+
 # envpod — Zero-trust governance environments for AI agents
 
 > "Docker isolates. Envpod governs."
@@ -5,6 +10,8 @@
 ## What is envpod?
 
 envpod is a governance layer for AI agents running on Linux. It gives every agent a **pod** — an isolated environment with four hard walls (memory, filesystem, network, processor) and a governance ceiling that records, reviews, and controls everything the agent does.
+
+> **Why not just Docker?** Docker isolates processes but provides zero governance. No file change review, no action queue, no credential vault, no undo. Envpod adds the governance layer on top of the same Linux primitives. See [Docker vs Envpod](docs/FOR-DOCKER-USERS.md) for a full comparison.
 
 The core insight: container runtimes give you isolation, but isolation alone is not enough for autonomous agents. You need to know what the agent changed, review it before it lands, roll it back if wrong, and keep secrets out of the agent's context. envpod builds this governance layer on top of Linux namespaces, OverlayFS, and cgroups — as a single static binary with no runtime dependencies.
 
@@ -30,6 +37,10 @@ Every agent session runs inside a pod. Filesystem writes go to a copy-on-write o
 ```bash
 # Install (Linux x86_64 or ARM64 — auto-detects arch)
 curl -fsSL https://envpod.dev/install.sh | sh
+
+# Or install from a release tarball
+curl -fsSL https://github.com/markamo/envpod-ce/releases/latest/download/envpod-linux-x86_64.tar.gz \
+  | tar xz && sudo ./envpod-linux-x86_64/install.sh
 
 # Create a pod from a config file
 sudo envpod init my-agent --config pod.yaml
@@ -118,6 +129,10 @@ processor:
 - `docs/ACTION-CATALOG.md` — action type reference
 - `docs/FOR-DOCKER-USERS.md` — envpod for Docker users
 - `docs/EMBEDDED.md` — ARM64 / embedded deployment
+- `docs/LICENSING.md` — AGPL rationale and commercial licensing
+- `CHANGELOG.md` — release history
+- `CONTRIBUTING.md` — how to contribute
+- `SECURITY.md` — vulnerability reporting
 
 ## Building from Source
 
@@ -133,24 +148,12 @@ The binary is at `target/release/envpod`.
 
 ## License
 
-**[GNU Affero General Public License v3.0](LICENSE) (AGPL-3.0-only)**
+[![License](https://img.shields.io/badge/license-AGPL--3.0-blue)](LICENSE)
 
-Copyright 2026 Xtellix Inc.
+Copyright 2026 Xtellix Inc. Licensed under [AGPL-3.0-only](LICENSE) — free to use, modify, and distribute. Cloud providers offering envpod as a service must open-source their stack under AGPL-3.0.
 
-You are free to:
-- Use envpod in production — personal, commercial, internal — at no cost
-- Study, modify, and distribute the source code
-- Build on it for your own products
-
-**The copyleft condition:** If you distribute envpod (bundled in a product, a Docker image, a cloud service, etc.) you must release the complete source code of the combined work under AGPL v3 — not just your changes, but the whole thing.
-
-**What this means for large companies:**
-Docker Engine is already open source (Apache 2.0) — but that is not sufficient. AGPL v3 requires the *entire combined work* to be licensed under AGPL v3 specifically, not just "open sourced." For Docker, this would mean relicensing Docker Engine from Apache 2.0 to AGPL v3, which would ripple through the entire container ecosystem (Kubernetes, containerd, every tool that builds on Docker) and destroy their commercial business model (Docker Desktop). AWS, Google, and other cloud providers face the same problem with their managed container offerings. In practice, no large company will accept this, which is intentional — it prevents tech giants from embedding envpod into their platforms without contributing back or paying for a commercial license.
-
-**For everyone else** (independent developers, startups, researchers, internal tooling): AGPL places no practical restriction. Use it freely.
-
-Commercial licenses (for companies that want to include envpod in closed-source products) are available at [envpod.com](https://envpod.com).
+See [docs/LICENSING.md](docs/LICENSING.md) for full details. For commercial licensing, contact mark@envpod.dev.
 
 ---
 
-Premium features (AI monitoring agent, prompt screening, TLS inspection, messaging/database actions) available at [envpod.com](https://envpod.com)
+Premium features (AI monitoring agent, prompt screening, TLS inspection, messaging/database actions) available at [envpod.dev](https://envpod.dev)
