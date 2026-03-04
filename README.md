@@ -101,7 +101,38 @@ Ubuntu 24.04, Docker 29.2.1, Podman 4.9.3, NVIDIA TITAN RTX x2, 10 iterations av
 | Podman | 77 MB | 229 MB | 11 KB |
 | Envpod | **105 MB** | **105 MB** | **1 KB** |
 
-Envpod GPU base is **69% smaller** than Docker's — CUDA libraries are bind-mounted from the host, not copied. Clone is ~10x faster than init (rootfs symlinked). Run the benchmarks yourself: `sudo ./tests/benchmark-podman.sh 10`
+Envpod GPU base is **69% smaller** than Docker's — CUDA libraries are bind-mounted from the host, not copied. Clone is ~10x faster than init (rootfs symlinked).
+
+Raw results from our test machine are in [`results/`](results/) for independent verification.
+
+<details>
+<summary><strong>Reproduce these benchmarks</strong></summary>
+
+```bash
+# Create results directory
+mkdir -p results
+
+# Head-to-head: Docker vs Podman vs envpod (startup latency)
+sudo ./tests/benchmark-podman.sh 10 2>&1 | tee results/benchmark-podman.txt
+
+# Scale-out: create + run + destroy 50 instances
+sudo ./tests/benchmark-scale.sh 50 2>&1 | tee results/benchmark-scale.txt
+
+# Disk footprint comparison
+sudo ./tests/benchmark-size.sh 2>&1 | tee results/benchmark-size.txt
+
+# GPU passthrough overhead (requires NVIDIA GPU)
+sudo ./tests/benchmark-gpu.sh 10 2>&1 | tee results/benchmark-gpu.txt
+
+# Core envpod benchmarks (init, run, diff, rollback, lifecycle)
+sudo ./tests/benchmark.sh 50 2>&1 | tee results/benchmark-core.txt
+
+# Clone vs init
+sudo ./tests/benchmark-clone.sh 10 2>&1 | tee results/benchmark-clone.txt
+```
+
+Requires: Docker, Podman, envpod installed. NVIDIA GPU for GPU benchmarks. All scripts auto-clean up after themselves.
+</details>
 
 ## Feature Highlights
 
