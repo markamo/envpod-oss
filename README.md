@@ -107,10 +107,11 @@ Envpod GPU base is **69% smaller** than Docker's — CUDA libraries are bind-mou
 
 | Test | Docker | Podman | Envpod | vs Docker | vs Podman |
 |------|--------|--------|--------|-----------|-----------|
-| fresh: nslookup google.com | 521ms | 504ms | **249ms** | **272ms faster** | **255ms faster** |
-| warm: nslookup google.com | 100ms | 240ms | **72ms** | **28ms faster** | **168ms faster** |
-| fresh: curl GET google.com | 659ms | 694ms | **378ms** | **281ms faster** | **316ms faster** |
-| fresh: curl POST httpbin.org | 642ms | 686ms | **476ms** | **166ms faster** | **210ms faster** |
+| fresh: nslookup google.com | 673ms | 784ms | **257ms** | **416ms faster** | **527ms faster** |
+| warm: nslookup google.com | 129ms | 319ms | **62ms** | **67ms faster** | **257ms faster** |
+| fresh: curl GET google.com | 825ms | 874ms | **382ms** | **443ms faster** | **492ms faster** |
+| warm: curl GET google.com | 254ms | 422ms | **191ms** | **63ms faster** | **231ms faster** |
+| fresh: curl POST httpbin.org | 1.07s | 974ms | **508ms** | **559ms faster** | **466ms faster** |
 
 Envpod resolves DNS through a whitelist filter, logs every query, and still finishes before Docker returns. Docker/Podman pass DNS through unfiltered — no governance.
 

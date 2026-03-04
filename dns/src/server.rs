@@ -9,8 +9,9 @@
 
 use std::net::{Ipv4Addr, SocketAddr};
 use std::path::PathBuf;
-use std::sync::{Arc, RwLock};
-use std::time::Instant;
+use std::collections::HashMap;
+use std::sync::{Arc, Mutex, RwLock};
+use std::time::{Duration, Instant};
 
 use anyhow::{Context, Result};
 use hickory_proto::op::{Message, MessageType, OpCode, ResponseCode};
@@ -27,6 +28,70 @@ struct AuditMessage {
     detail: String,
 }
 
+/// In-memory DNS response cache with TTL-based expiration.
+///
+/// Caches raw upstream response bytes keyed by (domain, query_type).
+/// On cache hit, the response ID is patched to match the current query.
+/// Docker's dnsmasq caches by default — this brings envpod to parity for
+/// sustained workloads (loop of curls, repeated API calls, etc.).
+struct DnsCache {
+    entries: HashMap<(String, u16), DnsCacheEntry>,
+    max_ttl: Duration,
+}
+
+struct DnsCacheEntry {
+    response: Vec<u8>,
+    expires_at: Instant,
+}
+
+impl DnsCache {
+    fn new() -> Self {
+        Self {
+            entries: HashMap::new(),
+            max_ttl: Duration::from_secs(300), // 5 min cap
+        }
+    }
+
+    /// Look up a cached response. Returns None if not found or expired.
+    /// On hit, patches the DNS header ID (bytes 0-1) to match the current query.
+    fn get(&mut self, domain: &str, qtype: u16, query_id: u16) -> Option<Vec<u8>> {
+        let key = (domain.to_ascii_lowercase(), qtype);
+        let entry = self.entries.get(&key)?;
+        if Instant::now() < entry.expires_at {
+            let mut resp = entry.response.clone();
+            if resp.len() >= 2 {
+                resp[0] = (query_id >> 8) as u8;
+                resp[1] = query_id as u8;
+            }
+            Some(resp)
+        } else {
+            self.entries.remove(&key);
+            None
+        }
+    }
+
+    /// Cache an upstream DNS response using the minimum TTL from answer records.
+    fn insert(&mut self, domain: &str, qtype: u16, response: &[u8]) {
+        let key = (domain.to_ascii_lowercase(), qtype);
+        let ttl_secs = Self::extract_min_ttl(response).unwrap_or(60);
+        let ttl = Duration::from_secs(ttl_secs.min(self.max_ttl.as_secs()));
+        self.entries.insert(key, DnsCacheEntry {
+            response: response.to_vec(),
+            expires_at: Instant::now() + ttl,
+        });
+    }
+
+    fn extract_min_ttl(data: &[u8]) -> Option<u64> {
+        let msg = Message::from_bytes(data).ok()?;
+        msg.answers()
+            .iter()
+            .chain(msg.name_servers().iter())
+            .map(|r| r.ttl())
+            .min()
+            .map(|t| t as u64)
+    }
+}
+
 /// DNS server that filters queries based on pod policy.
 pub struct DnsServer {
     bind_addr: SocketAddr,
@@ -39,6 +104,10 @@ pub struct DnsServer {
     /// When set, pod name lookups are forwarded to the central daemon (no file reads).
     /// When None or daemon unreachable, `*.pods.local` returns NXDOMAIN.
     daemon_sock: Option<PathBuf>,
+    /// When true, AAAA (IPv6) queries return NODATA immediately without forwarding
+    /// to upstream. Pods always have IPv6 disabled (disable_ipv6=1), so AAAA queries
+    /// are wasted upstream round-trips.
+    filter_aaaa: bool,
 }
 
 /// Handle returned by `DnsServer::spawn()` — used to shut down the server.
@@ -85,6 +154,7 @@ impl DnsServer {
             pod_name,
             audit_path: None,
             daemon_sock: None,
+            filter_aaaa: false,
         }
     }
 
@@ -103,6 +173,7 @@ impl DnsServer {
             pod_name,
             audit_path: None,
             daemon_sock: None,
+            filter_aaaa: false,
         }
     }
 
@@ -120,6 +191,7 @@ impl DnsServer {
             pod_name,
             audit_path: None,
             daemon_sock: None,
+            filter_aaaa: false,
         }
     }
 
@@ -127,6 +199,13 @@ impl DnsServer {
     /// When set, pod name lookups are forwarded to the daemon (in-memory, no file reads).
     pub fn with_daemon_sock(mut self, sock: PathBuf) -> Self {
         self.daemon_sock = Some(sock);
+        self
+    }
+
+    /// Filter AAAA (IPv6) queries — return NODATA immediately without upstream.
+    /// Pods have IPv6 disabled (disable_ipv6=1), so AAAA upstream queries are wasted.
+    pub fn with_filter_aaaa(mut self, filter: bool) -> Self {
+        self.filter_aaaa = filter;
         self
     }
 
@@ -171,6 +250,7 @@ impl DnsServer {
             self.pod_name,
             audit_tx,
             self.daemon_sock,
+            self.filter_aaaa,
             shutdown_rx,
         ));
 
@@ -295,11 +375,13 @@ impl DnsServer {
         pod_name: String,
         audit_tx: Option<mpsc::UnboundedSender<AuditMessage>>,
         daemon_sock: Option<PathBuf>,
+        filter_aaaa: bool,
         mut shutdown_rx: watch::Receiver<bool>,
     ) {
         let socket = Arc::new(socket);
         let audit_tx = Arc::new(audit_tx);
         let daemon_sock = Arc::new(daemon_sock);
+        let cache = Arc::new(Mutex::new(DnsCache::new()));
         let mut buf = vec![0u8; 4096];
         let mut pkt_count: u64 = 0;
 
@@ -323,12 +405,13 @@ impl DnsServer {
                             let pkt_num = pkt_count;
                             let audit_tx = audit_tx.clone();
                             let daemon_sock = daemon_sock.clone();
+                            let cache = cache.clone();
 
                             // Spawn each query handler as a separate task so
                             // slow upstream forwarding doesn't block the receive loop.
                             tokio::spawn(async move {
                                 tracing::debug!("[dns] pkt#{pkt_num} received {len} bytes from {src}");
-                                match Self::handle_query(&data, &policy, &upstream, &pod_name, &audit_tx, &daemon_sock).await {
+                                match Self::handle_query(&data, &policy, &upstream, &pod_name, &audit_tx, &daemon_sock, &cache, filter_aaaa).await {
                                     Ok(response) => {
                                         tracing::debug!("[dns] pkt#{pkt_num} from {src} → resolved ({} bytes)", response.len());
                                         if let Err(e) = sock.send_to(&response, src).await {
@@ -368,7 +451,11 @@ impl DnsServer {
         pod_name: &str,
         audit_tx: &Arc<Option<mpsc::UnboundedSender<AuditMessage>>>,
         daemon_sock: &Arc<Option<PathBuf>>,
+        cache: &Arc<Mutex<DnsCache>>,
+        filter_aaaa: bool,
     ) -> Result<Vec<u8>> {
+        use hickory_proto::rr::record_type::RecordType;
+
         let start = Instant::now();
 
         let request = Message::from_bytes(data).context("parse DNS query")?;
@@ -381,6 +468,14 @@ impl DnsServer {
 
         let domain = question.name().to_string();
         let query_type = question.query_type();
+
+        // Short-circuit AAAA queries when IPv6 is disabled in the pod.
+        // Returns NODATA (NOERROR + empty answer) instantly — saves an upstream
+        // round-trip per unique domain since pods always have disable_ipv6=1.
+        if filter_aaaa && query_type == RecordType::AAAA {
+            tracing::debug!(pod = %pod_name, domain = %domain, "AAAA filtered (IPv6 disabled)");
+            return Self::build_nodata(&request);
+        }
 
         // Pod discovery: intercept *.pods.local before any policy check.
         // Forwards to the central envpod-dns daemon via Unix socket (no file reads).
@@ -420,6 +515,17 @@ impl DnsServer {
 
         match &decision {
             PolicyDecision::Allow => {
+                // Check response cache before hitting upstream
+                let qtype_u16 = u16::from(query_type);
+                if let Some(cached) = cache.lock().expect("dns cache").get(&domain, qtype_u16, request.id()) {
+                    tracing::debug!(
+                        pod = %pod_name,
+                        domain = %domain,
+                        "DNS cache hit"
+                    );
+                    return Ok(cached);
+                }
+
                 tracing::info!(
                     pod = %pod_name,
                     domain = %domain,
@@ -427,7 +533,12 @@ impl DnsServer {
                     latency_us = %_log.latency_us,
                     "DNS query"
                 );
-                Self::forward_to_upstream(data, upstream, pod_name).await
+                let response = Self::forward_to_upstream(data, upstream, pod_name).await?;
+
+                // Cache upstream response (TTL extracted from answer records)
+                cache.lock().expect("dns cache").insert(&domain, qtype_u16, &response);
+
+                Ok(response)
             }
             PolicyDecision::Deny => {
                 tracing::info!(
@@ -698,6 +809,25 @@ impl DnsServer {
         .context("upstream recv")?;
 
         Ok(buf[..timeout.0].to_vec())
+    }
+
+    /// Build a NODATA response (NOERROR + empty answer section).
+    /// Used for AAAA queries when IPv6 is disabled — tells the client
+    /// "domain exists but has no AAAA records", so it falls back to A immediately.
+    fn build_nodata(request: &Message) -> Result<Vec<u8>> {
+        let mut response = Message::new();
+        response.set_id(request.id());
+        response.set_message_type(MessageType::Response);
+        response.set_op_code(OpCode::Query);
+        response.set_recursion_desired(request.recursion_desired());
+        response.set_recursion_available(true);
+        response.set_response_code(ResponseCode::NoError);
+
+        for q in request.queries() {
+            response.add_query(q.clone());
+        }
+
+        Ok(response.to_vec()?)
     }
 
     /// Build an NXDOMAIN response for a denied query.

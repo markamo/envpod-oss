@@ -81,25 +81,37 @@ for cmd in docker podman; do
 done
 
 # ---------------------------------------------------------------------------
-# Container images — pull if needed
+# Container images — build with curl + dnsutils installed
 # ---------------------------------------------------------------------------
-DOCKER_IMG="ubuntu:24.04"
-PODMAN_IMG="docker.io/library/ubuntu:24.04"
+BASE_IMG="ubuntu:24.04"
+DOCKER_IMG="envpod-bench:latest"
+PODMAN_IMG="localhost/envpod-bench:latest"
 
 echo ""
 info "Preparing container images..."
 
+# ubuntu:24.04 doesn't ship curl or dnsutils — build images that have them
+DOCKERFILE="FROM ${BASE_IMG}
+RUN apt-get update && apt-get install -y --no-install-recommends curl dnsutils ca-certificates && rm -rf /var/lib/apt/lists/*"
+
 if ! docker image inspect "$DOCKER_IMG" &>/dev/null; then
-    dim "  Pulling $DOCKER_IMG (Docker)..."
-    docker pull "$DOCKER_IMG" >/dev/null 2>&1
+    dim "  Building $DOCKER_IMG (Docker) — installing curl + dnsutils..."
+    echo "$DOCKERFILE" | docker build -q -t "$DOCKER_IMG" - >/dev/null 2>&1
 fi
-dim "  Docker $DOCKER_IMG: ready"
+# Verify tools exist
+if ! docker run --rm "$DOCKER_IMG" sh -c "command -v curl && command -v nslookup" >/dev/null 2>&1; then
+    echo "Error: Docker image missing curl or nslookup" >&2; exit 1
+fi
+dim "  Docker $DOCKER_IMG: ready (curl + nslookup verified)"
 
 if ! podman image inspect "$PODMAN_IMG" &>/dev/null; then
-    dim "  Pulling $PODMAN_IMG (Podman)..."
-    podman pull "$PODMAN_IMG" >/dev/null 2>&1
+    dim "  Building $PODMAN_IMG (Podman) — installing curl + dnsutils..."
+    echo "$DOCKERFILE" | podman build -q -t "envpod-bench:latest" - >/dev/null 2>&1
 fi
-dim "  Podman $PODMAN_IMG: ready"
+if ! podman run --rm "$PODMAN_IMG" sh -c "command -v curl && command -v nslookup" >/dev/null 2>&1; then
+    echo "Error: Podman image missing curl or nslookup" >&2; exit 1
+fi
+dim "  Podman $PODMAN_IMG: ready (curl + nslookup verified)"
 echo ""
 
 # ---------------------------------------------------------------------------
@@ -138,10 +150,16 @@ YAML
 # Timing + stats helpers
 # ---------------------------------------------------------------------------
 time_ms() {
-    local start end
+    local start end rc
     start=$(date +%s%N)
     "$@" >/dev/null 2>&1
+    rc=$?
     end=$(date +%s%N)
+    if [ $rc -ne 0 ]; then
+        echo "FAIL: exit $rc: $*" >&2
+        echo "-1"
+        return
+    fi
     echo $(( (end - start) / 1000000 ))
 }
 
@@ -669,9 +687,9 @@ echo ""
 info "  Key insight:"
 dim "    Docker/Podman: unfiltered DNS passthrough — no governance"
 dim "    Envpod:        whitelist-filtered DNS + query logging + isolated network"
-dim "    Envpod is faster WITH governance than Docker/Podman WITHOUT it."
-dim "    The in-container loop proves the overhead is in container entry,"
-dim "    not in envpod's DNS filtering or network stack."
+dim "    All runtimes run identical commands (curl, nslookup) with same tools installed."
+dim "    Per-invocation tests reflect real agent workloads (one command per session)."
+dim "    Loop tests measure pure network overhead without container-entry cost."
 echo ""
 info "  What envpod adds (zero extra cost):"
 dim "    + Per-pod DNS whitelist filtering with query logging"

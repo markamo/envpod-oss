@@ -926,7 +926,8 @@ async fn run_setup_commands(
         let bind_ip: std::net::Ipv4Addr = net.host_ip.parse()
             .with_context(|| format!("parse DNS bind IP: {}", net.host_ip))?;
         let policy = build_dns_policy(net);
-        let dns_server = DnsServer::new(bind_ip, policy, upstream, name.to_string());
+        let dns_server = DnsServer::new(bind_ip, policy, upstream, name.to_string())
+            .with_filter_aaaa(true);
         let h = dns_server.spawn().await
             .context("DNS server failed to start (setup phase)")?;
         Some(h)
@@ -1586,7 +1587,8 @@ async fn cmd_run(store: &PodStore, base_dir: &std::path::Path, name: &str, comma
             upstream,
             name.to_string(),
         ).with_audit_path(audit_path)
-         .with_daemon_sock(daemon_sock);
+         .with_daemon_sock(daemon_sock)
+         .with_filter_aaaa(true);
         let handle = dns_server.spawn().await
             .context("DNS server failed to start — pod cannot resolve hostnames")?;
         Some(handle)
