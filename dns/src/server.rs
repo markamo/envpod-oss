@@ -16,10 +16,16 @@ use anyhow::{Context, Result};
 use hickory_proto::op::{Message, MessageType, OpCode, ResponseCode};
 use hickory_proto::serialize::binary::BinDecodable;
 use tokio::net::UdpSocket;
-use tokio::sync::watch;
+use tokio::sync::{mpsc, watch};
 
 use crate::audit::DnsQueryLog;
 use crate::resolver::{DnsPolicy, PolicyDecision};
+
+/// Audit entry queued for async writing.
+struct AuditMessage {
+    pod_name: String,
+    detail: String,
+}
 
 /// DNS server that filters queries based on pod policy.
 pub struct DnsServer {
@@ -153,12 +159,17 @@ impl DnsServer {
         let (shutdown_tx, shutdown_rx) = watch::channel(false);
         let policy = self.policy.clone();
 
+        // Spawn async audit writer — non-blocking channel replaces sync file I/O
+        // in the DNS hot path. Writer holds a persistent file handle and drains
+        // the channel, so DNS queries never block on disk.
+        let audit_tx = Self::spawn_audit_writer(self.audit_path);
+
         let join_handle = tokio::spawn(Self::run_loop(
             socket,
             self.policy,
             self.upstream,
             self.pod_name,
-            self.audit_path,
+            audit_tx,
             self.daemon_sock,
             shutdown_rx,
         ));
@@ -168,6 +179,61 @@ impl DnsServer {
             join_handle,
             policy,
         })
+    }
+
+    /// Spawn a background task that writes audit entries to disk.
+    ///
+    /// Returns an mpsc sender. Callers send `AuditMessage` without blocking.
+    /// The writer holds a persistent file handle (no open/close per entry)
+    /// and flushes after draining all available messages.
+    fn spawn_audit_writer(audit_path: Option<PathBuf>) -> Option<mpsc::UnboundedSender<AuditMessage>> {
+        let path = audit_path?;
+
+        let (tx, mut rx) = mpsc::unbounded_channel::<AuditMessage>();
+
+        tokio::spawn(async move {
+            use std::io::Write;
+
+            let file = std::fs::OpenOptions::new()
+                .create(true)
+                .append(true)
+                .open(&path);
+
+            let mut file = match file {
+                Ok(f) => f,
+                Err(e) => {
+                    tracing::warn!(error = %e, "failed to open DNS audit file, audit disabled");
+                    return;
+                }
+            };
+
+            while let Some(msg) = rx.recv().await {
+                let entry = serde_json::json!({
+                    "timestamp": chrono::Utc::now().to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+                    "pod_name": msg.pod_name,
+                    "action": "dns_query",
+                    "detail": msg.detail,
+                    "success": true,
+                });
+                let _ = writeln!(file, "{}", entry);
+
+                // Drain any buffered messages before flushing
+                while let Ok(msg) = rx.try_recv() {
+                    let entry = serde_json::json!({
+                        "timestamp": chrono::Utc::now().to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+                        "pod_name": msg.pod_name,
+                        "action": "dns_query",
+                        "detail": msg.detail,
+                        "success": true,
+                    });
+                    let _ = writeln!(file, "{}", entry);
+                }
+
+                let _ = file.flush();
+            }
+        });
+
+        Some(tx)
     }
 
     /// Bind a UDP socket that accepts both IPv4 and IPv6 DNS queries.
@@ -227,12 +293,12 @@ impl DnsServer {
         policy: Arc<RwLock<DnsPolicy>>,
         upstream: Vec<SocketAddr>,
         pod_name: String,
-        audit_path: Option<PathBuf>,
+        audit_tx: Option<mpsc::UnboundedSender<AuditMessage>>,
         daemon_sock: Option<PathBuf>,
         mut shutdown_rx: watch::Receiver<bool>,
     ) {
         let socket = Arc::new(socket);
-        let audit_path = Arc::new(audit_path);
+        let audit_tx = Arc::new(audit_tx);
         let daemon_sock = Arc::new(daemon_sock);
         let mut buf = vec![0u8; 4096];
         let mut pkt_count: u64 = 0;
@@ -255,14 +321,14 @@ impl DnsServer {
                             let pod_name = pod_name.clone();
                             let sock = socket.clone();
                             let pkt_num = pkt_count;
-                            let audit_path = audit_path.clone();
+                            let audit_tx = audit_tx.clone();
                             let daemon_sock = daemon_sock.clone();
 
                             // Spawn each query handler as a separate task so
                             // slow upstream forwarding doesn't block the receive loop.
                             tokio::spawn(async move {
                                 tracing::debug!("[dns] pkt#{pkt_num} received {len} bytes from {src}");
-                                match Self::handle_query(&data, &policy, &upstream, &pod_name, &audit_path, &daemon_sock).await {
+                                match Self::handle_query(&data, &policy, &upstream, &pod_name, &audit_tx, &daemon_sock).await {
                                     Ok(response) => {
                                         tracing::debug!("[dns] pkt#{pkt_num} from {src} → resolved ({} bytes)", response.len());
                                         if let Err(e) = sock.send_to(&response, src).await {
@@ -300,7 +366,7 @@ impl DnsServer {
         policy: &Arc<RwLock<DnsPolicy>>,
         upstream: &[SocketAddr],
         pod_name: &str,
-        audit_path: &Arc<Option<PathBuf>>,
+        audit_tx: &Arc<Option<mpsc::UnboundedSender<AuditMessage>>>,
         daemon_sock: &Arc<Option<PathBuf>>,
     ) -> Result<Vec<u8>> {
         let start = Instant::now();
@@ -325,7 +391,7 @@ impl DnsServer {
             if let Some(queried_pod) = d.strip_suffix(".pods.local") {
                 if !queried_pod.is_empty() {
                     return Self::handle_pod_lookup(
-                        &request, queried_pod, daemon_sock, audit_path,
+                        &request, queried_pod, daemon_sock, audit_tx,
                         pod_name, &domain, &format!("{query_type}"),
                     ).await;
                 }
@@ -349,8 +415,8 @@ impl DnsServer {
             upstream_used: None,
         };
 
-        // Write per-query audit entry to pod's audit.jsonl
-        Self::write_audit_entry(audit_path.as_ref(), pod_name, &domain, &format!("{query_type}"), &decision);
+        // Send audit entry to async writer (non-blocking)
+        Self::send_audit(audit_tx, pod_name, &domain, &format!("{query_type}"), &decision);
 
         match &decision {
             PolicyDecision::Allow => {
@@ -385,19 +451,19 @@ impl DnsServer {
         }
     }
 
-    /// Write a DNS query audit entry to the pod's audit.jsonl.
+    /// Send a DNS audit entry to the background writer (non-blocking).
     ///
-    /// Writes in the same JSONL format as `AuditEntry` from envpod-core so
-    /// `envpod audit` displays DNS queries alongside other pod actions.
-    /// Uses append mode — atomic for writes < PIPE_BUF (4096 bytes).
-    fn write_audit_entry(
-        audit_path: &Option<PathBuf>,
+    /// The entry is queued via an unbounded mpsc channel. The background writer
+    /// holds a persistent file handle and batches writes, so DNS query latency
+    /// is never blocked by disk I/O.
+    fn send_audit(
+        audit_tx: &Option<mpsc::UnboundedSender<AuditMessage>>,
         pod_name: &str,
         domain: &str,
         query_type: &str,
         decision: &PolicyDecision,
     ) {
-        let Some(path) = audit_path else { return };
+        let Some(tx) = audit_tx else { return };
 
         let decision_str = match decision {
             PolicyDecision::Allow => "allow",
@@ -412,22 +478,10 @@ impl DnsServer {
             _ => format!("domain={domain} type={query_type} decision={decision_str}"),
         };
 
-        let entry = serde_json::json!({
-            "timestamp": chrono::Utc::now().to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            "pod_name": pod_name,
-            "action": "dns_query",
-            "detail": detail,
-            "success": true,
+        let _ = tx.send(AuditMessage {
+            pod_name: pod_name.to_string(),
+            detail,
         });
-
-        if let Ok(mut file) = std::fs::OpenOptions::new()
-            .create(true)
-            .append(true)
-            .open(path)
-        {
-            use std::io::Write;
-            let _ = writeln!(file, "{}", entry);
-        }
     }
 
     /// Resolve a `*.pods.local` query via the central envpod-dns daemon.
@@ -441,7 +495,7 @@ impl DnsServer {
         request: &Message,
         queried_pod: &str,
         daemon_sock: &Arc<Option<PathBuf>>,
-        audit_path: &Arc<Option<PathBuf>>,
+        audit_tx: &Arc<Option<mpsc::UnboundedSender<AuditMessage>>>,
         querying_pod: &str,
         domain: &str,
         query_type_str: &str,
@@ -462,8 +516,8 @@ impl DnsServer {
 
         match maybe_ip {
             Some(ipv4) => {
-                Self::write_audit_entry(
-                    audit_path.as_ref(),
+                Self::send_audit(
+                    audit_tx.as_ref(),
                     querying_pod,
                     domain,
                     query_type_str,
@@ -496,8 +550,8 @@ impl DnsServer {
                 Ok(response.to_vec()?)
             }
             None => {
-                Self::write_audit_entry(
-                    audit_path.as_ref(),
+                Self::send_audit(
+                    audit_tx.as_ref(),
                     querying_pod,
                     domain,
                     query_type_str,
