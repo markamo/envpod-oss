@@ -73,6 +73,36 @@ processor:
   memory: "4GB"
 ```
 
+## Benchmarks
+
+Ubuntu 24.04, Docker 29.2.1, Podman 4.9.3, NVIDIA TITAN RTX x2, 10 iterations averaged.
+
+**Startup latency:**
+
+| Test | Docker | Podman | Envpod | vs Docker | vs Podman |
+|------|--------|--------|--------|-----------|-----------|
+| fresh: run /bin/true | 552ms | 560ms | **401ms** | **151ms faster** | **159ms faster** |
+| warm: run /bin/true | 95ms | 270ms | **32ms** | **63ms faster** | **238ms faster** |
+| fresh: GPU nvidia-smi | 755ms | 745ms | **447ms** | **308ms faster** | **298ms faster** |
+
+**Scale-out (50 instances):**
+
+| Phase | Docker | Podman | Envpod | vs Docker | vs Podman |
+|-------|--------|--------|--------|-----------|-----------|
+| Create 50 | 6.3s | 6.9s | **407ms** | **15x faster** | **17x faster** |
+| Run all 50 | 11.4s | 26.8s | **7.5s** | **1.5x faster** | **3.6x faster** |
+| Full lifecycle | 19.0s | 36.2s | **9.5s** | **2x faster** | **3.8x faster** |
+
+**Resource overhead:**
+
+| Runtime | Base image (Ubuntu 24.04) | GPU image (CUDA 12.0) | Per-instance |
+|---------|--------------------------|----------------------|-------------|
+| Docker | 119 MB | 338 MB | 4 KB |
+| Podman | 77 MB | 229 MB | 11 KB |
+| Envpod | **105 MB** | **105 MB** | **1 KB** |
+
+Envpod GPU base is **69% smaller** than Docker's — CUDA libraries are bind-mounted from the host, not copied. Clone is ~10x faster than init (rootfs symlinked). Run the benchmarks yourself: `sudo ./tests/benchmark-podman.sh 10`
+
 ## Feature Highlights
 
 **Filesystem governance**
