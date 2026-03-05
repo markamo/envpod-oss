@@ -150,248 +150,12 @@ build_arch() {
     info "Binary copied"
 
     # -----------------------------------------------------------------------
-    # 3. Generate install.sh
+    # 3. Copy install.sh (universal installer from repo root)
     # -----------------------------------------------------------------------
 
-    cat > "${RELEASE_DIR}/install.sh" << 'INSTALL_EOF'
-#!/usr/bin/env bash
-#
-# envpod installer — pre-built static binary.
-# No Rust, git, or internet access required.
-#
-# Usage:
-#   sudo bash install.sh
-#
-set -euo pipefail
-
-ENVPOD_VERSION="0.1.0"
-INSTALL_DIR="/usr/local/bin"
-STATE_DIR="/var/lib/envpod"
-EXAMPLES_DIR="${ENVPOD_EXAMPLES_DIR:-/usr/local/share/envpod/examples}"
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
-# Argument parsing
-while [[ $# -gt 0 ]]; do
-    case "$1" in
-        --examples-dir)   EXAMPLES_DIR="$2"; shift 2 ;;
-        --examples-dir=*) EXAMPLES_DIR="${1#*=}"; shift ;;
-        --no-examples)    EXAMPLES_DIR=""; shift ;;
-        --help|-h)
-            echo "Usage: sudo bash install.sh [--examples-dir <path>] [--no-examples]"
-            echo "  --examples-dir <path>  Install examples to <path> (default: /usr/local/share/envpod/examples)"
-            echo "  --no-examples          Skip examples installation"
-            echo "  ENVPOD_EXAMPLES_DIR=<path>  env var also accepted"
-            exit 0 ;;
-        *) echo "Unknown argument: $1"; exit 1 ;;
-    esac
-done
-
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[0;33m'
-BOLD='\033[1m'
-NC='\033[0m'
-
-info()  { echo -e "${GREEN}[✓]${NC} $*"; }
-warn()  { echo -e "${YELLOW}[!]${NC} $*"; }
-fail()  { echo -e "${RED}[✗]${NC} $*"; exit 1; }
-step()  { echo -e "\n${BOLD}→ $*${NC}"; }
-
-echo -e "${BOLD}"
-echo "  ┌──────────────────────────────────────┐"
-echo "  │       envpod installer v${ENVPOD_VERSION}        │"
-echo "  │    Zero-trust environments for AI    │"
-echo "  └──────────────────────────────────────┘"
-echo -e "${NC}"
-
-if [[ $EUID -ne 0 ]]; then
-    fail "This installer must be run as root (sudo bash install.sh)"
-fi
-
-# ---------------------------------------------------------------------------
-# 1. Prerequisites
-# ---------------------------------------------------------------------------
-
-step "Checking prerequisites"
-
-KVER=$(uname -r | cut -d. -f1-2)
-KMAJOR=$(echo "$KVER" | cut -d. -f1)
-KMINOR=$(echo "$KVER" | cut -d. -f2)
-if [[ "$KMAJOR" -lt 5 ]] || { [[ "$KMAJOR" -eq 5 ]] && [[ "$KMINOR" -lt 11 ]]; }; then
-    fail "Kernel $KVER is too old. envpod requires Linux 5.11+ (found: $(uname -r))"
-fi
-info "Kernel $(uname -r) (>= 5.11)"
-
-if [[ ! -f /sys/fs/cgroup/cgroup.controllers ]]; then
-    echo ""
-    warn "cgroups v2 not active."
-    echo "  Raspberry Pi OS: add 'systemd.unified_cgroup_hierarchy=1' to /boot/firmware/cmdline.txt"
-    echo "  Other distros:   boot with cgroup_enable=memory cgroup_memory=1"
-    fail "cgroups v2 required"
-fi
-info "cgroups v2 available"
-
-if ! modprobe -n overlay 2>/dev/null && ! grep -q overlay /proc/filesystems 2>/dev/null; then
-    warn "OverlayFS not loaded — trying modprobe overlay..."
-    modprobe overlay 2>/dev/null || fail "OverlayFS not available. Run: modprobe overlay"
-fi
-info "OverlayFS available"
-
-if ! command -v iptables &>/dev/null; then
-    fail "iptables not found. Install: apt install iptables"
-fi
-info "iptables found"
-
-if ! command -v ip &>/dev/null; then
-    fail "iproute2 (ip) not found. Install: apt install iproute2"
-fi
-info "iproute2 found"
-
-# ---------------------------------------------------------------------------
-# 2. Install binary
-# ---------------------------------------------------------------------------
-
-step "Installing binary"
-
-if [[ ! -f "$SCRIPT_DIR/envpod" ]]; then
-    fail "envpod binary not found in $SCRIPT_DIR. Re-extract the release archive."
-fi
-
-cp "$SCRIPT_DIR/envpod" "$INSTALL_DIR/envpod"
-chmod 755 "$INSTALL_DIR/envpod"
-info "Installed to $INSTALL_DIR/envpod"
-
-# ---------------------------------------------------------------------------
-# 3. Create state directories
-# ---------------------------------------------------------------------------
-
-step "Creating state directories"
-mkdir -p "$STATE_DIR/state" "$STATE_DIR/pods"
-info "$STATE_DIR/{state,pods} created"
-
-# ---------------------------------------------------------------------------
-# 4. Shell completions
-# ---------------------------------------------------------------------------
-
-step "Installing shell completions"
-
-REAL_USER="${SUDO_USER:-root}"
-REAL_HOME=$(eval echo "~$REAL_USER")
-
-install_bash_completions() {
-    local comp_dir="/etc/bash_completion.d"
-    mkdir -p "$comp_dir"
-    "$INSTALL_DIR/envpod" completions bash > "$comp_dir/envpod"
-    info "Bash completions installed to $comp_dir/envpod"
-}
-
-install_zsh_completions() {
-    local comp_dir="$REAL_HOME/.zfunc"
-    mkdir -p "$comp_dir"
-    "$INSTALL_DIR/envpod" completions zsh > "$comp_dir/_envpod"
-    local zshrc="$REAL_HOME/.zshrc"
-    if [[ -f "$zshrc" ]] && ! grep -q '.zfunc' "$zshrc" 2>/dev/null; then
-        echo 'fpath=(~/.zfunc $fpath)' >> "$zshrc"
-    fi
-    chown -R "$REAL_USER":"$REAL_USER" "$comp_dir" 2>/dev/null || true
-    info "Zsh completions installed to $comp_dir/_envpod"
-}
-
-install_fish_completions() {
-    local comp_dir="$REAL_HOME/.config/fish/completions"
-    mkdir -p "$comp_dir"
-    "$INSTALL_DIR/envpod" completions fish > "$comp_dir/envpod.fish"
-    chown -R "$REAL_USER":"$REAL_USER" "$comp_dir" 2>/dev/null || true
-    info "Fish completions installed to $comp_dir/envpod.fish"
-}
-
-REAL_SHELL=$(getent passwd "$REAL_USER" 2>/dev/null | cut -d: -f7 || echo "/bin/bash")
-case "$REAL_SHELL" in
-    */zsh)  install_zsh_completions; install_bash_completions ;;
-    */fish) install_fish_completions ;;
-    *)      install_bash_completions ;;
-esac
-
-# ---------------------------------------------------------------------------
-# 5. Enable IP forwarding
-# ---------------------------------------------------------------------------
-
-step "Enabling IP forwarding"
-
-CURRENT_FWD=$(sysctl -n net.ipv4.ip_forward 2>/dev/null || echo "0")
-if [[ "$CURRENT_FWD" == "1" ]]; then
-    info "IP forwarding already enabled"
-else
-    sysctl -w net.ipv4.ip_forward=1 >/dev/null
-    info "IP forwarding enabled (runtime)"
-fi
-
-SYSCTL_CONF="/etc/sysctl.d/99-envpod.conf"
-if [[ ! -f "$SYSCTL_CONF" ]]; then
-    echo "net.ipv4.ip_forward = 1" > "$SYSCTL_CONF"
-    info "Persisted to $SYSCTL_CONF"
-else
-    info "$SYSCTL_CONF already exists"
-fi
-
-# ---------------------------------------------------------------------------
-# 6. Install examples
-# ---------------------------------------------------------------------------
-
-step "Installing examples"
-
-if [[ -z "$EXAMPLES_DIR" ]]; then
-    info "Examples skipped (--no-examples)"
-elif [[ -d "$SCRIPT_DIR/examples" ]]; then
-    mkdir -p "$EXAMPLES_DIR"
-    cp "$SCRIPT_DIR/examples/"*.yaml "$EXAMPLES_DIR/"
-    cp "$SCRIPT_DIR/examples/"*.sh "$EXAMPLES_DIR/" 2>/dev/null || true
-    info "Examples installed to $EXAMPLES_DIR/"
-else
-    warn "No examples directory found — skipping"
-fi
-
-step "Installing uninstall script"
-
-SHARE_DIR="/usr/local/share/envpod"
-mkdir -p "$SHARE_DIR"
-if [[ -f "$SCRIPT_DIR/uninstall.sh" ]]; then
-    cp "$SCRIPT_DIR/uninstall.sh" "$SHARE_DIR/uninstall.sh"
-    chmod 755 "$SHARE_DIR/uninstall.sh"
-    info "Uninstall script: sudo bash $SHARE_DIR/uninstall.sh"
-fi
-
-# ---------------------------------------------------------------------------
-# 7. Verify
-# ---------------------------------------------------------------------------
-
-step "Verifying installation"
-
-INSTALLED_VERSION=$("$INSTALL_DIR/envpod" --version 2>&1 || true)
-if [[ -z "$INSTALLED_VERSION" ]]; then
-    fail "envpod binary not working"
-fi
-info "$INSTALLED_VERSION"
-
-"$INSTALL_DIR/envpod" ls >/dev/null 2>&1 && info "envpod ls — OK" || warn "envpod ls failed (state dir may need sudo)"
-
-echo ""
-echo -e "${GREEN}${BOLD}Installation complete!${NC}"
-echo ""
-echo "  Quick start:"
-echo "    sudo envpod init my-agent -c pod.yaml"
-echo "    sudo envpod run my-agent -- bash"
-echo "    sudo envpod diff my-agent"
-echo ""
-echo "  Examples installed to: $EXAMPLES_DIR/"
-echo "  Documentation: https://github.com/markamo/envpod-ce/tree/main/docs"
-echo ""
-echo "  To uninstall:"
-echo "    sudo bash /usr/local/share/envpod/uninstall.sh"
-echo ""
-INSTALL_EOF
+    cp "${SCRIPT_DIR}/install.sh" "${RELEASE_DIR}/install.sh"
     chmod 755 "${RELEASE_DIR}/install.sh"
-    info "install.sh generated"
+    info "install.sh copied (universal installer)"
 
     # -----------------------------------------------------------------------
     # 4. Generate README.md
@@ -416,6 +180,8 @@ ${RELEASE_NAME}/
 ├── README.md       This file
 ├── LICENSE         GNU Affero General Public License v3.0
 ├── docs/           Documentation
+│   ├── INSTALL.md          Installation guide (9 distros)
+│   ├── DOCKER-TESTING.md   Docker evaluation guide
 │   ├── FEATURES.md         Complete feature reference
 │   ├── TUTORIALS.md        Step-by-step tutorials (12 scenarios)
 │   ├── ACTION-CATALOG.md   Action type reference
@@ -538,8 +304,8 @@ README_EOF
     # 6. Copy docs and examples from repo
     # -----------------------------------------------------------------------
 
-    for doc in FEATURES.md TUTORIALS.md ACTION-CATALOG.md CLI-BLACKBOOK.md \
-               FOR-DOCKER-USERS.md EMBEDDED.md; do
+    for doc in INSTALL.md DOCKER-TESTING.md FEATURES.md TUTORIALS.md \
+               ACTION-CATALOG.md CLI-BLACKBOOK.md FOR-DOCKER-USERS.md EMBEDDED.md; do
         if [[ -f "${SCRIPT_DIR}/docs/${doc}" ]]; then
             cp "${SCRIPT_DIR}/docs/${doc}" "${RELEASE_DIR}/docs/${doc}"
         else

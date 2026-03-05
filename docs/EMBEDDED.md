@@ -1,6 +1,6 @@
 # Running envpod on Embedded / Edge Systems
 
-> **EnvPod v0.2** — Zero-trust governance environments for AI agents
+> **EnvPod v0.1** — Zero-trust governance environments for AI agents
 > Author: Mark Amoboateng · mark@envpod.dev
 > Copyright 2026 Xtellix Inc. · GNU Affero General Public License v3.0
 
@@ -24,10 +24,9 @@ envpod ships a static ARM64 binary with no runtime dependencies. It runs on any 
 ### Download the ARM64 binary
 
 ```bash
-# On your Jetson / Pi (replace 0.2.0 with current version)
-wget https://releases.envpod.com/envpod-0.2.0-linux-aarch64.tar.gz
-tar xzf envpod-0.2.0-linux-aarch64.tar.gz
-cd envpod-0.2.0-linux-aarch64
+# On your Jetson / Pi
+curl -fsSL https://github.com/markamo/envpod-ce/releases/latest/download/envpod-linux-arm64.tar.gz | tar xz
+cd envpod-*-linux-arm64
 sudo bash install.sh
 ```
 
@@ -315,10 +314,10 @@ cargo zigbuild --release --target aarch64-unknown-linux-musl.2.17
 
 Output:
 ```
-release/envpod-0.2.0-linux-x86_64/     x86_64 release
-release/envpod-0.2.0-linux-aarch64/    ARM64 release
-envpod-0.2.0-linux-x86_64.tar.gz
-envpod-0.2.0-linux-aarch64.tar.gz
+release/envpod-0.1.0-linux-x86_64/     x86_64 release
+release/envpod-0.1.0-linux-arm64/      ARM64 release
+envpod-linux-x86_64.tar.gz
+envpod-linux-arm64.tar.gz
 ```
 
 ---

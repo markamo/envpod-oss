@@ -1,157 +1,243 @@
 # Installing envpod
 
-> Copyright 2026 Mark Amo-Boateng / Xtellix Inc. · GNU Affero General Public License v3.0
+envpod is a single static binary with no runtime dependencies. It runs on any Linux distribution with kernel 5.11+ and cgroup v2.
 
----
-
-## Requirements
-
-| Requirement | Minimum | Notes |
-|---|---|---|
-| OS | Linux only | No macOS or Windows support |
-| Kernel | 5.15+ | Recommended: 5.19+ or 6.x |
-| cgroups | v2 | Run `stat -fc %T /sys/fs/cgroup/` — should print `cgroup2fs` |
-| Filesystem | OverlayFS | Run `grep overlay /proc/filesystems` |
-| Tools | `iptables`, `ip` (iproute2) | `sudo apt install iptables iproute2` |
-| Privilege | root | Required for namespace setup |
-| Disk | ~12 MB | Binary only. Pod rootfs requires ~200 MB per pod. |
-| Arch | x86\_64 or arm64 | Static musl binary, no runtime dependencies |
-
----
-
-## Install (one-liner)
+## One-Line Install (any distro)
 
 ```bash
-curl -fsSL https://envpod.dev/install.sh | sh
+curl -fsSL https://envpod.dev/install.sh | sudo bash
 ```
 
-The script:
-1. Detects your architecture (x86\_64 or arm64)
-2. Downloads the latest release tarball from GitHub
-3. Prompts for sudo — installs binary, completions, examples, and uninstall script
-4. Enables IP forwarding (required for pod networking)
+Auto-detects your distro, installs prerequisites, downloads the correct binary (x86_64 or ARM64), and sets everything up. Works on Ubuntu, Debian, Fedora, Arch, Rocky, Alma, openSUSE, and Amazon Linux.
 
-After installation:
-- `envpod` binary → `/usr/local/bin/envpod`
-- Examples → `/usr/local/share/envpod/examples/`
-- Uninstall script → `/usr/local/share/envpod/uninstall.sh`
-
-**Custom examples directory:**
-```bash
-# Install examples to a custom path
-curl -fsSL https://envpod.dev/install.sh | sh -s -- --examples-dir /opt/myproject/examples
-
-# Skip examples entirely
-curl -fsSL https://envpod.dev/install.sh | sh -s -- --no-examples
-
-# Via environment variable
-ENVPOD_EXAMPLES_DIR=/opt/myproject/examples curl -fsSL https://envpod.dev/install.sh | sh
-```
-
----
-
-## Verify cgroups v2
+Add `--auto-deps` to skip the interactive prompt:
 
 ```bash
-stat -fc %T /sys/fs/cgroup/
+curl -fsSL https://envpod.dev/install.sh | sudo bash -s -- --auto-deps
 ```
 
-If the output is `tmpfs`, you have cgroups v1. Enable v2:
+## Install from Tarball
 
-**Ubuntu/Debian (GRUB):**
-```bash
-sudo sed -i 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="systemd.unified_cgroup_hierarchy=1"/' /etc/default/grub
-sudo update-grub
-sudo reboot
-```
-
-**Raspberry Pi** — add to `/boot/cmdline.txt` (one line):
-```
-cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1 systemd.unified_cgroup_hierarchy=1
-```
-
----
-
-## Build from Source
-
-Requires Rust toolchain — install via [rustup.rs](https://rustup.rs).
+If you already downloaded the release:
 
 ```bash
-git clone https://github.com/markamo/envpod-ce
-cd envpod-ce
-cargo build --release
-sudo cp target/release/envpod /usr/local/bin/
-sudo chmod 755 /usr/local/bin/envpod
+curl -fsSL https://github.com/markamo/envpod-ce/releases/latest/download/envpod-linux-x86_64.tar.gz | tar xz
+cd envpod-*-linux-x86_64
+sudo bash install.sh
 ```
 
----
+The same `install.sh` detects whether the binary is present locally or needs to be downloaded.
 
-## Static musl binary (x86\_64)
+## Portable (no install)
 
-Build a fully static binary with no shared library dependencies:
+Download, extract, run. No install step, no PATH modification, no state directories. Just the binary and examples in one folder.
 
 ```bash
-rustup target add x86_64-unknown-linux-musl
-sudo apt install musl-tools
-CC_x86_64_unknown_linux_musl=musl-gcc cargo build --release --target x86_64-unknown-linux-musl
+curl -fsSL https://github.com/markamo/envpod-ce/releases/latest/download/envpod-linux-x86_64.tar.gz | tar xz
+cd envpod-*-linux-x86_64
+sudo ./envpod init my-agent -c examples/basic-internet.yaml
+sudo ./envpod run my-agent -- bash
 ```
 
-Output: `target/x86_64-unknown-linux-musl/release/envpod`
+The portable binary requires `iptables` and `iproute2` at runtime.
 
----
+## Docker (testing/evaluation)
 
-## ARM64 (Raspberry Pi, Jetson Orin)
+```bash
+docker run -it --privileged --cgroupns=host \
+  -v /tmp/envpod-test:/var/lib/envpod \
+  -v /sys/fs/cgroup:/sys/fs/cgroup:rw \
+  ubuntu:24.04
 
-The one-liner auto-detects `aarch64` and downloads the arm64 binary. For building from source on ARM64, see [EMBEDDED.md](EMBEDDED.md).
+# Inside the container — install.sh detects Docker automatically:
+curl -fsSL https://envpod.dev/install.sh | bash
+```
 
----
+See `docs/DOCKER-TESTING.md` for details.
+
+## Per-Distro Notes
+
+The one-line installer handles prerequisites automatically. These notes are for manual installation or troubleshooting.
+
+### Ubuntu 24.04 / 22.04
+
+```bash
+# Prerequisites
+sudo apt-get update
+sudo apt-get install -y curl ca-certificates tar gzip iptables iproute2
+
+# Install envpod
+curl -fsSL https://github.com/markamo/envpod-ce/releases/latest/download/envpod-linux-x86_64.tar.gz | tar xz
+cd envpod-*-linux-x86_64
+sudo bash install.sh
+```
+
+### Debian 12 (Bookworm)
+
+```bash
+# Prerequisites
+sudo apt-get update
+sudo apt-get install -y curl ca-certificates tar gzip iptables iproute2
+
+# Install envpod
+curl -fsSL https://github.com/markamo/envpod-ce/releases/latest/download/envpod-linux-x86_64.tar.gz | tar xz
+cd envpod-*-linux-x86_64
+sudo bash install.sh
+```
+
+### Fedora 41+
+
+```bash
+# Prerequisites
+sudo dnf install -y curl tar gzip iptables iproute
+
+# Install envpod
+curl -fsSL https://github.com/markamo/envpod-ce/releases/latest/download/envpod-linux-x86_64.tar.gz | tar xz
+cd envpod-*-linux-x86_64
+sudo bash install.sh
+```
+
+Note: Fedora runs SELinux in enforcing mode by default. If you encounter permission errors during `envpod run`, check `ausearch -m AVC -ts recent` for denials. Workaround: `sudo setenforce 0` (temporary, reverts on reboot). SELinux policy module support is planned.
+
+### Arch Linux
+
+```bash
+# Prerequisites
+sudo pacman -S curl tar gzip iptables iproute2
+
+# Install envpod
+curl -fsSL https://github.com/markamo/envpod-ce/releases/latest/download/envpod-linux-x86_64.tar.gz | tar xz
+cd envpod-*-linux-x86_64
+sudo bash install.sh
+```
+
+### Rocky Linux 9 / AlmaLinux 9
+
+```bash
+# Prerequisites (--allowerasing replaces curl-minimal with curl)
+sudo dnf install -y --allowerasing curl tar gzip iptables iproute
+
+# Install envpod
+curl -fsSL https://github.com/markamo/envpod-ce/releases/latest/download/envpod-linux-x86_64.tar.gz | tar xz
+cd envpod-*-linux-x86_64
+sudo bash install.sh
+```
+
+Note: Rocky and AlmaLinux minimal images ship `curl-minimal` which conflicts with `curl`. The `--allowerasing` flag replaces it. On a full server install this is not needed.
+
+### openSUSE Leap 15.6
+
+```bash
+# Prerequisites
+sudo zypper install -y curl tar gzip iptables iproute2
+
+# Install envpod
+curl -fsSL https://github.com/markamo/envpod-ce/releases/latest/download/envpod-linux-x86_64.tar.gz | tar xz
+cd envpod-*-linux-x86_64
+sudo bash install.sh
+```
+
+### Amazon Linux 2023
+
+```bash
+# Prerequisites (--allowerasing replaces curl-minimal with curl)
+sudo dnf install -y --allowerasing curl tar gzip iptables iproute
+
+# Install envpod
+curl -fsSL https://github.com/markamo/envpod-ce/releases/latest/download/envpod-linux-x86_64.tar.gz | tar xz
+cd envpod-*-linux-x86_64
+sudo bash install.sh
+```
+
+### Raspberry Pi OS (64-bit) / ARM64
+
+```bash
+# Ensure cgroup v2 is enabled
+# Add to /boot/firmware/cmdline.txt:
+#   systemd.unified_cgroup_hierarchy=1
+# Then reboot
+
+# Prerequisites
+sudo apt-get update
+sudo apt-get install -y curl ca-certificates tar gzip iptables iproute2
+
+# Install envpod (ARM64 binary)
+curl -fsSL https://github.com/markamo/envpod-ce/releases/latest/download/envpod-linux-arm64.tar.gz | tar xz
+cd envpod-*-linux-arm64
+sudo bash install.sh
+```
+
+## What install.sh does
+
+The install script performs these steps:
+
+1. **Checks prerequisites** — kernel ≥ 5.11, cgroup v2 active, overlayfs available, iptables and iproute2 present
+2. **Copies binary** to `/usr/local/bin/envpod`
+3. **Creates state directories** at `/var/lib/envpod/{state,pods}`
+4. **Installs shell completions** — bash, zsh, or fish (auto-detected)
+5. **Enables IP forwarding** — runtime and persisted to `/etc/sysctl.d/99-envpod.conf`
+6. **Installs example configs** to `/usr/local/share/envpod/examples/`
+7. **Installs uninstall script** to `/usr/local/share/envpod/uninstall.sh`
+
+## Verify installation
+
+```bash
+envpod --version
+sudo envpod ls
+```
 
 ## Uninstall
 
-The uninstall script is installed alongside the binary:
-
 ```bash
-# Remove binary, completions, and shared files — keep pod data
 sudo bash /usr/local/share/envpod/uninstall.sh
-
-# Remove everything including all pods, vaults, and audit logs
-sudo bash /usr/local/share/envpod/uninstall.sh --purge
 ```
 
-What each option removes:
+## System requirements
 
-| Path | Default | `--purge` |
+| Requirement | Minimum | Notes |
 |---|---|---|
-| `/usr/local/bin/envpod` | ✓ | ✓ |
-| `/usr/local/share/envpod/` | ✓ | ✓ |
-| Shell completions | ✓ | ✓ |
-| `/var/lib/envpod/` (pod data, vaults, audit logs) | kept | ✓ |
+| Kernel | 5.11+ | `uname -r` to check |
+| cgroup | v2 (unified hierarchy) | Check: `ls /sys/fs/cgroup/cgroup.controllers` |
+| Architecture | x86_64 or ARM64 (aarch64) | |
+| Filesystem | overlayfs support | Mainline since 3.18 |
+| Download tools | curl, tar, gzip, ca-certificates | Only needed to download envpod |
+| Network tools | iptables, iproute2 | Required at runtime |
+| Disk | ~12 MB (binary) + pod storage | |
+| RAM | ~4 MB per idle pod | |
 
-**Manual uninstall** (if the script isn't available):
+## Troubleshooting
 
-```bash
-# Binary and completions
-sudo rm -f /usr/local/bin/envpod
-sudo rm -rf /usr/local/share/envpod
-sudo rm -f /etc/bash_completion.d/envpod
-sudo rm -f /usr/share/bash-completion/completions/envpod
-sudo rm -f ~/.zfunc/_envpod
+**`curl: (77) error setting certificate file`**
+Missing `ca-certificates`. Install it: `apt install ca-certificates` (Debian/Ubuntu) or `dnf install ca-certificates` (Fedora/RHEL).
 
-# System config (IP forwarding)
-sudo rm -f /etc/sysctl.d/99-envpod.conf
-sudo sysctl -w net.ipv4.ip_forward=0   # optional — only if you want to revert
+**`tar: gzip: Cannot exec: No such file or directory`**
+Missing `gzip`. Install it: `dnf install gzip` (RHEL-based) or `zypper install gzip` (openSUSE).
 
-# Pod data (optional — this deletes all pods, vaults, and audit logs)
-sudo rm -rf /var/lib/envpod
+**`problem with installed package curl-minimal`** (Rocky/Alma/Amazon Linux)
+These distros ship `curl-minimal` which conflicts with `curl`. Use `dnf install -y --allowerasing curl` to replace it.
 
-# Leftover iptables rules (cleans up any envpod NAT/FORWARD/INPUT rules)
-sudo iptables-save | grep -v "10.200\." | sudo iptables-restore
-```
+**`cgroup write: Not supported (os error 95)`**
+Running inside Docker without `--cgroupns=host`. See `docs/DOCKER-TESTING.md`.
 
----
+**`mount overlayfs failed: EINVAL`**
+Running inside Docker (nested overlayfs). Mount a volume for envpod's data. See `docs/DOCKER-TESTING.md`.
 
-## Next Steps
+**`Kernel X.X is too old`**
+envpod requires kernel 5.11+. Check with `uname -r`. Upgrade your kernel or use a newer distro release.
 
-- [Quickstart](QUICKSTART.md) — create your first pod in 60 seconds
-- [Tutorials](TUTORIALS.md) — step-by-step guides for common use cases
-- [CLI Reference](CLI-BLACKBOOK.md) — complete command reference
+**`cgroups v2 not active`**
+Boot with cgroup v2 enabled. Raspberry Pi: add `systemd.unified_cgroup_hierarchy=1` to `/boot/firmware/cmdline.txt`. Other: add `cgroup_no_v1=all systemd.unified_cgroup_hierarchy=1` to kernel boot parameters.
+
+## Tested distributions
+
+| Distro | Version | Portable | Install | Governance |
+|--------|---------|----------|---------|------------|
+| Ubuntu | 24.04 LTS | ✓ | ✓ | ✓ |
+| Ubuntu | 22.04 LTS | ✓ | ✓ | ✓ |
+| Debian | 12 (Bookworm) | ✓ | ✓ | ✓ |
+| Fedora | 41 | ✓ | ✓ | ✓ |
+| Arch Linux | rolling | ✓ | ✓ | ✓ |
+| Rocky Linux | 9 | ✓ | ✓ | ✓ |
+| AlmaLinux | 9 | ✓ | ✓ | ✓ |
+| openSUSE Leap | 15.6 | ✓ | ✓ | ✓ |
+| Amazon Linux | 2023 | ✓ | ✓ | ✓ |
