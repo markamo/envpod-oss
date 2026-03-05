@@ -17,34 +17,40 @@
 ```bash
 curl -fsSL https://envpod.dev/install.sh | sh
 ```
-*Narration: "Single binary, 12 megs, no dependencies."*
+*Narration: "Single binary, 5 megs, no dependencies. x86 and ARM64."*
 
-**[0:20]** Install completes. Run:
+**[0:20]** Show available presets:
 ```bash
-sudo envpod init hello
+envpod presets
 ```
-*Narration: "One command creates a governed pod."*
+*Narration: "18 built-in presets — coding agents, browsers, frameworks, environments."*
 
-**[0:28]** Run the agent — it writes a file:
+**[0:26]** Create a pod with a preset:
+```bash
+sudo envpod init hello --preset devbox
+```
+*Narration: "One command. Pick a preset. Pod created."*
+
+**[0:32]** Run the agent — it writes a file:
 ```bash
 sudo envpod run hello -- bash -c "echo 'the agent wrote this' > /home/agent/hello.txt && echo 'done'"
 ```
 *Narration: "The agent thinks it wrote to your filesystem. It didn't."*
 
-**[0:36]** Show the diff:
+**[0:40]** Show the diff:
 ```bash
 sudo envpod diff hello
 ```
 *Narration: "Every change goes to a copy-on-write overlay. You review before anything touches the host."*
 
-**[0:44]** Commit or rollback:
+**[0:48]** Commit or rollback:
 ```bash
 sudo envpod commit hello
 # or: sudo envpod rollback hello
 ```
 *Narration: "Commit what you want. Roll back the rest. That's governance."*
 
-**[0:52]** Show the audit log:
+**[0:54]** Show the audit log:
 ```bash
 sudo envpod audit hello
 ```
@@ -58,7 +64,8 @@ sudo envpod audit hello
 
 ```bash
 curl -fsSL https://envpod.dev/install.sh | sh
-sudo envpod init hello
+envpod presets
+sudo envpod init hello --preset devbox
 sudo envpod run hello -- bash -c "echo 'the agent wrote this' > /home/agent/hello.txt && echo 'done'"
 sudo envpod diff hello
 sudo envpod commit hello
