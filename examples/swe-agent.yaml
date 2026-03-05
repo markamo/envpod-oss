@@ -79,5 +79,6 @@ audit:
   action_log: true
 
 setup:
+  - "command -v pip >/dev/null || { apt-get update && apt-get install -y python3-pip; }"
   - "git clone https://github.com/SWE-agent/SWE-agent.git /opt/swe-agent"
   - "cd /opt/swe-agent && pip install --editable ."

@@ -4,9 +4,10 @@
 # 256MB /dev/shm, monitored network with broad DNS for web browsing.
 # Good for: browser-use agents, web scraping, UI testing.
 #
-# Note: Google Chrome must be installed on the host. The binary lives
-# at /opt/google/chrome/ which is outside the system bind-mounts, so
-# /opt/google is mounted read-only into the pod.
+# Setup checks if Chrome is available from the host; if not, it installs
+# Google Chrome inside the pod (~300MB, takes 1-2 min). For faster setup,
+# install Chrome on the host first: the pod will use it automatically.
+# After first setup, use `envpod clone` for instant copies.
 #
 # Note: Firefox is a snap on Ubuntu 24.04 and does not work inside namespace
 #       pods. Use Google Chrome (deb package) instead.
@@ -36,6 +37,7 @@ network:
       - "*.corp"
 
 filesystem:
+  system_access: advanced
   mounts:
     - path: /opt/google
       permissions: ReadOnly
@@ -73,3 +75,14 @@ budget:
 
 audit:
   action_log: true
+
+setup:
+  - |
+    if command -v google-chrome >/dev/null 2>&1; then
+      echo "Chrome already available"
+    else
+      apt-get update && apt-get install -y wget gnupg
+      wget -qO- https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-chrome.gpg
+      echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
+      apt-get update && apt-get install -y google-chrome-stable
+    fi

@@ -11,6 +11,8 @@ use clap_complete::{generate, Shell};
 use tokio::io::{AsyncBufReadExt, AsyncWriteExt};
 
 mod dashboard;
+mod presets;
+mod wizard;
 
 use envpod_core::audit::{AuditAction, AuditEntry, AuditLog};
 use envpod_core::backend::{create_backend, IsolationBackend};
@@ -89,12 +91,17 @@ enum Commands {
         #[arg(long, default_value = "native")]
         backend: String,
         /// Path to pod.yaml configuration file
-        #[arg(short, long)]
+        #[arg(short, long, conflicts_with = "preset")]
         config: Option<PathBuf>,
+        /// Use a built-in preset (run `envpod presets` to list)
+        #[arg(short = 'p', long, conflicts_with = "config")]
+        preset: Option<String>,
         /// Show live output from setup commands
         #[arg(short, long)]
         verbose: bool,
     },
+    /// List available presets for `envpod init --preset`
+    Presets,
     /// Run a command inside a pod
     Run {
         /// Pod name
@@ -609,8 +616,13 @@ async fn run(cli: Cli) -> Result<()> {
             name,
             backend,
             config,
+            preset,
             verbose,
-        } => cmd_init(&store, base_dir, &name, &backend, config.as_deref(), verbose).await,
+        } => cmd_init(&store, base_dir, &name, &backend, config.as_deref(), preset.as_deref(), verbose).await,
+        Commands::Presets => {
+            eprint!("{}", presets::format_table());
+            Ok(())
+        }
         Commands::Run { name, root, user, env_vars, enable_display, enable_audio, ports, public_ports, internal_ports, command } => cmd_run(&store, base_dir, &name, &command, root, user.as_deref(), &env_vars, enable_display, enable_audio, &ports, &public_ports, &internal_ports).await,
         Commands::Diff { name, json, all } => cmd_diff(&store, base_dir, &name, json, all),
         Commands::Commit { name, paths, exclude, output, all, include_system } => cmd_commit(&store, base_dir, &name, &paths, &exclude, output.as_deref(), all, include_system),
@@ -718,16 +730,37 @@ async fn cmd_init(
     name: &str,
     backend_name: &str,
     config_path: Option<&std::path::Path>,
+    preset_name: Option<&str>,
     verbose: bool,
 ) -> Result<()> {
     if store.exists(name) {
         anyhow::bail!("pod '{name}' already exists");
     }
 
-    let mut config = match config_path {
-        Some(path) => PodConfig::from_file(path)
-            .with_context(|| format!("load config: {}", path.display()))?,
-        None => PodConfig::default(),
+    let mut config = if let Some(path) = config_path {
+        // Explicit config file
+        PodConfig::from_file(path)
+            .with_context(|| format!("load config: {}", path.display()))?
+    } else if let Some(pname) = preset_name {
+        // --preset flag
+        let preset = presets::get(pname).ok_or_else(|| {
+            let available: Vec<&str> = presets::list().iter().map(|p| p.name).collect();
+            anyhow::anyhow!(
+                "unknown preset '{pname}'. Available presets:\n  {}",
+                available.join(", ")
+            )
+        })?;
+        serde_yaml::from_str(preset.yaml)
+            .with_context(|| format!("parse preset '{pname}'"))?
+    } else if std::io::IsTerminal::is_terminal(&std::io::stdin()) {
+        // Interactive wizard (stdin is a terminal)
+        match wizard::run_interactive()? {
+            Some(cfg) => cfg,
+            None => PodConfig::default(), // user picked "custom"
+        }
+    } else {
+        // Non-interactive (piped/scripted) — use defaults
+        PodConfig::default()
     };
     config.name = name.to_string();
     config.backend = backend_name.to_string();
@@ -1269,7 +1302,7 @@ async fn cmd_base(store: &PodStore, base_dir: &std::path::Path, action: BaseActi
             }
 
             // Init a temporary pod
-            cmd_init(store, base_dir, &tmp_pod, "native", config.as_deref(), verbose).await?;
+            cmd_init(store, base_dir, &tmp_pod, "native", config.as_deref(), None, verbose).await?;
 
             // Snapshot it as a base pod
             let handle = store.load(&tmp_pod)?;
@@ -1755,6 +1788,40 @@ async fn cmd_run(store: &PodStore, base_dir: &std::path::Path, name: &str, comma
     std::io::stderr().flush().ok();
 
     let proc_handle = backend.start(&handle, command, effective_user, env_vars)?;
+
+    // Guardian cgroup: migrate display PIDs (Xvfb, x11vnc, websockify) from
+    // app/ to guardian/ so they survive freeze/thaw (envpod lock/unlock).
+    if web_display_type != envpod_core::config::WebDisplayType::None {
+        if let Some(ref cg) = state.cgroup_path {
+            let min_expected = match web_display_type {
+                envpod_core::config::WebDisplayType::Novnc => 3,   // Xvfb + x11vnc + websockify
+                envpod_core::config::WebDisplayType::Webrtc => 2,  // Xvfb + gst-launch
+                _ => 1,
+            };
+            let mut total_migrated = 0;
+            for _ in 0..30 {
+                match envpod_core::backend::native::migrate_display_pids(cg) {
+                    Ok(n) => {
+                        total_migrated += n;
+                        if total_migrated >= min_expected {
+                            break;
+                        }
+                    }
+                    Err(e) => {
+                        tracing::debug!(error = %e, "guardian migration attempt failed");
+                    }
+                }
+                std::thread::sleep(std::time::Duration::from_millis(200));
+            }
+            if total_migrated > 0 {
+                eprintln!("  {}  {} display process{} protected (guardian cgroup)",
+                    color::dim("Guardian"),
+                    total_migrated,
+                    if total_migrated == 1 { "" } else { "es" },
+                );
+            }
+        }
+    }
 
     // Port forwarding: merge pod.yaml ports/public_ports with CLI -p/-P flags.
     // `ports` / `-p` → localhost-only (127.0.0.1: prefix applied automatically).
