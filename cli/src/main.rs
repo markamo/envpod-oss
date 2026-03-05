@@ -917,10 +917,8 @@ async fn cmd_setup(store: &PodStore, base_dir: &std::path::Path, name: &str, ver
                             envpod_core::config::WebDisplayType::Webrtc => "WebRTC",
                             _ => "Display",
                         };
-                        let hostname = std::fs::read_to_string("/etc/hostname")
-                            .map(|s| s.trim().to_string())
-                            .unwrap_or_else(|_| "localhost".into());
-                        eprintln!("  {}  {} → http://localhost:{}  or  http://{}:{}", color::dim("Display"), label, cfg.web_display.port, hostname, cfg.web_display.port);
+                        let pod_ip = state.network.as_ref().map(|n| n.pod_ip.as_str()).unwrap_or("localhost");
+                        eprintln!("  {}  {} → http://{}:{}/vnc.html", color::dim("Display"), label, pod_ip, cfg.web_display.port);
                     }
                 }
             }
@@ -1737,11 +1735,8 @@ async fn cmd_run(store: &PodStore, base_dir: &std::path::Path, name: &str, comma
             envpod_core::config::WebDisplayType::Webrtc => "WebRTC",
             _ => "none",
         };
-        // Show both localhost and hostname so user can pick whichever works
-        let hostname = std::fs::read_to_string("/etc/hostname")
-            .map(|s| s.trim().to_string())
-            .unwrap_or_else(|_| "localhost".into());
-        eprintln!("  {}  {} → http://localhost:{}  or  http://{}:{}", color::dim("Display "), display_label, web_display_port, hostname, web_display_port);
+        let pod_ip = state.network.as_ref().map(|n| n.pod_ip.as_str()).unwrap_or("localhost");
+        eprintln!("  {}  {} → http://{}:{}/vnc.html", color::dim("Display "), display_label, pod_ip, web_display_port);
     }
     if is_root {
         eprintln!();
@@ -2270,6 +2265,17 @@ fn print_pod_info(
         color::dim("CPU    "),
         color::dim("·"),
     );
+
+    // Web display
+    if config.web_display.display_type != envpod_core::config::WebDisplayType::None {
+        let label = match config.web_display.display_type {
+            envpod_core::config::WebDisplayType::Novnc => "noVNC",
+            envpod_core::config::WebDisplayType::Webrtc => "WebRTC",
+            _ => "enabled",
+        };
+        let pod_ip = state.and_then(|s| s.network.as_ref()).map(|n| n.pod_ip.as_str()).unwrap_or("localhost");
+        eprintln!("  {}  {} → http://{}:{}/vnc.html", color::dim("Display"), label, pod_ip, config.web_display.port);
+    }
 
     // Budget
     if let Some(ref dur) = config.budget.max_duration {
