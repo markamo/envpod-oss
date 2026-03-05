@@ -250,6 +250,33 @@ in milliseconds. Inspect, decide, then resume or kill.
 
 ---
 
+## Web Display
+
+Access a pod's graphical desktop from any browser — no X11 or Wayland needed.
+
+```yaml
+web_display:
+  type: novnc
+  port: 6080
+  resolution: "1280x720"
+```
+
+```bash
+sudo envpod run my-agent -- google-chrome --no-sandbox --start-maximized
+# Open http://localhost:6080/vnc.html in your browser
+```
+
+A virtual display (Xvfb) + VNC server (x11vnc) + WebSocket bridge (websockify)
+run inside the pod. Port forwarded to localhost automatically. Works on headless
+servers, SSH sessions, and remote machines.
+
+**Impact:** run browser agents, GUI applications, or desktop environments
+inside governed pods — accessible from any browser. No host display required.
+
+See [WEB-DISPLAY.md](WEB-DISPLAY.md) for the full guide.
+
+---
+
 ## Device Passthrough
 
 Selectively forward host devices into the pod.
