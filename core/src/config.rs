@@ -29,6 +29,7 @@ pub struct PodConfig {
     pub devices: DevicesConfig,
     pub snapshots: SnapshotConfig,
     pub queue: QueueConfig,
+    pub web_display: WebDisplayConfig,
 
     /// Default user to run commands as inside the pod.
     /// Defaults to "agent" (non-root, UID 60000) for full pod boundary protection.
@@ -66,6 +67,7 @@ impl Default for PodConfig {
             devices: DevicesConfig::default(),
             snapshots: SnapshotConfig::default(),
             queue: QueueConfig::default(),
+            web_display: WebDisplayConfig::default(),
             user: default_user(),
             setup: Vec::new(),
             setup_script: None,
@@ -483,6 +485,46 @@ impl Default for AuditConfig {
         Self {
             action_log: true,
             system_trace: false,
+        }
+    }
+}
+
+// -- Web Display --------------------------------------------------------------
+
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
+pub enum WebDisplayType {
+    #[default]
+    None,
+    Novnc,
+    Webrtc,
+}
+
+/// Web display configuration — browser-based GUI access to pod desktops.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(default)]
+pub struct WebDisplayConfig {
+    /// Display type: none (default), novnc (CE), webrtc (Premium).
+    #[serde(rename = "type")]
+    pub display_type: WebDisplayType,
+    /// Host port for browser access. Default: 6080.
+    pub port: u16,
+    /// Virtual display resolution (e.g. "1280x720"). Default: "1280x720".
+    pub resolution: String,
+    /// Enable audio capture (WebRTC only). Default: true.
+    pub audio: bool,
+    /// Video codec (WebRTC only): vp8 or h264. Default: "vp8".
+    pub codec: String,
+}
+
+impl Default for WebDisplayConfig {
+    fn default() -> Self {
+        Self {
+            display_type: WebDisplayType::None,
+            port: 6080,
+            resolution: "1280x720".into(),
+            audio: true,
+            codec: "vp8".into(),
         }
     }
 }

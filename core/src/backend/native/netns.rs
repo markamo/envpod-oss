@@ -751,10 +751,10 @@ pub fn setup_port_forwards(pod_dir: &Path, host_veth: &str, pod_ip: &str, ports:
     }
 
     // Enable route_localnet on host veth so that localhost OUTPUT DNAT works.
-    std::fs::write(
-        format!("/proc/sys/net/ipv4/conf/{host_veth}/route_localnet"),
-        "1",
-    ).ok(); // best-effort
+    let rl_path = format!("/proc/sys/net/ipv4/conf/{host_veth}/route_localnet");
+    if let Err(e) = std::fs::write(&rl_path, "1") {
+        tracing::warn!("route_localnet write failed ({rl_path}): {e}");
+    }
 
     let mut records = Vec::new();
     for spec in ports {
@@ -788,6 +788,17 @@ pub fn setup_port_forwards(pod_dir: &Path, host_veth: &str, pod_ip: &str, ports:
             "-d", "127.0.0.1", "-p", proto, "--dport", &host_port_s,
             "-j", "DNAT", "--to-destination", &dest,
         ]).with_context(|| format!("OUTPUT DNAT for '{spec}'"))?;
+
+        // POSTROUTING SNAT: After OUTPUT DNAT rewrites dest from 127.0.0.1 to
+        // pod_ip, the packet still has source 127.0.0.1.  The pod would reply
+        // to 127.0.0.1 which stays inside its own namespace.  MASQUERADE on
+        // the host veth rewrites the source to the host veth IP so the pod
+        // sends the reply back across the veth pair.
+        iptables_cmd(&[
+            "-t", "nat", "-A", "POSTROUTING",
+            "-s", "127.0.0.1", "-d", pod_ip, "-p", proto, "--dport", &container_port_s,
+            "-o", host_veth, "-j", "MASQUERADE",
+        ]).with_context(|| format!("POSTROUTING MASQUERADE for '{spec}'"))?;
 
         records.push(PortForwardRecord {
             proto: proto.to_string(),
@@ -1291,13 +1302,14 @@ mod tests {
     #[test]
     fn pod_index_allocation() {
         let tmp = tempfile::tempdir().unwrap();
-        let idx1 = allocate_pod_index(tmp.path()).unwrap();
-        let idx2 = allocate_pod_index(tmp.path()).unwrap();
+        // Use 10.199 to avoid collision with live pods on 10.200
+        let idx1 = allocate_pod_index(tmp.path(), "10.199").unwrap();
+        let idx2 = allocate_pod_index(tmp.path(), "10.199").unwrap();
         assert_eq!(idx1, 1);
         assert_eq!(idx2, 2);
 
         release_pod_index(tmp.path(), idx1);
-        let idx3 = allocate_pod_index(tmp.path()).unwrap();
+        let idx3 = allocate_pod_index(tmp.path(), "10.199").unwrap();
         assert_eq!(idx3, 1); // reuses released index
     }
 

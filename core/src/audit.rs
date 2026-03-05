@@ -53,6 +53,8 @@ pub enum AuditAction {
     Restore,
     QueueAutoExecute,
     Clone,
+    WebDisplayStart,
+    WebDisplayStop,
 }
 
 impl std::fmt::Display for AuditAction {

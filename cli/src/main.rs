@@ -755,6 +755,40 @@ async fn cmd_init(
         std::fs::write(state.config_path(), yaml).context("persist pod.yaml")?;
     }
 
+    // Write web display supervisor script to overlay
+    if config.web_display.display_type != envpod_core::config::WebDisplayType::None {
+        if let Ok(state) = NativeState::from_handle(&handle) {
+            let script = envpod_core::web_display::generate_supervisor_script(&config.web_display);
+            // With advanced/dangerous system_access, /usr gets its own COW overlay
+            // backed by sys_upper/usr/, so we must write there instead of upper/
+            let script_dir = if matches!(config.filesystem.system_access, envpod_core::config::SystemAccess::Advanced | envpod_core::config::SystemAccess::Dangerous) {
+                state.sys_upper_dir().join("usr/local/bin")
+            } else {
+                state.upper_dir().join("usr/local/bin")
+            };
+            std::fs::create_dir_all(&script_dir).ok();
+            let script_path = script_dir.join("envpod-display-start");
+            std::fs::write(&script_path, &script).context("write display supervisor script")?;
+            use std::os::unix::fs::PermissionsExt;
+            std::fs::set_permissions(&script_path, std::fs::Permissions::from_mode(0o755))?;
+            eprintln!("  Web display supervisor script installed");
+
+            // Prepend web display setup commands to config.setup
+            let display_cmds = envpod_core::web_display::generate_setup_commands(&config.web_display);
+            let mut new_setup = display_cmds;
+            new_setup.extend(config.setup.clone());
+            config.setup = new_setup;
+        }
+    }
+
+    // Re-persist pod.yaml if setup commands were modified
+    if config.web_display.display_type != envpod_core::config::WebDisplayType::None {
+        if let Ok(state) = NativeState::from_handle(&handle) {
+            let yaml = serde_yaml::to_string(&config).context("serialize updated pod config")?;
+            std::fs::write(state.config_path(), yaml).context("persist updated pod.yaml")?;
+        }
+    }
+
     let state_opt = NativeState::from_handle(&handle).ok();
     eprintln!("{divider}");
     eprintln!(
@@ -1564,7 +1598,31 @@ async fn cmd_run(store: &PodStore, base_dir: &std::path::Path, name: &str, comma
             }
         }
     }
+    // Web display: set DISPLAY=:99 and wrap command with supervisor
+    let web_display_type = pod_config.as_ref()
+        .map(|c| c.web_display.display_type)
+        .unwrap_or(envpod_core::config::WebDisplayType::None);
+    let web_display_port = pod_config.as_ref()
+        .map(|c| c.web_display.port)
+        .unwrap_or(6080);
+
+    if web_display_type != envpod_core::config::WebDisplayType::None {
+        extra_env.push("DISPLAY=:99".to_string());
+        extra_env.push("XDG_RUNTIME_DIR=/tmp".to_string());
+    }
     let env_vars = &extra_env;
+
+    // Build effective command: wrap with display supervisor if web_display is enabled
+    let effective_command: Vec<String> = if web_display_type != envpod_core::config::WebDisplayType::None {
+        // The supervisor script uses exec "$@", so pass original command as args
+        let mut cmd = vec!["/usr/local/bin/envpod-display-start".to_string()];
+        cmd.extend_from_slice(command);
+        cmd
+    } else {
+        command.to_vec()
+    };
+    let command = &effective_command;
+
     let shared_dns_policy: Option<std::sync::Arc<std::sync::RwLock<DnsPolicy>>> =
         if let Some(ref net) = state.network {
             // Persist initial network state for dns-reload support
@@ -1650,6 +1708,14 @@ async fn cmd_run(store: &PodStore, base_dir: &std::path::Path, name: &str, comma
         config_user.to_string()
     };
     eprintln!("  {}  {}", color::dim("User    "), user_display);
+    if web_display_type != envpod_core::config::WebDisplayType::None {
+        let display_label = match web_display_type {
+            envpod_core::config::WebDisplayType::Novnc => "noVNC",
+            envpod_core::config::WebDisplayType::Webrtc => "WebRTC",
+            _ => "none",
+        };
+        eprintln!("  {}  {} → http://localhost:{}", color::dim("Display "), display_label, web_display_port);
+    }
     if is_root {
         eprintln!();
         eprintln!("  {} Running as root — known gaps: iptables modification, raw sockets.", color::yellow("⚠"));
@@ -1678,6 +1744,11 @@ async fn cmd_run(store: &PodStore, base_dir: &std::path::Path, name: &str, comma
         all_ports.extend(public);
         all_ports.extend(cli_ports.iter().map(normalize_local));
         all_ports.extend_from_slice(cli_public_ports);
+
+        // Auto-add web display port forward (localhost only)
+        if web_display_type != envpod_core::config::WebDisplayType::None {
+            all_ports.push(format!("127.0.0.1:{}:6080", web_display_port));
+        }
 
         if !all_ports.is_empty() {
             envpod_core::backend::native::cleanup_port_forwards(&state.pod_dir);
@@ -2754,6 +2825,53 @@ fn security_findings(config: &PodConfig) -> Vec<SecurityFinding> {
                  the pod service on the forwarded port(s)."
             ),
             fix: "use network.ports (or -p) instead if only localhost access is needed.",
+        });
+    }
+
+    // W-01: noVNC enabled — VNC unencrypted (mitigated by localhost-only)
+    if config.web_display.display_type == envpod_core::config::WebDisplayType::Novnc {
+        findings.push(SecurityFinding {
+            id: "W-01",
+            severity: "MEDIUM",
+            title: "noVNC enabled — VNC protocol is unencrypted",
+            explanation: "web_display.type is novnc — VNC traffic between x11vnc and websockify \
+                          is unencrypted. Mitigated by localhost-only port forwarding by default."
+                .into(),
+            fix: "use web_display.type: webrtc for DTLS-encrypted transport, or keep novnc with \
+                  localhost-only access (ports, not public_ports).",
+        });
+    }
+
+    // W-02: web_display port in public_ports — remote VNC without encryption
+    if config.web_display.display_type != envpod_core::config::WebDisplayType::None {
+        let display_port = config.web_display.port.to_string();
+        let exposed = config.network.public_ports.iter().any(|spec| {
+            spec.starts_with(&format!("{display_port}:")) || spec == &display_port
+        });
+        if exposed {
+            findings.push(SecurityFinding {
+                id: "W-02",
+                severity: "HIGH",
+                title: "Web display port exposed on all interfaces",
+                explanation: format!(
+                    "web_display port {display_port} is in network.public_ports — the display \
+                     is accessible from other machines on the host network."
+                ),
+                fix: "use network.ports instead of public_ports for localhost-only display access.",
+            });
+        }
+    }
+
+    // W-03: WebRTC enabled — uses DTLS, lower risk
+    if config.web_display.display_type == envpod_core::config::WebDisplayType::Webrtc {
+        findings.push(SecurityFinding {
+            id: "W-03",
+            severity: "LOW",
+            title: "WebRTC display enabled",
+            explanation: "web_display.type is webrtc — uses DTLS encryption for transport. \
+                          Lower risk than VNC but still exposes a desktop stream."
+                .into(),
+            fix: "set web_display.type: none if GUI access is not needed.",
         });
     }
 

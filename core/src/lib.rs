@@ -16,4 +16,5 @@ pub mod store;
 pub mod types;
 pub mod undo;
 pub mod vault;
+pub mod web_display;
 pub mod snapshot;
