@@ -184,6 +184,11 @@ enum Commands {
         #[arg(long)]
         all: bool,
     },
+    /// Resume a frozen pod
+    Unlock {
+        /// Pod name
+        name: String,
+    },
     /// Terminate a pod's processes and rollback changes
     Kill {
         /// Pod name
@@ -622,6 +627,7 @@ async fn run(cli: Cli) -> Result<()> {
             }
         }
         Commands::Lock { name, all } => cmd_lock(&store, base_dir, name.as_deref(), all),
+        Commands::Unlock { name } => cmd_unlock(&store, base_dir, &name),
         Commands::Kill { name } => cmd_kill(&store, base_dir, &name),
         Commands::Destroy { names, base, full } => {
             if base && names.len() > 1 {
@@ -646,7 +652,7 @@ async fn run(cli: Cli) -> Result<()> {
         } => cmd_mount(&store, base_dir, &name, &host_path, target.as_deref(), readonly),
         Commands::Unmount { name, path } => cmd_unmount(&store, base_dir, &name, &path),
         Commands::Undo { name, id, all } => cmd_undo(&store, base_dir, &name, id.as_deref(), all),
-        Commands::Ls { json } => cmd_ls(&store, json),
+        Commands::Ls { json } => cmd_ls(&store, base_dir, json),
         Commands::Vault { name, action } => cmd_vault(&store, &name, action),
         Commands::Remote { name, cmd, payload } => {
             cmd_remote(&store, &name, &cmd, payload.as_deref()).await
@@ -3219,6 +3225,18 @@ fn cmd_lock(store: &PodStore, base_dir: &std::path::Path, name: Option<&str>, al
 }
 
 // ---------------------------------------------------------------------------
+// unlock (resume a frozen pod)
+// ---------------------------------------------------------------------------
+
+fn cmd_unlock(store: &PodStore, base_dir: &std::path::Path, name: &str) -> Result<()> {
+    let handle = store.load(name)?;
+    let backend = create_backend(&handle.backend, base_dir)?;
+    backend.resume(&handle)?;
+    println!("Resumed pod '{name}'");
+    Ok(())
+}
+
+// ---------------------------------------------------------------------------
 // kill
 // ---------------------------------------------------------------------------
 
@@ -4218,30 +4236,47 @@ fn resolve_undo_id(registry: &UndoRegistry, prefix: &str) -> Result<uuid::Uuid> 
 // ls
 // ---------------------------------------------------------------------------
 
-fn cmd_ls(store: &PodStore, json: bool) -> Result<()> {
+fn cmd_ls(store: &PodStore, base_dir: &std::path::Path, json: bool) -> Result<()> {
     let pods = store.list()?;
 
-    // Resolve base pod name for each pod (from rootfs symlink)
-    let pod_bases: Vec<Option<String>> = pods
+    // Resolve base name, status, and pod IP for each pod
+    let pod_info: Vec<(Option<String>, String, String)> = pods
         .iter()
         .map(|h| {
-            NativeState::from_handle(h)
+            let base = NativeState::from_handle(h)
                 .ok()
-                .and_then(|state| resolve_base_name(&state.pod_dir))
+                .and_then(|state| resolve_base_name(&state.pod_dir));
+            let (status, ip) = if let Ok(backend) = create_backend(&h.backend, base_dir) {
+                if let Ok(info) = backend.info(h) {
+                    let s = format!("{:?}", info.status).to_lowercase();
+                    let ip = NativeState::from_handle(h)
+                        .ok()
+                        .and_then(|st| st.network.as_ref().map(|n| n.pod_ip.clone()))
+                        .unwrap_or_else(|| "-".into());
+                    (s, ip)
+                } else {
+                    ("unknown".into(), "-".into())
+                }
+            } else {
+                ("unknown".into(), "-".into())
+            };
+            (base, status, ip)
         })
         .collect();
 
     if json {
         let json_pods: Vec<serde_json::Value> = pods
             .iter()
-            .zip(pod_bases.iter())
-            .map(|(h, base)| {
+            .zip(pod_info.iter())
+            .map(|(h, (base, status, ip))| {
                 serde_json::json!({
                     "name": h.name,
                     "backend": h.backend,
                     "id": h.id,
                     "created_at": h.created_at,
                     "base": base.as_deref().unwrap_or(""),
+                    "status": status,
+                    "ip": ip,
                 })
             })
             .collect();
@@ -4255,17 +4290,18 @@ fn cmd_ls(store: &PodStore, json: bool) -> Result<()> {
     }
 
     println!(
-        "{:<20} {:<16} {:<24}",
-        "NAME", "BASE", "CREATED"
+        "{:<20} {:<10} {:<16} {:<16}",
+        "NAME", "STATUS", "IP", "BASE"
     );
-    println!("{}", "-".repeat(60));
-    for (handle, base) in pods.iter().zip(pod_bases.iter()) {
+    println!("{}", "-".repeat(62));
+    for (handle, (base, status, ip)) in pods.iter().zip(pod_info.iter()) {
         let base_display = base.as_deref().unwrap_or("-");
         println!(
-            "{:<20} {:<16} {}",
+            "{:<20} {:<10} {:<16} {:<16}",
             handle.name,
+            status,
+            ip,
             base_display,
-            handle.created_at.format("%Y-%m-%d %H:%M:%S UTC"),
         );
     }
     println!("\n{} pod(s)", pods.len());
@@ -4807,9 +4843,10 @@ fn format_bytes(bytes: u64) -> String {
 
 /// Subcommands whose first positional argument is a pod name.
 const POD_SUBCOMMANDS: &[&str] = &[
-    "init", "run", "diff", "commit", "rollback", "audit", "lock", "kill", "destroy",
-    "queue", "approve", "cancel", "status", "logs", "vault", "mount", "unmount",
-    "undo", "remote", "monitor", "dns",
+    "init", "setup", "run", "diff", "commit", "rollback", "audit", "lock", "unlock",
+    "kill", "destroy", "queue", "approve", "cancel", "status", "logs", "vault",
+    "mount", "unmount", "undo", "remote", "monitor", "dns", "clone", "actions",
+    "ports", "discover", "snapshot",
 ];
 
 fn print_completions(shell: Shell, base_dir: &std::path::Path) {
