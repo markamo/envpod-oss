@@ -149,6 +149,55 @@ sudo ./tests/benchmark-dns.sh 10 2>&1 | tee results/benchmark-dns.txt
 Requires: Docker, Podman, envpod installed. NVIDIA GPU for GPU benchmarks. All scripts auto-clean up after themselves.
 </details>
 
+## Tested Distros
+
+Tested via automated suite — install, run, governance (diff/commit/rollback) all pass on every distro:
+
+| Distro | Version | Package Manager | Status |
+|--------|---------|-----------------|--------|
+| Ubuntu | 24.04 LTS | apt | **Pass** |
+| Ubuntu | 22.04 LTS | apt | **Pass** |
+| Debian | 12 | apt | **Pass** |
+| Fedora | 41 | dnf | **Pass** |
+| Arch Linux | latest | pacman | **Pass** |
+| Rocky Linux | 9 | dnf | **Pass** |
+| AlmaLinux | 9 | dnf | **Pass** |
+| openSUSE Leap | 15.6 | zypper | **Pass** |
+| Amazon Linux | 2023 | dnf | **Pass** |
+
+The installer auto-detects your distro and package manager. Prerequisites (iptables, iproute2) are installed automatically if missing.
+
+<details>
+<summary><strong>Reproduce distro tests</strong></summary>
+
+```bash
+# Test with host-mounted binary (fast — binary already built)
+sudo bash tests/test-distros.sh 2>&1 | tee results/test-distros.txt
+
+# Test full in-container install + governance (comprehensive)
+sudo bash tests/test-distros-v2.sh 2>&1 | tee results/test-distros-v2.txt
+```
+
+</details>
+
+## Try in Docker
+
+Don't want to install on bare metal? Test envpod inside Docker:
+
+```bash
+docker build -t envpod-demo -f docker/Dockerfile docker/
+docker run -it --privileged --cgroupns=host \
+  -v /tmp/envpod-test:/var/lib/envpod \
+  -v /sys/fs/cgroup:/sys/fs/cgroup:rw \
+  envpod-demo
+
+# Inside the container:
+envpod init test -c /opt/envpod/examples/basic-internet.yaml
+envpod run test -- bash
+```
+
+See [docs/DOCKER-TESTING.md](docs/DOCKER-TESTING.md) for the full guide.
+
 ## Feature Highlights
 
 **Filesystem governance**
@@ -199,6 +248,8 @@ Requires: Docker, Podman, envpod installed. NVIDIA GPU for GPU benchmarks. All s
 
 ## Documentation
 
+- `docs/INSTALL.md` — installation guide (9 distros, bare metal + container)
+- `docs/DOCKER-TESTING.md` — Docker evaluation guide
 - `docs/FEATURES.md` — full feature list (CE vs Premium)
 - `docs/CLI-BLACKBOOK.md` — complete CLI reference
 - `docs/TUTORIALS.md` — step-by-step tutorials
