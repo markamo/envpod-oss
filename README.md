@@ -3,275 +3,429 @@
 [![Platform](https://img.shields.io/badge/platform-Linux%20x86__64%20%7C%20ARM64-lightgrey)](docs/EMBEDDED.md)
 [![Built with Rust](https://img.shields.io/badge/built%20with-Rust-orange)](https://www.rust-lang.org/)
 
-# envpod — Zero-trust governance environments for AI agents
+# envpod
 
-> "Docker isolates. Envpod governs."
+> **EnvPod v0.1.0** — Zero-trust governance environments for AI agents
+> Author: Mark Amoboateng · mark@envpod.dev
+> Copyright 2026 Xtellix Inc.
 
-## What is envpod?
+**Docker isolates. Envpod governs.**
 
-envpod is a governance layer for AI agents running on Linux. It gives every agent a **pod** — an isolated environment with four hard walls (memory, filesystem, network, processor) and a governance ceiling that records, reviews, and controls everything the agent does.
+Every AI agent runs inside a **pod** — an isolated environment with four walls (memory, filesystem, network, processor) and a governance ceiling (policy engine, tool security, vault, monitoring, audit). All agent actions are isolated, monitored, and reversible.
 
-> **Why not just Docker?** Docker isolates processes but provides zero governance. No file change review, no action queue, no credential vault, no undo. Envpod adds the governance layer on top of the same Linux primitives. See [Docker vs Envpod](docs/FOR-DOCKER-USERS.md) for a full comparison.
+> **Why not just Docker?** Docker isolates processes but provides zero governance. No file change review, no action queue, no credential vault, no undo. Envpod adds the governance layer on top of the same Linux primitives. See [Docker vs Envpod](docs/COMPARE-DOCKER.md) for a full comparison.
 
-The core insight: container runtimes give you isolation, but isolation alone is not enough for autonomous agents. You need to know what the agent changed, review it before it lands, roll it back if wrong, and keep secrets out of the agent's context. envpod builds this governance layer on top of Linux namespaces, OverlayFS, and cgroups — as a single static binary with no runtime dependencies.
+## Why Envpod
 
-Every agent session runs inside a pod. Filesystem writes go to a copy-on-write overlay — the host is never touched until a human runs `envpod commit`. DNS is filtered so the agent can only reach approved domains. Credentials are stored in an encrypted vault and injected as environment variables at runtime — the agent never sees them in its context. All actions are logged to an append-only audit trail. The human reviews with `envpod diff`, commits good changes, rolls back bad ones.
+AI agents are powerful but dangerous without boundaries. They can read sensitive files, exfiltrate data over the network, consume unbounded resources, and make irreversible changes — all while running with your credentials.
 
-## The Pod Model
+Existing sandboxes (Docker, E2B, Firecrackers) provide isolation but zero governance. Envpod adds the governance layer: every file change goes through copy-on-write review, every DNS query is logged, every action can be undone.
 
-**Four walls:**
-- **Filesystem wall** — OverlayFS copy-on-write. Agent writes go to an overlay; the host filesystem is unchanged until `envpod commit`.
-- **Network wall** — Network namespace + embedded per-pod DNS resolver. Domain-level allow/deny, rate limiting, DNS remapping.
-- **Memory wall** — Namespace separation, /proc blocking, coredump prevention. Cognitive isolation via per-pod context.
-- **Processor wall** — CPU affinity, cgroup v2 enforcement. CPU, memory, and PID limits.
+## Features
 
-**Governance ceiling:**
-- Action staging queue (immediate / delayed / staged / blocked tiers)
-- Encrypted credential vault (ChaCha20-Poly1305)
-- Remote lockdown (freeze / kill / restrict)
-- Multi-layer audit log (action + system)
-- Web dashboard for fleet oversight
+**Filesystem Isolation** — OverlayFS copy-on-write. Agent writes go to an overlay, never the host. Review changes with `diff`, accept with `commit`, discard with `rollback`.
+
+**Network Isolation** — Each pod gets its own network namespace with veth pairs. Embedded DNS resolver per pod with whitelist, blacklist, or monitor modes. Every DNS query is logged.
+
+**Process Isolation** — PID namespace, cgroups v2 (CPU, memory, PID limits), seccomp-BPF syscall filtering. Processes in the pod cannot see or signal host processes.
+
+**Credential Vault** — Secrets stored encrypted (ChaCha20-Poly1305), injected as environment variables at runtime. **Vault proxy injection** (v0.2) goes further: a transparent HTTPS proxy intercepts API requests, strips dummy auth headers, and injects real credentials at the transport layer — the agent never has access to real API keys in env vars, memory, or config files.
+
+**Web Dashboard** — Browser-based fleet management UI (`envpod dashboard`). Real-time pod overview with resource monitoring, audit trail viewer, filesystem diff inspector, and one-click commit/rollback/freeze/resume actions.
+
+**Action Queue** — Actions classified by reversibility: immediate (COW-protected), delayed (auto-execute after timeout), staged (human approval required), blocked (denied).
+
+**Audit Trail** — Append-only JSONL logs for every action. Static security analysis of pod configurations via `envpod audit --security`.
+
+**Monitoring Agent** — Background policy engine polls resource usage and can autonomously freeze or restrict a pod based on configurable rules.
+
+**Remote Control** — Freeze, resume, kill, or restrict a running pod in real time via `envpod remote`.
+
+**Live DNS Mutation** — Update a pod's DNS allow/deny lists without restarting via `envpod dns`.
+
+**Undo Registry** — Every executed action records its undo mechanism. `envpod undo` reverses any reversible action.
+
+**Display + Audio Forwarding** — GPU passthrough, Wayland/X11 display forwarding, PipeWire/PulseAudio audio forwarding for GUI agents.
 
 ## Quick Start
 
 ```bash
-# Install (Linux x86_64 or ARM64 — auto-detects arch)
-curl -fsSL https://envpod.dev/install.sh | sh
-
-# Or install from a release tarball
+# Install (Linux x86_64 — single binary, no dependencies)
 curl -fsSL https://github.com/markamo/envpod-ce/releases/latest/download/envpod-linux-x86_64.tar.gz \
   | tar xz && sudo ./envpod-linux-x86_64/install.sh
 
-# Create a pod from a config file
-sudo envpod init my-agent --config pod.yaml
+# Create a pod using a built-in preset (18 available)
+sudo envpod init my-agent --preset claude-code
 
-# Run a command inside the pod
-sudo envpod run my-agent -- bash
+# Or use the interactive wizard (shows all presets by category)
+sudo envpod init my-agent
 
-# Review what the agent changed
+# Or use a custom config file
+sudo envpod init my-agent -c examples/coding-agent.yaml
+
+# Run a command inside the pod (fully isolated)
+sudo envpod run my-agent -- /bin/bash
+
+# See what the agent changed
 sudo envpod diff my-agent
 
-# Commit approved changes to the host filesystem
-sudo envpod commit my-agent
+# Accept or reject changes
+sudo envpod commit my-agent              # apply all changes to host
+sudo envpod commit my-agent /opt/a       # commit specific paths only
+sudo envpod rollback my-agent            # discard everything
 
-# Roll back all changes
-sudo envpod rollback my-agent
+# View audit trail
+sudo envpod audit my-agent
+
+# Security analysis
+sudo envpod audit my-agent --security
 ```
 
-Minimal `pod.yaml`:
+See [Installation](docs/INSTALL.md), [Quickstart](docs/QUICKSTART.md), [Pod Config](docs/POD-CONFIG.md), [Tutorials](docs/TUTORIALS.md), [Action Catalog](docs/ACTION-CATALOG.md), [CLI Black Book](docs/CLI-BLACKBOOK.md), [Capabilities](docs/CAPABILITIES.md), [Features](docs/FEATURES.md), [Compare vs Docker](docs/COMPARE-DOCKER.md), [Benchmarks](docs/BENCHMARKS.md), [Security](docs/SECURITY.md), [Licensing](docs/LICENSING.md), [Roadmap](docs/ROADMAP.md), [FAQ](docs/FAQ.md), [Changelog](CHANGELOG.md), and [Contributing](CONTRIBUTING.md) for more.
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────┐
+│                  GOVERNANCE CEILING                  │
+│  Credential Vault  ·  Action Queue  ·  Undo         │
+│  Monitoring Agent  ·  Remote Control ·  Audit Log   │
+├──────────┬──────────┬──────────┬────────────────────┤
+│ MEMORY   │FILESYSTEM│ NETWORK  │ PROCESSOR          │
+│ WALL     │ WALL     │ WALL     │ WALL               │
+│          │          │          │                     │
+│ PID ns   │OverlayFS │ Net ns   │ cgroups v2         │
+│ /proc    │ COW      │ veth     │ CPU cores/affinity │
+│ masking  │ diff/    │ DNS      │ Memory limit       │
+│ seccomp  │ commit/  │ filtering│ PID limit          │
+│          │ rollback │ iptables │                     │
+├──────────┴──────────┴──────────┴────────────────────┤
+│              ISOLATION BACKEND (pluggable)           │
+│                  native (Linux)                      │
+└─────────────────────────────────────────────────────┘
+```
+
+## CLI Commands
+
+| Command | Description |
+|---------|-------------|
+| `envpod init <name> [-c config.yaml] [--preset name]` | Create a new pod (interactive wizard if no flags) |
+| `envpod presets` | List all built-in presets by category |
+| `envpod setup <name>` | Re-run setup commands |
+| `envpod run <name> [--root] [-d] [-a] [-p h:p] [-P h:p] [-i port] -- <cmd>` | Run a command inside a pod |
+| `envpod diff <name>` | Show filesystem changes (COW overlay) |
+| `envpod commit <name> [paths...] [--exclude ...]` | Apply changes to host |
+| `envpod rollback <name>` | Discard all overlay changes |
+| `envpod audit <name> [--security] [--json]` | View audit log or run security analysis |
+| `envpod status <name>` | Show pod status and resource usage |
+| `envpod logs <name>` | View pod stdout/stderr |
+| `envpod lock <name>` | Freeze pod state |
+| `envpod kill <name>` | Stop processes and rollback |
+| `envpod destroy <names...> [--base] [--full]` | Remove pod(s). `--full` also cleans iptables immediately |
+| `envpod clone <source> <name> [--current]` | Clone a pod or base pod (fast — skips rootfs rebuild) |
+| `envpod base create/ls/destroy` | Manage base pods (reusable snapshots for cloning) |
+| `envpod ls [--json]` | List all pods |
+| `envpod queue <name>` | View action staging queue |
+| `envpod approve <name> <id>` | Approve a queued action |
+| `envpod cancel <name> <id>` | Cancel a queued action |
+| `envpod undo <name>` | Undo last reversible action |
+| `envpod vault <name> set/get/remove` | Manage pod credentials |
+| `envpod vault <name> bind/unbind/bindings` | Manage vault proxy bindings (v0.2) |
+| `envpod dashboard [--port 9090]` | Start web dashboard (v0.2) |
+| `envpod mount <name> <path>` | Bind-mount a host path into a pod |
+| `envpod unmount <name> <path>` | Unmount a path from a pod |
+| `envpod dns <name>` | Update DNS policy on a running pod |
+| `envpod remote <name> <cmd>` | Send remote control command |
+| `envpod monitor <name>` | Manage monitoring policy |
+| `envpod gc` | Clean up orphaned resources (iptables, netns, cgroups, pod dirs) |
+| `envpod completions <shell>` | Generate shell completions (bash, zsh, fish) |
+
+## Configuration
+
+Pods are configured via `pod.yaml`:
 
 ```yaml
 name: my-agent
+type: standard           # standard, hardened, ephemeral, supervised, air_gapped
+backend: native
+user: agent              # "agent" (non-root, UID 60000) or "root"
+
+filesystem:
+  system_access: safe    # safe (read-only), advanced (COW), dangerous (COW + commit)
+  mounts:
+    - path: /opt/google
+      permissions: ReadOnly
+  tracking:
+    watch: [/home, /opt, /root, /workspace]
+    ignore: [/var/cache, /var/lib/apt, /tmp, /run]
+
 network:
-  mode: Isolated
+  mode: Isolated         # Isolated, Monitored, Host
+  subnet: "10.200"       # pod IP subnet (default: 10.200)
   dns:
-    mode: Whitelist
+    mode: Whitelist      # Whitelist, Blacklist, Monitor
     allow:
       - api.anthropic.com
+      - github.com
+    deny: []
+    remap:               # redirect domains
+      internal.api: "10.0.1.5"
+  ports:                 # localhost-only port forwards: "host:container[/proto]"
+    - "8080:3000"
+  public_ports:          # all-interfaces port forwards (LAN-visible)
+    - "9090:9090"
+  internal_ports:        # pod-to-pod only: "container[/proto]" (no host port)
+    - "3000"
+  allow_discovery: false # when true: register as <name>.pods.local (requires envpod dns-daemon)
+  allow_pods: []         # pod names this pod may resolve via *.pods.local
+
 processor:
   cores: 2.0
   memory: "4GB"
+  max_pids: 1024
+  cpu_affinity: "0-3"    # pin to specific CPUs
+
+security:
+  seccomp_profile: default  # "default" or "browser"
+  shm_size: "256MB"         # /dev/shm size
+
+devices:
+  gpu: true
+  display: true             # auto-mount display socket
+  audio: true               # auto-mount audio socket
+  display_protocol: auto    # auto, wayland, x11
+  audio_protocol: auto      # auto, pipewire, pulseaudio
+  extra: ["/dev/fuse"]      # additional devices
+
+vault:                       # v0.2 — vault proxy injection
+  proxy: true                # enable transparent HTTPS proxy
+  bindings:
+    - key: ANTHROPIC_API_KEY
+      domain: api.anthropic.com
+      header: "Authorization: Bearer {value}"
+
+budget:
+  max_duration: "4h"
+
+audit:
+  action_log: true
+
+setup:
+  - "pip install numpy pandas"
+
+setup_script: ~/setup.sh    # host script injected into pod
 ```
 
-## Benchmarks
+## Presets
 
-Ubuntu 24.04, Docker 29.2.1, Podman 4.9.3, NVIDIA TITAN RTX x2, 10 iterations averaged.
+18 built-in presets — no YAML needed. Use `envpod presets` to list all, or `envpod init <name>` for an interactive wizard.
 
-**Startup latency:**
+```bash
+sudo envpod init my-agent --preset claude-code    # direct
+sudo envpod init my-agent                          # interactive wizard
+```
+
+**Coding Agents**
+
+| Preset | Description | Setup |
+|--------|-------------|-------|
+| `claude-code` | Anthropic Claude Code CLI | `curl` installer |
+| `codex` | OpenAI Codex CLI | nvm + `npm install -g @openai/codex` |
+| `gemini-cli` | Google Gemini CLI | nvm + `npm install -g @google/gemini-cli` |
+| `opencode` | OpenCode terminal agent | `curl` installer |
+| `aider` | Aider AI pair programmer | `pip install aider-chat` |
+| `swe-agent` | SWE-agent autonomous coder | `pip install sweagent` |
+
+**Frameworks**
+
+| Preset | Description | Setup |
+|--------|-------------|-------|
+| `langgraph` | LangGraph workflows | `pip install langgraph langchain-openai` |
+| `google-adk` | Google Agent Development Kit | `pip install google-adk` |
+| `openclaw` | OpenClaw messaging assistant | nvm + `npm install -g openclaw` |
+
+**Browser Agents**
+
+| Preset | Description | Setup |
+|--------|-------------|-------|
+| `browser-use` | Browser-use web automation | `pip install browser-use playwright` + Chromium |
+| `playwright` | Playwright browser automation | `pip install playwright` + Chromium |
+| `browser` | Headless Chrome sandbox | Chrome (check host, else install) |
+
+**Environments**
+
+| Preset | Description | Setup |
+|--------|-------------|-------|
+| `devbox` | General dev sandbox | None |
+| `python-env` | Python environment | numpy, pandas, matplotlib, scipy, scikit-learn |
+| `nodejs` | Node.js environment | nvm + Node.js 22 |
+| `web-display` | noVNC desktop | Supervisor-managed |
+| `desktop` | XFCE desktop via noVNC | XFCE4 + Chrome (~550MB, 2-4 min) |
+| `vscode` | VS Code in the browser | code-server |
+
+The interactive wizard also lets you customize CPU cores, memory, and GPU after selecting a preset.
+
+## Additional Examples
+
+34 example configs total in `examples/` — the 18 presets above plus:
+
+| Example | Description |
+|---------|-------------|
+| [`basic-cli.yaml`](examples/basic-cli.yaml) | Minimal sandbox, no network |
+| [`basic-internet.yaml`](examples/basic-internet.yaml) | CLI with monitored internet |
+| [`coding-agent.yaml`](examples/coding-agent.yaml) | General-purpose coding agent |
+| [`browser-wayland.yaml`](examples/browser-wayland.yaml) | Chrome with secure Wayland + PipeWire |
+| [`ml-training.yaml`](examples/ml-training.yaml) | GPU-accelerated ML training |
+| [`hardened-sandbox.yaml`](examples/hardened-sandbox.yaml) | Maximum isolation, no network |
+| [`fuse-agent.yaml`](examples/fuse-agent.yaml) | FUSE filesystem support |
+| [`demo-pod.yaml`](examples/demo-pod.yaml) | Minimal quick demo |
+| [`monitoring-policy.yaml`](examples/monitoring-policy.yaml) | Example monitoring rules |
+| [`discovery-service.yaml`](examples/discovery-service.yaml) | Pod discovery (target) |
+| [`discovery-client.yaml`](examples/discovery-client.yaml) | Pod discovery (client) |
+| [`jetson-orin.yaml`](examples/jetson-orin.yaml) | NVIDIA Jetson Orin (ARM64) |
+| [`raspberry-pi.yaml`](examples/raspberry-pi.yaml) | Raspberry Pi 4/5 (ARM64) |
+| [`web-display-novnc.yaml`](examples/web-display-novnc.yaml) | noVNC web display |
+| [`web-display-webrtc.yaml`](examples/web-display-webrtc.yaml) | WebRTC web display |
+| [`remote-desktop.yaml`](examples/remote-desktop.yaml) | Remote desktop |
+| [`tailscale-pod.yaml`](examples/tailscale-pod.yaml) | Tailscale VPN integration |
+
+## Performance
+
+### envpod vs Docker vs Podman (10 iterations, `tests/benchmark-podman.sh`)
+
+Docker 29.2.1, Podman 4.9.3, envpod on Ubuntu 24.04, NVIDIA TITAN RTX x2:
 
 | Test | Docker | Podman | Envpod | vs Docker | vs Podman |
 |------|--------|--------|--------|-----------|-----------|
 | fresh: run /bin/true | 552ms | 560ms | **401ms** | **151ms faster** | **159ms faster** |
 | warm: run /bin/true | 95ms | 270ms | **32ms** | **63ms faster** | **238ms faster** |
+| fresh: file I/O (write+read 1MB) | 604ms | 573ms | **413ms** | **191ms faster** | **160ms faster** |
 | fresh: GPU nvidia-smi | 755ms | 745ms | **447ms** | **308ms faster** | **298ms faster** |
+| warm: GPU nvidia-smi | 137ms | 244ms | **76ms** | **61ms faster** | **168ms faster** |
 
-**Scale-out (50 instances):**
+- **fresh** = create from base + run + destroy (`docker run --rm` / `podman run --rm` / `envpod clone+run+destroy`)
+- **warm** = run in existing instance (`docker exec` / `podman exec` / `envpod run`)
+
+Envpod is faster at every operation while adding governance features neither Docker nor Podman have.
+
+### Core Benchmarks (50 iterations, `tests/benchmark.sh`)
+
+| Command | Median | Min | Max | P95 |
+|---------|--------|-----|-----|-----|
+| `envpod init` | 1.363s | 1.329s | 1.413s | 1.386s |
+| `envpod clone` | ~130ms | — | — | — |
+| `envpod run -- /bin/true` | 23ms | 20ms | 1.348s* | 45ms |
+| `envpod run --root -- /bin/true` | 21ms | 20ms | 44ms | 41ms |
+| `envpod diff` | 7ms | 7ms | 8ms | 7ms |
+| `envpod rollback` | 8ms | 7ms | 9ms | 9ms |
+| Full lifecycle (init+run+diff+destroy) | 3.348s | 3.286s | 3.405s | 3.400s |
+
+*First run after init is ~1.3s (cold start: DNS resolver, cgroup init). Subsequent runs are 20-45ms.
+
+Clone is ~10x faster than init — rootfs is symlinked (not copied), only cgroup + network namespace are recreated.
+
+### GPU Passthrough (NVIDIA TITAN RTX x2, 10 iterations, `tests/benchmark-gpu.sh`)
+
+| Command | Host | Pod | Overhead |
+|---------|------|-----|----------|
+| `nvidia-smi` query | 52ms | 80ms | +28ms (namespace entry) |
+| `nvidia-smi --list-gpus` | — | 73ms | — |
+| `envpod init` (gpu: true vs false) | — | 1.358s vs 1.350s | ~0ms |
+| `envpod run /bin/true` (gpu: true vs false) | — | 20ms vs 25ms | ~0ms |
+
+GPU passthrough is a zero-copy bind-mount of `/dev/nvidia*` and `/dev/dri/*` — no virtualization layer, no measurable overhead.
+
+### Disk Footprint (`tests/benchmark-size.sh`)
+
+Docker 29.2.1, Podman 4.9.3, envpod on Ubuntu 24.04, NVIDIA TITAN RTX x2:
+
+**Base image / base pod (ubuntu 24.04):**
+
+| Runtime | Size |
+|---------|------|
+| Docker image | 119 MB |
+| Podman image | 77 MB |
+| Envpod base pod | **105 MB** |
+
+Envpod base is 12% smaller than Docker. Docker/Podman copy the full distro userland into the image; envpod copies only `/etc` + apt state — `/usr`, `/bin`, `/lib` are bind-mounted from the host.
+
+**GPU image / base pod (CUDA 12.0 ubuntu 22.04):**
+
+| Runtime | Size |
+|---------|------|
+| Docker image | 338 MB |
+| Podman image | 229 MB |
+| Envpod base pod (gpu: true) | **105 MB** |
+
+Envpod GPU base is **69% smaller** than Docker's CUDA image — CUDA libraries are bind-mounted from the host, not copied.
+
+**Per-instance overhead:**
+
+| Runtime | Size |
+|---------|------|
+| Docker container layer | 4 KB |
+| Podman container layer | 11 KB |
+| Envpod pod (unique) | **1 KB** |
+| Envpod clone (unique) | **1 KB** |
+
+Clones share the base rootfs via symlink — near-zero per-clone overhead.
+
+### Scale Test (50 instances, `tests/benchmark-scale.sh`)
+
+Docker 29.2.1, Podman 4.9.3, envpod on Ubuntu 24.04:
 
 | Phase | Docker | Podman | Envpod | vs Docker | vs Podman |
 |-------|--------|--------|--------|-----------|-----------|
-| Create 50 | 6.3s | 6.9s | **407ms** | **15x faster** | **17x faster** |
-| Run all 50 | 11.4s | 26.8s | **7.5s** | **1.5x faster** | **3.6x faster** |
-| Full lifecycle | 19.0s | 36.2s | **9.5s** | **2x faster** | **3.8x faster** |
+| Create 50 instances | 6.3s | 6.9s | **407ms** | **15x faster** | **17x faster** |
+| Run /bin/true in all 50 | 11.4s | 26.8s | **7.5s** | **1.5x faster** | **3.6x faster** |
+| Destroy all 50 | 1.2s | 2.4s | **1.6s** | — | — |
+| **Full lifecycle** | **19.0s** | **36.2s** | **9.5s** | **2x faster** | **3.8x faster** |
 
-**Resource overhead:**
+Envpod creation is **15x faster** than Docker because `envpod clone` copies only a symlink + empty dirs (~1 KB per clone), while `docker create` allocates a full container layer. Envpod uses a **two-phase destroy**: `envpod destroy` is fast (deletes veth + netns, skips iptables), then `envpod gc` cleans up stale iptables rules in one batch. Dead rules are harmless — they reference non-existent interfaces. See [Benchmarks](docs/BENCHMARKS.md#fast-destroy--gc) for details.
 
-| Runtime | Base image (Ubuntu 24.04) | GPU image (CUDA 12.0) | Per-instance |
-|---------|--------------------------|----------------------|-------------|
-| Docker | 119 MB | 338 MB | 4 KB |
-| Podman | 77 MB | 229 MB | 11 KB |
-| Envpod | **105 MB** | **105 MB** | **1 KB** |
-
-Envpod GPU base is **69% smaller** than Docker's — CUDA libraries are bind-mounted from the host, not copied. Clone is ~10x faster than init (rootfs symlinked).
-
-**Real-world DNS + API (what agents actually do):**
-
-| Test | Docker | Podman | Envpod | vs Docker | vs Podman |
-|------|--------|--------|--------|-----------|-----------|
-| fresh: nslookup google.com | 673ms | 784ms | **257ms** | **416ms faster** | **527ms faster** |
-| warm: nslookup google.com | 129ms | 319ms | **62ms** | **67ms faster** | **257ms faster** |
-| fresh: curl GET google.com | 825ms | 874ms | **382ms** | **443ms faster** | **492ms faster** |
-| warm: curl GET google.com | 254ms | 422ms | **191ms** | **63ms faster** | **231ms faster** |
-| fresh: curl POST httpbin.org | 1.07s | 974ms | **508ms** | **559ms faster** | **466ms faster** |
-
-Envpod resolves DNS through a whitelist filter, logs every query, and still finishes before Docker returns. Docker/Podman pass DNS through unfiltered — no governance.
-
-Raw results from our test machine are in [`results/`](results/) for independent verification.
-
-<details>
-<summary><strong>Reproduce these benchmarks</strong></summary>
-
+Run the benchmarks yourself:
 ```bash
-# Create results directory
-mkdir -p results
-
-# Head-to-head: Docker vs Podman vs envpod (startup latency)
-sudo ./tests/benchmark-podman.sh 10 2>&1 | tee results/benchmark-podman.txt
-
-# Scale-out: create + run + destroy 50 instances
-sudo ./tests/benchmark-scale.sh 50 2>&1 | tee results/benchmark-scale.txt
-
-# Disk footprint comparison
-sudo ./tests/benchmark-size.sh 2>&1 | tee results/benchmark-size.txt
-
-# GPU passthrough overhead (requires NVIDIA GPU)
-sudo ./tests/benchmark-gpu.sh 10 2>&1 | tee results/benchmark-gpu.txt
-
-# Core envpod benchmarks (init, run, diff, rollback, lifecycle)
-sudo ./tests/benchmark.sh 50 2>&1 | tee results/benchmark-core.txt
-
-# Clone vs init
-sudo ./tests/benchmark-clone.sh 10 2>&1 | tee results/benchmark-clone.txt
-
-# Real-world DNS + HTTPS + API POST
-sudo ./tests/benchmark-dns.sh 10 2>&1 | tee results/benchmark-dns.txt
+sudo ./tests/benchmark-podman.sh 10  # Docker + Podman + envpod comparison
+sudo ./tests/benchmark-docker.sh 10  # Docker vs envpod only
+sudo ./tests/benchmark.sh 50         # core benchmarks
+sudo ./tests/benchmark-clone.sh 10   # clone vs init
+sudo ./tests/benchmark-gpu.sh 10     # GPU passthrough (requires NVIDIA GPU)
+sudo ./tests/benchmark-size.sh       # disk footprint comparison
+sudo ./tests/benchmark-scale.sh 50   # scale test (create + run + destroy N)
 ```
 
-Requires: Docker, Podman, envpod installed. NVIDIA GPU for GPU benchmarks. All scripts auto-clean up after themselves.
-</details>
+## How Envpod Compares
 
-## Tested Distros
+| | Docker Sandbox | E2B | Envpod |
+|---|---|---|---|
+| **Isolation** | Container (namespaces + cgroups) | Cloud microVM | Container (namespaces + cgroups + seccomp-BPF) |
+| **Reversibility** | None — changes permanent | None | COW overlay + diff/commit/rollback + undo registry |
+| **Governance** | None | None | Vault, action queue, monitoring, remote control, audit |
+| **DNS Control** | None | None | Per-pod whitelist/blacklist/monitor with query logging |
+| **Display/Audio** | Manual volume mounts | N/A | Auto-detect Wayland/X11, PipeWire/PulseAudio |
+| **Security Audit** | None | None | Static analysis of pod config (`--security`) |
 
-Tested via automated suite — install, run, governance (diff/commit/rollback) all pass on every distro:
+## Development
 
-| Distro | Version | Package Manager | Status |
-|--------|---------|-----------------|--------|
-| Ubuntu | 24.04 LTS | apt | **Pass** |
-| Ubuntu | 22.04 LTS | apt | **Pass** |
-| Debian | 12 | apt | **Pass** |
-| Fedora | 41 | dnf | **Pass** |
-| Arch Linux | latest | pacman | **Pass** |
-| Rocky Linux | 9 | dnf | **Pass** |
-| AlmaLinux | 9 | dnf | **Pass** |
-| openSUSE Leap | 15.6 | zypper | **Pass** |
-| Amazon Linux | 2023 | dnf | **Pass** |
-
-The installer auto-detects your distro and package manager. Prerequisites (iptables, iproute2) are installed automatically if missing.
-
-<details>
-<summary><strong>Reproduce distro tests</strong></summary>
+Requires Rust toolchain and Linux (kernel namespaces, cgroups v2, overlayfs).
 
 ```bash
-# Test with host-mounted binary (fast — binary already built)
-sudo bash tests/test-distros.sh 2>&1 | tee results/test-distros.txt
+cargo build                    # Build all crates
+cargo build --release          # Release build (static musl binary)
+cargo test                     # Run unit tests
+cargo clippy                   # Lint
+cargo fmt                      # Format
 
-# Test full in-container install + governance (comprehensive)
-sudo bash tests/test-distros-v2.sh 2>&1 | tee results/test-distros-v2.txt
+# Integration tests (require root)
+sudo cargo test -- --ignored
+sudo ./tests/e2e.sh
 ```
 
-</details>
+### Workspace Crates
 
-## Try in Docker
-
-Don't want to install on bare metal? Test envpod inside Docker:
-
-```bash
-docker build -t envpod-demo -f docker/Dockerfile docker/
-docker run -it --privileged --cgroupns=host \
-  -v /tmp/envpod-test:/var/lib/envpod \
-  -v /sys/fs/cgroup:/sys/fs/cgroup:rw \
-  envpod-demo
-
-# Inside the container:
-envpod init test -c /opt/envpod/examples/basic-internet.yaml
-envpod run test -- bash
-```
-
-See [docs/DOCKER-TESTING.md](docs/DOCKER-TESTING.md) for the full guide.
-
-## Feature Highlights
-
-**Filesystem governance**
-- OverlayFS copy-on-write: all agent writes go to overlay, host untouched
-- `envpod diff` — review changes before they land
-- `envpod commit` — apply selected changes (or `--output <dir>` to export)
-- `envpod rollback` — discard all changes instantly
-- Pod snapshots — checkpoint and restore overlay state
-
-**Network governance**
-- Per-pod DNS resolver (whitelist / blacklist / monitor / remap modes)
-- Anti-tunneling protection
-- Port forwarding: localhost-only (`-p`), public (`-P`), pod-to-pod (`-i`)
-- Pod discovery via `<name>.pods.local` (requires `envpod dns-daemon`)
-
-**Credential vault**
-- ChaCha20-Poly1305 encrypted, per-pod vault
-- `envpod vault set/get/list/rm/import` — manage secrets
-- Secrets injected as environment variables at runtime
-- Never stored in agent context or pod.yaml
-
-**Action queue (20 built-in types)**
-- HTTP: `http_get`, `http_post`, `http_put`, `http_patch`, `http_delete`, `webhook`
-- Filesystem: `file_create`, `file_write`, `file_delete`, `file_copy`, `file_move`, `dir_create`, `dir_delete`
-- Git: `git_commit`, `git_push`, `git_pull`, `git_checkout`, `git_branch`, `git_tag`
-- Custom: `custom` (define your own schema)
-- Reversibility tiers: ImmediateProtected / Delayed (30s grace) / Staged (human approval) / Blocked
-
-**Web dashboard**
-- `envpod dashboard` — starts on localhost:9090
-- Fleet overview with live polling
-- Pod detail: audit log, diff, resource usage
-- Action buttons: commit, rollback, freeze, resume
-
-**Base pods and cloning**
-- Base pods: reusable rootfs snapshots for fast cloning
-- `envpod clone source new-name` — clone in ~130ms vs ~1.3s for full init
-- `envpod base create/ls/destroy` — manage base pods
-
-**Display and audio passthrough**
-- Wayland / X11 display forwarding
-- PipeWire / PulseAudio audio forwarding
-- GPU passthrough (NVIDIA + DRI)
-
-**ARM64 support**
-- Static musl binary for Raspberry Pi 4/5 and Jetson Orin
-- See `docs/EMBEDDED.md` for setup instructions
-
-## Documentation
-
-- `docs/INSTALL.md` — installation guide (9 distros, bare metal + container)
-- `docs/DOCKER-TESTING.md` — Docker evaluation guide
-- `docs/FEATURES.md` — full feature list (CE vs Premium)
-- `docs/CLI-BLACKBOOK.md` — complete CLI reference
-- `docs/TUTORIALS.md` — step-by-step tutorials
-- `docs/ACTION-CATALOG.md` — action type reference
-- `docs/FOR-DOCKER-USERS.md` — envpod for Docker users
-- `docs/EMBEDDED.md` — ARM64 / embedded deployment
-- `docs/LICENSING.md` — AGPL rationale and commercial licensing
-- `CHANGELOG.md` — release history
-- `CONTRIBUTING.md` — how to contribute
-- `SECURITY.md` — vulnerability reporting
-
-## Building from Source
-
-Requires Rust toolchain (rustup).
-
-```bash
-git clone https://github.com/markamo/envpod-ce
-cd envpod-ce
-cargo build --release
-```
-
-The binary is at `target/release/envpod`.
+- **`cli/`** — CLI binary (`envpod` command), 26 subcommands + web dashboard
+- **`core/`** — Core library (isolation, governance, policy logic, vault proxy)
+- **`dns/`** — Embedded per-pod DNS resolver with filtering
 
 ## License
 
@@ -280,7 +434,3 @@ The binary is at `target/release/envpod`.
 Copyright 2026 Xtellix Inc. Licensed under [AGPL-3.0-only](LICENSE) — free to use, modify, and distribute. Cloud providers offering envpod as a service must open-source their stack under AGPL-3.0.
 
 See [docs/LICENSING.md](docs/LICENSING.md) for full details. For commercial licensing, contact mark@envpod.dev.
-
----
-
-Premium features (AI monitoring agent, prompt screening, TLS inspection, messaging/database actions) available at [envpod.dev](https://envpod.dev)
