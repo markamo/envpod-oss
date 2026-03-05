@@ -904,6 +904,29 @@ async fn cmd_setup(store: &PodStore, base_dir: &std::path::Path, name: &str, ver
     eprintln!("{divider}");
     eprintln!();
     eprintln!("  {}  {}", color::dim("Log"), log_path.display());
+
+    // Show web display URL hint after setup if configured
+    if success {
+        let handle = store.load(name)?;
+        if let Ok(state) = NativeState::from_handle(&handle) {
+            if let Ok(yaml) = std::fs::read_to_string(state.config_path()) {
+                if let Ok(cfg) = serde_yaml::from_str::<envpod_core::config::PodConfig>(&yaml) {
+                    if cfg.web_display.display_type != envpod_core::config::WebDisplayType::None {
+                        let label = match cfg.web_display.display_type {
+                            envpod_core::config::WebDisplayType::Novnc => "noVNC",
+                            envpod_core::config::WebDisplayType::Webrtc => "WebRTC",
+                            _ => "Display",
+                        };
+                        let hostname = std::fs::read_to_string("/etc/hostname")
+                            .map(|s| s.trim().to_string())
+                            .unwrap_or_else(|_| "localhost".into());
+                        eprintln!("  {}  {} → http://localhost:{}  or  http://{}:{}", color::dim("Display"), label, cfg.web_display.port, hostname, cfg.web_display.port);
+                    }
+                }
+            }
+        }
+    }
+
     eprintln!();
     Ok(())
 }
@@ -1714,7 +1737,11 @@ async fn cmd_run(store: &PodStore, base_dir: &std::path::Path, name: &str, comma
             envpod_core::config::WebDisplayType::Webrtc => "WebRTC",
             _ => "none",
         };
-        eprintln!("  {}  {} → http://localhost:{}", color::dim("Display "), display_label, web_display_port);
+        // Show both localhost and hostname so user can pick whichever works
+        let hostname = std::fs::read_to_string("/etc/hostname")
+            .map(|s| s.trim().to_string())
+            .unwrap_or_else(|_| "localhost".into());
+        eprintln!("  {}  {} → http://localhost:{}  or  http://{}:{}", color::dim("Display "), display_label, web_display_port, hostname, web_display_port);
     }
     if is_root {
         eprintln!();

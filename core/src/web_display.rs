@@ -79,8 +79,9 @@ sleep 1
 websockify --web /usr/share/novnc 0.0.0.0:6080 localhost:5900 &
 WEBSOCKIFY_PID=$!
 
-# Execute the user command
-exec "$@"
+# Execute the user command, redirecting its output to a log file
+# so GUI app noise (Chrome, Firefox, etc.) doesn't flood the terminal.
+exec "$@" >/tmp/envpod-display-app.log 2>&1
 "#
     )
 }
@@ -128,8 +129,8 @@ cleanup() {{
 }}
 trap cleanup EXIT
 
-# Execute the user command
-exec "$@"
+# Execute the user command, redirecting its output to a log file
+exec "$@" >/tmp/envpod-display-app.log 2>&1
 "#
     )
 }
