@@ -181,12 +181,13 @@ List all built-in presets by category (Coding Agents, Frameworks, Browser Agents
 
 #### `envpod run <name> [options] -- <command> [args...]`
 
-Run a command inside a pod.
+Run a command inside a pod. Press **Ctrl+Z** to detach (pod continues in background). Use `envpod fg` to reattach.
 
 | Option | Description |
 |--------|-------------|
 | `--root` | Run as root inside the pod (default is non-root `agent` user). Prints a security warning. |
-| `--user <name\|uid>` | Run as a specific user inside the pod (looked up in pod's `/etc/passwd`) |
+| `--user <name\|uid>` | Run as a specific user inside the pod (`--user root` is equivalent to `--root`) |
+| `-b`, `--background` | Run in background. Use `envpod fg <name>` to reattach. |
 | `--env <KEY=VALUE>` | Set environment variables (repeatable) |
 | `-d`, `--enable-display` | Forward display (Wayland preferred, X11 fallback). Override with `display_protocol` in pod.yaml. |
 | `-a`, `--enable-audio` | Forward audio (PipeWire preferred, PulseAudio fallback). Override with `audio_protocol` in pod.yaml. |
@@ -204,6 +205,10 @@ sudo envpod run my-agent -- python3 train.py --epochs 10
 # Run as root (with security warning)
 sudo envpod run my-agent --root -- /bin/bash
 
+# Run in background, reattach later
+sudo envpod run my-agent -b -- python3 long_task.py
+sudo envpod fg my-agent
+
 # Run as a specific user with display and audio
 sudo envpod run my-agent -d -a --user browseruser -- google-chrome https://example.com
 
@@ -214,6 +219,10 @@ sudo envpod run my-agent --env MY_VAR=hello --env DEBUG=1 -- /bin/bash
 The command runs inside full isolation: PID namespace, mount namespace with OverlayFS, network namespace with DNS filtering, cgroup resource limits, and seccomp syscall filtering.
 
 **Default user:** Pods run as a non-root `agent` user (UID 60000) by default, providing full pod boundary protection (17/17 jailbreak tests pass). The user is created automatically during `envpod init`. Override with `--root` (prints a warning), `--user <name>`, or `user:` in pod.yaml. CLI flags take precedence over pod.yaml.
+
+#### `envpod fg <name>`
+
+Reattach to a background or detached pod. Shows existing log output and tails new output in real-time. Press **Ctrl+Z** to detach again (pod continues running).
 
 **User precedence:** `--user` > `--root` > pod.yaml `user:` field > default `agent`
 

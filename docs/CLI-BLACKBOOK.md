@@ -2,7 +2,7 @@
 
 > **EnvPod v0.2.0** — Zero-trust governance environments for AI agents
 > Author: Mark Amoboateng · mark@envpod.dev
-> Copyright 2026 Xtellix Inc. · GNU Affero General Public License v3.0
+> Copyright 2026 Xtellix Inc. · Licensed under Apache-2.0
 
 ---
 
@@ -145,13 +145,16 @@ envpod run <name> [flags] -- <command> [args...]
 |---|---|---|
 | `name` | | Pod name |
 | `--root` | | Run as root inside pod (default: non-root `agent` user, UID 60000) |
-| `--user <uid|name>` | `-u` | Run as specific user inside pod |
+| `--user <uid|name>` | `-u` | Run as specific user inside pod (`--user root` is equivalent to `--root`) |
 | `--env KEY=VALUE` | `-e` | Set extra env vars (repeatable) |
+| `--background` | `-b` | Run in background (detached). Use `envpod fg` to reattach |
 | `--enable-display` | `-d` | Forward display (Wayland preferred, X11 fallback) |
 | `--enable-audio` | `-a` | Forward audio (PipeWire preferred, PulseAudio fallback) |
 | `--publish host:pod` | `-p` | Port forward — localhost only (OUTPUT DNAT) |
 | `--publish-all host:pod` | `-P` | Port forward — all interfaces (PREROUTING + FORWARD) |
 | `--internal pod_port` | `-i` | Pod-to-pod port only (no host mapping) |
+
+**Detach/reattach:** Press **Ctrl+Z** during an interactive run to detach — the pod continues running in the background with DNS, port forwards, and all services intact. Use `envpod fg <name>` to reattach. Starting with `-b` runs in background from the start.
 
 **Use cases:**
 
@@ -167,6 +170,10 @@ sudo envpod run myagent --root -- apt-get install -y ripgrep
 
 # Run specific user
 sudo envpod run myagent --user 1000 -- id
+
+# Background mode — run detached, reattach later
+sudo envpod run myagent -b -- python3 long_task.py
+sudo envpod fg myagent
 
 # With display and audio (browser, GUI apps)
 sudo envpod run myagent -d -a -- google-chrome --no-sandbox
@@ -199,6 +206,25 @@ sudo envpod run myagent -d -a -p 8080:3000 -e API_URL=http://localhost:8080 -- p
 **Protocol suffix:** `/tcp` (default) or `/udp`. Example: `8080:3000/udp`
 
 **After run exits:** Namespace torn down, iptables rules cleaned up, queue socket closed, DNS resolver stopped. Overlay changes persist until `envpod commit` or `envpod rollback`.
+
+---
+
+## fg
+
+Reattach to a background or detached pod. Tails the pod's `run.log` and waits for the process to exit. Press **Ctrl+Z** to detach again (pod continues running).
+
+```
+envpod fg <name>
+```
+
+```bash
+# Start in background, then attach
+sudo envpod run myagent -b -- python3 agent.py
+sudo envpod fg myagent
+
+# Or: start interactive, Ctrl+Z to detach, then reattach
+sudo envpod fg myagent
+```
 
 ---
 
@@ -821,6 +847,43 @@ sudo envpod vault myagent import .env --overwrite
 sudo envpod vault myagent import /etc/agent-secrets.env
 ```
 
+### vault bind (Premium)
+
+Bind a vault key to a domain for transparent proxy injection. The agent uses a dummy key; the proxy injects the real one.
+
+```bash
+# OpenAI
+sudo envpod vault myagent bind OPENAI_API_KEY api.openai.com "Authorization: Bearer {value}"
+
+# Anthropic
+sudo envpod vault myagent bind ANTHROPIC_API_KEY api.anthropic.com "Authorization: Bearer {value}"
+
+# Custom API key header
+sudo envpod vault myagent bind STRIPE_KEY api.stripe.com "Authorization: Bearer {value}"
+sudo envpod vault myagent bind CUSTOM_KEY api.example.com "X-API-Key: {value}"
+```
+
+Also requires in pod.yaml:
+```yaml
+vault:
+  proxy: true
+```
+
+### vault unbind
+
+```bash
+sudo envpod vault myagent unbind OPENAI_API_KEY
+```
+
+### vault bindings
+
+```bash
+sudo envpod vault myagent bindings
+# KEY                  DOMAIN                HEADER
+# OPENAI_API_KEY       api.openai.com        Authorization: Bearer {value}
+# ANTHROPIC_API_KEY    api.anthropic.com     Authorization: Bearer {value}
+```
+
 ---
 
 ## queue
@@ -837,8 +900,8 @@ envpod queue <name> add --tier <tier> --description <desc> [--delay <secs>]
 ```bash
 sudo envpod queue myagent
 # ID        TIER    STATUS   CREATED    DESCRIPTION
-# a1b2c3    staged  queued   14:22:01   git_push remote=origin branch=main
-# a1b2c4    delayed queued   14:22:05   file_delete /workspace/tmp/old_cache (executes in 28s)
+# a1b2c3    staged  queued   14:22:01   send_email to=ops@co.com subject="Done"
+# a1b2c4    delayed queued   14:22:05   delete /tmp/old_cache (executes in 28s)
 
 # JSON
 sudo envpod queue myagent --json
@@ -960,7 +1023,7 @@ envpod actions <pod> set-tier <name> <tier>
 ```bash
 sudo envpod actions myagent ls
 # NAME              TIER       SCOPE      TYPE
-# notify_webhook    immediate  external   webhook
+# send_alert        immediate  external   slack_message
 # commit_work       staged     internal   git_commit
 # save_output       immediate  internal   file_write
 # log_event         immediate  internal   (custom)
@@ -991,17 +1054,17 @@ sudo envpod actions myagent add \
 For built-in types, edit `{pod_dir}/actions.json` directly to set `action_type` and `config`:
 ```json
 {
-  "name": "notify_webhook",
-  "action_type": "webhook",
+  "name": "send_alert",
+  "action_type": "slack_message",
   "tier": "immediate",
-  "config": {"url": "https://hooks.example.com/notify"}
+  "config": {"auth_vault_key": "SLACK_WEBHOOK_URL"}
 }
 ```
 
 ### actions remove
 
 ```bash
-sudo envpod actions myagent remove notify_webhook
+sudo envpod actions myagent remove send_alert
 ```
 
 ### actions set-tier
@@ -1010,10 +1073,10 @@ Change tier live — takes effect on the next `list_actions` query from the agen
 
 ```bash
 # Demote to staged (add human checkpoint)
-sudo envpod actions myagent set-tier notify_webhook staged
+sudo envpod actions myagent set-tier send_alert staged
 
 # Block an action permanently for this run
-sudo envpod actions myagent set-tier push_work blocked
+sudo envpod actions myagent set-tier send_sms blocked
 
 # Promote to immediate (remove checkpoint)
 sudo envpod actions myagent set-tier ping_health immediate
@@ -1023,7 +1086,7 @@ sudo envpod actions myagent set-tier ping_health immediate
 
 ```bash
 # Block all external actions during incident response
-sudo envpod actions myagent set-tier notify_webhook blocked
+sudo envpod actions myagent set-tier send_alert blocked
 sudo envpod actions myagent set-tier http_post blocked
 
 # Gradually give agent more autonomy as trust builds
@@ -1335,7 +1398,7 @@ envpod dashboard [--port <N>] [--no-open]
 | `--port <N>` | `9090` | Port to listen on |
 | `--no-open` | false | Don't open browser |
 
-**Features:** Fleet overview (2s polling), pod detail tabs (Overview, Audit, Diff, Resources, Snapshots, Queue), action buttons (commit, rollback, freeze, resume).
+**Features:** Fleet overview (2s polling), pod detail tabs (Overview, Audit, Diff, Resources, Snapshots, Queue), inline diff viewer (Premium), action buttons (commit, rollback, freeze, resume).
 
 **Use cases:**
 

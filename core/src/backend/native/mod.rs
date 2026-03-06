@@ -32,6 +32,7 @@ pub use netns::{
     read_active_ports,
 };
 pub use gc::{gc_all, GcResult};
+pub use cgroup::{migrate_display_pids, has_guardian};
 
 use std::path::{Path, PathBuf};
 
@@ -897,7 +898,7 @@ impl IsolationBackend for NativeBackend {
         })
     }
 
-    fn start(&self, handle: &PodHandle, command: &[String], user: Option<&str>, extra_env: &[String]) -> Result<ProcessHandle> {
+    fn start(&self, handle: &PodHandle, command: &[String], user: Option<&str>, extra_env: &[String], quiet_log: Option<&Path>) -> Result<ProcessHandle> {
         check_privileges()?;
 
         let state = NativeState::from_handle(handle)?;
@@ -932,7 +933,7 @@ impl IsolationBackend for NativeBackend {
             }
         }
 
-        self.start_inner(handle, command, &state, pod_config.as_ref(), None, user, extra_env)
+        self.start_inner(handle, command, &state, pod_config.as_ref(), quiet_log, user, extra_env)
     }
 
     fn freeze(&self, handle: &PodHandle) -> Result<()> {
@@ -1442,6 +1443,7 @@ mod tests {
                 ],
                 None,
                 &[],
+                None,
             )
             .unwrap();
 
@@ -1498,6 +1500,7 @@ mod tests {
                 ],
                 None,
                 &[],
+                None,
             )
             .unwrap();
 
@@ -1566,6 +1569,7 @@ mod tests {
                 ],
                 None,
                 &[],
+                None,
             )
             .unwrap();
 
@@ -1624,7 +1628,7 @@ mod tests {
 
         // Start a simple echo command
         let proc_handle = backend
-            .start(&handle, &["/bin/echo".into(), "audit-test".into()], None, &[])
+            .start(&handle, &["/bin/echo".into(), "audit-test".into()], None, &[], None)
             .unwrap();
 
         nix::sys::wait::waitpid(

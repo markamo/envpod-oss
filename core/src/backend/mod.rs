@@ -1,6 +1,3 @@
-// Copyright 2026 Mark Amo-Boateng / Xtellix Inc.
-// SPDX-License-Identifier: AGPL-3.0-only
-
 pub mod native;
 
 use std::path::{Path, PathBuf};
@@ -49,7 +46,7 @@ pub trait IsolationBackend: Send + Sync {
     /// If `user` is Some, the process drops to the specified user (name or numeric uid)
     /// after all privileged setup is complete.
     /// `extra_env` contains additional KEY=VALUE environment variables.
-    fn start(&self, handle: &PodHandle, command: &[String], user: Option<&str>, extra_env: &[String]) -> Result<ProcessHandle>;
+    fn start(&self, handle: &PodHandle, command: &[String], user: Option<&str>, extra_env: &[String], quiet_log: Option<&Path>) -> Result<ProcessHandle>;
 
     /// Freeze all processes in the pod (SIGSTOP / cgroup freezer).
     /// State is fully preserved — can be resumed with `resume`.

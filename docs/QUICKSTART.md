@@ -50,7 +50,14 @@ Or drop into an interactive shell (every command you type runs inside the pod):
 sudo envpod run tutorial -- /bin/bash
 ```
 
-You're now inside the pod. Try `hostname` (shows `tutorial`), `cat /proc/1/cmdline`, or explore the filesystem. Type `exit` to leave.
+You're now inside the pod. Try `hostname` (shows `tutorial`), `cat /proc/1/cmdline`, or explore the filesystem. Press **Ctrl+Z** to detach (pod continues in background), or type `exit` to leave. Use `sudo envpod fg tutorial` to reattach to a detached pod.
+
+You can also start a pod in the background with `-b`:
+
+```bash
+sudo envpod run tutorial -b -- python3 long_task.py
+sudo envpod fg tutorial  # reattach later
+```
 
 Check pod status:
 

@@ -112,7 +112,8 @@ See [Installation](docs/INSTALL.md), [Quickstart](docs/QUICKSTART.md), [Pod Conf
 | `envpod init <name> [-c config.yaml] [--preset name]` | Create a new pod (interactive wizard if no flags) |
 | `envpod presets` | List all built-in presets by category |
 | `envpod setup <name>` | Re-run setup commands |
-| `envpod run <name> [--root] [-d] [-a] [-p h:p] [-P h:p] [-i port] -- <cmd>` | Run a command inside a pod |
+| `envpod run <name> [--root] [-b] [-d] [-a] [-p h:p] [-P h:p] [-i port] -- <cmd>` | Run a command inside a pod (Ctrl+Z to detach) |
+| `envpod fg <name>` | Reattach to a background/detached pod |
 | `envpod diff <name>` | Show filesystem changes (COW overlay) |
 | `envpod commit <name> [paths...] [--exclude ...]` | Apply changes to host |
 | `envpod rollback <name>` | Discard all overlay changes |

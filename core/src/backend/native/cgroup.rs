@@ -1,6 +1,3 @@
-// Copyright 2026 Mark Amo-Boateng / Xtellix Inc.
-// SPDX-License-Identifier: AGPL-3.0-only
-
 //! cgroup v2 management for pod resource limits and process control.
 //!
 //! Each pod gets its own cgroup under `/sys/fs/cgroup/envpod/<pod-id>/`.
@@ -156,6 +153,120 @@ pub fn read_usage(cgroup: &Path) -> Result<ResourceUsage> {
     // Single-point read returns 0 — callers needing CPU% should sample over time.
 
     Ok(usage)
+}
+
+// ---------------------------------------------------------------------------
+// Guardian mode: split cgroup into app/ (freezable) and guardian/ (always-on)
+// for web display services that must survive pod freeze/thaw.
+// ---------------------------------------------------------------------------
+
+/// Known display process names that should be migrated to the guardian cgroup.
+/// Matched against both /proc/{pid}/comm and /proc/{pid}/cmdline.
+const DISPLAY_PROCESS_NAMES: &[&str] = &["Xvfb", "x11vnc", "websockify", "gst-launch"];
+
+/// Create app/ and guardian/ subcgroups for web display guardian mode.
+///
+/// Resource limits stay on the parent cgroup (cap both subcgroups).
+/// `app/` holds the agent process (freezable), `guardian/` holds display services.
+pub fn create_guardian(cgroup: &Path) -> Result<()> {
+    // Enable controllers on the pod cgroup so subcgroups inherit them
+    let subtree = cgroup.join("cgroup.subtree_control");
+    for controller in ["+cpu", "+memory", "+pids", "+io", "+cpuset"] {
+        fs::write(&subtree, controller).ok();
+    }
+
+    fs::create_dir_all(cgroup.join("app"))
+        .context("create guardian app/ subcgroup")?;
+    fs::create_dir_all(cgroup.join("guardian"))
+        .context("create guardian guardian/ subcgroup")?;
+    Ok(())
+}
+
+/// Move PIDs matching display process names from app/ to guardian/.
+/// Returns the number of PIDs migrated.
+pub fn migrate_display_pids(cgroup: &Path) -> Result<usize> {
+    let app_procs = cgroup.join("app").join("cgroup.procs");
+    let guardian_procs = cgroup.join("guardian").join("cgroup.procs");
+
+    let contents = fs::read_to_string(&app_procs)
+        .context("read app/cgroup.procs")?;
+
+    let mut migrated = 0;
+    for line in contents.lines() {
+        let pid: u32 = match line.trim().parse() {
+            Ok(p) if p > 0 => p,
+            _ => continue,
+        };
+
+        // Identify the process by comm name first, then fall back to cmdline.
+        // websockify on Ubuntu is a Python script, so comm = "python3" not "websockify".
+        let comm = fs::read_to_string(format!("/proc/{pid}/comm"))
+            .map(|c| c.trim().to_string())
+            .unwrap_or_default();
+
+        let is_display = if DISPLAY_PROCESS_NAMES.iter().any(|name| comm.starts_with(name)) {
+            true
+        } else {
+            // Check cmdline (null-separated) for display process names
+            fs::read_to_string(format!("/proc/{pid}/cmdline"))
+                .map(|cl| {
+                    let cl_lower = cl.replace('\0', " ");
+                    DISPLAY_PROCESS_NAMES.iter().any(|name| cl_lower.contains(&name.to_lowercase()))
+                })
+                .unwrap_or(false)
+        };
+
+        if is_display {
+            if let Err(e) = fs::write(&guardian_procs, pid.to_string()) {
+                tracing::warn!(pid, comm, error = %e, "failed to migrate PID to guardian");
+            } else {
+                tracing::debug!(pid, comm, "migrated to guardian cgroup");
+                migrated += 1;
+            }
+        }
+    }
+
+    Ok(migrated)
+}
+
+/// Check if guardian mode is active (app/ subdirectory exists).
+pub fn has_guardian(cgroup: &Path) -> bool {
+    cgroup.join("app").exists()
+}
+
+/// Destroy guardian subcgroups (before removing parent).
+/// Processes must already be dead or moved out.
+pub fn destroy_guardian(cgroup: &Path) -> Result<()> {
+    let app = cgroup.join("app");
+    let guardian = cgroup.join("guardian");
+
+    // Move any remaining processes from subcgroups to parent before rmdir.
+    // This handles cases where processes are still alive during cleanup.
+    for subcg in [&app, &guardian] {
+        if subcg.exists() {
+            let procs_file = subcg.join("cgroup.procs");
+            if let Ok(contents) = fs::read_to_string(&procs_file) {
+                let parent_procs = procs_path(cgroup);
+                for line in contents.lines() {
+                    if let Ok(pid) = line.trim().parse::<u32>() {
+                        if pid > 0 {
+                            // Best effort — process may have exited
+                            fs::write(&parent_procs, pid.to_string()).ok();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Now remove the empty subcgroup directories
+    if app.exists() {
+        fs::remove_dir(&app).ok();
+    }
+    if guardian.exists() {
+        fs::remove_dir(&guardian).ok();
+    }
+    Ok(())
 }
 
 /// Destroy the cgroup. All processes must already be dead.

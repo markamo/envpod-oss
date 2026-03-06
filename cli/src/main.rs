@@ -102,7 +102,7 @@ enum Commands {
     },
     /// List available presets for `envpod init --preset`
     Presets,
-    /// Run a command inside a pod
+    /// Run a command inside a pod (Ctrl+Z to detach, `envpod fg` to reattach)
     Run {
         /// Pod name
         name: String,
@@ -121,6 +121,9 @@ enum Commands {
         /// Enable audio forwarding (PipeWire preferred, PulseAudio fallback; override with audio_protocol in pod.yaml)
         #[arg(short = 'a', long)]
         enable_audio: bool,
+        /// Run in background (use `envpod fg <pod>` to bring to foreground)
+        #[arg(short = 'b', long)]
+        background: bool,
         /// Publish port to localhost only: host_port:container_port[/proto] (e.g. -p 8080:3000)
         #[arg(short = 'p', long = "publish")]
         ports: Vec<String>,
@@ -133,6 +136,11 @@ enum Commands {
         /// Command and arguments to execute
         #[arg(last = true)]
         command: Vec<String>,
+    },
+    /// Bring a background pod to the foreground (attach to running process)
+    Fg {
+        /// Pod name
+        name: String,
     },
     /// Show filesystem changes in a pod's overlay
     Diff {
@@ -623,7 +631,14 @@ async fn run(cli: Cli) -> Result<()> {
             eprint!("{}", presets::format_table());
             Ok(())
         }
-        Commands::Run { name, root, user, env_vars, enable_display, enable_audio, ports, public_ports, internal_ports, command } => cmd_run(&store, base_dir, &name, &command, root, user.as_deref(), &env_vars, enable_display, enable_audio, &ports, &public_ports, &internal_ports).await,
+        Commands::Run { name, root, user, env_vars, enable_display, enable_audio, background, ports, public_ports, internal_ports, command } => {
+            if background {
+                cmd_run_background(base_dir, &name, &command, root, user.as_deref(), &env_vars, enable_display, enable_audio, &ports, &public_ports, &internal_ports)
+            } else {
+                cmd_run(&store, base_dir, &name, &command, root, user.as_deref(), &env_vars, enable_display, enable_audio, &ports, &public_ports, &internal_ports).await
+            }
+        }
+        Commands::Fg { name } => cmd_fg(&store, base_dir, &name).await,
         Commands::Diff { name, json, all } => cmd_diff(&store, base_dir, &name, json, all),
         Commands::Commit { name, paths, exclude, output, all, include_system } => cmd_commit(&store, base_dir, &name, &paths, &exclude, output.as_deref(), all, include_system),
         Commands::Rollback { name } => cmd_rollback(&store, base_dir, &name),
@@ -1552,6 +1567,93 @@ fn get_home_for_user(username: &str) -> Option<String> {
 }
 
 // ---------------------------------------------------------------------------
+// run (background wrapper)
+// ---------------------------------------------------------------------------
+
+fn cmd_run_background(base_dir: &std::path::Path, name: &str, command: &[String], root: bool, user: Option<&str>, env_vars: &[String], enable_display: bool, enable_audio: bool, cli_ports: &[String], cli_public_ports: &[String], cli_internal_ports: &[String]) -> Result<()> {
+    if command.is_empty() {
+        anyhow::bail!("no command specified — usage: envpod run {name} -b -- <command>");
+    }
+
+    // Resolve pod dir for the log file
+    let store = PodStore::new(base_dir.join("state"))?;
+    let handle = store.load(name)?;
+    let state = NativeState::from_handle(&handle)?;
+    let run_log_path = state.pod_dir.join("run.log");
+
+    // Truncate old log
+    std::fs::write(&run_log_path, "")?;
+
+    // Build the equivalent `envpod run` command WITHOUT -b
+    let exe = std::env::current_exe().context("cannot find envpod binary")?;
+    let mut args: Vec<String> = vec![
+        "--dir".into(), base_dir.to_string_lossy().into_owned(),
+        "run".into(),
+    ];
+    if root { args.push("--root".into()); }
+    if let Some(u) = user { args.push("--user".into()); args.push(u.into()); }
+    for e in env_vars { args.push("--env".into()); args.push(e.clone()); }
+    if enable_display { args.push("--enable-display".into()); }
+    if enable_audio { args.push("--enable-audio".into()); }
+    for p in cli_ports { args.push("-p".into()); args.push(p.clone()); }
+    for p in cli_public_ports { args.push("-P".into()); args.push(p.clone()); }
+    for p in cli_internal_ports { args.push("-i".into()); args.push(p.clone()); }
+    args.push(name.into());
+    args.push("--".into());
+    args.extend(command.iter().cloned());
+
+    // Fork a daemon process
+    match unsafe { nix::unistd::fork() } {
+        Ok(nix::unistd::ForkResult::Parent { child }) => {
+            // Write supervisor PID
+            let supervisor_pid_path = state.pod_dir.join("supervisor.pid");
+            std::fs::write(&supervisor_pid_path, child.as_raw().to_string())?;
+
+            eprintln!("  {}  supervisor PID {}", color::dim("Background"), child);
+            eprintln!("  {}  {}", color::dim("Log     "), run_log_path.display());
+            eprintln!();
+            eprintln!("  Use {} to attach, {} to view logs",
+                color::green(&format!("envpod fg {name}")),
+                color::dim(&format!("tail -f {}", run_log_path.display())));
+            Ok(())
+        }
+        Ok(nix::unistd::ForkResult::Child) => {
+            // Detach from terminal
+            nix::unistd::setsid().ok();
+
+            // Redirect stdout/stderr to /dev/null (daemon banner text not needed).
+            // The actual child process output goes to run.log via ENVPOD_QUIET_LOG.
+            let devnull = std::fs::OpenOptions::new()
+                .write(true)
+                .open("/dev/null")
+                .expect("failed to open /dev/null");
+            let null_fd = std::os::unix::io::AsRawFd::as_raw_fd(&devnull);
+            nix::unistd::dup2(null_fd, 1).ok();
+            nix::unistd::dup2(null_fd, 2).ok();
+            // Redirect stdin from /dev/null (don't just close it)
+            let devnull_r = std::fs::File::open("/dev/null")
+                .expect("failed to open /dev/null for read");
+            let null_r_fd = std::os::unix::io::AsRawFd::as_raw_fd(&devnull_r);
+            nix::unistd::dup2(null_r_fd, 0).ok();
+
+            // Tell the re-exec'd envpod run to write child output to run.log
+            std::env::set_var("ENVPOD_QUIET_LOG", &run_log_path);
+
+            // Exec envpod run (fresh process, fresh tokio runtime)
+            let c_exe = std::ffi::CString::new(exe.to_string_lossy().as_bytes()).unwrap();
+            let c_args: Vec<std::ffi::CString> = std::iter::once(c_exe.clone())
+                .chain(args.iter().map(|a| std::ffi::CString::new(a.as_bytes()).unwrap()))
+                .collect();
+            nix::unistd::execv(&c_exe, &c_args).expect("execv failed");
+            unreachable!()
+        }
+        Err(e) => {
+            anyhow::bail!("failed to fork background daemon: {e}");
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------
 // run
 // ---------------------------------------------------------------------------
 
@@ -1715,10 +1817,12 @@ async fn cmd_run(store: &PodStore, base_dir: &std::path::Path, name: &str, comma
     };
 
     // Resolve effective user: CLI --user > CLI --root > pod.yaml user > default "agent"
+    // --user root is equivalent to --root
     let config_user = pod_config.as_ref().map(|c| c.user.as_str()).unwrap_or("agent");
-    let is_root = root || config_user == "root";
+    let user_is_root = user.map(|u| u == "root").unwrap_or(false);
+    let is_root = root || user_is_root || config_user == "root";
     let effective_user: Option<&str> = if let Some(u) = user {
-        Some(u) // explicit --user takes precedence
+        if u == "root" { None } else { Some(u) }
     } else if is_root {
         None // root = no setuid
     } else {
@@ -1787,7 +1891,10 @@ async fn cmd_run(store: &PodStore, base_dir: &std::path::Path, name: &str, comma
     use std::io::Write;
     std::io::stderr().flush().ok();
 
-    let proc_handle = backend.start(&handle, command, effective_user, env_vars)?;
+    // In background mode, the daemon sets ENVPOD_QUIET_LOG so spawn_isolated
+    // writes output directly to the log file (no tee, no doubled output).
+    let quiet_log_path = std::env::var("ENVPOD_QUIET_LOG").ok().map(std::path::PathBuf::from);
+    let proc_handle = backend.start(&handle, command, effective_user, env_vars, quiet_log_path.as_deref())?;
 
     // Guardian cgroup: migrate display PIDs (Xvfb, x11vnc, websockify) from
     // app/ to guardian/ so they survive freeze/thaw (envpod lock/unlock).
@@ -1936,6 +2043,10 @@ async fn cmd_run(store: &PodStore, base_dir: &std::path::Path, name: &str, comma
         store.save(&updated_handle)?;
     }
 
+    // Write supervisor PID so `envpod fg` can find us
+    let supervisor_pid_path = state.pod_dir.join("supervisor.pid");
+    std::fs::write(&supervisor_pid_path, std::process::id().to_string())?;
+
     // Budget enforcement: if max_duration is set, spawn a timer that kills the process
     let budget_handle = if let Some(ref cfg) = pod_config {
         if let Some(ref dur_str) = cfg.budget.max_duration {
@@ -2045,36 +2156,83 @@ async fn cmd_run(store: &PodStore, base_dir: &std::path::Path, name: &str, comma
         executor.spawn()
     };
 
-    // Wait for the child process to exit (in a blocking task to not block tokio)
+    // Wait for the child process to exit, or Ctrl+Z to detach.
+    // SIGTSTP (Ctrl+Z) detaches the terminal — the current process becomes
+    // a background daemon (keeping DNS, port forwards, etc. alive).
     let pid_raw = proc_handle.pid as i32;
-    let wait_result = tokio::task::spawn_blocking(move || {
+    let wait_task = tokio::task::spawn_blocking(move || {
         nix::sys::wait::waitpid(nix::unistd::Pid::from_raw(pid_raw), None)
-    })
-    .await
-    .context("wait task panicked")?;
+    });
 
-    // Cancel budget timer if process exited naturally
+    let mut sigtstp = tokio::signal::unix::signal(tokio::signal::unix::SignalKind::from_raw(20))
+        .context("failed to register SIGTSTP handler")?;
+
+    let detached = tokio::select! {
+        result = wait_task => {
+            // Process exited normally
+            let wait_result = result.context("wait task panicked")?;
+            match wait_result {
+                Ok(nix::sys::wait::WaitStatus::Exited(_, code)) => {
+                    if code != 0 {
+                        println!("Process exited with code {code}");
+                    }
+                }
+                Ok(nix::sys::wait::WaitStatus::Signaled(_, sig, _)) => {
+                    println!("Process killed by signal {sig}");
+                }
+                Ok(status) => {
+                    println!("Process exited: {status:?}");
+                }
+                Err(nix::Error::ECHILD) => {}
+                Err(e) => {
+                    anyhow::bail!("wait failed: {e}");
+                }
+            }
+            false
+        }
+        _ = sigtstp.recv() => {
+            // Ctrl+Z: detach from terminal. The current process stays alive
+            // as a background daemon (DNS server, port forwards, etc. persist).
+            eprintln!();
+            eprintln!("Detaching from pod '{}' (Ctrl+Z)", name);
+            eprintln!("Pod continues running in background. Use {} to reattach.",
+                color::green(&format!("envpod fg {name}")));
+
+            // Redirect stdio to run.log / /dev/null and detach from terminal
+            let run_log_path = state.pod_dir.join("run.log");
+            let log_fd = std::fs::OpenOptions::new()
+                .create(true).append(true).open(&run_log_path).ok();
+            let null_fd = std::fs::File::open("/dev/null").ok();
+            if let Some(f) = null_fd {
+                let fd = std::os::unix::io::AsRawFd::as_raw_fd(&f);
+                nix::unistd::dup2(fd, 0).ok(); // stdin = /dev/null
+            }
+            if let Some(f) = log_fd {
+                let fd = std::os::unix::io::AsRawFd::as_raw_fd(&f);
+                nix::unistd::dup2(fd, 1).ok(); // stdout = run.log
+                nix::unistd::dup2(fd, 2).ok(); // stderr = run.log
+            }
+            nix::unistd::setsid().ok(); // new session, detach from terminal
+
+            true
+        }
+    };
+
+    // Cancel budget timer
     if let Some(bh) = budget_handle {
-        bh.abort();
+        if !detached { bh.abort(); }
     }
 
-    match wait_result {
-        Ok(nix::sys::wait::WaitStatus::Exited(_, code)) => {
+    if detached {
+        // Continue running as background daemon — wait for child to exit
+        let wait_result = tokio::task::spawn_blocking(move || {
+            nix::sys::wait::waitpid(nix::unistd::Pid::from_raw(proc_handle.pid as i32), None)
+        }).await;
+        // Child exited — fall through to normal cleanup
+        if let Ok(Ok(nix::sys::wait::WaitStatus::Exited(_, code))) = wait_result {
             if code != 0 {
-                println!("Process exited with code {code}");
+                eprintln!("Process exited with code {code}");
             }
-        }
-        Ok(nix::sys::wait::WaitStatus::Signaled(_, sig, _)) => {
-            println!("Process killed by signal {sig}");
-        }
-        Ok(status) => {
-            println!("Process exited: {status:?}");
-        }
-        Err(nix::Error::ECHILD) => {
-            // Child was already reaped — this is fine
-        }
-        Err(e) => {
-            anyhow::bail!("wait failed: {e}");
         }
     }
 
@@ -2087,6 +2245,9 @@ async fn cmd_run(store: &PodStore, base_dir: &std::path::Path, name: &str, comma
         updated_handle.backend_state = updated_state.to_json();
         store.save(&updated_handle)?;
     }
+
+    // Clean up supervisor PID file
+    let _ = std::fs::remove_file(state.pod_dir.join("supervisor.pid"));
 
     // Clean up port forwards and discovery registration
     if port_forward_active {
@@ -2285,6 +2446,7 @@ fn print_run_banner(
         }
     }
 
+    eprintln!("  {}  Ctrl+Z detach, envpod fg {name} reattach", color::dim("Detach  "));
     eprintln!();
 }
 
@@ -2354,6 +2516,126 @@ fn print_pod_info(
     if let Some(ref dur) = config.budget.max_duration {
         eprintln!("  {}  {dur}", color::dim("Budget "));
     }
+}
+
+// ---------------------------------------------------------------------------
+// fg (foreground / attach)
+// ---------------------------------------------------------------------------
+
+async fn cmd_fg(store: &PodStore, _base_dir: &std::path::Path, name: &str) -> Result<()> {
+    let handle = store.load(name)?;
+    let state = NativeState::from_handle(&handle)?;
+
+    let run_log = state.pod_dir.join("run.log");
+    let supervisor_pid_path = state.pod_dir.join("supervisor.pid");
+
+    // Check if there's a background supervisor process
+    let supervisor_pid: Option<i32> = std::fs::read_to_string(&supervisor_pid_path)
+        .ok()
+        .and_then(|s| s.trim().parse().ok());
+
+    // Determine the PID to monitor: init_pid (child in namespace) or supervisor PID
+    let pid = if let Some(p) = state.init_pid {
+        p
+    } else if let Some(sp) = supervisor_pid {
+        // init_pid not set yet — pod is still starting up, monitor the supervisor
+        sp as u32
+    } else {
+        anyhow::bail!("pod '{name}' is not running");
+    };
+
+    // Verify process is alive
+    let nix_pid = nix::unistd::Pid::from_raw(pid as i32);
+    if nix::sys::signal::kill(nix_pid, None).is_err() {
+        anyhow::bail!("pod '{name}' process (PID {pid}) is not running");
+    }
+
+    eprintln!("Attaching to pod '{}' (PID {})...", color::green(name), pid);
+    eprintln!("Press Ctrl+Z to detach (pod continues running in background)");
+    eprintln!();
+
+    // Tail the run.log file (if it exists) while waiting for the process
+    let log_task = if run_log.exists() {
+        // Print existing log content first
+        if let Ok(content) = std::fs::read_to_string(&run_log) {
+            if !content.is_empty() {
+                print!("{content}");
+                std::io::Write::flush(&mut std::io::stdout()).ok();
+            }
+        }
+
+        // Then tail -f
+        let log_path = run_log.clone();
+        Some(tokio::spawn(async move {
+            use tokio::io::{AsyncReadExt, AsyncSeekExt};
+            let file = tokio::fs::File::open(&log_path).await.ok();
+            if let Some(file) = file {
+                let metadata = file.metadata().await.ok();
+                let start_pos = metadata.map(|m| m.len()).unwrap_or(0);
+
+                // Open again for tailing from current position
+                let mut file = tokio::fs::File::open(&log_path).await.unwrap();
+                file.seek(std::io::SeekFrom::Start(start_pos)).await.ok();
+
+                let mut buf = [0u8; 4096];
+                loop {
+                    match file.read(&mut buf).await {
+                        Ok(0) => {
+                            tokio::time::sleep(std::time::Duration::from_millis(100)).await;
+                        }
+                        Ok(n) => {
+                            use std::io::Write;
+                            std::io::stdout().write_all(&buf[..n]).ok();
+                            std::io::stdout().flush().ok();
+                        }
+                        Err(_) => break,
+                    }
+                }
+            }
+        }))
+    } else {
+        None
+    };
+
+    // Wait for process to exit or Ctrl+Z (detach)
+    let mut sigtstp = tokio::signal::unix::signal(tokio::signal::unix::SignalKind::from_raw(20))
+        .context("failed to register SIGTSTP handler")?;
+
+    let wait_result = {
+        let poll_pid = pid;
+        let wait_task = tokio::task::spawn_blocking(move || {
+            // We can't waitpid on a process we didn't fork — poll /proc instead
+            loop {
+                let proc_path = format!("/proc/{poll_pid}");
+                if !std::path::Path::new(&proc_path).exists() {
+                    return true; // Process exited
+                }
+                std::thread::sleep(std::time::Duration::from_millis(200));
+            }
+        });
+
+        tokio::select! {
+            result = wait_task => result.unwrap_or(true),
+            _ = sigtstp.recv() => false, // Ctrl+Z = detach
+        }
+    };
+
+    // Stop log tailing
+    if let Some(lt) = log_task {
+        lt.abort();
+    }
+
+    if wait_result {
+        // Process exited
+        eprintln!();
+        eprintln!("Process exited");
+    } else {
+        // Detached via Ctrl+Z
+        eprintln!();
+        eprintln!("Detached from pod '{}' (still running in background, PID {})", name, pid);
+    }
+
+    Ok(())
 }
 
 // ---------------------------------------------------------------------------
