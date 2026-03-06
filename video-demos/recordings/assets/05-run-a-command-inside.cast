@@ -1,4 +1,4 @@
-{"version": 2, "width": 110, "height": 10, "title": "Run a Command Inside", "timestamp": 1772821503, "env": {"TERM": "xterm-256color", "THEME": "monokai", "FONT_FAMILY": "JetBrains Mono, Fira Code, Menlo, monospace", "FONT_SIZE": "16"}, "idle_time_limit": 3}
+{"version": 2, "width": 110, "height": 32, "title": "Run a Command Inside", "timestamp": 1772821992, "env": {"TERM": "xterm-256color", "THEME": "monokai", "FONT_FAMILY": "JetBrains Mono, Fira Code, Menlo, monospace", "FONT_SIZE": "16"}, "idle_time_limit": 3}
 [0.3, "o", "\u001b[0;32m$ \u001b[0m"]
 [0.3, "o", "\u001b[0m"]
 [0.3, "o", "s"]
@@ -167,5 +167,5 @@
 [5.15, "o", "\u001b[0m\u001b[0m\r\n"]
 [5.15, "o", "\u001b[0m  Command   bash -c echo 'the agent wrote this' > /home/agent/hello.txt && echo 'wrote /home/agent/hello.txt inside pod'\u001b[0m\r\n"]
 [5.15, "o", "\u001b[0m  User      agent\u001b[0m\r\n"]
-[6.65, "o", "\u001b[10;1H"]
+[6.65, "o", "\u001b[32;1H"]
 [6.65, "o", "\u001b[2m                                                                                                      md2cast\u001b[0m"]

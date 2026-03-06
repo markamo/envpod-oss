@@ -1,4 +1,4 @@
-{"version": 2, "width": 110, "height": 10, "title": "Show Presets", "timestamp": 1772821500, "env": {"TERM": "xterm-256color", "THEME": "monokai", "FONT_FAMILY": "JetBrains Mono, Fira Code, Menlo, monospace", "FONT_SIZE": "16"}, "idle_time_limit": 3}
+{"version": 2, "width": 110, "height": 29, "title": "Show Presets", "timestamp": 1772821990, "env": {"TERM": "xterm-256color", "THEME": "monokai", "FONT_FAMILY": "JetBrains Mono, Fira Code, Menlo, monospace", "FONT_SIZE": "16"}, "idle_time_limit": 3}
 [0.3, "o", "\u001b[0;32m$ \u001b[0m"]
 [0.3, "o", "\u001b[0m"]
 [0.3, "o", "e"]
@@ -43,5 +43,5 @@
 [1.52, "o", "\u001b[0m   16  web-display     noVNC desktop\u001b[0m\r\n"]
 [1.52, "o", "\u001b[0m   17  desktop         XFCE desktop via noVNC\u001b[0m\r\n"]
 [1.52, "o", "\u001b[0m   18  vscode          VS Code in the browser\u001b[0m\r\n"]
-[3.02, "o", "\u001b[10;1H"]
+[3.02, "o", "\u001b[29;1H"]
 [3.02, "o", "\u001b[2m                                                                                                      md2cast\u001b[0m"]
