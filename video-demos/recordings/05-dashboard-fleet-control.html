@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo 5: &quot;Dashboard — Fleet Control&quot;</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/asciinema-player@3.8.0/dist/bundle/asciinema-player.css">
+<style>
+  :root {
+    --bg: #1a1b26;
+    --fg: #c0caf5;
+    --muted: #565f89;
+    --accent: #7aa2f7;
+    --border: #292e42;
+    --code-bg: #24283b;
+    --blockquote-border: #e0af68;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: Inter, system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.7;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+  h1 {
+    font-size: 2rem;
+    margin: 2rem 0 1rem;
+    color: #c0caf5;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 0.5rem;
+  }
+  h2 {
+    font-size: 1.5rem;
+    margin: 2.5rem 0 1rem;
+    color: var(--accent);
+  }
+  h3 { font-size: 1.2rem; margin: 1.5rem 0 0.5rem; color: var(--fg); }
+  p { margin: 0.8rem 0; }
+  li { margin: 0.3rem 0 0.3rem 1.5rem; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+  blockquote {
+    border-left: 3px solid var(--blockquote-border);
+    padding: 0.5rem 1rem;
+    margin: 1rem 0;
+    color: var(--muted);
+    background: rgba(224, 175, 104, 0.05);
+    border-radius: 0 4px 4px 0;
+  }
+  .cast-block {
+    margin: 1.5rem 0;
+  }
+  .player {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  details {
+    margin-top: 0.5rem;
+  }
+  summary {
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 0.85rem;
+    padding: 0.3rem 0;
+    user-select: none;
+  }
+  summary:hover { color: var(--accent); }
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem;
+    overflow-x: auto;
+    margin-top: 0.5rem;
+  }
+  code {
+    font-family: JetBrains Mono, Fira Code, Cascadia Code, monospace;
+    font-size: 0.9rem;
+    color: var(--fg);
+  }
+  .media-block {
+    margin: 1.5rem 0;
+    text-align: center;
+  }
+  .media {
+    max-width: 100%;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .code-copy {
+    position: relative;
+    margin-top: 0.5rem;
+  }
+  .copy-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: var(--border);
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+    font-family: inherit;
+    z-index: 1;
+    transition: color 0.2s, background 0.2s;
+  }
+  .copy-btn:hover { color: var(--fg); background: var(--code-bg); }
+  .copy-btn.copied { color: #9ece6a; }
+  /* Asciinema player overrides */
+  .ap-wrapper { border-radius: 8px !important; }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/asciinema-player@3.8.0/dist/bundle/asciinema-player.min.js" defer></script>
+</head>
+<body>
+<h1>Demo 5: &quot;Dashboard — Fleet Control&quot;</h1>
+<p>Platform: YouTube / LinkedIn — web UI showcase</p>
+<p>Length: ~90s</p>
+<p>Audience: Team leads, security engineers</p>
+<p>Setup: Multiple pods already running (e.g. claude-code, openclaw, browser)</p>
+<hr>
+<h2>Script</h2>
+<p>[0:00] Spin up a fleet using presets:</p>
+<div class="cast-block">
+  <div id="player-1" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogMTEsICJ0aXRsZSI6ICJTY3JpcHQiLCAidGltZXN0YW1wIjogMTc3MjgyMDkzNSwgImVudiI6IHsiVEVSTSI6ICJ4dGVybS0yNTZjb2xvciIsICJUSEVNRSI6ICJtb25va2FpIiwgIkZPTlRfRkFNSUxZIjogIkpldEJyYWlucyBNb25vLCBGaXJhIENvZGUsIE1lbmxvLCBtb25vc3BhY2UiLCAiRk9OVF9TSVpFIjogIjE2In0sICJpZGxlX3RpbWVfbGltaXQiOiAzfQpbMC4zLCAibyIsICJcdTAwMWJbMDszMm0kIFx1MDAxYlswbSJdClswLjMsICJvIiwgIlx1MDAxYlswbSJdClswLjMsICJvIiwgInMiXQpbMC4zMiwgIm8iLCAidSJdClswLjM0LCAibyIsICJkIl0KWzAuMzYsICJvIiwgIm8iXQpbMC4zOCwgIm8iLCAiICJdClswLjQsICJvIiwgImUiXQpbMC40MiwgIm8iLCAibiJdClswLjQ0LCAibyIsICJ2Il0KWzAuNDYsICJvIiwgInAiXQpbMC40OCwgIm8iLCAibyJdClswLjUsICJvIiwgImQiXQpbMC41MiwgIm8iLCAiICJdClswLjU0LCAibyIsICJpIl0KWzAuNTYsICJvIiwgIm4iXQpbMC41OCwgIm8iLCAiaSJdClswLjYsICJvIiwgInQiXQpbMC42MiwgIm8iLCAiICJdClswLjY0LCAibyIsICJjIl0KWzAuNjYsICJvIiwgImwiXQpbMC42OCwgIm8iLCAiYSJdClswLjcsICJvIiwgInUiXQpbMC43MiwgIm8iLCAiZCJdClswLjc0LCAibyIsICJlIl0KWzAuNzYsICJvIiwgIi0iXQpbMC43OCwgIm8iLCAiYyJdClswLjgsICJvIiwgIm8iXQpbMC44MiwgIm8iLCAiZCJdClswLjg0LCAibyIsICJlIl0KWzAuODYsICJvIiwgIiAiXQpbMC44OCwgIm8iLCAiLSJdClswLjksICJvIiwgIi0iXQpbMC45MiwgIm8iLCAicCJdClswLjk0LCAibyIsICJyIl0KWzAuOTYsICJvIiwgImUiXQpbMC45OCwgIm8iLCAicyJdClsxLjAsICJvIiwgImUiXQpbMS4wMiwgIm8iLCAidCJdClsxLjA0LCAibyIsICIgIl0KWzEuMDYsICJvIiwgImMiXQpbMS4wOCwgIm8iLCAibCJdClsxLjEsICJvIiwgImEiXQpbMS4xMiwgIm8iLCAidSJdClsxLjE0LCAibyIsICJkIl0KWzEuMTYsICJvIiwgImUiXQpbMS4xOCwgIm8iLCAiLSJdClsxLjIsICJvIiwgImMiXQpbMS4yMiwgIm8iLCAibyJdClsxLjI0LCAibyIsICJkIl0KWzEuMjYsICJvIiwgImUiXQpbMS4yOCwgIm8iLCAiXHUwMDFiWzBtIl0KWzEuMjgsICJvIiwgIlxyXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG1cdTAwMWJbMzg7NTsxNW1zdWRvXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZW52cG9kXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtaW5pdFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWNsYXVkZS1jb2RlXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtLS1wcmVzZXRcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1jbGF1ZGUtY29kZVx1MDAxYlszOW1cdTAwMWJbMG0iXQpbMi4wOCwgIm8iLCAiXHJcbiJdClszLjU4LCAibyIsICJcdTAwMWJbMDszMm0kIFx1MDAxYlswbSJdClszLjU4LCAibyIsICJcdTAwMWJbMG0iXQpbMy41OCwgIm8iLCAicyJdClszLjYsICJvIiwgInUiXQpbMy42MiwgIm8iLCAiZCJdClszLjY0LCAibyIsICJvIl0KWzMuNjYsICJvIiwgIiAiXQpbMy42OCwgIm8iLCAiZSJdClszLjcsICJvIiwgIm4iXQpbMy43MiwgIm8iLCAidiJdClszLjc0LCAibyIsICJwIl0KWzMuNzYsICJvIiwgIm8iXQpbMy43OCwgIm8iLCAiZCJdClszLjgsICJvIiwgIiAiXQpbMy44MiwgIm8iLCAiaSJdClszLjg0LCAibyIsICJuIl0KWzMuODYsICJvIiwgImkiXQpbMy44OCwgIm8iLCAidCJdClszLjksICJvIiwgIiAiXQpbMy45MiwgIm8iLCAibyJdClszLjk0LCAibyIsICJwIl0KWzMuOTYsICJvIiwgImUiXQpbMy45OCwgIm8iLCAibiJdCls0LjAsICJvIiwgImMiXQpbNC4wMiwgIm8iLCAibCJdCls0LjA0LCAibyIsICJhIl0KWzQuMDYsICJvIiwgInciXQpbNC4wOCwgIm8iLCAiICJdCls0LjEsICJvIiwgIi0iXQpbNC4xMiwgIm8iLCAiLSJdCls0LjE0LCAibyIsICJwIl0KWzQuMTYsICJvIiwgInIiXQpbNC4xOCwgIm8iLCAiZSJdCls0LjIsICJvIiwgInMiXQpbNC4yMiwgIm8iLCAiZSJdCls0LjI0LCAibyIsICJ0Il0KWzQuMjYsICJvIiwgIiAiXQpbNC4yOCwgIm8iLCAibyJdCls0LjMsICJvIiwgInAiXQpbNC4zMiwgIm8iLCAiZSJdCls0LjM0LCAibyIsICJuIl0KWzQuMzYsICJvIiwgImMiXQpbNC4zOCwgIm8iLCAibCJdCls0LjQsICJvIiwgImEiXQpbNC40MiwgIm8iLCAidyJdCls0LjQ0LCAibyIsICJcdTAwMWJbMG0iXQpbNC40NCwgIm8iLCAiXHJcdTAwMWJbMDszMm0kIFx1MDAxYlswbVx1MDAxYlszODs1OzE1bXN1ZG9cdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1lbnZwb2RcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1pbml0XHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtb3BlbmNsYXdcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0tLXByZXNldFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bW9wZW5jbGF3XHUwMDFiWzM5bVx1MDAxYlswbSJdCls1LjI0LCAibyIsICJcclxuIl0KWzYuNzQsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzYuNzQsICJvIiwgIlx1MDAxYlswbSJdCls2Ljc0LCAibyIsICJzIl0KWzYuNzYsICJvIiwgInUiXQpbNi43OCwgIm8iLCAiZCJdCls2LjgsICJvIiwgIm8iXQpbNi44MiwgIm8iLCAiICJdCls2Ljg0LCAibyIsICJlIl0KWzYuODYsICJvIiwgIm4iXQpbNi44OCwgIm8iLCAidiJdCls2LjksICJvIiwgInAiXQpbNi45MiwgIm8iLCAibyJdCls2Ljk0LCAibyIsICJkIl0KWzYuOTYsICJvIiwgIiAiXQpbNi45OCwgIm8iLCAiaSJdCls3LjAsICJvIiwgIm4iXQpbNy4wMiwgIm8iLCAiaSJdCls3LjA0LCAibyIsICJ0Il0KWzcuMDYsICJvIiwgIiAiXQpbNy4wOCwgIm8iLCAiYiJdCls3LjEsICJvIiwgInIiXQpbNy4xMiwgIm8iLCAibyJdCls3LjE0LCAibyIsICJ3Il0KWzcuMTYsICJvIiwgInMiXQpbNy4xOCwgIm8iLCAiZSJdCls3LjIsICJvIiwgInIiXQpbNy4yMiwgIm8iLCAiICJdCls3LjI0LCAibyIsICItIl0KWzcuMjYsICJvIiwgIi0iXQpbNy4yOCwgIm8iLCAicCJdCls3LjMsICJvIiwgInIiXQpbNy4zMiwgIm8iLCAiZSJdCls3LjM0LCAibyIsICJzIl0KWzcuMzYsICJvIiwgImUiXQpbNy4zOCwgIm8iLCAidCJdCls3LjQsICJvIiwgIiAiXQpbNy40MiwgIm8iLCAiYiJdCls3LjQ0LCAibyIsICJyIl0KWzcuNDYsICJvIiwgIm8iXQpbNy40OCwgIm8iLCAidyJdCls3LjUsICJvIiwgInMiXQpbNy41MiwgIm8iLCAiZSJdCls3LjU0LCAibyIsICJyIl0KWzcuNTYsICJvIiwgIlx1MDAxYlswbSJdCls3LjU2LCAibyIsICJcclx1MDAxYlswOzMybSQgXHUwMDFiWzBtXHUwMDFiWzM4OzU7MTVtc3Vkb1x1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWVudnBvZFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWluaXRcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1icm93c2VyXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtLS1wcmVzZXRcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1icm93c2VyXHUwMDFiWzM5bVx1MDAxYlswbSJdCls4LjM2LCAibyIsICJcclxuIl0KWzkuODYsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzkuODYsICJvIiwgIlx1MDAxYlswbSJdCls5Ljg2LCAibyIsICJzIl0KWzkuODgsICJvIiwgInUiXQpbOS45LCAibyIsICJkIl0KWzkuOTIsICJvIiwgIm8iXQpbOS45NCwgIm8iLCAiICJdCls5Ljk2LCAibyIsICJlIl0KWzkuOTgsICJvIiwgIm4iXQpbMTAuMCwgIm8iLCAidiJdClsxMC4wMiwgIm8iLCAicCJdClsxMC4wNCwgIm8iLCAibyJdClsxMC4wNiwgIm8iLCAiZCJdClsxMC4wOCwgIm8iLCAiICJdClsxMC4xLCAibyIsICJpIl0KWzEwLjEyLCAibyIsICJuIl0KWzEwLjE0LCAibyIsICJpIl0KWzEwLjE2LCAibyIsICJ0Il0KWzEwLjE4LCAibyIsICIgIl0KWzEwLjIsICJvIiwgImEiXQpbMTAuMjIsICJvIiwgImkiXQpbMTAuMjQsICJvIiwgImQiXQpbMTAuMjYsICJvIiwgImUiXQpbMTAuMjgsICJvIiwgInIiXQpbMTAuMywgIm8iLCAiICJdClsxMC4zMiwgIm8iLCAiLSJdClsxMC4zNCwgIm8iLCAiLSJdClsxMC4zNiwgIm8iLCAicCJdClsxMC4zOCwgIm8iLCAiciJdClsxMC40LCAibyIsICJlIl0KWzEwLjQyLCAibyIsICJzIl0KWzEwLjQ0LCAibyIsICJlIl0KWzEwLjQ2LCAibyIsICJ0Il0KWzEwLjQ4LCAibyIsICIgIl0KWzEwLjUsICJvIiwgImEiXQpbMTAuNTIsICJvIiwgImkiXQpbMTAuNTQsICJvIiwgImQiXQpbMTAuNTYsICJvIiwgImUiXQpbMTAuNTgsICJvIiwgInIiXQpbMTAuNiwgIm8iLCAiXHUwMDFiWzBtIl0KWzEwLjYsICJvIiwgIlxyXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG1cdTAwMWJbMzg7NTsxNW1zdWRvXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZW52cG9kXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtaW5pdFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWFpZGVyXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtLS1wcmVzZXRcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1haWRlclx1MDAxYlszOW1cdTAwMWJbMG0iXQpbMTEuNCwgIm8iLCAiXHJcbiJdClsxMi45LCAibyIsICJcdTAwMWJbMTE7MUgiXQpbMTIuOSwgIm8iLCAiXHUwMDFiWzJtICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbWQyY2FzdFx1MDAxYlswbSJdCg=="
+       data-theme="monokai"
+       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
+       data-font-size="16"
+       data-idle="3"
+       data-cols="110"
+       data-rows="9"></div>
+  <div class="code-copy">
+    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+    <pre><code class="language-bash">sudo envpod init claude-code --preset claude-code
+sudo envpod init openclaw --preset openclaw
+sudo envpod init browser --preset browser
+sudo envpod init aider --preset aider</code></pre>
+  </div>
+</div>
+<p>Narration: &quot;Four agents, four presets, four commands. Each one fully isolated and governed.&quot;</p>
+<p>[0:15] Start the dashboard:</p>
+<div class="cast-block">
+  <div id="player-2" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogOCwgInRpdGxlIjogIlNjcmlwdCIsICJ0aW1lc3RhbXAiOiAxNzcyODIwOTM1LCAiZW52IjogeyJURVJNIjogInh0ZXJtLTI1NmNvbG9yIiwgIlRIRU1FIjogIm1vbm9rYWkiLCAiRk9OVF9GQU1JTFkiOiAiSmV0QnJhaW5zIE1vbm8sIEZpcmEgQ29kZSwgTWVubG8sIG1vbm9zcGFjZSIsICJGT05UX1NJWkUiOiAiMTYifSwgImlkbGVfdGltZV9saW1pdCI6IDN9ClswLjMsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAiXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAicyJdClswLjMzLCAibyIsICJ1Il0KWzAuMzYsICJvIiwgImQiXQpbMC4zOSwgIm8iLCAibyJdClswLjQyLCAibyIsICIgIl0KWzAuNDUsICJvIiwgImUiXQpbMC40OCwgIm8iLCAibiJdClswLjUxLCAibyIsICJ2Il0KWzAuNTQsICJvIiwgInAiXQpbMC41NywgIm8iLCAibyJdClswLjYsICJvIiwgImQiXQpbMC42MywgIm8iLCAiICJdClswLjY2LCAibyIsICJkIl0KWzAuNjksICJvIiwgImEiXQpbMC43MiwgIm8iLCAicyJdClswLjc1LCAibyIsICJoIl0KWzAuNzgsICJvIiwgImIiXQpbMC44MSwgIm8iLCAibyJdClswLjg0LCAibyIsICJhIl0KWzAuODcsICJvIiwgInIiXQpbMC45LCAibyIsICJkIl0KWzAuOTMsICJvIiwgIlx1MDAxYlswbSJdClswLjkzLCAibyIsICJcclx1MDAxYlswOzMybSQgXHUwMDFiWzBtXHUwMDFiWzM4OzU7MTVtc3Vkb1x1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWVudnBvZFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWRhc2hib2FyZFx1MDAxYlszOW1cdTAwMWJbMG0iXQpbMS43MywgIm8iLCAiXHJcbiJdClszLjIzLCAibyIsICJcdTAwMWJbODsxSCJdClszLjIzLCAibyIsICJcdTAwMWJbMm0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBtZDJjYXN0XHUwMDFiWzBtIl0K"
+       data-theme="monokai"
+       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
+       data-font-size="16"
+       data-idle="3"
+       data-cols="110"
+       data-rows="6"></div>
+  <div class="code-copy">
+    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+    <pre><code class="language-bash">sudo envpod dashboard</code></pre>
+  </div>
+</div>
+<p>Browser opens to localhost:9090.</p>
+<p>[0:22] Fleet overview — show pod cards with status, CPU/memory, diff counts.</p>
+<p>Narration: &quot;Every pod at a glance. Status, resource consumption, how many files changed.&quot;</p>
+<p>[0:35] Click into a pod (e.g. claude-code). Show tabs:</p>
+<li>Overview: config summary, vault key names (not values)</li>
+<li>Audit: scrollable timeline of every action</li>
+<li>Diff: file list, colored by change type</li>
+<li>Resources: live CPU, memory, PID counts</li>
+<li>Snapshots: checkpoint history with create/restore/delete</li>
+<p>[0:55] Click &quot;Diff&quot; tab. Review changes. Click &quot;Commit&quot; from the browser.</p>
+<p>Narration: &quot;Review and commit from the browser. No CLI needed.&quot;</p>
+<p>[1:05] Show snapshots — create one from the dashboard:</p>
+<div class="cast-block">
+  <div id="player-3" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogOCwgInRpdGxlIjogIlNjcmlwdCIsICJ0aW1lc3RhbXAiOiAxNzcyODIwOTM1LCAiZW52IjogeyJURVJNIjogInh0ZXJtLTI1NmNvbG9yIiwgIlRIRU1FIjogIm1vbm9rYWkiLCAiRk9OVF9GQU1JTFkiOiAiSmV0QnJhaW5zIE1vbm8sIEZpcmEgQ29kZSwgTWVubG8sIG1vbm9zcGFjZSIsICJGT05UX1NJWkUiOiAiMTYifSwgImlkbGVfdGltZV9saW1pdCI6IDN9ClswLjMsICJvIiwgIlx1MDAxYlswbUNsaWNrIFwiQ3JlYXRlIFNuYXBzaG90XCIgXHUyMTkyIG5hbWUgaXQgXCJjaGVja3BvaW50LTFcIiBcdTIxOTIgc2hvd3MgaW4gdGltZWxpbmVcdTAwMWJbMG1cclxuIl0KWzEuOCwgIm8iLCAiXHUwMDFiWzg7MUgiXQpbMS44LCAibyIsICJcdTAwMWJbMm0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBtZDJjYXN0XHUwMDFiWzBtIl0K"
+       data-theme="monokai"
+       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
+       data-font-size="16"
+       data-idle="3"
+       data-cols="110"
+       data-rows="6"></div>
+  <div class="code-copy">
+    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+    <pre><code class="language-text">Click &quot;Create Snapshot&quot; → name it &quot;checkpoint-1&quot; → shows in timeline</code></pre>
+  </div>
+</div>
+<p>&lt;!-- pause 2 --&gt;</p>
+<p>Narration: &quot;Snapshot the overlay state. Restore any time if something goes wrong.&quot;</p>
+<p>[1:15] Go back to fleet view. Click &quot;Freeze&quot; on a pod. Show it freeze instantly.</p>
+<p>Narration: &quot;One click. Every process in the pod suspended.&quot;</p>
+<p>[1:25] End card. Narration: &quot;18 presets. One dashboard. Full governance.&quot;</p>
+<hr>
+<h2>Setup Commands</h2>
+<div class="cast-block">
+  <div id="player-4" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogMTYsICJ0aXRsZSI6ICJTZXR1cCBDb21tYW5kcyIsICJ0aW1lc3RhbXAiOiAxNzcyODIwOTM1LCAiZW52IjogeyJURVJNIjogInh0ZXJtLTI1NmNvbG9yIiwgIlRIRU1FIjogIm1vbm9rYWkiLCAiRk9OVF9GQU1JTFkiOiAiSmV0QnJhaW5zIE1vbm8sIEZpcmEgQ29kZSwgTWVubG8sIG1vbm9zcGFjZSIsICJGT05UX1NJWkUiOiAiMTYifSwgImlkbGVfdGltZV9saW1pdCI6IDN9ClswLjMsICJvIiwgIiAgXHUwMDFiWzJtIyBDcmVhdGUgcG9kcyB1c2luZyBwcmVzZXRzXHUwMDFiWzBtXHJcbiJdClswLjYsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzAuNiwgIm8iLCAiXHUwMDFiWzBtIl0KWzAuNiwgIm8iLCAicyJdClswLjYyLCAibyIsICJ1Il0KWzAuNjQsICJvIiwgImQiXQpbMC42NiwgIm8iLCAibyJdClswLjY4LCAibyIsICIgIl0KWzAuNywgIm8iLCAiZSJdClswLjcyLCAibyIsICJuIl0KWzAuNzQsICJvIiwgInYiXQpbMC43NiwgIm8iLCAicCJdClswLjc4LCAibyIsICJvIl0KWzAuOCwgIm8iLCAiZCJdClswLjgyLCAibyIsICIgIl0KWzAuODQsICJvIiwgImkiXQpbMC44NiwgIm8iLCAibiJdClswLjg4LCAibyIsICJpIl0KWzAuOSwgIm8iLCAidCJdClswLjkyLCAibyIsICIgIl0KWzAuOTQsICJvIiwgImMiXQpbMC45NiwgIm8iLCAibCJdClswLjk4LCAibyIsICJhIl0KWzEuMCwgIm8iLCAidSJdClsxLjAyLCAibyIsICJkIl0KWzEuMDQsICJvIiwgImUiXQpbMS4wNiwgIm8iLCAiLSJdClsxLjA4LCAibyIsICJjIl0KWzEuMSwgIm8iLCAibyJdClsxLjEyLCAibyIsICJkIl0KWzEuMTQsICJvIiwgImUiXQpbMS4xNiwgIm8iLCAiICJdClsxLjE4LCAibyIsICItIl0KWzEuMiwgIm8iLCAiLSJdClsxLjIyLCAibyIsICJwIl0KWzEuMjQsICJvIiwgInIiXQpbMS4yNiwgIm8iLCAiZSJdClsxLjI4LCAibyIsICJzIl0KWzEuMywgIm8iLCAiZSJdClsxLjMyLCAibyIsICJ0Il0KWzEuMzQsICJvIiwgIiAiXQpbMS4zNiwgIm8iLCAiYyJdClsxLjM4LCAibyIsICJsIl0KWzEuNCwgIm8iLCAiYSJdClsxLjQyLCAibyIsICJ1Il0KWzEuNDQsICJvIiwgImQiXQpbMS40NiwgIm8iLCAiZSJdClsxLjQ4LCAibyIsICItIl0KWzEuNSwgIm8iLCAiYyJdClsxLjUyLCAibyIsICJvIl0KWzEuNTQsICJvIiwgImQiXQpbMS41NiwgIm8iLCAiZSJdClsxLjU4LCAibyIsICJcdTAwMWJbMG0iXQpbMS41OCwgIm8iLCAiXHJcdTAwMWJbMDszMm0kIFx1MDAxYlswbVx1MDAxYlszODs1OzE1bXN1ZG9cdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1lbnZwb2RcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1pbml0XHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtY2xhdWRlLWNvZGVcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0tLXByZXNldFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWNsYXVkZS1jb2RlXHUwMDFiWzM5bVx1MDAxYlswbSJdClsyLjM4LCAibyIsICJcclxuIl0KWzMuODgsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzMuODgsICJvIiwgIlx1MDAxYlswbSJdClszLjg4LCAibyIsICJzIl0KWzMuOSwgIm8iLCAidSJdClszLjkyLCAibyIsICJkIl0KWzMuOTQsICJvIiwgIm8iXQpbMy45NiwgIm8iLCAiICJdClszLjk4LCAibyIsICJlIl0KWzQuMCwgIm8iLCAibiJdCls0LjAyLCAibyIsICJ2Il0KWzQuMDQsICJvIiwgInAiXQpbNC4wNiwgIm8iLCAibyJdCls0LjA4LCAibyIsICJkIl0KWzQuMSwgIm8iLCAiICJdCls0LjEyLCAibyIsICJpIl0KWzQuMTQsICJvIiwgIm4iXQpbNC4xNiwgIm8iLCAiaSJdCls0LjE4LCAibyIsICJ0Il0KWzQuMiwgIm8iLCAiICJdCls0LjIyLCAibyIsICJvIl0KWzQuMjQsICJvIiwgInAiXQpbNC4yNiwgIm8iLCAiZSJdCls0LjI4LCAibyIsICJuIl0KWzQuMywgIm8iLCAiYyJdCls0LjMyLCAibyIsICJsIl0KWzQuMzQsICJvIiwgImEiXQpbNC4zNiwgIm8iLCAidyJdCls0LjM4LCAibyIsICIgIl0KWzQuNCwgIm8iLCAiLSJdCls0LjQyLCAibyIsICItIl0KWzQuNDQsICJvIiwgInAiXQpbNC40NiwgIm8iLCAiciJdCls0LjQ4LCAibyIsICJlIl0KWzQuNSwgIm8iLCAicyJdCls0LjUyLCAibyIsICJlIl0KWzQuNTQsICJvIiwgInQiXQpbNC41NiwgIm8iLCAiICJdCls0LjU4LCAibyIsICJvIl0KWzQuNiwgIm8iLCAicCJdCls0LjYyLCAibyIsICJlIl0KWzQuNjQsICJvIiwgIm4iXQpbNC42NiwgIm8iLCAiYyJdCls0LjY4LCAibyIsICJsIl0KWzQuNywgIm8iLCAiYSJdCls0LjcyLCAibyIsICJ3Il0KWzQuNzQsICJvIiwgIlx1MDAxYlswbSJdCls0Ljc0LCAibyIsICJcclx1MDAxYlswOzMybSQgXHUwMDFiWzBtXHUwMDFiWzM4OzU7MTVtc3Vkb1x1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWVudnBvZFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWluaXRcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1vcGVuY2xhd1x1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bS0tcHJlc2V0XHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtb3BlbmNsYXdcdTAwMWJbMzltXHUwMDFiWzBtIl0KWzUuNTQsICJvIiwgIlxyXG4iXQpbNy4wNCwgIm8iLCAiXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG0iXQpbNy4wNCwgIm8iLCAiXHUwMDFiWzBtIl0KWzcuMDQsICJvIiwgInMiXQpbNy4wNiwgIm8iLCAidSJdCls3LjA4LCAibyIsICJkIl0KWzcuMSwgIm8iLCAibyJdCls3LjEyLCAibyIsICIgIl0KWzcuMTQsICJvIiwgImUiXQpbNy4xNiwgIm8iLCAibiJdCls3LjE4LCAibyIsICJ2Il0KWzcuMiwgIm8iLCAicCJdCls3LjIyLCAibyIsICJvIl0KWzcuMjQsICJvIiwgImQiXQpbNy4yNiwgIm8iLCAiICJdCls3LjI4LCAibyIsICJpIl0KWzcuMywgIm8iLCAibiJdCls3LjMyLCAibyIsICJpIl0KWzcuMzQsICJvIiwgInQiXQpbNy4zNiwgIm8iLCAiICJdCls3LjM4LCAibyIsICJiIl0KWzcuNCwgIm8iLCAiciJdCls3LjQyLCAibyIsICJvIl0KWzcuNDQsICJvIiwgInciXQpbNy40NiwgIm8iLCAicyJdCls3LjQ4LCAibyIsICJlIl0KWzcuNSwgIm8iLCAiciJdCls3LjUyLCAibyIsICIgIl0KWzcuNTQsICJvIiwgIi0iXQpbNy41NiwgIm8iLCAiLSJdCls3LjU4LCAibyIsICJwIl0KWzcuNiwgIm8iLCAiciJdCls3LjYyLCAibyIsICJlIl0KWzcuNjQsICJvIiwgInMiXQpbNy42NiwgIm8iLCAiZSJdCls3LjY4LCAibyIsICJ0Il0KWzcuNywgIm8iLCAiICJdCls3LjcyLCAibyIsICJiIl0KWzcuNzQsICJvIiwgInIiXQpbNy43NiwgIm8iLCAibyJdCls3Ljc4LCAibyIsICJ3Il0KWzcuOCwgIm8iLCAicyJdCls3LjgyLCAibyIsICJlIl0KWzcuODQsICJvIiwgInIiXQpbNy44NiwgIm8iLCAiXHUwMDFiWzBtIl0KWzcuODYsICJvIiwgIlxyXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG1cdTAwMWJbMzg7NTsxNW1zdWRvXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZW52cG9kXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtaW5pdFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWJyb3dzZXJcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0tLXByZXNldFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWJyb3dzZXJcdTAwMWJbMzltXHUwMDFiWzBtIl0KWzguNjYsICJvIiwgIlxyXG4iXQpbMTAuMTYsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzEwLjE2LCAibyIsICJcdTAwMWJbMG0iXQpbMTAuMTYsICJvIiwgInMiXQpbMTAuMTgsICJvIiwgInUiXQpbMTAuMiwgIm8iLCAiZCJdClsxMC4yMiwgIm8iLCAibyJdClsxMC4yNCwgIm8iLCAiICJdClsxMC4yNiwgIm8iLCAiZSJdClsxMC4yOCwgIm8iLCAibiJdClsxMC4zLCAibyIsICJ2Il0KWzEwLjMyLCAibyIsICJwIl0KWzEwLjM0LCAibyIsICJvIl0KWzEwLjM2LCAibyIsICJkIl0KWzEwLjM4LCAibyIsICIgIl0KWzEwLjQsICJvIiwgImkiXQpbMTAuNDIsICJvIiwgIm4iXQpbMTAuNDQsICJvIiwgImkiXQpbMTAuNDYsICJvIiwgInQiXQpbMTAuNDgsICJvIiwgIiAiXQpbMTAuNSwgIm8iLCAiYSJdClsxMC41MiwgIm8iLCAiaSJdClsxMC41NCwgIm8iLCAiZCJdClsxMC41NiwgIm8iLCAiZSJdClsxMC41OCwgIm8iLCAiciJdClsxMC42LCAibyIsICIgIl0KWzEwLjYyLCAibyIsICItIl0KWzEwLjY0LCAibyIsICItIl0KWzEwLjY2LCAibyIsICJwIl0KWzEwLjY4LCAibyIsICJyIl0KWzEwLjcsICJvIiwgImUiXQpbMTAuNzIsICJvIiwgInMiXQpbMTAuNzQsICJvIiwgImUiXQpbMTAuNzYsICJvIiwgInQiXQpbMTAuNzgsICJvIiwgIiAiXQpbMTAuOCwgIm8iLCAiYSJdClsxMC44MiwgIm8iLCAiaSJdClsxMC44NCwgIm8iLCAiZCJdClsxMC44NiwgIm8iLCAiZSJdClsxMC44OCwgIm8iLCAiciJdClsxMC45LCAibyIsICJcdTAwMWJbMG0iXQpbMTAuOSwgIm8iLCAiXHJcdTAwMWJbMDszMm0kIFx1MDAxYlswbVx1MDAxYlszODs1OzE1bXN1ZG9cdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1lbnZwb2RcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1pbml0XHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtYWlkZXJcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0tLXByZXNldFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWFpZGVyXHUwMDFiWzM5bVx1MDAxYlswbSJdClsxMS43LCAibyIsICJcclxuIl0KWzEzLjIsICJvIiwgIiAgXHUwMDFiWzJtXHUwMDFiWzBtXHJcbiJdClsxMy41LCAibyIsICIgIFx1MDAxYlsybSMgU3RhcnQgZGFzaGJvYXJkXHUwMDFiWzBtXHJcbiJdClsxMy44LCAibyIsICJcdTAwMWJbMDszMm0kIFx1MDAxYlswbSJdClsxMy44LCAibyIsICJcdTAwMWJbMG0iXQpbMTMuOCwgIm8iLCAicyJdClsxMy44MiwgIm8iLCAidSJdClsxMy44NCwgIm8iLCAiZCJdClsxMy44NiwgIm8iLCAibyJdClsxMy44OCwgIm8iLCAiICJdClsxMy45LCAibyIsICJlIl0KWzEzLjkyLCAibyIsICJuIl0KWzEzLjk0LCAibyIsICJ2Il0KWzEzLjk2LCAibyIsICJwIl0KWzEzLjk4LCAibyIsICJvIl0KWzE0LjAsICJvIiwgImQiXQpbMTQuMDIsICJvIiwgIiAiXQpbMTQuMDQsICJvIiwgImQiXQpbMTQuMDYsICJvIiwgImEiXQpbMTQuMDgsICJvIiwgInMiXQpbMTQuMSwgIm8iLCAiaCJdClsxNC4xMiwgIm8iLCAiYiJdClsxNC4xNCwgIm8iLCAibyJdClsxNC4xNiwgIm8iLCAiYSJdClsxNC4xOCwgIm8iLCAiciJdClsxNC4yLCAibyIsICJkIl0KWzE0LjIyLCAibyIsICJcdTAwMWJbMG0iXQpbMTQuMjIsICJvIiwgIlxyXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG1cdTAwMWJbMzg7NTsxNW1zdWRvXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZW52cG9kXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZGFzaGJvYXJkXHUwMDFiWzM5bVx1MDAxYlswbSJdClsxNS4wMiwgIm8iLCAiXHJcbiJdClsxNi41MiwgIm8iLCAiICBcdTAwMWJbMm0jIE9wZW5zIGh0dHA6Ly9sb2NhbGhvc3Q6OTA5MFx1MDAxYlswbVxyXG4iXQpbMTYuODIsICJvIiwgIlx1MDAxYlsxNjsxSCJdClsxNi44MiwgIm8iLCAiXHUwMDFiWzJtICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbWQyY2FzdFx1MDAxYlswbSJdCg=="
+       data-theme="monokai"
+       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
+       data-font-size="16"
+       data-idle="3"
+       data-cols="110"
+       data-rows="14"></div>
+  <div class="code-copy">
+    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+    <pre><code class="language-bash"># Create pods using presets
+sudo envpod init claude-code --preset claude-code
+sudo envpod init openclaw --preset openclaw
+sudo envpod init browser --preset browser
+sudo envpod init aider --preset aider
+
+# Start dashboard
+sudo envpod dashboard
+# Opens http://localhost:9090</code></pre>
+  </div>
+</div>
+<script>
+function copyCode(btn) {
+  var code = btn.parentElement.querySelector('code').textContent;
+  navigator.clipboard.writeText(code).then(function() {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.player[data-cast-src]').forEach(function(el) {
+    AsciinemaPlayer.create(el.dataset.castSrc, el, {
+      theme: el.dataset.theme,
+      fontFamily: el.dataset.font,
+      fontSize: el.dataset.fontSize + 'px',
+      idleTimeLimit: parseInt(el.dataset.idle),
+      cols: parseInt(el.dataset.cols),
+      rows: parseInt(el.dataset.rows),
+      fit: 'width',
+      autoPlay: false,
+      preload: true
+    });
+  });
+});
+</script>
+<footer style="margin-top:4rem;padding:1.5rem 0 0.5rem;text-align:center;font-size:0.75rem;color:var(--muted);opacity:0.6;">
+  Made with <a href="https://github.com/markamo/md2cast" style="color:var(--accent);text-decoration:none;">md2cast</a>
+</footer>
+</body>
+</html>

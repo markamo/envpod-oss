@@ -1,9 +1,11 @@
+<!-- type-delay 0.03 -->
 # Installing envpod
 
 envpod is a single static binary with no runtime dependencies. It runs on any Linux distribution with kernel 5.11+ and cgroup v2.
 
 ## One-Line Install (any distro)
 
+<!-- no-exec -->
 ```bash
 curl -fsSL https://envpod.dev/install.sh | sudo bash
 ```
@@ -12,6 +14,7 @@ Auto-detects your distro, installs prerequisites, downloads the correct binary (
 
 Add `--auto-deps` to skip the interactive prompt:
 
+<!-- no-exec -->
 ```bash
 curl -fsSL https://envpod.dev/install.sh | sudo bash -s -- --auto-deps
 ```
@@ -20,6 +23,7 @@ curl -fsSL https://envpod.dev/install.sh | sudo bash -s -- --auto-deps
 
 If you already downloaded the release:
 
+<!-- no-exec -->
 ```bash
 curl -fsSL https://github.com/markamo/envpod-ce/releases/latest/download/envpod-linux-x86_64.tar.gz | tar xz
 cd envpod-*-linux-x86_64
@@ -32,6 +36,8 @@ The same `install.sh` detects whether the binary is present locally or needs to 
 
 Download, extract, run. No install step, no PATH modification, no state directories. Just the binary and examples in one folder.
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 curl -fsSL https://github.com/markamo/envpod-ce/releases/latest/download/envpod-linux-x86_64.tar.gz | tar xz
 cd envpod-*-linux-x86_64
@@ -43,6 +49,8 @@ The portable binary requires `iptables` and `iproute2` at runtime.
 
 ## Docker (testing/evaluation)
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 docker run -it --privileged --cgroupns=host \
   -v /tmp/envpod-test:/var/lib/envpod \
@@ -61,6 +69,8 @@ The one-line installer handles prerequisites automatically. These notes are for 
 
 ### Ubuntu 24.04 / 22.04
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # Prerequisites
 sudo apt-get update
@@ -74,6 +84,8 @@ sudo bash install.sh
 
 ### Debian 12 (Bookworm)
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # Prerequisites
 sudo apt-get update
@@ -87,6 +99,8 @@ sudo bash install.sh
 
 ### Fedora 41+
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # Prerequisites
 sudo dnf install -y curl tar gzip iptables iproute
@@ -101,6 +115,8 @@ Note: Fedora runs SELinux in enforcing mode by default. If you encounter permiss
 
 ### Arch Linux
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # Prerequisites
 sudo pacman -S curl tar gzip iptables iproute2
@@ -113,6 +129,8 @@ sudo bash install.sh
 
 ### Rocky Linux 9 / AlmaLinux 9
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # Prerequisites (--allowerasing replaces curl-minimal with curl)
 sudo dnf install -y --allowerasing curl tar gzip iptables iproute
@@ -127,6 +145,8 @@ Note: Rocky and AlmaLinux minimal images ship `curl-minimal` which conflicts wit
 
 ### openSUSE Leap 15.6
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # Prerequisites
 sudo zypper install -y curl tar gzip iptables iproute2
@@ -139,6 +159,8 @@ sudo bash install.sh
 
 ### Amazon Linux 2023
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # Prerequisites (--allowerasing replaces curl-minimal with curl)
 sudo dnf install -y --allowerasing curl tar gzip iptables iproute
@@ -151,6 +173,8 @@ sudo bash install.sh
 
 ### Raspberry Pi OS (64-bit) / ARM64
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # Ensure cgroup v2 is enabled
 # Add to /boot/firmware/cmdline.txt:
@@ -181,6 +205,7 @@ The install script performs these steps:
 
 ## Verify installation
 
+<!-- no-exec -->
 ```bash
 envpod --version
 sudo envpod ls
@@ -188,12 +213,14 @@ sudo envpod ls
 
 ## Uninstall
 
+<!-- no-exec -->
 ```bash
 sudo bash /usr/local/share/envpod/uninstall.sh
 ```
 
 ## System requirements
 
+<!-- output -->
 | Requirement | Minimum | Notes |
 |---|---|---|
 | Kernel | 5.11+ | `uname -r` to check |
@@ -230,6 +257,7 @@ Boot with cgroup v2 enabled. Raspberry Pi: add `systemd.unified_cgroup_hierarchy
 
 ## Tested distributions
 
+<!-- output -->
 | Distro | Version | Portable | Install | Governance |
 |--------|---------|----------|---------|------------|
 | Ubuntu | 24.04 LTS | ✓ | ✓ | ✓ |

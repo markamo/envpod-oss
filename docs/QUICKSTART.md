@@ -1,3 +1,4 @@
+<!-- type-delay 0.03 -->
 # Quickstart Tutorial
 
 > **EnvPod v0.1.0** — Zero-trust governance environments for AI agents
@@ -16,6 +17,8 @@ This tutorial takes you from zero to a governed AI agent in about 10 minutes. Yo
 
 Create a pod using a built-in preset, the interactive wizard, or a config file:
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # Option A: Use a built-in preset (18 available — run `envpod presets` to see all)
 sudo envpod init tutorial --preset devbox
@@ -29,23 +32,28 @@ sudo envpod init tutorial -c examples/basic-cli.yaml
 
 Verify it exists:
 
+<!-- no-exec -->
 ```bash
 sudo envpod ls
 ```
 
+<!-- output -->
 ```
 NAME       BACKEND  STATUS   CREATED
 tutorial   native   created  2026-02-26T10:00:00Z
 ```
+<!-- pause 2 -->
 
 Run a single command inside the pod:
 
+<!-- no-exec -->
 ```bash
 sudo envpod run tutorial -- echo "Hello from inside the pod"
 ```
 
 Or drop into an interactive shell (every command you type runs inside the pod):
 
+<!-- no-exec -->
 ```bash
 sudo envpod run tutorial -- /bin/bash
 ```
@@ -54,6 +62,7 @@ You're now inside the pod. Try `hostname` (shows `tutorial`), `cat /proc/1/cmdli
 
 You can also start a pod in the background with `-b`:
 
+<!-- no-exec -->
 ```bash
 sudo envpod run tutorial -b -- python3 long_task.py
 sudo envpod fg tutorial  # reattach later
@@ -61,6 +70,7 @@ sudo envpod fg tutorial  # reattach later
 
 Check pod status:
 
+<!-- no-exec -->
 ```bash
 sudo envpod status tutorial
 ```
@@ -75,6 +85,7 @@ Every file the agent writes goes to a COW overlay — the host filesystem is nev
 
 Write a file inside the pod (use `/opt/` — not `/tmp`, which is a fresh tmpfs that bypasses the overlay):
 
+<!-- no-exec -->
 ```bash
 sudo envpod run tutorial -- sh -c 'echo "agent output" > /opt/result.txt'
 sudo envpod run tutorial -- sh -c 'mkdir -p /opt/data && echo "more data" > /opt/data/notes.txt'
@@ -82,18 +93,22 @@ sudo envpod run tutorial -- sh -c 'mkdir -p /opt/data && echo "more data" > /opt
 
 See what changed:
 
+<!-- no-exec -->
 ```bash
 sudo envpod diff tutorial
 ```
 
+<!-- output -->
 ```
   Added    /opt/result.txt
   Added    /opt/data/
   Added    /opt/data/notes.txt
 ```
+<!-- pause 2 -->
 
 The host filesystem is untouched. Now reject the changes:
 
+<!-- no-exec -->
 ```bash
 sudo envpod rollback tutorial
 sudo envpod diff tutorial        # empty — changes discarded
@@ -101,6 +116,8 @@ sudo envpod diff tutorial        # empty — changes discarded
 
 Write again and this time accept:
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 sudo envpod run tutorial -- sh -c 'echo "final output" > /opt/result.txt; echo "extra" > /opt/extra.txt'
 sudo envpod diff tutorial        # shows /opt/result.txt and /opt/extra.txt
@@ -123,12 +140,14 @@ This is the core safety loop: **run → diff → commit or rollback**. Every fil
 
 Create a network-enabled pod using the `python-env.yaml` config (this also runs setup commands — installing numpy, pandas, and other data science packages):
 
+<!-- no-exec -->
 ```bash
 sudo envpod init pynet -c examples/python-env.yaml
 ```
 
 Test DNS resolution inside the **pynet** pod:
 
+<!-- no-exec -->
 ```bash
 # Allowed — pypi.org is on the whitelist
 sudo envpod run pynet -- nslookup pypi.org
@@ -141,6 +160,8 @@ The second lookup fails because envpod runs an embedded DNS server per pod. Each
 
 You can mutate DNS policy on a running pod without restarting:
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # Allow a new domain
 sudo envpod dns pynet --allow google.com
@@ -158,10 +179,12 @@ sudo envpod dns pynet --remove-allow google.com
 
 Every action inside a pod is logged. View the audit trail for the `pynet` pod:
 
+<!-- no-exec -->
 ```bash
 sudo envpod audit pynet
 ```
 
+<!-- output -->
 ```
 TIME                 ACTION              DETAILS
 2026-02-26T10:05:00  create              backend=native
@@ -173,9 +196,11 @@ TIME                 ACTION              DETAILS
 2026-02-26T10:05:02  stop
 ...
 ```
+<!-- pause 2 -->
 
 For machine-readable output:
 
+<!-- no-exec -->
 ```bash
 sudo envpod audit pynet --json
 ```
@@ -190,6 +215,7 @@ Let's run Claude Code (Anthropic's CLI coding agent) inside a governed pod.
 
 First, store the API key in the pod's credential vault so it's never exposed in the agent's context:
 
+<!-- no-exec -->
 ```bash
 sudo envpod init claude-code --preset claude-code
 sudo envpod vault claude-code set ANTHROPIC_API_KEY
@@ -199,6 +225,7 @@ The vault prompts for the value interactively — it never appears in shell hist
 
 Run the agent:
 
+<!-- no-exec -->
 ```bash
 sudo envpod run claude-code -- claude
 ```
@@ -211,6 +238,8 @@ The agent runs with full isolation:
 
 After the session, review and decide:
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 sudo envpod diff claude-code       # what did it change?
 sudo envpod commit claude-code     # accept all changes
@@ -223,6 +252,7 @@ sudo envpod rollback claude-code   # reject everything
 
 For maximum security, use vault proxy injection — the agent never sees the real API key:
 
+<!-- no-exec -->
 ```bash
 # Bind the key to the API domain (auto-enables proxy)
 sudo envpod vault claude-code bind ANTHROPIC_API_KEY api.anthropic.com "Authorization: Bearer {value}"
@@ -235,6 +265,7 @@ With proxy injection, the agent can make normal HTTPS requests to `api.anthropic
 
 All 18 presets include auto-setup commands — dependencies install automatically during `envpod init`. Use `envpod presets` to see the full list, or run `sudo envpod init <name>` for an interactive wizard.
 
+<!-- output -->
 | Preset | Agent | Auto-Setup |
 |--------|-------|------------|
 | `claude-code` | Anthropic Claude Code | `curl` installer |
@@ -262,6 +293,7 @@ You can also use config files directly for full control: `sudo envpod init my-ag
 
 Run a full GUI browser inside a governed pod:
 
+<!-- no-exec -->
 ```bash
 sudo envpod init browser-pod -c examples/browser.yaml
 sudo envpod run browser-pod -- useradd -m browseruser
@@ -272,6 +304,7 @@ The `-d` flag auto-detects Wayland or X11 and sets the correct environment. The 
 
 **For maximum security** (Wayland + PipeWire), use the dedicated config:
 
+<!-- no-exec -->
 ```bash
 sudo envpod init browser-secure -c examples/browser-wayland.yaml
 sudo envpod run browser-secure -d -a --user browseruser -- google-chrome --ozone-platform=wayland https://youtube.com
@@ -283,10 +316,12 @@ Chrome needs `--ozone-platform=wayland` to use Wayland natively (it defaults to 
 
 Compare security findings with `sudo envpod audit --security -c examples/browser.yaml` vs `examples/browser-wayland.yaml`:
 
+<!-- output -->
 | Config | I-04 Display | I-05 Audio |
 |--------|-------------|------------|
 | `browser.yaml` (X11/auto) | **CRITICAL** | **HIGH** |
 | `browser-wayland.yaml` (Wayland + PipeWire) | LOW | MEDIUM |
+<!-- pause 2 -->
 
 ---
 
@@ -294,12 +329,14 @@ Compare security findings with `sudo envpod audit --security -c examples/browser
 
 Envpod ships a jailbreak test script that probes all isolation boundaries from inside the pod. Run it against your tutorial pod to verify the walls are holding:
 
+<!-- no-exec -->
 ```bash
 sudo envpod run tutorial -- bash /usr/local/share/envpod/examples/jailbreak-test.sh
 ```
 
 Pods run as the non-root `agent` user by default, giving full pod boundary protection. You'll see a colored pass/fail report across 49 tests:
 
+<!-- output -->
 ```
 envpod jailbreak test v0.1.0
 Probing isolation boundaries...
@@ -319,6 +356,7 @@ Probing isolation boundaries...
 Known gaps (v0.1):
   I-03  [MEDIUM]   /proc/stat leaks host CPU counters
 ```
+<!-- pause 2 -->
 
 The default non-root user passes all 17 pod boundary tests. Running with `--root` exposes 2 additional gaps (N-05 iptables, N-06 raw sockets). Use `--json` for machine-readable output, or `--category seccomp` to test a single category.
 
@@ -332,6 +370,8 @@ The default non-root user passes all 17 pod boundary tests. Running with `--root
 
 Every `envpod init` automatically creates a **base snapshot** (the state after init + setup). Clone from it:
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # Create a coding agent (takes ~1.3s + setup time)
 sudo envpod init coder -c examples/coding-agent.yaml
@@ -351,6 +391,7 @@ Clones share the base rootfs via symlink (~1 KB unique data per clone). This is 
 
 By default, `clone` copies the base snapshot (after init+setup, before any agent changes). To clone the current state including agent modifications:
 
+<!-- no-exec -->
 ```bash
 sudo envpod run coder -- sh -c 'echo "agent work" > /opt/result.txt'
 sudo envpod clone coder coder-fork --current    # includes /opt/result.txt
@@ -360,6 +401,8 @@ sudo envpod clone coder coder-fork --current    # includes /opt/result.txt
 
 For managing reusable snapshots independently:
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # Create a base pod (no instance needed)
 sudo envpod base create python-base -c examples/python-env.yaml
@@ -379,6 +422,7 @@ sudo envpod base destroy python-base
 
 Creating 50 agent pods from a base takes **407ms total** (8ms each) vs 6.3s with Docker. See [Benchmarks](BENCHMARKS.md#scale-test) for full numbers.
 
+<!-- no-exec -->
 ```bash
 # Spin up 50 agents
 for i in $(seq 1 50); do
@@ -392,10 +436,12 @@ done
 
 Check the security posture of any pod config without creating a pod:
 
+<!-- no-exec -->
 ```bash
 sudo envpod audit --security -c examples/browser.yaml
 ```
 
+<!-- output -->
 ```
   envpod security audit · browser-agent
 
@@ -410,9 +456,11 @@ sudo envpod audit --security -c examples/browser.yaml
   P-03  [MEDIUM]   Nested namespaces possible
   I-06  [LOW]      GPU information leakage
 ```
+<!-- pause 2 -->
 
 Compare with the secure Wayland config:
 
+<!-- no-exec -->
 ```bash
 sudo envpod audit --security -c examples/browser-wayland.yaml
 ```
@@ -421,6 +469,7 @@ The Wayland config drops I-04 from CRITICAL to LOW and I-05 from HIGH to MEDIUM.
 
 For machine-readable output:
 
+<!-- no-exec -->
 ```bash
 sudo envpod audit --security --json -c examples/coding-agent.yaml
 ```
@@ -433,6 +482,7 @@ sudo envpod audit --security --json -c examples/coding-agent.yaml
 
 View and manage staged actions that need human approval:
 
+<!-- no-exec -->
 ```bash
 sudo envpod queue claude-code          # list pending actions
 sudo envpod approve claude-code <id>   # approve an action
@@ -443,6 +493,7 @@ sudo envpod cancel claude-code <id>    # reject an action
 
 Freeze a pod instantly (all processes paused, state preserved):
 
+<!-- no-exec -->
 ```bash
 sudo envpod lock claude-code           # freeze
 sudo envpod undo claude-code           # list undo-able actions
@@ -453,6 +504,7 @@ sudo envpod undo claude-code <id>      # undo a specific action
 
 Update network policy without restarting:
 
+<!-- no-exec -->
 ```bash
 sudo envpod dns claude-code --allow newdomain.com
 sudo envpod dns claude-code --deny suspicious.io
@@ -464,18 +516,21 @@ sudo envpod dns claude-code --deny suspicious.io
 
 Destroy all tutorial pods (batch destroy — single command):
 
+<!-- no-exec -->
 ```bash
 sudo envpod destroy tutorial pynet claude-code coder coder-2 coder-3
 ```
 
 For a fully clean teardown (including iptables rules), use `--full`:
 
+<!-- no-exec -->
 ```bash
 sudo envpod destroy tutorial --full
 ```
 
 Or destroy with the default fast path and clean up afterward:
 
+<!-- no-exec -->
 ```bash
 sudo envpod destroy tutorial pynet claude-code
 sudo envpod gc    # removes stale iptables, orphaned netns, cgroups, pod dirs
@@ -483,6 +538,7 @@ sudo envpod gc    # removes stale iptables, orphaned netns, cgroups, pod dirs
 
 Verify:
 
+<!-- no-exec -->
 ```bash
 sudo envpod ls    # empty
 ```

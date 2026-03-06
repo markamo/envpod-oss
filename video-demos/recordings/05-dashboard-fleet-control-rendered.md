@@ -13,6 +13,8 @@
 **[0:00]** Spin up a fleet using presets:
 <!-- no-exec -->
 <!-- type-delay 0.02 -->
+![Script](assets/01-script.gif)
+
 ```bash
 sudo envpod init claude-code --preset claude-code
 sudo envpod init openclaw --preset openclaw
@@ -23,6 +25,8 @@ sudo envpod init aider --preset aider
 
 **[0:15]** Start the dashboard:
 <!-- no-exec -->
+![Script](assets/02-script.gif)
+
 ```bash
 sudo envpod dashboard
 ```
@@ -45,6 +49,8 @@ sudo envpod dashboard
 
 **[1:05]** Show snapshots — create one from the dashboard:
 <!-- output -->
+![Script](assets/03-script.gif)
+
 ```
 Click "Create Snapshot" → name it "checkpoint-1" → shows in timeline
 ```
@@ -63,6 +69,8 @@ Click "Create Snapshot" → name it "checkpoint-1" → shows in timeline
 
 <!-- no-exec -->
 <!-- type-delay 0.02 -->
+![Setup Commands](assets/04-setup-commands.gif)
+
 ```bash
 # Create pods using presets
 sudo envpod init claude-code --preset claude-code
@@ -74,3 +82,6 @@ sudo envpod init aider --preset aider
 sudo envpod dashboard
 # Opens http://localhost:9090
 ```
+
+
+<p align="center"><sub>Made with <a href="https://github.com/markamo/md2cast">md2cast</a></sub></p>

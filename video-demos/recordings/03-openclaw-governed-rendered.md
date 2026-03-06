@@ -14,6 +14,8 @@
 
 **[0:12]** Show the interactive wizard:
 <!-- no-exec -->
+![Script](assets/01-script.gif)
+
 ```bash
 sudo envpod init openclaw
 ```
@@ -23,6 +25,8 @@ sudo envpod init openclaw
 
 **[0:30]** Customize in the wizard:
 <!-- output -->
+![Script](assets/02-script.gif)
+
 ```
   CPU cores [2.0]: 2
   Memory [1GB]: 2GB
@@ -36,6 +40,8 @@ sudo envpod init openclaw
 **[0:50]** Store credentials:
 <!-- no-exec -->
 <!-- type-delay 0.02 -->
+![Script](assets/03-script.gif)
+
 ```bash
 sudo envpod vault openclaw set ANTHROPIC_API_KEY
 sudo envpod vault openclaw set OPENAI_API_KEY
@@ -44,6 +50,8 @@ sudo envpod vault openclaw set OPENAI_API_KEY
 
 **[1:05]** Launch:
 <!-- no-exec -->
+![Script](assets/04-script.gif)
+
 ```bash
 sudo envpod run openclaw -- openclaw
 ```
@@ -51,6 +59,8 @@ sudo envpod run openclaw -- openclaw
 
 **[1:25]** Second terminal — live audit:
 <!-- no-exec -->
+![Script](assets/05-script.gif)
+
 ```bash
 sudo envpod audit openclaw
 ```
@@ -59,6 +69,8 @@ sudo envpod audit openclaw
 
 **[1:40]** Show the diff (files OpenClaw created/modified):
 <!-- no-exec -->
+![Script](assets/06-script.gif)
+
 ```bash
 sudo envpod diff openclaw
 ```
@@ -67,6 +79,8 @@ sudo envpod diff openclaw
 **[1:55]** Show snapshots — checkpoint the state:
 <!-- no-exec -->
 <!-- type-delay 0.02 -->
+![Script](assets/07-script.gif)
+
 ```bash
 sudo envpod snapshot openclaw create -n "after-setup"
 sudo envpod snapshot openclaw ls
@@ -77,6 +91,8 @@ sudo envpod snapshot openclaw ls
 **[2:10]** Freeze and resume:
 <!-- no-exec -->
 <!-- type-delay 0.02 -->
+![Script](assets/08-script.gif)
+
 ```bash
 sudo envpod freeze openclaw
 # ... inspect ...
@@ -92,6 +108,8 @@ sudo envpod resume openclaw
 
 <!-- no-exec -->
 <!-- type-delay 0.02 -->
+![Commands (copy-paste)](assets/09-commands-copy-paste.gif)
+
 ```bash
 sudo envpod init openclaw
 # (select openclaw from wizard, customize resources)
@@ -105,3 +123,6 @@ sudo envpod snapshot openclaw ls
 sudo envpod freeze openclaw
 sudo envpod resume openclaw
 ```
+
+
+<p align="center"><sub>Made with <a href="https://github.com/markamo/md2cast">md2cast</a></sub></p>

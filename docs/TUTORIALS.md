@@ -1,3 +1,4 @@
+<!-- type-delay 0.03 -->
 # Tutorials
 
 > **EnvPod v0.1.0** — Zero-trust governance environments for AI agents
@@ -44,6 +45,7 @@ Run a full GUI browser inside a governed pod — with display forwarding and aud
 
 ### Step 1: Create the Pod
 
+<!-- no-exec -->
 ```bash
 sudo envpod init browser-pod -c examples/browser.yaml
 ```
@@ -59,12 +61,14 @@ This creates a pod with:
 
 Chrome refuses to run as root. Create a non-root user inside the pod:
 
+<!-- no-exec -->
 ```bash
 sudo envpod run browser-pod -- useradd -m browseruser
 ```
 
 ### Step 3: Launch Chrome
 
+<!-- no-exec -->
 ```bash
 sudo envpod run browser-pod -d -a --user browseruser -- google-chrome https://google.com
 ```
@@ -82,6 +86,8 @@ Chrome opens inside the pod. It can browse the web, but:
 
 ### Step 4: Review What Happened
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # See filesystem changes
 sudo envpod diff browser-pod
@@ -97,6 +103,7 @@ sudo envpod rollback browser-pod   # discard everything
 
 ### Step 5: Check Security
 
+<!-- no-exec -->
 ```bash
 sudo envpod audit --security -c examples/browser.yaml
 ```
@@ -105,6 +112,7 @@ You'll see findings including I-04 (CRITICAL: X11 keylogging) and I-05 (HIGH: mi
 
 ### Cleanup
 
+<!-- no-exec -->
 ```bash
 sudo envpod destroy browser-pod --full
 ```
@@ -123,6 +131,7 @@ The same browser pod, but with maximum display and audio security. This drops th
 
 Check your setup:
 
+<!-- no-exec -->
 ```bash
 # Should show "wayland" or a Wayland socket name
 echo $WAYLAND_DISPLAY
@@ -133,6 +142,7 @@ pw-cli info 0
 
 ### Step 1: Create the Secure Pod
 
+<!-- no-exec -->
 ```bash
 sudo envpod init browser-secure -c examples/browser-wayland.yaml
 ```
@@ -143,12 +153,14 @@ The key differences from `browser.yaml`:
 
 ### Step 2: Create a Browser User
 
+<!-- no-exec -->
 ```bash
 sudo envpod run browser-secure -- useradd -m browseruser
 ```
 
 ### Step 3: Launch Chrome on Wayland
 
+<!-- no-exec -->
 ```bash
 sudo envpod run browser-secure -d -a --user browseruser -- google-chrome --ozone-platform=wayland https://google.com
 ```
@@ -157,14 +169,17 @@ Chrome needs `--ozone-platform=wayland` to use Wayland natively (it defaults to 
 
 ### Step 4: Compare Security
 
+<!-- no-exec -->
 ```bash
 sudo envpod audit --security -c examples/browser-wayland.yaml
 ```
 
+<!-- output -->
 | Finding | `browser.yaml` | `browser-wayland.yaml` |
 |---------|----------------|------------------------|
 | I-04 Display | **CRITICAL** (X11 keylogging) | LOW (Wayland client isolation) |
 | I-05 Audio | **HIGH** (PulseAudio mic access) | MEDIUM (PipeWire permissions) |
+<!-- pause 2 -->
 
 **Why Wayland is safer:** X11 has no client isolation — any X11 client can capture keystrokes, take screenshots, and inject input into other windows on the same display. Wayland compositors enforce strict client isolation by design. Each client only sees its own window.
 
@@ -172,6 +187,7 @@ sudo envpod audit --security -c examples/browser-wayland.yaml
 
 ### Cleanup
 
+<!-- no-exec -->
 ```bash
 sudo envpod destroy browser-secure --full
 ```
@@ -184,6 +200,7 @@ Run browser automation (Playwright, Puppeteer, browser-use) inside a pod — no 
 
 ### Step 1: Create the Pod
 
+<!-- no-exec -->
 ```bash
 sudo envpod init headless -c examples/browser-use.yaml
 ```
@@ -192,6 +209,7 @@ This installs `browser-use` and Playwright with Chromium during setup. The confi
 
 ### Step 2: Run an Automation Script
 
+<!-- no-exec -->
 ```bash
 # Drop into the pod and write a script
 sudo envpod run headless -- /bin/bash
@@ -199,6 +217,7 @@ sudo envpod run headless -- /bin/bash
 
 Inside the pod:
 
+<!-- output -->
 ```python
 # Save as /opt/scrape.py
 from browser_use import Browser
@@ -212,6 +231,7 @@ browser.close()
 
 Or run it directly:
 
+<!-- no-exec -->
 ```bash
 sudo envpod run headless -- python3 /opt/scrape.py
 ```
@@ -220,18 +240,22 @@ sudo envpod run headless -- python3 /opt/scrape.py
 
 Every DNS query is logged:
 
+<!-- no-exec -->
 ```bash
 sudo envpod audit headless
 ```
 
+<!-- output -->
 ```
 TIME                 ACTION        DETAILS
 ...
 2026-03-01T10:05:02  dns_query     domain=example.com. type=A decision=allow
 ```
+<!-- pause 2 -->
 
 ### Security Profile
 
+<!-- no-exec -->
 ```bash
 sudo envpod audit --security -c examples/browser-use.yaml
 ```
@@ -240,6 +264,7 @@ No display or audio findings — headless avoids the I-04 and I-05 issues entire
 
 ### Cleanup
 
+<!-- no-exec -->
 ```bash
 sudo envpod destroy headless --full
 ```
@@ -252,6 +277,7 @@ Watch YouTube (or any streaming video) inside a fully governed pod with display 
 
 ### Step 1: Create and Configure
 
+<!-- no-exec -->
 ```bash
 sudo envpod init youtube -c examples/browser-wayland.yaml
 sudo envpod run youtube -- useradd -m browseruser
@@ -261,12 +287,14 @@ sudo envpod run youtube -- useradd -m browseruser
 
 For Wayland + PipeWire (recommended):
 
+<!-- no-exec -->
 ```bash
 sudo envpod run youtube -d -a --user browseruser -- google-chrome --ozone-platform=wayland https://youtube.com
 ```
 
 For X11 + PulseAudio (works everywhere but less secure):
 
+<!-- no-exec -->
 ```bash
 sudo envpod init youtube-x11 -c examples/browser.yaml
 sudo envpod run youtube-x11 -- useradd -m browseruser
@@ -289,6 +317,7 @@ sudo envpod run youtube-x11 -d -a --user browseruser -- google-chrome https://yo
 
 If you don't hear audio:
 
+<!-- no-exec -->
 ```bash
 # Check PipeWire is running on the host
 pw-cli info 0
@@ -302,6 +331,7 @@ sudo envpod run youtube -a --user browseruser -- ls -la /tmp/pulse-native
 
 ### Cleanup
 
+<!-- no-exec -->
 ```bash
 sudo envpod destroy youtube --full
 ```
@@ -320,6 +350,8 @@ For systems without Wayland or PipeWire — older Ubuntu (20.04, 22.04), Debian,
 
 Check your setup:
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # Should show ":0" or ":1"
 echo $DISPLAY
@@ -335,18 +367,21 @@ pactl info
 
 Use `browser.yaml` — it auto-detects X11 and PulseAudio:
 
+<!-- no-exec -->
 ```bash
 sudo envpod init legacy-browser -c examples/browser.yaml
 ```
 
 ### Step 2: Create a Browser User
 
+<!-- no-exec -->
 ```bash
 sudo envpod run legacy-browser -- useradd -m browseruser
 ```
 
 ### Step 3: Launch Chrome
 
+<!-- no-exec -->
 ```bash
 sudo envpod run legacy-browser -d -a --user browseruser -- google-chrome https://google.com
 ```
@@ -367,6 +402,7 @@ Navigate to a YouTube video or any page with audio. Sound plays through your hos
 
 If audio doesn't work:
 
+<!-- no-exec -->
 ```bash
 # Verify PulseAudio is running
 pactl info | head -5
@@ -382,14 +418,17 @@ sudo envpod run legacy-browser -a --user browseruser -- ls -la /home/browseruser
 
 X11 + PulseAudio is the **least secure** display/audio combination:
 
+<!-- no-exec -->
 ```bash
 sudo envpod audit --security -c examples/browser.yaml
 ```
 
+<!-- output -->
 | Finding | Severity | Why |
 |---------|----------|-----|
 | I-04 | **CRITICAL** | X11 has no client isolation — any X11 client can keylog, screenshot, and inject input into other windows |
 | I-05 | **HIGH** | PulseAudio grants unrestricted microphone recording |
+<!-- pause 2 -->
 
 **This is acceptable when:**
 - You're on a dedicated development machine (no sensitive windows open)
@@ -406,6 +445,7 @@ sudo envpod audit --security -c examples/browser.yaml
 
 If you want to be explicit (instead of relying on auto-detection):
 
+<!-- output -->
 ```yaml
 # x11-pulseaudio.yaml
 name: legacy-browser
@@ -444,6 +484,7 @@ audit:
   action_log: true
 ```
 
+<!-- no-exec -->
 ```bash
 sudo envpod init my-legacy -c x11-pulseaudio.yaml
 sudo envpod run my-legacy -- useradd -m browseruser
@@ -452,6 +493,7 @@ sudo envpod run my-legacy -d -a --user browseruser -- google-chrome https://yout
 
 ### Cleanup
 
+<!-- no-exec -->
 ```bash
 sudo envpod destroy legacy-browser --full
 ```
@@ -469,6 +511,7 @@ Run GPU-accelerated machine learning training inside a governed pod.
 
 ### Step 1: Create the Pod
 
+<!-- no-exec -->
 ```bash
 sudo envpod init ml -c examples/ml-training.yaml
 ```
@@ -482,6 +525,7 @@ This creates a pod with:
 
 ### Step 2: Verify GPU Access
 
+<!-- no-exec -->
 ```bash
 sudo envpod run ml -- nvidia-smi
 ```
@@ -490,6 +534,8 @@ You should see your host GPU(s). GPU passthrough adds ~28ms overhead (namespace 
 
 ### Step 3: Run Training
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # Interactive
 sudo envpod run ml -- /bin/bash
@@ -506,12 +552,15 @@ print(f'Tensor on GPU: {x.device}')
 
 For a real training script:
 
+<!-- no-exec -->
 ```bash
 sudo envpod run ml -- python3 train.py --epochs 100 --batch-size 64
 ```
 
 ### Step 4: Save Results
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # See what the training produced
 sudo envpod diff ml
@@ -531,14 +580,17 @@ sudo envpod rollback ml
 
 GPU passthrough is zero-copy — no virtualization layer:
 
+<!-- output -->
 | Operation | Host | Pod | Overhead |
 |-----------|------|-----|----------|
 | `nvidia-smi` query | 52ms | 80ms | +28ms (namespace entry) |
 | CUDA tensor ops | baseline | identical | 0ms |
 | Training throughput | baseline | identical | 0% |
+<!-- pause 2 -->
 
 ### Cleanup
 
+<!-- no-exec -->
 ```bash
 sudo envpod destroy ml --full
 ```
@@ -551,6 +603,7 @@ Run Claude Code (Anthropic's CLI coding agent) inside a fully governed pod.
 
 ### Step 1: Create the Pod
 
+<!-- no-exec -->
 ```bash
 sudo envpod init claude -c examples/claude-code.yaml
 ```
@@ -562,6 +615,7 @@ This installs Claude Code during setup. The config includes:
 
 ### Step 2: Store API Key
 
+<!-- no-exec -->
 ```bash
 sudo envpod vault claude set ANTHROPIC_API_KEY
 ```
@@ -570,6 +624,7 @@ The vault prompts for the value interactively — it never appears in shell hist
 
 ### Step 3: Run Claude Code
 
+<!-- no-exec -->
 ```bash
 sudo envpod run claude -- claude
 ```
@@ -583,6 +638,8 @@ Claude Code runs with full isolation:
 
 After the session:
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # What did it change?
 sudo envpod diff claude
@@ -601,6 +658,8 @@ sudo envpod rollback claude
 
 Need multiple Claude Code instances working on different tasks?
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # Clone the configured pod (inherits setup, API key, config)
 sudo envpod clone claude claude-task-2
@@ -621,6 +680,7 @@ sudo envpod diff claude-task-3
 
 The same pattern works for any coding agent:
 
+<!-- output -->
 | Agent | Config | Setup |
 |-------|--------|-------|
 | Claude Code | `claude-code.yaml` | `curl -fsSL https://claude.ai/install.sh \| bash` |
@@ -629,6 +689,7 @@ The same pattern works for any coding agent:
 | SWE-agent | `swe-agent.yaml` | `pip install sweagent` |
 | OpenCode | `opencode.yaml` | Go binary install |
 
+<!-- no-exec -->
 ```bash
 sudo envpod init codex-agent -c examples/codex.yaml
 sudo envpod vault codex-agent set OPENAI_API_KEY
@@ -637,6 +698,7 @@ sudo envpod run codex-agent -- codex
 
 ### Cleanup
 
+<!-- no-exec -->
 ```bash
 sudo envpod destroy claude claude-task-2 claude-task-3 --full
 ```
@@ -649,6 +711,7 @@ Spin up multiple agent pods from a single base for parallel workloads.
 
 ### Step 1: Create a Base Pod
 
+<!-- no-exec -->
 ```bash
 sudo envpod base create agent-base -c examples/coding-agent.yaml
 ```
@@ -657,6 +720,7 @@ This creates a reusable snapshot with all setup commands pre-run.
 
 ### Step 2: Clone N Agents
 
+<!-- no-exec -->
 ```bash
 for i in $(seq 1 10); do
     sudo envpod clone agent-base "agent-$i"
@@ -671,6 +735,7 @@ This takes under a second for 10 clones (~8ms each). Each clone has:
 
 ### Step 3: Run Tasks
 
+<!-- no-exec -->
 ```bash
 # Assign each agent a task
 sudo envpod run agent-1 -- python3 /opt/task1.py
@@ -680,6 +745,8 @@ sudo envpod run agent-2 -- python3 /opt/task2.py
 
 ### Step 4: Collect Results
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # Review each agent's output
 for i in $(seq 1 10); do
@@ -695,6 +762,8 @@ done
 
 ### Step 5: Tear Down
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # Batch destroy all 10 agents
 sudo envpod destroy agent-1 agent-2 agent-3 agent-4 agent-5 \
@@ -709,10 +778,12 @@ sudo envpod gc
 
 ### Scale Performance
 
+<!-- output -->
 | Count | Create All | Run All | Destroy All |
 |-------|-----------|---------|-------------|
 | 10 | ~80ms | ~1.5s | ~320ms |
 | 50 | ~407ms | ~7.5s | ~1.6s |
+<!-- pause 2 -->
 
 See [Benchmarks](BENCHMARKS.md#scale-test) for full numbers.
 
@@ -732,6 +803,7 @@ Setup commands run as root, but pods default to running as the non-root `agent` 
 
 Here's the `examples/nodejs.yaml` config:
 
+<!-- output -->
 ```yaml
 name: nodejs
 type: standard
@@ -789,6 +861,7 @@ audit:
 
 ### Step 2: Create the Pod
 
+<!-- no-exec -->
 ```bash
 sudo envpod init myapp -c examples/nodejs.yaml
 ```
@@ -797,6 +870,7 @@ During setup, three steps run:
 
 **Install nvm to `/opt/nvm`:**
 
+<!-- no-exec -->
 ```bash
 export NVM_DIR=/opt/nvm && curl -o- https://raw.githubusercontent.com/.../install.sh | bash
 ```
@@ -805,6 +879,7 @@ Setting `NVM_DIR=/opt/nvm` redirects nvm's install to `/opt/nvm` instead of `/ro
 
 **Install Node.js:**
 
+<!-- no-exec -->
 ```bash
 export NVM_DIR=/opt/nvm && . "$NVM_DIR/nvm.sh" && nvm install 22
 ```
@@ -813,6 +888,8 @@ Each setup command runs in a fresh shell, so `NVM_DIR` must be set again. Then n
 
 **Symlink to `/usr/local/bin`:**
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 export NVM_DIR=/opt/nvm
 . "$NVM_DIR/nvm.sh"
@@ -825,6 +902,7 @@ ln -sf "$(which npx)" /usr/local/bin/npx
 
 ### Step 3: Verify Node.js
 
+<!-- no-exec -->
 ```bash
 sudo envpod run myapp -- node -v
 sudo envpod run myapp -- npm -v
@@ -834,6 +912,8 @@ Both commands should print version numbers. If they fail with "command not found
 
 ### Step 4: Develop Inside the Pod
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # Interactive shell — node, npm, npx all available
 sudo envpod run myapp -- bash
@@ -848,6 +928,8 @@ sudo envpod run myapp -- node server.js
 
 For tools installed globally with `npm install -g`, the binary lands in the nvm version directory. Symlink it to `/usr/local/bin` to make it available to all users:
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # Install globally and symlink to /usr/local/bin
 sudo envpod run myapp --root -- bash -c '
@@ -863,6 +945,8 @@ sudo envpod run myapp -- tsc --version
 
 ### Step 6: Review and Commit
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # See what changed (your project files, not nvm/npm internals)
 sudo envpod diff myapp
@@ -880,6 +964,8 @@ The tracking `ignore` list keeps `envpod diff` focused on your project code. nvm
 
 Once the Node.js environment is set up, clone it for new projects — no nvm download or Node.js install needed:
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # Clone is ~130ms (vs minutes for full nvm + Node.js install)
 sudo envpod clone myapp project-a
@@ -894,6 +980,7 @@ sudo envpod run project-b -- bash -c 'cd /workspace && npm init -y && npm instal
 
 The same pattern works for any Node.js-based agent. The only difference is the final `npm install -g` step:
 
+<!-- output -->
 | Tool | Final setup command |
 |------|-------------------|
 | Claude Code | `curl -fsSL https://claude.ai/install.sh \| bash` (native installer, no nvm needed) |
@@ -910,6 +997,9 @@ You need `system_access: advanced` in your config. nvm tries to set permissions 
 
 **"node: command not found" in `envpod run`:**
 The `/usr/local/bin` symlinks are missing. Re-run the symlink step:
+
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 sudo envpod run myapp --root -- bash -c '
   export NVM_DIR=/opt/nvm && . "$NVM_DIR/nvm.sh"
@@ -927,6 +1017,7 @@ Run with `--root`: `sudo envpod run myapp --root -- npm install -g package-name`
 
 ### Cleanup
 
+<!-- no-exec -->
 ```bash
 sudo envpod destroy myapp --full
 ```
@@ -958,6 +1049,7 @@ Both sides must opt in. If either is missing, `*.pods.local` → NXDOMAIN.
 
 The daemon is a lightweight host-side process. Start it once — it persists across pod starts and stops:
 
+<!-- no-exec -->
 ```bash
 sudo envpod dns-daemon
 ```
@@ -965,18 +1057,22 @@ sudo envpod dns-daemon
 It listens on a Unix socket at `/var/lib/envpod/dns.sock` and is not reachable from inside pods. Keep this running in a dedicated terminal, or run it as a systemd service for production setups.
 
 To verify it's running:
+
+<!-- no-exec -->
 ```bash
 ls -la /var/lib/envpod/dns.sock   # socket file should exist
 ```
 
 ### Step 2: Create the Service Pod
 
+<!-- no-exec -->
 ```bash
 sudo envpod init api-service -c examples/discovery-service.yaml
 ```
 
 Key config in `examples/discovery-service.yaml`:
 
+<!-- output -->
 ```yaml
 network:
   mode: Isolated
@@ -990,12 +1086,14 @@ network:
 
 ### Step 3: Create the Client Pod
 
+<!-- no-exec -->
 ```bash
 sudo envpod init api-client -c examples/discovery-client.yaml
 ```
 
 Key config in `examples/discovery-client.yaml`:
 
+<!-- output -->
 ```yaml
 network:
   mode: Isolated
@@ -1010,12 +1108,14 @@ network:
 
 In one terminal, start the service:
 
+<!-- no-exec -->
 ```bash
 sudo envpod run api-service -- python3 -m http.server 8080
 ```
 
 You'll see the discovery registration message:
 
+<!-- output -->
 ```
   Disc     api-service.pods.local → 10.200.50.2
 ```
@@ -1024,6 +1124,7 @@ You'll see the discovery registration message:
 
 In a second terminal, start the client and connect to the service by name:
 
+<!-- no-exec -->
 ```bash
 sudo envpod run api-client -- curl http://api-service.pods.local:8080/
 ```
@@ -1038,6 +1139,7 @@ Both conditions pass → A record returned → connection succeeds.
 
 Discovery queries are logged:
 
+<!-- no-exec -->
 ```bash
 sudo envpod audit api-client | grep pods.local
 # {"action":"dns_remap","domain":"api-service.pods.local","target":"10.200.50.2", ...}
@@ -1045,6 +1147,7 @@ sudo envpod audit api-client | grep pods.local
 
 A failed lookup (wrong `allow_pods` or missing daemon) logs as a DNS deny:
 
+<!-- output -->
 ```bash
 # {"action":"dns_deny","domain":"api-service.pods.local", ...}
 ```
@@ -1053,6 +1156,7 @@ A failed lookup (wrong `allow_pods` or missing daemon) logs as a DNS deny:
 
 If both pods need to discover each other, both set `allow_discovery: true` and each lists the other in `allow_pods`:
 
+<!-- output -->
 ```yaml
 # pod-a/pod.yaml
 network:
@@ -1073,6 +1177,7 @@ network:
 
 Use `allow_pods: ["*"]` to allow a pod to resolve any discoverable pod in the fleet:
 
+<!-- output -->
 ```yaml
 network:
   allow_pods: ["*"]    # resolve all pods with allow_discovery: true
@@ -1084,6 +1189,7 @@ Useful for orchestrator pods that need to find all workers. The `*` matches only
 
 If `envpod dns-daemon` is not running when a pod starts:
 
+<!-- output -->
 ```
   warning: envpod dns-daemon not running — pod discovery disabled (...)
 ```
@@ -1094,6 +1200,7 @@ The pod continues to run normally. `*.pods.local` queries return NXDOMAIN. All o
 
 For production, create `/etc/systemd/system/envpod-dns.service`:
 
+<!-- output -->
 ```ini
 [Unit]
 Description=envpod central pod discovery daemon
@@ -1111,6 +1218,7 @@ WantedBy=multi-user.target
 
 Then enable and start it:
 
+<!-- no-exec -->
 ```bash
 sudo systemctl enable --now envpod-dns
 sudo systemctl status envpod-dns
@@ -1118,6 +1226,7 @@ sudo systemctl status envpod-dns
 
 ### Tear Down
 
+<!-- no-exec -->
 ```bash
 sudo envpod destroy api-service api-client
 # daemon unregisters both entries automatically on destroy
@@ -1146,16 +1255,19 @@ With static pod.yaml, you'd have to stop the pod, edit the config, and restart i
 
 With no flags, `envpod discover` shows the live state from the daemon:
 
+<!-- no-exec -->
 ```bash
 sudo envpod discover api-service
 ```
 
+<!-- output -->
 ```
 Pod:              api-service
 IP:               10.200.50.2
 Allow discovery:  yes
 Allow pods:       client-pod
 ```
+<!-- pause 2 -->
 
 If the daemon is not running, it falls back to the values in `pod.yaml`.
 
@@ -1163,10 +1275,12 @@ If the daemon is not running, it falls back to the values in `pod.yaml`.
 
 A pod that starts with `allow_discovery: false` (the default) is invisible to all other pods. You can make it discoverable at any time without restarting:
 
+<!-- no-exec -->
 ```bash
 sudo envpod discover worker-pod --on
 ```
 
+<!-- output -->
 ```
 Discovery enabled:  worker-pod is now discoverable as worker-pod.pods.local
 Live state → allow_discovery=true, allow_pods=[]
@@ -1174,6 +1288,7 @@ Live state → allow_discovery=true, allow_pods=[]
 
 To hide it again:
 
+<!-- no-exec -->
 ```bash
 sudo envpod discover worker-pod --off
 ```
@@ -1184,6 +1299,7 @@ The pod continues running. Any `worker-pod.pods.local` query from other pods imm
 
 The client side of discovery is controlled by `allow_pods`. To grant a new pod permission to discover a service:
 
+<!-- no-exec -->
 ```bash
 sudo envpod discover api-service --add-pod new-client
 ```
@@ -1192,12 +1308,14 @@ The daemon updates `api-service`'s allow_pods list. The next time `new-client` q
 
 To revoke access:
 
+<!-- no-exec -->
 ```bash
 sudo envpod discover api-service --remove-pod new-client
 ```
 
 To revoke all access at once:
 
+<!-- no-exec -->
 ```bash
 sudo envpod discover api-service --remove-pod '*'
 ```
@@ -1208,11 +1326,13 @@ After this, no pod can resolve `api-service.pods.local` (even if they have it in
 
 All flags can be combined in one command:
 
+<!-- no-exec -->
 ```bash
 # Enable discovery and grant access to two pods simultaneously
 sudo envpod discover api-service --on --add-pod orchestrator --add-pod monitor-pod
 ```
 
+<!-- no-exec -->
 ```bash
 # Disable discovery and clear all allow_pods in one shot
 sudo envpod discover api-service --off --remove-pod '*'
@@ -1222,6 +1342,8 @@ sudo envpod discover api-service --off --remove-pod '*'
 
 You have `api-service` and `client-pod` already running. A third pod, `monitor-pod`, joins the fleet and needs to observe the API service:
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # 1. Grant monitor-pod permission to discover api-service
 sudo envpod discover api-service --add-pod monitor-pod
@@ -1240,6 +1362,8 @@ No restarts anywhere. The changes apply to the daemon registry immediately.
 
 You suspect `agent-7` is behaving incorrectly. You want to cut it off from discovering any services without fully killing it yet (maybe you need to preserve it for forensics):
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # Remove agent-7 from all allow_pods lists it appears in
 sudo envpod discover api-service --remove-pod agent-7
@@ -1255,10 +1379,12 @@ sudo envpod discover agent-7 --off
 
 Every mutation writes to `pod.yaml`:
 
+<!-- no-exec -->
 ```bash
 cat /var/lib/envpod/pods/api-service/pod.yaml | grep -A5 "^network:"
 ```
 
+<!-- output -->
 ```yaml
 network:
   allow_discovery: true
@@ -1273,10 +1399,12 @@ When the pod next restarts (after `envpod destroy` + `envpod init` + `envpod run
 
 If `envpod-dns` is not running, `envpod discover` falls back gracefully:
 
+<!-- no-exec -->
 ```bash
 sudo envpod discover api-service --on
 ```
 
+<!-- output -->
 ```
 warning: envpod-dns not running (...) — updating pod.yaml only
 Discovery enabled:  api-service.pods.local
@@ -1285,10 +1413,12 @@ pod.yaml updated. Changes will apply when the pod next starts.
 
 Start the daemon and it will auto-register any currently-running pods:
 
+<!-- no-exec -->
 ```bash
 sudo envpod dns-daemon
 ```
 
+<!-- output -->
 ```
 envpod-dns: starting on /var/lib/envpod/dns.sock
 envpod-dns: auto-registered 3 already-running pod(s)
@@ -1362,6 +1492,7 @@ The catalog is a plain JSON file that lives inside the pod's state directory
 on the **host** — outside the overlay, outside the agent's reach. The agent
 can read the catalog via the queue socket but cannot write to it.
 
+<!-- output -->
 ```
 /var/lib/envpod/pods/<pod-name>/
   actions.json        ← the action catalog  (host-only)
@@ -1373,6 +1504,8 @@ can read the catalog via the queue socket but cannot write to it.
 ```
 
 With a custom `--dir`:
+
+<!-- output -->
 ```
 /tmp/my-dir/pods/<pod-name>/actions.json
 ```
@@ -1380,6 +1513,9 @@ With a custom `--dir`:
 ### 3 Ways to Add Actions
 
 **Option 1 — CLI (fastest for one-offs):**
+
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 sudo envpod actions my-agent add fetch_api \
   --description "Fetch data from the upstream API" \
@@ -1391,20 +1527,26 @@ sudo envpod actions my-agent ls                          # verify
 ```
 
 **Option 2 — Edit `actions.json` directly (best for a full catalog):**
+
+<!-- no-exec -->
 ```bash
 sudo nano /var/lib/envpod/pods/my-agent/actions.json
 ```
+
 Write a JSON array of action definitions — see Step 2 below for the format.
 Changes are picked up immediately on the agent's next `list_actions` call.
 No pod restart needed.
 
 **Option 3 — `pod.yaml` setup commands (best for reproducible pods):**
+
+<!-- output -->
 ```yaml
 # pod.yaml
 setup:
   - cp /home/mymark/configs/my-agent-actions.json \
        /var/lib/envpod/pods/my-agent/actions.json
 ```
+
 The setup command runs once at `envpod init` time, placing your pre-written
 catalog in the right location. Clone the pod later and every clone gets the
 same catalog automatically.
@@ -1425,6 +1567,7 @@ same catalog automatically.
 
 ### 1. Create the Pod
 
+<!-- output -->
 ```yaml
 # pod.yaml
 name: my-agent
@@ -1439,6 +1582,7 @@ queue:
   socket: true
 ```
 
+<!-- no-exec -->
 ```bash
 sudo envpod init my-agent -c pod.yaml
 ```
@@ -1448,6 +1592,8 @@ sudo envpod init my-agent -c pod.yaml
 The catalog lives at `/var/lib/envpod/pods/my-agent/actions.json`.
 Create it directly — no pod restart needed, changes are live immediately.
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 sudo tee /var/lib/envpod/pods/my-agent/actions.json > /dev/null << 'EOF'
 [
@@ -1510,6 +1656,7 @@ EOF
 
 Verify it loaded:
 
+<!-- no-exec -->
 ```bash
 sudo envpod actions my-agent ls
 # NAME             TIER       SCOPE      TYPE
@@ -1522,6 +1669,8 @@ sudo envpod actions my-agent ls
 
 You can also add actions one at a time with the CLI:
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 sudo envpod actions my-agent add fetch_data \
   --description "Fetch data from upstream API" \
@@ -1531,6 +1680,7 @@ sudo envpod actions my-agent add fetch_data \
 
 ### 3. Store Credentials in the Vault
 
+<!-- no-exec -->
 ```bash
 echo "ghp_xxxxxxxxxxxx" | sudo envpod vault my-agent set GITHUB_TOKEN
 ```
@@ -1542,6 +1692,7 @@ from the vault at execution time when it runs `git_commit` or `git_push`.
 
 The agent communicates with envpod over `/run/envpod/queue.sock` inside the pod.
 
+<!-- output -->
 ```python
 # agent.py
 import socket, json, time
@@ -1625,6 +1776,7 @@ print("\nDone.")
 
 ### 5. Run the Pod
 
+<!-- no-exec -->
 ```bash
 sudo envpod run my-agent -- python3 agent.py
 ```
@@ -1636,6 +1788,8 @@ and `notify_complete` are staged — the agent blocks on the poll loop.
 
 In another terminal:
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # See staged actions waiting for approval
 sudo envpod queue my-agent
@@ -1660,8 +1814,13 @@ The agent never saw the token.
 
 ### 7. View the Audit Log
 
+<!-- no-exec -->
 ```bash
 sudo envpod audit my-agent
+```
+
+<!-- output -->
+```
 # 2026-03-03 14:22:01  queue_submit   fetch_data         executed  immediate
 # 2026-03-03 14:22:02  queue_submit   save_output        executed  immediate
 # 2026-03-03 14:22:03  queue_submit   commit_work        queued    staged
@@ -1669,12 +1828,15 @@ sudo envpod audit my-agent
 # 2026-03-03 14:25:11  queue_approve  commit_work        executed  approved_by=host
 # 2026-03-03 14:25:14  queue_approve  notify_complete    executed  approved_by=host
 ```
+<!-- pause 2 -->
 
 ### Hot-Reload the Catalog
 
 The catalog is re-read on every `list_actions` call. You can add, remove, or
 change tiers while the pod is running — no restart needed.
 
+<!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # Decide mid-run that push should require approval too
 sudo envpod actions my-agent set-tier push_work staged
@@ -1720,6 +1882,7 @@ Run a full browser desktop inside a governed pod — accessible from any browser
 
 ### Step 1: Create the config
 
+<!-- output -->
 ```yaml
 # web-chrome.yaml
 name: web-chrome
@@ -1757,6 +1920,7 @@ security:
 
 ### Step 2: Init the pod
 
+<!-- no-exec -->
 ```bash
 sudo envpod init web-chrome -c web-chrome.yaml
 ```
@@ -1769,11 +1933,14 @@ Both auto-generated by envpod — no manual setup needed.
 
 ### Step 3: Run Chrome
 
+<!-- no-exec -->
 ```bash
 sudo envpod run web-chrome -- google-chrome --no-sandbox --start-maximized
 ```
 
 The banner shows:
+
+<!-- output -->
 ```
 Display   noVNC → http://localhost:6080
 Port      [local ] 127.0.0.1:6080:6080 → pod
@@ -1783,6 +1950,7 @@ Port      [local ] 127.0.0.1:6080:6080 → pod
 
 Navigate to:
 
+<!-- output -->
 ```
 http://localhost:6080/vnc.html
 ```
@@ -1797,6 +1965,7 @@ Click **Connect**. You'll see Chrome running inside the pod.
 
 Everything the agent does is governed. In another terminal:
 
+<!-- no-exec -->
 ```bash
 sudo envpod diff web-chrome       # see what Chrome changed in the overlay
 sudo envpod audit web-chrome      # full event timeline
@@ -1804,6 +1973,7 @@ sudo envpod audit web-chrome      # full event timeline
 
 ### How It Works
 
+<!-- output -->
 ```
 Browser ──WebSocket──→ websockify:6080 ──VNC──→ x11vnc:5900 ──X11──→ Xvfb:99
                                                                        │
@@ -1824,25 +1994,34 @@ cleanup, and NVIDIA GPU workarounds automatically.
 ### Alternatives
 
 **Quick test (no Chrome):**
+
+<!-- output -->
 ```yaml
 setup:
   - "DEBIAN_FRONTEND=noninteractive apt-get install -y x11-apps"
 ```
+
+<!-- no-exec -->
 ```bash
 sudo envpod run my-pod -- xeyes
 ```
 
 **Window manager desktop:**
+
+<!-- output -->
 ```yaml
 setup:
   - "DEBIAN_FRONTEND=noninteractive apt-get install -y openbox xterm"
 ```
+
+<!-- no-exec -->
 ```bash
 sudo envpod run my-desktop -- openbox-session
 ```
 
 ### Web Display vs Display Passthrough
 
+<!-- output -->
 | | Web Display (this tutorial) | Display Passthrough ([Tutorial 1](#tutorial-1-browser-pod-with-display--audio)) |
 |---|---|---|
 | Host display needed? | No | Yes |
@@ -1850,9 +2029,11 @@ sudo envpod run my-desktop -- openbox-session
 | Works on headless servers? | Yes | No |
 | Latency | ~100ms | Native |
 | Config | `web_display.type: novnc` | `devices.display: true` + `-d` flag |
+<!-- pause 2 -->
 
 ### Security
 
+<!-- no-exec -->
 ```bash
 sudo envpod audit web-chrome --security
 ```
