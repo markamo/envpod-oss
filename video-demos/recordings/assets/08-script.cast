@@ -1,4 +1,4 @@
-{"version": 2, "width": 110, "height": 10, "title": "Script", "timestamp": 1772821357, "env": {"TERM": "xterm-256color", "THEME": "monokai", "FONT_FAMILY": "JetBrains Mono, Fira Code, Menlo, monospace", "FONT_SIZE": "16"}, "idle_time_limit": 3}
+{"version": 2, "width": 110, "height": 10, "title": "Script", "timestamp": 1772863645, "env": {"TERM": "xterm-256color", "THEME": "monokai", "FONT_FAMILY": "JetBrains Mono, Fira Code, Menlo, monospace", "FONT_SIZE": "16"}, "idle_time_limit": 3}
 [0.3, "o", "\u001b[0;32m$ \u001b[0m"]
 [0.3, "o", "\u001b[0m"]
 [0.3, "o", "s"]

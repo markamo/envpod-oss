@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Demo 4: &quot;Chrome in a Pod — Wayland + GPU&quot;</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/asciinema-player@3.8.0/dist/bundle/asciinema-player.css">
+<!-- SVG mode: no external JS/CSS needed -->
 <style>
   :root {
     --bg: #1a1b26;
@@ -56,6 +56,16 @@
     border-radius: 8px;
     overflow: hidden;
     border: 1px solid var(--border);
+  }
+  .svg-player {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .svg-player svg {
+    display: block;
+    width: 100%;
+    height: auto;
   }
   details {
     margin-top: 0.5rem;
@@ -114,7 +124,7 @@
   /* Asciinema player overrides */
   .ap-wrapper { border-radius: 8px !important; }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/asciinema-player@3.8.0/dist/bundle/asciinema-player.min.js" defer></script>
+<!-- SVG mode -->
 </head>
 <body>
 <h1>Demo 4: &quot;Chrome in a Pod — Wayland + GPU&quot;</h1>
@@ -127,13 +137,54 @@
 <p>[0:00] Narration: &quot;A browser agent needs GPU, display, and audio. Here's how envpod does it without Docker.&quot;</p>
 <p>[0:08] Show the preset and config:</p>
 <div class="cast-block">
-  <div id="player-1" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogOCwgInRpdGxlIjogIlNjcmlwdCIsICJ0aW1lc3RhbXAiOiAxNzcyODIxMzU3LCAiZW52IjogeyJURVJNIjogInh0ZXJtLTI1NmNvbG9yIiwgIlRIRU1FIjogIm1vbm9rYWkiLCAiRk9OVF9GQU1JTFkiOiAiSmV0QnJhaW5zIE1vbm8sIEZpcmEgQ29kZSwgTWVubG8sIG1vbm9zcGFjZSIsICJGT05UX1NJWkUiOiAiMTYifSwgImlkbGVfdGltZV9saW1pdCI6IDN9ClswLjMsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAiXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAiZSJdClswLjMzLCAibyIsICJuIl0KWzAuMzYsICJvIiwgInYiXQpbMC4zOSwgIm8iLCAicCJdClswLjQyLCAibyIsICJvIl0KWzAuNDUsICJvIiwgImQiXQpbMC40OCwgIm8iLCAiICJdClswLjUxLCAibyIsICJwIl0KWzAuNTQsICJvIiwgInIiXQpbMC41NywgIm8iLCAiZSJdClswLjYsICJvIiwgInMiXQpbMC42MywgIm8iLCAiZSJdClswLjY2LCAibyIsICJ0Il0KWzAuNjksICJvIiwgInMiXQpbMC43MiwgIm8iLCAiICJdClswLjc1LCAibyIsICJ8Il0KWzAuNzgsICJvIiwgIiAiXQpbMC44MSwgIm8iLCAiZyJdClswLjg0LCAibyIsICJyIl0KWzAuODcsICJvIiwgImUiXQpbMC45LCAibyIsICJwIl0KWzAuOTMsICJvIiwgIiAiXQpbMC45NiwgIm8iLCAiYiJdClswLjk5LCAibyIsICJyIl0KWzEuMDIsICJvIiwgIm8iXQpbMS4wNSwgIm8iLCAidyJdClsxLjA4LCAibyIsICJzIl0KWzEuMTEsICJvIiwgImUiXQpbMS4xNCwgIm8iLCAiciJdClsxLjE3LCAibyIsICJcdTAwMWJbMG0iXQpbMS4xNywgIm8iLCAiXHJcdTAwMWJbMDszMm0kIFx1MDAxYlswbVx1MDAxYlszODs1OzE1bWVudnBvZFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bXByZXNldHNcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW18XHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZ3JlcFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWJyb3dzZXJcdTAwMWJbMzltXHUwMDFiWzBtIl0KWzEuOTcsICJvIiwgIlxyXG4iXQpbMy40NywgIm8iLCAiXHUwMDFiWzg7MUgiXQpbMy40NywgIm8iLCAiXHUwMDFiWzJtICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbWQyY2FzdFx1MDAxYlswbSJdCg=="
-       data-theme="monokai"
-       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
-       data-font-size="16"
-       data-idle="3"
-       data-cols="110"
-       data-rows="6"></div>
+  <div class="svg-player"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 948 168" style="width:100%;max-width:948px;border-radius:8px;background:#1a1b26">
+<style>
+.t{font-family:JetBrains Mono, Fira Code, Cascadia Code, monospace;font-size:14px;white-space:pre}
+.f{opacity:0}
+@keyframes s{0%,100%{opacity:1}}
+#f0{animation:s 0.120s step-end 0.300s none}
+#f1{animation:s 0.120s step-end 0.420s none}
+#f2{animation:s 0.120s step-end 0.540s none}
+#f3{animation:s 0.120s step-end 0.660s none}
+#f4{animation:s 0.120s step-end 0.780s none}
+#f5{animation:s 0.120s step-end 0.900s none}
+#f6{animation:s 0.120s step-end 1.020s none}
+#f7{animation:s 0.830s step-end 1.140s none}
+#f8{animation:s 1.500s step-end 1.970s none}
+#f9{animation:s 2.000s step-end 3.470s forwards}
+</style>
+<g id="f0" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f1" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpo</tspan></text>
+</g>
+<g id="f2" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod pr</tspan></text>
+</g>
+<g id="f3" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod preset</tspan></text>
+</g>
+<g id="f4" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets |</tspan></text>
+</g>
+<g id="f5" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep</tspan></text>
+</g>
+<g id="f6" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep bro</tspan></text>
+</g>
+<g id="f7" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+</g>
+<g id="f8" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+</g>
+<g id="f9" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="152.0"><tspan fill="#c0caf5" opacity="0.5">                                                                                                      md2cast</tspan></text>
+</g>
+</svg></div>
   <div class="code-copy">
     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
     <pre><code class="language-bash">envpod presets | grep browser</code></pre>
@@ -141,13 +192,58 @@
 </div>
 <p>Highlight: 3 browser presets — browser, browser-use, playwright.</p>
 <div class="cast-block">
-  <div id="player-2" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogOCwgInRpdGxlIjogIlNjcmlwdCIsICJ0aW1lc3RhbXAiOiAxNzcyODIxMzU3LCAiZW52IjogeyJURVJNIjogInh0ZXJtLTI1NmNvbG9yIiwgIlRIRU1FIjogIm1vbm9rYWkiLCAiRk9OVF9GQU1JTFkiOiAiSmV0QnJhaW5zIE1vbm8sIEZpcmEgQ29kZSwgTWVubG8sIG1vbm9zcGFjZSIsICJGT05UX1NJWkUiOiAiMTYifSwgImlkbGVfdGltZV9saW1pdCI6IDN9ClswLjMsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAiXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAiYyJdClswLjMzLCAibyIsICJhIl0KWzAuMzYsICJvIiwgInQiXQpbMC4zOSwgIm8iLCAiICJdClswLjQyLCAibyIsICJlIl0KWzAuNDUsICJvIiwgIngiXQpbMC40OCwgIm8iLCAiYSJdClswLjUxLCAibyIsICJtIl0KWzAuNTQsICJvIiwgInAiXQpbMC41NywgIm8iLCAibCJdClswLjYsICJvIiwgImUiXQpbMC42MywgIm8iLCAicyJdClswLjY2LCAibyIsICIvIl0KWzAuNjksICJvIiwgImIiXQpbMC43MiwgIm8iLCAiciJdClswLjc1LCAibyIsICJvIl0KWzAuNzgsICJvIiwgInciXQpbMC44MSwgIm8iLCAicyJdClswLjg0LCAibyIsICJlIl0KWzAuODcsICJvIiwgInIiXQpbMC45LCAibyIsICItIl0KWzAuOTMsICJvIiwgInciXQpbMC45NiwgIm8iLCAiYSJdClswLjk5LCAibyIsICJ5Il0KWzEuMDIsICJvIiwgImwiXQpbMS4wNSwgIm8iLCAiYSJdClsxLjA4LCAibyIsICJuIl0KWzEuMTEsICJvIiwgImQiXQpbMS4xNCwgIm8iLCAiLiJdClsxLjE3LCAibyIsICJ5Il0KWzEuMiwgIm8iLCAiYSJdClsxLjIzLCAibyIsICJtIl0KWzEuMjYsICJvIiwgImwiXQpbMS4yOSwgIm8iLCAiXHUwMDFiWzBtIl0KWzEuMjksICJvIiwgIlxyXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG1cdTAwMWJbMzg7NTsxNW1jYXRcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1leGFtcGxlcy9icm93c2VyLXdheWxhbmQueWFtbFx1MDAxYlszOW1cdTAwMWJbMG0iXQpbMi4wOSwgIm8iLCAiXHJcbiJdClszLjU5LCAibyIsICJcdTAwMWJbODsxSCJdClszLjU5LCAibyIsICJcdTAwMWJbMm0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBtZDJjYXN0XHUwMDFiWzBtIl0K"
-       data-theme="monokai"
-       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
-       data-font-size="16"
-       data-idle="3"
-       data-cols="110"
-       data-rows="6"></div>
+  <div class="svg-player"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 948 168" style="width:100%;max-width:948px;border-radius:8px;background:#1a1b26">
+<style>
+.t{font-family:JetBrains Mono, Fira Code, Cascadia Code, monospace;font-size:14px;white-space:pre}
+.f{opacity:0}
+@keyframes s{0%,100%{opacity:1}}
+#f0{animation:s 0.120s step-end 0.300s none}
+#f1{animation:s 0.120s step-end 0.420s none}
+#f2{animation:s 0.120s step-end 0.540s none}
+#f3{animation:s 0.120s step-end 0.660s none}
+#f4{animation:s 0.120s step-end 0.780s none}
+#f5{animation:s 0.120s step-end 0.900s none}
+#f6{animation:s 0.120s step-end 1.020s none}
+#f7{animation:s 0.120s step-end 1.140s none}
+#f8{animation:s 0.830s step-end 1.260s none}
+#f9{animation:s 1.500s step-end 2.090s none}
+#f10{animation:s 2.000s step-end 3.590s forwards}
+</style>
+<g id="f0" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f1" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat e</tspan></text>
+</g>
+<g id="f2" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examp</tspan></text>
+</g>
+<g id="f3" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/</tspan></text>
+</g>
+<g id="f4" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/brow</tspan></text>
+</g>
+<g id="f5" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-</tspan></text>
+</g>
+<g id="f6" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayl</tspan></text>
+</g>
+<g id="f7" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.</tspan></text>
+</g>
+<g id="f8" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+</g>
+<g id="f9" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+</g>
+<g id="f10" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="152.0"><tspan fill="#c0caf5" opacity="0.5">                                                                                                      md2cast</tspan></text>
+</g>
+</svg></div>
   <div class="code-copy">
     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
     <pre><code class="language-bash">cat examples/browser-wayland.yaml</code></pre>
@@ -156,13 +252,82 @@
 <p>Highlight: gpu: true, display: true, audio: true, display_protocol: wayland, audio_protocol: pipewire, browser seccomp, 4GB RAM.</p>
 <p>[0:22] Init with the config:</p>
 <div class="cast-block">
-  <div id="player-3" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogOCwgInRpdGxlIjogIlNjcmlwdCIsICJ0aW1lc3RhbXAiOiAxNzcyODIxMzU3LCAiZW52IjogeyJURVJNIjogInh0ZXJtLTI1NmNvbG9yIiwgIlRIRU1FIjogIm1vbm9rYWkiLCAiRk9OVF9GQU1JTFkiOiAiSmV0QnJhaW5zIE1vbm8sIEZpcmEgQ29kZSwgTWVubG8sIG1vbm9zcGFjZSIsICJGT05UX1NJWkUiOiAiMTYifSwgImlkbGVfdGltZV9saW1pdCI6IDN9ClswLjMsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAiXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAicyJdClswLjMzLCAibyIsICJ1Il0KWzAuMzYsICJvIiwgImQiXQpbMC4zOSwgIm8iLCAibyJdClswLjQyLCAibyIsICIgIl0KWzAuNDUsICJvIiwgImUiXQpbMC40OCwgIm8iLCAibiJdClswLjUxLCAibyIsICJ2Il0KWzAuNTQsICJvIiwgInAiXQpbMC41NywgIm8iLCAibyJdClswLjYsICJvIiwgImQiXQpbMC42MywgIm8iLCAiICJdClswLjY2LCAibyIsICJpIl0KWzAuNjksICJvIiwgIm4iXQpbMC43MiwgIm8iLCAiaSJdClswLjc1LCAibyIsICJ0Il0KWzAuNzgsICJvIiwgIiAiXQpbMC44MSwgIm8iLCAiYiJdClswLjg0LCAibyIsICJyIl0KWzAuODcsICJvIiwgIm8iXQpbMC45LCAibyIsICJ3Il0KWzAuOTMsICJvIiwgInMiXQpbMC45NiwgIm8iLCAiZSJdClswLjk5LCAibyIsICJyIl0KWzEuMDIsICJvIiwgIiAiXQpbMS4wNSwgIm8iLCAiLSJdClsxLjA4LCAibyIsICJjIl0KWzEuMTEsICJvIiwgIiAiXQpbMS4xNCwgIm8iLCAiZSJdClsxLjE3LCAibyIsICJ4Il0KWzEuMiwgIm8iLCAiYSJdClsxLjIzLCAibyIsICJtIl0KWzEuMjYsICJvIiwgInAiXQpbMS4yOSwgIm8iLCAibCJdClsxLjMyLCAibyIsICJlIl0KWzEuMzUsICJvIiwgInMiXQpbMS4zOCwgIm8iLCAiLyJdClsxLjQxLCAibyIsICJiIl0KWzEuNDQsICJvIiwgInIiXQpbMS40NywgIm8iLCAibyJdClsxLjUsICJvIiwgInciXQpbMS41MywgIm8iLCAicyJdClsxLjU2LCAibyIsICJlIl0KWzEuNTksICJvIiwgInIiXQpbMS42MiwgIm8iLCAiLSJdClsxLjY1LCAibyIsICJ3Il0KWzEuNjgsICJvIiwgImEiXQpbMS43MSwgIm8iLCAieSJdClsxLjc0LCAibyIsICJsIl0KWzEuNzcsICJvIiwgImEiXQpbMS44LCAibyIsICJuIl0KWzEuODMsICJvIiwgImQiXQpbMS44NiwgIm8iLCAiLiJdClsxLjg5LCAibyIsICJ5Il0KWzEuOTIsICJvIiwgImEiXQpbMS45NSwgIm8iLCAibSJdClsxLjk4LCAibyIsICJsIl0KWzIuMDEsICJvIiwgIlx1MDAxYlswbSJdClsyLjAxLCAibyIsICJcclx1MDAxYlswOzMybSQgXHUwMDFiWzBtXHUwMDFiWzM4OzU7MTVtc3Vkb1x1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWVudnBvZFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWluaXRcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1icm93c2VyXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtLWNcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1leGFtcGxlcy9icm93c2VyLXdheWxhbmQueWFtbFx1MDAxYlszOW1cdTAwMWJbMG0iXQpbMi44MSwgIm8iLCAiXHJcbiJdCls0LjMxLCAibyIsICJcdTAwMWJbODsxSCJdCls0LjMxLCAibyIsICJcdTAwMWJbMm0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBtZDJjYXN0XHUwMDFiWzBtIl0K"
-       data-theme="monokai"
-       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
-       data-font-size="16"
-       data-idle="3"
-       data-cols="110"
-       data-rows="6"></div>
+  <div class="svg-player"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 948 168" style="width:100%;max-width:948px;border-radius:8px;background:#1a1b26">
+<style>
+.t{font-family:JetBrains Mono, Fira Code, Cascadia Code, monospace;font-size:14px;white-space:pre}
+.f{opacity:0}
+@keyframes s{0%,100%{opacity:1}}
+#f0{animation:s 0.120s step-end 0.300s none}
+#f1{animation:s 0.120s step-end 0.420s none}
+#f2{animation:s 0.120s step-end 0.540s none}
+#f3{animation:s 0.120s step-end 0.660s none}
+#f4{animation:s 0.120s step-end 0.780s none}
+#f5{animation:s 0.120s step-end 0.900s none}
+#f6{animation:s 0.120s step-end 1.020s none}
+#f7{animation:s 0.120s step-end 1.140s none}
+#f8{animation:s 0.120s step-end 1.260s none}
+#f9{animation:s 0.120s step-end 1.380s none}
+#f10{animation:s 0.120s step-end 1.500s none}
+#f11{animation:s 0.120s step-end 1.620s none}
+#f12{animation:s 0.120s step-end 1.740s none}
+#f13{animation:s 0.120s step-end 1.860s none}
+#f14{animation:s 0.830s step-end 1.980s none}
+#f15{animation:s 1.500s step-end 2.810s none}
+#f16{animation:s 2.000s step-end 4.310s forwards}
+</style>
+<g id="f0" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f1" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo</tspan></text>
+</g>
+<g id="f2" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envp</tspan></text>
+</g>
+<g id="f3" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod i</tspan></text>
+</g>
+<g id="f4" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init</tspan></text>
+</g>
+<g id="f5" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init brow</tspan></text>
+</g>
+<g id="f6" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser</tspan></text>
+</g>
+<g id="f7" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c e</tspan></text>
+</g>
+<g id="f8" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examp</tspan></text>
+</g>
+<g id="f9" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/</tspan></text>
+</g>
+<g id="f10" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/brow</tspan></text>
+</g>
+<g id="f11" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-</tspan></text>
+</g>
+<g id="f12" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayl</tspan></text>
+</g>
+<g id="f13" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.</tspan></text>
+</g>
+<g id="f14" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+</g>
+<g id="f15" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+</g>
+<g id="f16" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="152.0"><tspan fill="#c0caf5" opacity="0.5">                                                                                                      md2cast</tspan></text>
+</g>
+</svg></div>
   <div class="code-copy">
     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
     <pre><code class="language-bash">sudo envpod init browser -c examples/browser-wayland.yaml</code></pre>
@@ -170,13 +335,98 @@
 </div>
 <p>[0:30] Launch Chrome inside the pod with display and audio forwarding:</p>
 <div class="cast-block">
-  <div id="player-4" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogOCwgInRpdGxlIjogIlNjcmlwdCIsICJ0aW1lc3RhbXAiOiAxNzcyODIxMzU3LCAiZW52IjogeyJURVJNIjogInh0ZXJtLTI1NmNvbG9yIiwgIlRIRU1FIjogIm1vbm9rYWkiLCAiRk9OVF9GQU1JTFkiOiAiSmV0QnJhaW5zIE1vbm8sIEZpcmEgQ29kZSwgTWVubG8sIG1vbm9zcGFjZSIsICJGT05UX1NJWkUiOiAiMTYifSwgImlkbGVfdGltZV9saW1pdCI6IDN9ClswLjMsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAiXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAicyJdClswLjMyLCAibyIsICJ1Il0KWzAuMzQsICJvIiwgImQiXQpbMC4zNiwgIm8iLCAibyJdClswLjM4LCAibyIsICIgIl0KWzAuNCwgIm8iLCAiZSJdClswLjQyLCAibyIsICJuIl0KWzAuNDQsICJvIiwgInYiXQpbMC40NiwgIm8iLCAicCJdClswLjQ4LCAibyIsICJvIl0KWzAuNSwgIm8iLCAiZCJdClswLjUyLCAibyIsICIgIl0KWzAuNTQsICJvIiwgInIiXQpbMC41NiwgIm8iLCAidSJdClswLjU4LCAibyIsICJuIl0KWzAuNiwgIm8iLCAiICJdClswLjYyLCAibyIsICJiIl0KWzAuNjQsICJvIiwgInIiXQpbMC42NiwgIm8iLCAibyJdClswLjY4LCAibyIsICJ3Il0KWzAuNywgIm8iLCAicyJdClswLjcyLCAibyIsICJlIl0KWzAuNzQsICJvIiwgInIiXQpbMC43NiwgIm8iLCAiICJdClswLjc4LCAibyIsICItIl0KWzAuOCwgIm8iLCAiZCJdClswLjgyLCAibyIsICIgIl0KWzAuODQsICJvIiwgIi0iXQpbMC44NiwgIm8iLCAiYSJdClswLjg4LCAibyIsICIgIl0KWzAuOSwgIm8iLCAiLSJdClswLjkyLCAibyIsICItIl0KWzAuOTQsICJvIiwgIiAiXQpbMC45NiwgIm8iLCAiZyJdClswLjk4LCAibyIsICJvIl0KWzEuMCwgIm8iLCAibyJdClsxLjAyLCAibyIsICJnIl0KWzEuMDQsICJvIiwgImwiXQpbMS4wNiwgIm8iLCAiZSJdClsxLjA4LCAibyIsICItIl0KWzEuMSwgIm8iLCAiYyJdClsxLjEyLCAibyIsICJoIl0KWzEuMTQsICJvIiwgInIiXQpbMS4xNiwgIm8iLCAibyJdClsxLjE4LCAibyIsICJtIl0KWzEuMiwgIm8iLCAiZSJdClsxLjIyLCAibyIsICIgIl0KWzEuMjQsICJvIiwgIi0iXQpbMS4yNiwgIm8iLCAiLSJdClsxLjI4LCAibyIsICJuIl0KWzEuMywgIm8iLCAibyJdClsxLjMyLCAibyIsICItIl0KWzEuMzQsICJvIiwgInMiXQpbMS4zNiwgIm8iLCAiYSJdClsxLjM4LCAibyIsICJuIl0KWzEuNCwgIm8iLCAiZCJdClsxLjQyLCAibyIsICJiIl0KWzEuNDQsICJvIiwgIm8iXQpbMS40NiwgIm8iLCAieCJdClsxLjQ4LCAibyIsICIgIl0KWzEuNSwgIm8iLCAiLSJdClsxLjUyLCAibyIsICItIl0KWzEuNTQsICJvIiwgIm8iXQpbMS41NiwgIm8iLCAieiJdClsxLjU4LCAibyIsICJvIl0KWzEuNiwgIm8iLCAibiJdClsxLjYyLCAibyIsICJlIl0KWzEuNjQsICJvIiwgIi0iXQpbMS42NiwgIm8iLCAicCJdClsxLjY4LCAibyIsICJsIl0KWzEuNywgIm8iLCAiYSJdClsxLjcyLCAibyIsICJ0Il0KWzEuNzQsICJvIiwgImYiXQpbMS43NiwgIm8iLCAibyJdClsxLjc4LCAibyIsICJyIl0KWzEuOCwgIm8iLCAibSJdClsxLjgyLCAibyIsICI9Il0KWzEuODQsICJvIiwgInciXQpbMS44NiwgIm8iLCAiYSJdClsxLjg4LCAibyIsICJ5Il0KWzEuOSwgIm8iLCAibCJdClsxLjkyLCAibyIsICJhIl0KWzEuOTQsICJvIiwgIm4iXQpbMS45NiwgIm8iLCAiZCJdClsxLjk4LCAibyIsICIgIl0KWzIuMCwgIm8iLCAiaCJdClsyLjAyLCAibyIsICJ0Il0KWzIuMDQsICJvIiwgInQiXQpbMi4wNiwgIm8iLCAicCJdClsyLjA4LCAibyIsICJzIl0KWzIuMSwgIm8iLCAiOiJdClsyLjEyLCAibyIsICIvIl0KWzIuMTQsICJvIiwgIi8iXQpbMi4xNiwgIm8iLCAieSJdClsyLjE4LCAibyIsICJvIl0KWzIuMiwgIm8iLCAidSJdClsyLjIyLCAibyIsICJ0Il0KWzIuMjQsICJvIiwgInUiXQpbMi4yNiwgIm8iLCAiYiJdClsyLjI4LCAibyIsICJlIl0KWzIuMywgIm8iLCAiLiJdClsyLjMyLCAibyIsICJjIl0KWzIuMzQsICJvIiwgIm8iXQpbMi4zNiwgIm8iLCAibSJdClsyLjM4LCAibyIsICJcdTAwMWJbMG0iXQpbMi4zOCwgIm8iLCAiXHJcdTAwMWJbMDszMm0kIFx1MDAxYlswbVx1MDAxYlszODs1OzE1bXN1ZG9cdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1lbnZwb2RcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1ydW5cdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1icm93c2VyXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtLWRcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0tYVx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bS0tXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZ29vZ2xlLWNocm9tZVx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bS0tbm8tc2FuZGJveFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bS0tb3pvbmUtcGxhdGZvcm1cdTAwMWJbMzltXHUwMDFiWzM4OzU7MjA0bT1cdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtd2F5bGFuZFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWh0dHBzOi8veW91dHViZS5jb21cdTAwMWJbMzltXHUwMDFiWzBtIl0KWzMuMTgsICJvIiwgIlxyXG4iXQpbNC42OCwgIm8iLCAiXHUwMDFiWzg7MUgiXQpbNC42OCwgIm8iLCAiXHUwMDFiWzJtICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbWQyY2FzdFx1MDAxYlswbSJdCg=="
-       data-theme="monokai"
-       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
-       data-font-size="16"
-       data-idle="3"
-       data-cols="110"
-       data-rows="6"></div>
+  <div class="svg-player"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 948 168" style="width:100%;max-width:948px;border-radius:8px;background:#1a1b26">
+<style>
+.t{font-family:JetBrains Mono, Fira Code, Cascadia Code, monospace;font-size:14px;white-space:pre}
+.f{opacity:0}
+@keyframes s{0%,100%{opacity:1}}
+#f0{animation:s 0.100s step-end 0.300s none}
+#f1{animation:s 0.120s step-end 0.400s none}
+#f2{animation:s 0.120s step-end 0.520s none}
+#f3{animation:s 0.120s step-end 0.640s none}
+#f4{animation:s 0.120s step-end 0.760s none}
+#f5{animation:s 0.120s step-end 0.880s none}
+#f6{animation:s 0.100s step-end 1.000s none}
+#f7{animation:s 0.120s step-end 1.100s none}
+#f8{animation:s 0.100s step-end 1.220s none}
+#f9{animation:s 0.120s step-end 1.320s none}
+#f10{animation:s 0.100s step-end 1.440s none}
+#f11{animation:s 0.120s step-end 1.540s none}
+#f12{animation:s 0.100s step-end 1.660s none}
+#f13{animation:s 0.100s step-end 1.760s none}
+#f14{animation:s 0.120s step-end 1.860s none}
+#f15{animation:s 0.100s step-end 1.980s none}
+#f16{animation:s 0.100s step-end 2.080s none}
+#f17{animation:s 0.120s step-end 2.180s none}
+#f18{animation:s 0.880s step-end 2.300s none}
+#f19{animation:s 1.500s step-end 3.180s none}
+#f20{animation:s 2.000s step-end 4.680s forwards}
+</style>
+<g id="f0" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f1" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo e</tspan></text>
+</g>
+<g id="f2" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod</tspan></text>
+</g>
+<g id="f3" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run br</tspan></text>
+</g>
+<g id="f4" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser</tspan></text>
+</g>
+<g id="f5" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a</tspan></text>
+</g>
+<g id="f6" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- goo</tspan></text>
+</g>
+<g id="f7" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-c</tspan></text>
+</g>
+<g id="f8" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome</tspan></text>
+</g>
+<g id="f9" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-</tspan></text>
+</g>
+<g id="f10" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbo</tspan></text>
+</g>
+<g id="f11" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --o</tspan></text>
+</g>
+<g id="f12" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-p</tspan></text>
+</g>
+<g id="f13" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platfo</tspan></text>
+</g>
+<g id="f14" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform=wa</tspan></text>
+</g>
+<g id="f15" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform=wayland</tspan></text>
+</g>
+<g id="f16" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform=wayland https</tspan></text>
+</g>
+<g id="f17" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform=wayland https://yo</tspan></text>
+</g>
+<g id="f18" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform=wayland https://youtube.</tspan></text>
+</g>
+<g id="f19" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+</g>
+<g id="f20" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="152.0"><tspan fill="#c0caf5" opacity="0.5">                                                                                                      md2cast</tspan></text>
+</g>
+</svg></div>
   <div class="code-copy">
     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
     <pre><code class="language-bash">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform=wayland https://youtube.com</code></pre>
@@ -186,13 +436,73 @@
 <p>Narration: &quot;Full Wayland display forwarding. GPU-accelerated rendering. PipeWire audio. All inside a governed pod.&quot;</p>
 <p>[0:55] Show what's different from Docker:</p>
 <div class="cast-block">
-  <div id="player-5" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogOSwgInRpdGxlIjogIlNjcmlwdCIsICJ0aW1lc3RhbXAiOiAxNzcyODIxMzU3LCAiZW52IjogeyJURVJNIjogInh0ZXJtLTI1NmNvbG9yIiwgIlRIRU1FIjogIm1vbm9rYWkiLCAiRk9OVF9GQU1JTFkiOiAiSmV0QnJhaW5zIE1vbm8sIEZpcmEgQ29kZSwgTWVubG8sIG1vbm9zcGFjZSIsICJGT05UX1NJWkUiOiAiMTYifSwgImlkbGVfdGltZV9saW1pdCI6IDN9ClswLjMsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAiXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAicyJdClswLjMyLCAibyIsICJ1Il0KWzAuMzQsICJvIiwgImQiXQpbMC4zNiwgIm8iLCAibyJdClswLjM4LCAibyIsICIgIl0KWzAuNCwgIm8iLCAiZSJdClswLjQyLCAibyIsICJuIl0KWzAuNDQsICJvIiwgInYiXQpbMC40NiwgIm8iLCAicCJdClswLjQ4LCAibyIsICJvIl0KWzAuNSwgIm8iLCAiZCJdClswLjUyLCAibyIsICIgIl0KWzAuNTQsICJvIiwgImQiXQpbMC41NiwgIm8iLCAiaSJdClswLjU4LCAibyIsICJmIl0KWzAuNiwgIm8iLCAiZiJdClswLjYyLCAibyIsICIgIl0KWzAuNjQsICJvIiwgImIiXQpbMC42NiwgIm8iLCAiciJdClswLjY4LCAibyIsICJvIl0KWzAuNywgIm8iLCAidyJdClswLjcyLCAibyIsICJzIl0KWzAuNzQsICJvIiwgImUiXQpbMC43NiwgIm8iLCAiciJdClswLjc4LCAibyIsICJcdTAwMWJbMG0iXQpbMC43OCwgIm8iLCAiXHJcdTAwMWJbMDszMm0kIFx1MDAxYlswbVx1MDAxYlszODs1OzE1bXN1ZG9cdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1lbnZwb2RcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1kaWZmXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtYnJvd3Nlclx1MDAxYlszOW1cdTAwMWJbMG0iXQpbMS41OCwgIm8iLCAiXHJcbiJdClszLjA4LCAibyIsICJcdTAwMWJbMDszMm0kIFx1MDAxYlswbSJdClszLjA4LCAibyIsICJcdTAwMWJbMG0iXQpbMy4wOCwgIm8iLCAicyJdClszLjEsICJvIiwgInUiXQpbMy4xMiwgIm8iLCAiZCJdClszLjE0LCAibyIsICJvIl0KWzMuMTYsICJvIiwgIiAiXQpbMy4xOCwgIm8iLCAiZSJdClszLjIsICJvIiwgIm4iXQpbMy4yMiwgIm8iLCAidiJdClszLjI0LCAibyIsICJwIl0KWzMuMjYsICJvIiwgIm8iXQpbMy4yOCwgIm8iLCAiZCJdClszLjMsICJvIiwgIiAiXQpbMy4zMiwgIm8iLCAiYSJdClszLjM0LCAibyIsICJ1Il0KWzMuMzYsICJvIiwgImQiXQpbMy4zOCwgIm8iLCAiaSJdClszLjQsICJvIiwgInQiXQpbMy40MiwgIm8iLCAiICJdClszLjQ0LCAibyIsICJiIl0KWzMuNDYsICJvIiwgInIiXQpbMy40OCwgIm8iLCAibyJdClszLjUsICJvIiwgInciXQpbMy41MiwgIm8iLCAicyJdClszLjU0LCAibyIsICJlIl0KWzMuNTYsICJvIiwgInIiXQpbMy41OCwgIm8iLCAiXHUwMDFiWzBtIl0KWzMuNTgsICJvIiwgIlxyXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG1cdTAwMWJbMzg7NTsxNW1zdWRvXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZW52cG9kXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtYXVkaXRcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1icm93c2VyXHUwMDFiWzM5bVx1MDAxYlswbSJdCls0LjM4LCAibyIsICJcclxuIl0KWzUuODgsICJvIiwgIlx1MDAxYls5OzFIIl0KWzUuODgsICJvIiwgIlx1MDAxYlsybSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG1kMmNhc3RcdTAwMWJbMG0iXQo="
-       data-theme="monokai"
-       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
-       data-font-size="16"
-       data-idle="3"
-       data-cols="110"
-       data-rows="7"></div>
+  <div class="svg-player"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 948 186" style="width:100%;max-width:948px;border-radius:8px;background:#1a1b26">
+<style>
+.t{font-family:JetBrains Mono, Fira Code, Cascadia Code, monospace;font-size:14px;white-space:pre}
+.f{opacity:0}
+@keyframes s{0%,100%{opacity:1}}
+#f0{animation:s 0.100s step-end 0.300s none}
+#f1{animation:s 0.120s step-end 0.400s none}
+#f2{animation:s 0.120s step-end 0.520s none}
+#f3{animation:s 0.120s step-end 0.640s none}
+#f4{animation:s 0.820s step-end 0.760s none}
+#f5{animation:s 1.500s step-end 1.580s none}
+#f6{animation:s 0.100s step-end 3.080s none}
+#f7{animation:s 0.120s step-end 3.180s none}
+#f8{animation:s 0.100s step-end 3.300s none}
+#f9{animation:s 0.100s step-end 3.400s none}
+#f10{animation:s 0.880s step-end 3.500s none}
+#f11{animation:s 1.500s step-end 4.380s none}
+#f12{animation:s 2.000s step-end 5.880s forwards}
+</style>
+<g id="f0" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f1" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo e</tspan></text>
+</g>
+<g id="f2" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod</tspan></text>
+</g>
+<g id="f3" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff b</tspan></text>
+</g>
+<g id="f4" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+</g>
+<g id="f5" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+</g>
+<g id="f6" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f7" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo e</tspan></text>
+</g>
+<g id="f8" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod</tspan></text>
+</g>
+<g id="f9" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit</tspan></text>
+</g>
+<g id="f10" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit brow</tspan></text>
+</g>
+<g id="f11" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit browser</tspan></text>
+</g>
+<g id="f12" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit browser</tspan></text>
+<text x="12" y="170.0"><tspan fill="#c0caf5" opacity="0.5">                                                                                                      md2cast</tspan></text>
+</g>
+</svg></div>
   <div class="code-copy">
     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
     <pre><code class="language-bash">sudo envpod diff browser
@@ -202,13 +512,86 @@ sudo envpod audit browser</code></pre>
 <p>Narration: &quot;Every file Chrome wrote — cookies, cache, preferences — captured in the overlay. Audit log shows every network domain it contacted.&quot;</p>
 <p>[1:10] Show security comparison:</p>
 <div class="cast-block">
-  <div id="player-6" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogOCwgInRpdGxlIjogIlNjcmlwdCIsICJ0aW1lc3RhbXAiOiAxNzcyODIxMzU3LCAiZW52IjogeyJURVJNIjogInh0ZXJtLTI1NmNvbG9yIiwgIlRIRU1FIjogIm1vbm9rYWkiLCAiRk9OVF9GQU1JTFkiOiAiSmV0QnJhaW5zIE1vbm8sIEZpcmEgQ29kZSwgTWVubG8sIG1vbm9zcGFjZSIsICJGT05UX1NJWkUiOiAiMTYifSwgImlkbGVfdGltZV9saW1pdCI6IDN9ClswLjMsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAiXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAicyJdClswLjMzLCAibyIsICJ1Il0KWzAuMzYsICJvIiwgImQiXQpbMC4zOSwgIm8iLCAibyJdClswLjQyLCAibyIsICIgIl0KWzAuNDUsICJvIiwgImUiXQpbMC40OCwgIm8iLCAibiJdClswLjUxLCAibyIsICJ2Il0KWzAuNTQsICJvIiwgInAiXQpbMC41NywgIm8iLCAibyJdClswLjYsICJvIiwgImQiXQpbMC42MywgIm8iLCAiICJdClswLjY2LCAibyIsICJhIl0KWzAuNjksICJvIiwgInUiXQpbMC43MiwgIm8iLCAiZCJdClswLjc1LCAibyIsICJpIl0KWzAuNzgsICJvIiwgInQiXQpbMC44MSwgIm8iLCAiICJdClswLjg0LCAibyIsICItIl0KWzAuODcsICJvIiwgIi0iXQpbMC45LCAibyIsICJzIl0KWzAuOTMsICJvIiwgImUiXQpbMC45NiwgIm8iLCAiYyJdClswLjk5LCAibyIsICJ1Il0KWzEuMDIsICJvIiwgInIiXQpbMS4wNSwgIm8iLCAiaSJdClsxLjA4LCAibyIsICJ0Il0KWzEuMTEsICJvIiwgInkiXQpbMS4xNCwgIm8iLCAiICJdClsxLjE3LCAibyIsICItIl0KWzEuMiwgIm8iLCAiYyJdClsxLjIzLCAibyIsICIgIl0KWzEuMjYsICJvIiwgImUiXQpbMS4yOSwgIm8iLCAieCJdClsxLjMyLCAibyIsICJhIl0KWzEuMzUsICJvIiwgIm0iXQpbMS4zOCwgIm8iLCAicCJdClsxLjQxLCAibyIsICJsIl0KWzEuNDQsICJvIiwgImUiXQpbMS40NywgIm8iLCAicyJdClsxLjUsICJvIiwgIi8iXQpbMS41MywgIm8iLCAiYiJdClsxLjU2LCAibyIsICJyIl0KWzEuNTksICJvIiwgIm8iXQpbMS42MiwgIm8iLCAidyJdClsxLjY1LCAibyIsICJzIl0KWzEuNjgsICJvIiwgImUiXQpbMS43MSwgIm8iLCAiciJdClsxLjc0LCAibyIsICItIl0KWzEuNzcsICJvIiwgInciXQpbMS44LCAibyIsICJhIl0KWzEuODMsICJvIiwgInkiXQpbMS44NiwgIm8iLCAibCJdClsxLjg5LCAibyIsICJhIl0KWzEuOTIsICJvIiwgIm4iXQpbMS45NSwgIm8iLCAiZCJdClsxLjk4LCAibyIsICIuIl0KWzIuMDEsICJvIiwgInkiXQpbMi4wNCwgIm8iLCAiYSJdClsyLjA3LCAibyIsICJtIl0KWzIuMSwgIm8iLCAibCJdClsyLjEzLCAibyIsICJcdTAwMWJbMG0iXQpbMi4xMywgIm8iLCAiXHJcdTAwMWJbMDszMm0kIFx1MDAxYlswbVx1MDAxYlszODs1OzE1bXN1ZG9cdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1lbnZwb2RcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1hdWRpdFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bS0tc2VjdXJpdHlcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0tY1x1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWV4YW1wbGVzL2Jyb3dzZXItd2F5bGFuZC55YW1sXHUwMDFiWzM5bVx1MDAxYlswbSJdClsyLjkzLCAibyIsICJcclxuIl0KWzQuNDMsICJvIiwgIlx1MDAxYls4OzFIIl0KWzQuNDMsICJvIiwgIlx1MDAxYlsybSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG1kMmNhc3RcdTAwMWJbMG0iXQo="
-       data-theme="monokai"
-       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
-       data-font-size="16"
-       data-idle="3"
-       data-cols="110"
-       data-rows="6"></div>
+  <div class="svg-player"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 948 168" style="width:100%;max-width:948px;border-radius:8px;background:#1a1b26">
+<style>
+.t{font-family:JetBrains Mono, Fira Code, Cascadia Code, monospace;font-size:14px;white-space:pre}
+.f{opacity:0}
+@keyframes s{0%,100%{opacity:1}}
+#f0{animation:s 0.120s step-end 0.300s none}
+#f1{animation:s 0.120s step-end 0.420s none}
+#f2{animation:s 0.120s step-end 0.540s none}
+#f3{animation:s 0.120s step-end 0.660s none}
+#f4{animation:s 0.120s step-end 0.780s none}
+#f5{animation:s 0.120s step-end 0.900s none}
+#f6{animation:s 0.120s step-end 1.020s none}
+#f7{animation:s 0.120s step-end 1.140s none}
+#f8{animation:s 0.120s step-end 1.260s none}
+#f9{animation:s 0.120s step-end 1.380s none}
+#f10{animation:s 0.120s step-end 1.500s none}
+#f11{animation:s 0.120s step-end 1.620s none}
+#f12{animation:s 0.120s step-end 1.740s none}
+#f13{animation:s 0.120s step-end 1.860s none}
+#f14{animation:s 0.120s step-end 1.980s none}
+#f15{animation:s 0.830s step-end 2.100s none}
+#f16{animation:s 1.500s step-end 2.930s none}
+#f17{animation:s 2.000s step-end 4.430s forwards}
+</style>
+<g id="f0" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f1" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo</tspan></text>
+</g>
+<g id="f2" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envp</tspan></text>
+</g>
+<g id="f3" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod a</tspan></text>
+</g>
+<g id="f4" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit</tspan></text>
+</g>
+<g id="f5" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --s</tspan></text>
+</g>
+<g id="f6" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --secur</tspan></text>
+</g>
+<g id="f7" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --security</tspan></text>
+</g>
+<g id="f8" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --security -c e</tspan></text>
+</g>
+<g id="f9" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --security -c examp</tspan></text>
+</g>
+<g id="f10" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --security -c examples/</tspan></text>
+</g>
+<g id="f11" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --security -c examples/brow</tspan></text>
+</g>
+<g id="f12" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --security -c examples/browser-</tspan></text>
+</g>
+<g id="f13" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --security -c examples/browser-wayl</tspan></text>
+</g>
+<g id="f14" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --security -c examples/browser-wayland.</tspan></text>
+</g>
+<g id="f15" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --security -c examples/browser-wayland.yaml</tspan></text>
+</g>
+<g id="f16" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --security -c examples/browser-wayland.yaml</tspan></text>
+</g>
+<g id="f17" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --security -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="152.0"><tspan fill="#c0caf5" opacity="0.5">                                                                                                      md2cast</tspan></text>
+</g>
+</svg></div>
   <div class="code-copy">
     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
     <pre><code class="language-bash">sudo envpod audit --security -c examples/browser-wayland.yaml</code></pre>
@@ -217,13 +600,54 @@ sudo envpod audit browser</code></pre>
 <p>Narration: &quot;Wayland + PipeWire: display is LOW risk, audio is MEDIUM. Compare that to X11 — CRITICAL, because X11 allows keylogging across windows.&quot;</p>
 <p>[1:25] Rollback everything:</p>
 <div class="cast-block">
-  <div id="player-7" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogOCwgInRpdGxlIjogIlNjcmlwdCIsICJ0aW1lc3RhbXAiOiAxNzcyODIxMzU3LCAiZW52IjogeyJURVJNIjogInh0ZXJtLTI1NmNvbG9yIiwgIlRIRU1FIjogIm1vbm9rYWkiLCAiRk9OVF9GQU1JTFkiOiAiSmV0QnJhaW5zIE1vbm8sIEZpcmEgQ29kZSwgTWVubG8sIG1vbm9zcGFjZSIsICJGT05UX1NJWkUiOiAiMTYifSwgImlkbGVfdGltZV9saW1pdCI6IDN9ClswLjMsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAiXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAicyJdClswLjMzLCAibyIsICJ1Il0KWzAuMzYsICJvIiwgImQiXQpbMC4zOSwgIm8iLCAibyJdClswLjQyLCAibyIsICIgIl0KWzAuNDUsICJvIiwgImUiXQpbMC40OCwgIm8iLCAibiJdClswLjUxLCAibyIsICJ2Il0KWzAuNTQsICJvIiwgInAiXQpbMC41NywgIm8iLCAibyJdClswLjYsICJvIiwgImQiXQpbMC42MywgIm8iLCAiICJdClswLjY2LCAibyIsICJyIl0KWzAuNjksICJvIiwgIm8iXQpbMC43MiwgIm8iLCAibCJdClswLjc1LCAibyIsICJsIl0KWzAuNzgsICJvIiwgImIiXQpbMC44MSwgIm8iLCAiYSJdClswLjg0LCAibyIsICJjIl0KWzAuODcsICJvIiwgImsiXQpbMC45LCAibyIsICIgIl0KWzAuOTMsICJvIiwgImIiXQpbMC45NiwgIm8iLCAiciJdClswLjk5LCAibyIsICJvIl0KWzEuMDIsICJvIiwgInciXQpbMS4wNSwgIm8iLCAicyJdClsxLjA4LCAibyIsICJlIl0KWzEuMTEsICJvIiwgInIiXQpbMS4xNCwgIm8iLCAiXHUwMDFiWzBtIl0KWzEuMTQsICJvIiwgIlxyXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG1cdTAwMWJbMzg7NTsxNW1zdWRvXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZW52cG9kXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtcm9sbGJhY2tcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1icm93c2VyXHUwMDFiWzM5bVx1MDAxYlswbSJdClsxLjk0LCAibyIsICJcclxuIl0KWzMuNDQsICJvIiwgIlx1MDAxYls4OzFIIl0KWzMuNDQsICJvIiwgIlx1MDAxYlsybSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG1kMmNhc3RcdTAwMWJbMG0iXQo="
-       data-theme="monokai"
-       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
-       data-font-size="16"
-       data-idle="3"
-       data-cols="110"
-       data-rows="6"></div>
+  <div class="svg-player"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 948 168" style="width:100%;max-width:948px;border-radius:8px;background:#1a1b26">
+<style>
+.t{font-family:JetBrains Mono, Fira Code, Cascadia Code, monospace;font-size:14px;white-space:pre}
+.f{opacity:0}
+@keyframes s{0%,100%{opacity:1}}
+#f0{animation:s 0.120s step-end 0.300s none}
+#f1{animation:s 0.120s step-end 0.420s none}
+#f2{animation:s 0.120s step-end 0.540s none}
+#f3{animation:s 0.120s step-end 0.660s none}
+#f4{animation:s 0.120s step-end 0.780s none}
+#f5{animation:s 0.120s step-end 0.900s none}
+#f6{animation:s 0.120s step-end 1.020s none}
+#f7{animation:s 0.800s step-end 1.140s none}
+#f8{animation:s 1.500s step-end 1.940s none}
+#f9{animation:s 2.000s step-end 3.440s forwards}
+</style>
+<g id="f0" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f1" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo</tspan></text>
+</g>
+<g id="f2" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envp</tspan></text>
+</g>
+<g id="f3" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod r</tspan></text>
+</g>
+<g id="f4" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod rollb</tspan></text>
+</g>
+<g id="f5" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod rollback</tspan></text>
+</g>
+<g id="f6" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod rollback brow</tspan></text>
+</g>
+<g id="f7" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod rollback browser</tspan></text>
+</g>
+<g id="f8" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod rollback browser</tspan></text>
+</g>
+<g id="f9" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod rollback browser</tspan></text>
+<text x="12" y="152.0"><tspan fill="#c0caf5" opacity="0.5">                                                                                                      md2cast</tspan></text>
+</g>
+</svg></div>
   <div class="code-copy">
     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
     <pre><code class="language-bash">sudo envpod rollback browser</code></pre>
@@ -234,13 +658,614 @@ sudo envpod audit browser</code></pre>
 <hr>
 <h2>Commands (copy-paste)</h2>
 <div class="cast-block">
-  <div id="player-8" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogMTUsICJ0aXRsZSI6ICJDb21tYW5kcyAoY29weS1wYXN0ZSkiLCAidGltZXN0YW1wIjogMTc3MjgyMTM1NywgImVudiI6IHsiVEVSTSI6ICJ4dGVybS0yNTZjb2xvciIsICJUSEVNRSI6ICJtb25va2FpIiwgIkZPTlRfRkFNSUxZIjogIkpldEJyYWlucyBNb25vLCBGaXJhIENvZGUsIE1lbmxvLCBtb25vc3BhY2UiLCAiRk9OVF9TSVpFIjogIjE2In0sICJpZGxlX3RpbWVfbGltaXQiOiAzfQpbMC4zLCAibyIsICJcdTAwMWJbMDszMm0kIFx1MDAxYlswbSJdClswLjMsICJvIiwgIlx1MDAxYlswbSJdClswLjMsICJvIiwgImUiXQpbMC4zMiwgIm8iLCAibiJdClswLjM0LCAibyIsICJ2Il0KWzAuMzYsICJvIiwgInAiXQpbMC4zOCwgIm8iLCAibyJdClswLjQsICJvIiwgImQiXQpbMC40MiwgIm8iLCAiICJdClswLjQ0LCAibyIsICJwIl0KWzAuNDYsICJvIiwgInIiXQpbMC40OCwgIm8iLCAiZSJdClswLjUsICJvIiwgInMiXQpbMC41MiwgIm8iLCAiZSJdClswLjU0LCAibyIsICJ0Il0KWzAuNTYsICJvIiwgInMiXQpbMC41OCwgIm8iLCAiICJdClswLjYsICJvIiwgInwiXQpbMC42MiwgIm8iLCAiICJdClswLjY0LCAibyIsICJnIl0KWzAuNjYsICJvIiwgInIiXQpbMC42OCwgIm8iLCAiZSJdClswLjcsICJvIiwgInAiXQpbMC43MiwgIm8iLCAiICJdClswLjc0LCAibyIsICJiIl0KWzAuNzYsICJvIiwgInIiXQpbMC43OCwgIm8iLCAibyJdClswLjgsICJvIiwgInciXQpbMC44MiwgIm8iLCAicyJdClswLjg0LCAibyIsICJlIl0KWzAuODYsICJvIiwgInIiXQpbMC44OCwgIm8iLCAiXHUwMDFiWzBtIl0KWzAuODgsICJvIiwgIlxyXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG1cdTAwMWJbMzg7NTsxNW1lbnZwb2RcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1wcmVzZXRzXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtfFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWdyZXBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1icm93c2VyXHUwMDFiWzM5bVx1MDAxYlswbSJdClsxLjY4LCAibyIsICJcclxuIl0KWzMuMTgsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzMuMTgsICJvIiwgIlx1MDAxYlswbSJdClszLjE4LCAibyIsICJjIl0KWzMuMiwgIm8iLCAiYSJdClszLjIyLCAibyIsICJ0Il0KWzMuMjQsICJvIiwgIiAiXQpbMy4yNiwgIm8iLCAiZSJdClszLjI4LCAibyIsICJ4Il0KWzMuMywgIm8iLCAiYSJdClszLjMyLCAibyIsICJtIl0KWzMuMzQsICJvIiwgInAiXQpbMy4zNiwgIm8iLCAibCJdClszLjM4LCAibyIsICJlIl0KWzMuNCwgIm8iLCAicyJdClszLjQyLCAibyIsICIvIl0KWzMuNDQsICJvIiwgImIiXQpbMy40NiwgIm8iLCAiciJdClszLjQ4LCAibyIsICJvIl0KWzMuNSwgIm8iLCAidyJdClszLjUyLCAibyIsICJzIl0KWzMuNTQsICJvIiwgImUiXQpbMy41NiwgIm8iLCAiciJdClszLjU4LCAibyIsICItIl0KWzMuNiwgIm8iLCAidyJdClszLjYyLCAibyIsICJhIl0KWzMuNjQsICJvIiwgInkiXQpbMy42NiwgIm8iLCAibCJdClszLjY4LCAibyIsICJhIl0KWzMuNywgIm8iLCAibiJdClszLjcyLCAibyIsICJkIl0KWzMuNzQsICJvIiwgIi4iXQpbMy43NiwgIm8iLCAieSJdClszLjc4LCAibyIsICJhIl0KWzMuOCwgIm8iLCAibSJdClszLjgyLCAibyIsICJsIl0KWzMuODQsICJvIiwgIlx1MDAxYlswbSJdClszLjg0LCAibyIsICJcclx1MDAxYlswOzMybSQgXHUwMDFiWzBtXHUwMDFiWzM4OzU7MTVtY2F0XHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZXhhbXBsZXMvYnJvd3Nlci13YXlsYW5kLnlhbWxcdTAwMWJbMzltXHUwMDFiWzBtIl0KWzQuNjQsICJvIiwgIlxyXG4iXQpbNi4xNCwgIm8iLCAiXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG0iXQpbNi4xNCwgIm8iLCAiXHUwMDFiWzBtIl0KWzYuMTQsICJvIiwgInMiXQpbNi4xNiwgIm8iLCAidSJdCls2LjE4LCAibyIsICJkIl0KWzYuMiwgIm8iLCAibyJdCls2LjIyLCAibyIsICIgIl0KWzYuMjQsICJvIiwgImUiXQpbNi4yNiwgIm8iLCAibiJdCls2LjI4LCAibyIsICJ2Il0KWzYuMywgIm8iLCAicCJdCls2LjMyLCAibyIsICJvIl0KWzYuMzQsICJvIiwgImQiXQpbNi4zNiwgIm8iLCAiICJdCls2LjM4LCAibyIsICJpIl0KWzYuNCwgIm8iLCAibiJdCls2LjQyLCAibyIsICJpIl0KWzYuNDQsICJvIiwgInQiXQpbNi40NiwgIm8iLCAiICJdCls2LjQ4LCAibyIsICJiIl0KWzYuNSwgIm8iLCAiciJdCls2LjUyLCAibyIsICJvIl0KWzYuNTQsICJvIiwgInciXQpbNi41NiwgIm8iLCAicyJdCls2LjU4LCAibyIsICJlIl0KWzYuNiwgIm8iLCAiciJdCls2LjYyLCAibyIsICIgIl0KWzYuNjQsICJvIiwgIi0iXQpbNi42NiwgIm8iLCAiYyJdCls2LjY4LCAibyIsICIgIl0KWzYuNywgIm8iLCAiZSJdCls2LjcyLCAibyIsICJ4Il0KWzYuNzQsICJvIiwgImEiXQpbNi43NiwgIm8iLCAibSJdCls2Ljc4LCAibyIsICJwIl0KWzYuOCwgIm8iLCAibCJdCls2LjgyLCAibyIsICJlIl0KWzYuODQsICJvIiwgInMiXQpbNi44NiwgIm8iLCAiLyJdCls2Ljg4LCAibyIsICJiIl0KWzYuOSwgIm8iLCAiciJdCls2LjkyLCAibyIsICJvIl0KWzYuOTQsICJvIiwgInciXQpbNi45NiwgIm8iLCAicyJdCls2Ljk4LCAibyIsICJlIl0KWzcuMCwgIm8iLCAiciJdCls3LjAyLCAibyIsICItIl0KWzcuMDQsICJvIiwgInciXQpbNy4wNiwgIm8iLCAiYSJdCls3LjA4LCAibyIsICJ5Il0KWzcuMSwgIm8iLCAibCJdCls3LjEyLCAibyIsICJhIl0KWzcuMTQsICJvIiwgIm4iXQpbNy4xNiwgIm8iLCAiZCJdCls3LjE4LCAibyIsICIuIl0KWzcuMiwgIm8iLCAieSJdCls3LjIyLCAibyIsICJhIl0KWzcuMjQsICJvIiwgIm0iXQpbNy4yNiwgIm8iLCAibCJdCls3LjI4LCAibyIsICJcdTAwMWJbMG0iXQpbNy4yOCwgIm8iLCAiXHJcdTAwMWJbMDszMm0kIFx1MDAxYlswbVx1MDAxYlszODs1OzE1bXN1ZG9cdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1lbnZwb2RcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1pbml0XHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtYnJvd3Nlclx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bS1jXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZXhhbXBsZXMvYnJvd3Nlci13YXlsYW5kLnlhbWxcdTAwMWJbMzltXHUwMDFiWzBtIl0KWzguMDgsICJvIiwgIlxyXG4iXQpbOS41OCwgIm8iLCAiXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG0iXQpbOS41OCwgIm8iLCAiXHUwMDFiWzBtIl0KWzkuNTgsICJvIiwgInMiXQpbOS42LCAibyIsICJ1Il0KWzkuNjIsICJvIiwgImQiXQpbOS42NCwgIm8iLCAibyJdCls5LjY2LCAibyIsICIgIl0KWzkuNjgsICJvIiwgImUiXQpbOS43LCAibyIsICJuIl0KWzkuNzIsICJvIiwgInYiXQpbOS43NCwgIm8iLCAicCJdCls5Ljc2LCAibyIsICJvIl0KWzkuNzgsICJvIiwgImQiXQpbOS44LCAibyIsICIgIl0KWzkuODIsICJvIiwgInIiXQpbOS44NCwgIm8iLCAidSJdCls5Ljg2LCAibyIsICJuIl0KWzkuODgsICJvIiwgIiAiXQpbOS45LCAibyIsICJiIl0KWzkuOTIsICJvIiwgInIiXQpbOS45NCwgIm8iLCAibyJdCls5Ljk2LCAibyIsICJ3Il0KWzkuOTgsICJvIiwgInMiXQpbMTAuMCwgIm8iLCAiZSJdClsxMC4wMiwgIm8iLCAiciJdClsxMC4wNCwgIm8iLCAiICJdClsxMC4wNiwgIm8iLCAiLSJdClsxMC4wOCwgIm8iLCAiZCJdClsxMC4xLCAibyIsICIgIl0KWzEwLjEyLCAibyIsICItIl0KWzEwLjE0LCAibyIsICJhIl0KWzEwLjE2LCAibyIsICIgIl0KWzEwLjE4LCAibyIsICItIl0KWzEwLjIsICJvIiwgIi0iXQpbMTAuMjIsICJvIiwgIiAiXQpbMTAuMjQsICJvIiwgImciXQpbMTAuMjYsICJvIiwgIm8iXQpbMTAuMjgsICJvIiwgIm8iXQpbMTAuMywgIm8iLCAiZyJdClsxMC4zMiwgIm8iLCAibCJdClsxMC4zNCwgIm8iLCAiZSJdClsxMC4zNiwgIm8iLCAiLSJdClsxMC4zOCwgIm8iLCAiYyJdClsxMC40LCAibyIsICJoIl0KWzEwLjQyLCAibyIsICJyIl0KWzEwLjQ0LCAibyIsICJvIl0KWzEwLjQ2LCAibyIsICJtIl0KWzEwLjQ4LCAibyIsICJlIl0KWzEwLjUsICJvIiwgIiAiXQpbMTAuNTIsICJvIiwgIi0iXQpbMTAuNTQsICJvIiwgIi0iXQpbMTAuNTYsICJvIiwgIm4iXQpbMTAuNTgsICJvIiwgIm8iXQpbMTAuNiwgIm8iLCAiLSJdClsxMC42MiwgIm8iLCAicyJdClsxMC42NCwgIm8iLCAiYSJdClsxMC42NiwgIm8iLCAibiJdClsxMC42OCwgIm8iLCAiZCJdClsxMC43LCAibyIsICJiIl0KWzEwLjcyLCAibyIsICJvIl0KWzEwLjc0LCAibyIsICJ4Il0KWzEwLjc2LCAibyIsICIgIl0KWzEwLjc4LCAibyIsICItIl0KWzEwLjgsICJvIiwgIi0iXQpbMTAuODIsICJvIiwgIm8iXQpbMTAuODQsICJvIiwgInoiXQpbMTAuODYsICJvIiwgIm8iXQpbMTAuODgsICJvIiwgIm4iXQpbMTAuOSwgIm8iLCAiZSJdClsxMC45MiwgIm8iLCAiLSJdClsxMC45NCwgIm8iLCAicCJdClsxMC45NiwgIm8iLCAibCJdClsxMC45OCwgIm8iLCAiYSJdClsxMS4wLCAibyIsICJ0Il0KWzExLjAyLCAibyIsICJmIl0KWzExLjA0LCAibyIsICJvIl0KWzExLjA2LCAibyIsICJyIl0KWzExLjA4LCAibyIsICJtIl0KWzExLjEsICJvIiwgIj0iXQpbMTEuMTIsICJvIiwgInciXQpbMTEuMTQsICJvIiwgImEiXQpbMTEuMTYsICJvIiwgInkiXQpbMTEuMTgsICJvIiwgImwiXQpbMTEuMiwgIm8iLCAiYSJdClsxMS4yMiwgIm8iLCAibiJdClsxMS4yNCwgIm8iLCAiZCJdClsxMS4yNiwgIm8iLCAiICJdClsxMS4yOCwgIm8iLCAiaCJdClsxMS4zLCAibyIsICJ0Il0KWzExLjMyLCAibyIsICJ0Il0KWzExLjM0LCAibyIsICJwIl0KWzExLjM2LCAibyIsICJzIl0KWzExLjM4LCAibyIsICI6Il0KWzExLjQsICJvIiwgIi8iXQpbMTEuNDIsICJvIiwgIi8iXQpbMTEuNDQsICJvIiwgInkiXQpbMTEuNDYsICJvIiwgIm8iXQpbMTEuNDgsICJvIiwgInUiXQpbMTEuNSwgIm8iLCAidCJdClsxMS41MiwgIm8iLCAidSJdClsxMS41NCwgIm8iLCAiYiJdClsxMS41NiwgIm8iLCAiZSJdClsxMS41OCwgIm8iLCAiLiJdClsxMS42LCAibyIsICJjIl0KWzExLjYyLCAibyIsICJvIl0KWzExLjY0LCAibyIsICJtIl0KWzExLjY2LCAibyIsICJcdTAwMWJbMG0iXQpbMTEuNjYsICJvIiwgIlxyXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG1cdTAwMWJbMzg7NTsxNW1zdWRvXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZW52cG9kXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtcnVuXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtYnJvd3Nlclx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bS1kXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtLWFcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0tLVx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWdvb2dsZS1jaHJvbWVcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0tLW5vLXNhbmRib3hcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0tLW96b25lLXBsYXRmb3JtXHUwMDFiWzM5bVx1MDAxYlszODs1OzIwNG09XHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bXdheWxhbmRcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1odHRwczovL3lvdXR1YmUuY29tXHUwMDFiWzM5bVx1MDAxYlswbSJdClsxMi40NiwgIm8iLCAiXHJcbiJdClsxMy45NiwgIm8iLCAiXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG0iXQpbMTMuOTYsICJvIiwgIlx1MDAxYlswbSJdClsxMy45NiwgIm8iLCAicyJdClsxMy45OCwgIm8iLCAidSJdClsxNC4wLCAibyIsICJkIl0KWzE0LjAyLCAibyIsICJvIl0KWzE0LjA0LCAibyIsICIgIl0KWzE0LjA2LCAibyIsICJlIl0KWzE0LjA4LCAibyIsICJuIl0KWzE0LjEsICJvIiwgInYiXQpbMTQuMTIsICJvIiwgInAiXQpbMTQuMTQsICJvIiwgIm8iXQpbMTQuMTYsICJvIiwgImQiXQpbMTQuMTgsICJvIiwgIiAiXQpbMTQuMiwgIm8iLCAiZCJdClsxNC4yMiwgIm8iLCAiaSJdClsxNC4yNCwgIm8iLCAiZiJdClsxNC4yNiwgIm8iLCAiZiJdClsxNC4yOCwgIm8iLCAiICJdClsxNC4zLCAibyIsICJiIl0KWzE0LjMyLCAibyIsICJyIl0KWzE0LjM0LCAibyIsICJvIl0KWzE0LjM2LCAibyIsICJ3Il0KWzE0LjM4LCAibyIsICJzIl0KWzE0LjQsICJvIiwgImUiXQpbMTQuNDIsICJvIiwgInIiXQpbMTQuNDQsICJvIiwgIlx1MDAxYlswbSJdClsxNC40NCwgIm8iLCAiXHJcdTAwMWJbMDszMm0kIFx1MDAxYlswbVx1MDAxYlszODs1OzE1bXN1ZG9cdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1lbnZwb2RcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1kaWZmXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtYnJvd3Nlclx1MDAxYlszOW1cdTAwMWJbMG0iXQpbMTUuMjQsICJvIiwgIlxyXG4iXQpbMTYuNzQsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzE2Ljc0LCAibyIsICJcdTAwMWJbMG0iXQpbMTYuNzQsICJvIiwgInMiXQpbMTYuNzYsICJvIiwgInUiXQpbMTYuNzgsICJvIiwgImQiXQpbMTYuOCwgIm8iLCAibyJdClsxNi44MiwgIm8iLCAiICJdClsxNi44NCwgIm8iLCAiZSJdClsxNi44NiwgIm8iLCAibiJdClsxNi44OCwgIm8iLCAidiJdClsxNi45LCAibyIsICJwIl0KWzE2LjkyLCAibyIsICJvIl0KWzE2Ljk0LCAibyIsICJkIl0KWzE2Ljk2LCAibyIsICIgIl0KWzE2Ljk4LCAibyIsICJhIl0KWzE3LjAsICJvIiwgInUiXQpbMTcuMDIsICJvIiwgImQiXQpbMTcuMDQsICJvIiwgImkiXQpbMTcuMDYsICJvIiwgInQiXQpbMTcuMDgsICJvIiwgIiAiXQpbMTcuMSwgIm8iLCAiYiJdClsxNy4xMiwgIm8iLCAiciJdClsxNy4xNCwgIm8iLCAibyJdClsxNy4xNiwgIm8iLCAidyJdClsxNy4xOCwgIm8iLCAicyJdClsxNy4yLCAibyIsICJlIl0KWzE3LjIyLCAibyIsICJyIl0KWzE3LjI0LCAibyIsICJcdTAwMWJbMG0iXQpbMTcuMjQsICJvIiwgIlxyXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG1cdTAwMWJbMzg7NTsxNW1zdWRvXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZW52cG9kXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtYXVkaXRcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1icm93c2VyXHUwMDFiWzM5bVx1MDAxYlswbSJdClsxOC4wNCwgIm8iLCAiXHJcbiJdClsxOS41NCwgIm8iLCAiXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG0iXQpbMTkuNTQsICJvIiwgIlx1MDAxYlswbSJdClsxOS41NCwgIm8iLCAicyJdClsxOS41NiwgIm8iLCAidSJdClsxOS41OCwgIm8iLCAiZCJdClsxOS42LCAibyIsICJvIl0KWzE5LjYyLCAibyIsICIgIl0KWzE5LjY0LCAibyIsICJlIl0KWzE5LjY2LCAibyIsICJuIl0KWzE5LjY4LCAibyIsICJ2Il0KWzE5LjcsICJvIiwgInAiXQpbMTkuNzIsICJvIiwgIm8iXQpbMTkuNzQsICJvIiwgImQiXQpbMTkuNzYsICJvIiwgIiAiXQpbMTkuNzgsICJvIiwgImEiXQpbMTkuOCwgIm8iLCAidSJdClsxOS44MiwgIm8iLCAiZCJdClsxOS44NCwgIm8iLCAiaSJdClsxOS44NiwgIm8iLCAidCJdClsxOS44OCwgIm8iLCAiICJdClsxOS45LCAibyIsICItIl0KWzE5LjkyLCAibyIsICItIl0KWzE5Ljk0LCAibyIsICJzIl0KWzE5Ljk2LCAibyIsICJlIl0KWzE5Ljk4LCAibyIsICJjIl0KWzIwLjAsICJvIiwgInUiXQpbMjAuMDIsICJvIiwgInIiXQpbMjAuMDQsICJvIiwgImkiXQpbMjAuMDYsICJvIiwgInQiXQpbMjAuMDgsICJvIiwgInkiXQpbMjAuMSwgIm8iLCAiICJdClsyMC4xMiwgIm8iLCAiLSJdClsyMC4xNCwgIm8iLCAiYyJdClsyMC4xNiwgIm8iLCAiICJdClsyMC4xOCwgIm8iLCAiZSJdClsyMC4yLCAibyIsICJ4Il0KWzIwLjIyLCAibyIsICJhIl0KWzIwLjI0LCAibyIsICJtIl0KWzIwLjI2LCAibyIsICJwIl0KWzIwLjI4LCAibyIsICJsIl0KWzIwLjMsICJvIiwgImUiXQpbMjAuMzIsICJvIiwgInMiXQpbMjAuMzQsICJvIiwgIi8iXQpbMjAuMzYsICJvIiwgImIiXQpbMjAuMzgsICJvIiwgInIiXQpbMjAuNCwgIm8iLCAibyJdClsyMC40MiwgIm8iLCAidyJdClsyMC40NCwgIm8iLCAicyJdClsyMC40NiwgIm8iLCAiZSJdClsyMC40OCwgIm8iLCAiciJdClsyMC41LCAibyIsICItIl0KWzIwLjUyLCAibyIsICJ3Il0KWzIwLjU0LCAibyIsICJhIl0KWzIwLjU2LCAibyIsICJ5Il0KWzIwLjU4LCAibyIsICJsIl0KWzIwLjYsICJvIiwgImEiXQpbMjAuNjIsICJvIiwgIm4iXQpbMjAuNjQsICJvIiwgImQiXQpbMjAuNjYsICJvIiwgIi4iXQpbMjAuNjgsICJvIiwgInkiXQpbMjAuNywgIm8iLCAiYSJdClsyMC43MiwgIm8iLCAibSJdClsyMC43NCwgIm8iLCAibCJdClsyMC43NiwgIm8iLCAiXHUwMDFiWzBtIl0KWzIwLjc2LCAibyIsICJcclx1MDAxYlswOzMybSQgXHUwMDFiWzBtXHUwMDFiWzM4OzU7MTVtc3Vkb1x1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWVudnBvZFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWF1ZGl0XHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtLS1zZWN1cml0eVx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bS1jXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZXhhbXBsZXMvYnJvd3Nlci13YXlsYW5kLnlhbWxcdTAwMWJbMzltXHUwMDFiWzBtIl0KWzIxLjU2LCAibyIsICJcclxuIl0KWzIzLjA2LCAibyIsICJcdTAwMWJbMDszMm0kIFx1MDAxYlswbSJdClsyMy4wNiwgIm8iLCAiXHUwMDFiWzBtIl0KWzIzLjA2LCAibyIsICJzIl0KWzIzLjA4LCAibyIsICJ1Il0KWzIzLjEsICJvIiwgImQiXQpbMjMuMTIsICJvIiwgIm8iXQpbMjMuMTQsICJvIiwgIiAiXQpbMjMuMTYsICJvIiwgImUiXQpbMjMuMTgsICJvIiwgIm4iXQpbMjMuMiwgIm8iLCAidiJdClsyMy4yMiwgIm8iLCAicCJdClsyMy4yNCwgIm8iLCAibyJdClsyMy4yNiwgIm8iLCAiZCJdClsyMy4yOCwgIm8iLCAiICJdClsyMy4zLCAibyIsICJyIl0KWzIzLjMyLCAibyIsICJvIl0KWzIzLjM0LCAibyIsICJsIl0KWzIzLjM2LCAibyIsICJsIl0KWzIzLjM4LCAibyIsICJiIl0KWzIzLjQsICJvIiwgImEiXQpbMjMuNDIsICJvIiwgImMiXQpbMjMuNDQsICJvIiwgImsiXQpbMjMuNDYsICJvIiwgIiAiXQpbMjMuNDgsICJvIiwgImIiXQpbMjMuNSwgIm8iLCAiciJdClsyMy41MiwgIm8iLCAibyJdClsyMy41NCwgIm8iLCAidyJdClsyMy41NiwgIm8iLCAicyJdClsyMy41OCwgIm8iLCAiZSJdClsyMy42LCAibyIsICJyIl0KWzIzLjYyLCAibyIsICJcdTAwMWJbMG0iXQpbMjMuNjIsICJvIiwgIlxyXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG1cdTAwMWJbMzg7NTsxNW1zdWRvXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZW52cG9kXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtcm9sbGJhY2tcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1icm93c2VyXHUwMDFiWzM5bVx1MDAxYlswbSJdClsyNC40MiwgIm8iLCAiXHJcbiJdClsyNS45MiwgIm8iLCAiXHUwMDFiWzE1OzFIIl0KWzI1LjkyLCAibyIsICJcdTAwMWJbMm0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBtZDJjYXN0XHUwMDFiWzBtIl0K"
-       data-theme="monokai"
-       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
-       data-font-size="16"
-       data-idle="3"
-       data-cols="110"
-       data-rows="13"></div>
+  <div class="svg-player"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 948 294" style="width:100%;max-width:948px;border-radius:8px;background:#1a1b26">
+<style>
+.t{font-family:JetBrains Mono, Fira Code, Cascadia Code, monospace;font-size:14px;white-space:pre}
+.f{opacity:0}
+@keyframes s{0%,100%{opacity:1}}
+#f0{animation:s 0.100s step-end 0.300s none}
+#f1{animation:s 0.120s step-end 0.400s none}
+#f2{animation:s 0.120s step-end 0.520s none}
+#f3{animation:s 0.120s step-end 0.640s none}
+#f4{animation:s 0.120s step-end 0.760s none}
+#f5{animation:s 0.800s step-end 0.880s none}
+#f6{animation:s 1.500s step-end 1.680s none}
+#f7{animation:s 0.120s step-end 3.180s none}
+#f8{animation:s 0.100s step-end 3.300s none}
+#f9{animation:s 0.100s step-end 3.400s none}
+#f10{animation:s 0.100s step-end 3.500s none}
+#f11{animation:s 0.100s step-end 3.600s none}
+#f12{animation:s 0.120s step-end 3.700s none}
+#f13{animation:s 0.820s step-end 3.820s none}
+#f14{animation:s 1.500s step-end 4.640s none}
+#f15{animation:s 0.100s step-end 6.140s none}
+#f16{animation:s 0.120s step-end 6.240s none}
+#f17{animation:s 0.120s step-end 6.360s none}
+#f18{animation:s 0.120s step-end 6.480s none}
+#f19{animation:s 0.100s step-end 6.600s none}
+#f20{animation:s 0.120s step-end 6.700s none}
+#f21{animation:s 0.120s step-end 6.820s none}
+#f22{animation:s 0.120s step-end 6.940s none}
+#f23{animation:s 0.100s step-end 7.060s none}
+#f24{animation:s 0.120s step-end 7.160s none}
+#f25{animation:s 0.800s step-end 7.280s none}
+#f26{animation:s 1.500s step-end 8.080s none}
+#f27{animation:s 0.120s step-end 9.580s none}
+#f28{animation:s 0.100s step-end 9.700s none}
+#f29{animation:s 0.120s step-end 9.800s none}
+#f30{animation:s 0.120s step-end 9.920s none}
+#f31{animation:s 0.100s step-end 10.040s none}
+#f32{animation:s 0.120s step-end 10.140s none}
+#f33{animation:s 0.120s step-end 10.260s none}
+#f34{animation:s 0.120s step-end 10.380s none}
+#f35{animation:s 0.120s step-end 10.500s none}
+#f36{animation:s 0.100s step-end 10.620s none}
+#f37{animation:s 0.120s step-end 10.720s none}
+#f38{animation:s 0.120s step-end 10.840s none}
+#f39{animation:s 0.120s step-end 10.960s none}
+#f40{animation:s 0.120s step-end 11.080s none}
+#f41{animation:s 0.100s step-end 11.200s none}
+#f42{animation:s 0.120s step-end 11.300s none}
+#f43{animation:s 0.120s step-end 11.420s none}
+#f44{animation:s 0.100s step-end 11.540s none}
+#f45{animation:s 0.820s step-end 11.640s none}
+#f46{animation:s 1.500s step-end 12.460s none}
+#f47{animation:s 0.120s step-end 13.960s none}
+#f48{animation:s 0.120s step-end 14.080s none}
+#f49{animation:s 0.100s step-end 14.200s none}
+#f50{animation:s 0.120s step-end 14.300s none}
+#f51{animation:s 0.820s step-end 14.420s none}
+#f52{animation:s 1.500s step-end 15.240s none}
+#f53{animation:s 0.100s step-end 16.740s none}
+#f54{animation:s 0.100s step-end 16.840s none}
+#f55{animation:s 0.120s step-end 16.940s none}
+#f56{animation:s 0.100s step-end 17.060s none}
+#f57{animation:s 0.880s step-end 17.160s none}
+#f58{animation:s 1.500s step-end 18.040s none}
+#f59{animation:s 0.100s step-end 19.540s none}
+#f60{animation:s 0.120s step-end 19.640s none}
+#f61{animation:s 0.120s step-end 19.760s none}
+#f62{animation:s 0.100s step-end 19.880s none}
+#f63{animation:s 0.120s step-end 19.980s none}
+#f64{animation:s 0.120s step-end 20.100s none}
+#f65{animation:s 0.100s step-end 20.220s none}
+#f66{animation:s 0.100s step-end 20.320s none}
+#f67{animation:s 0.120s step-end 20.420s none}
+#f68{animation:s 0.100s step-end 20.540s none}
+#f69{animation:s 0.120s step-end 20.640s none}
+#f70{animation:s 0.800s step-end 20.760s none}
+#f71{animation:s 1.500s step-end 21.560s none}
+#f72{animation:s 0.100s step-end 23.060s none}
+#f73{animation:s 0.100s step-end 23.160s none}
+#f74{animation:s 0.120s step-end 23.260s none}
+#f75{animation:s 0.100s step-end 23.380s none}
+#f76{animation:s 0.120s step-end 23.480s none}
+#f77{animation:s 0.820s step-end 23.600s none}
+#f78{animation:s 1.500s step-end 24.420s none}
+#f79{animation:s 2.000s step-end 25.920s forwards}
+</style>
+<g id="f0" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f1" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod</tspan></text>
+</g>
+<g id="f2" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod prese</tspan></text>
+</g>
+<g id="f3" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | g</tspan></text>
+</g>
+<g id="f4" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep br</tspan></text>
+</g>
+<g id="f5" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+</g>
+<g id="f6" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+</g>
+<g id="f7" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f8" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat exa</tspan></text>
+</g>
+<g id="f9" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples</tspan></text>
+</g>
+<g id="f10" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/brow</tspan></text>
+</g>
+<g id="f11" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-w</tspan></text>
+</g>
+<g id="f12" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-waylan</tspan></text>
+</g>
+<g id="f13" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+</g>
+<g id="f14" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+</g>
+<g id="f15" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f16" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo e</tspan></text>
+</g>
+<g id="f17" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod</tspan></text>
+</g>
+<g id="f18" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init b</tspan></text>
+</g>
+<g id="f19" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser</tspan></text>
+</g>
+<g id="f20" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c e</tspan></text>
+</g>
+<g id="f21" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c example</tspan></text>
+</g>
+<g id="f22" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/brow</tspan></text>
+</g>
+<g id="f23" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wa</tspan></text>
+</g>
+<g id="f24" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland</tspan></text>
+</g>
+<g id="f25" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+</g>
+<g id="f26" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+</g>
+<g id="f27" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f28" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo en</tspan></text>
+</g>
+<g id="f29" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod</tspan></text>
+</g>
+<g id="f30" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run br</tspan></text>
+</g>
+<g id="f31" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser</tspan></text>
+</g>
+<g id="f32" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a</tspan></text>
+</g>
+<g id="f33" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- go</tspan></text>
+</g>
+<g id="f34" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-c</tspan></text>
+</g>
+<g id="f35" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome</tspan></text>
+</g>
+<g id="f36" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-s</tspan></text>
+</g>
+<g id="f37" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbo</tspan></text>
+</g>
+<g id="f38" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --oz</tspan></text>
+</g>
+<g id="f39" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-pl</tspan></text>
+</g>
+<g id="f40" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan></text>
+</g>
+<g id="f41" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform=wayla</tspan></text>
+</g>
+<g id="f42" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform=wayland ht</tspan></text>
+</g>
+<g id="f43" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform=wayland https://</tspan></text>
+</g>
+<g id="f44" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform=wayland https://youtub</tspan></text>
+</g>
+<g id="f45" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform=wayland https://youtube.com</tspan></text>
+</g>
+<g id="f46" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+</g>
+<g id="f47" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f48" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo en</tspan></text>
+</g>
+<g id="f49" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod d</tspan></text>
+</g>
+<g id="f50" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff b</tspan></text>
+</g>
+<g id="f51" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+</g>
+<g id="f52" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+</g>
+<g id="f53" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f54" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo e</tspan></text>
+</g>
+<g id="f55" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod</tspan></text>
+</g>
+<g id="f56" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit</tspan></text>
+</g>
+<g id="f57" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit brow</tspan></text>
+</g>
+<g id="f58" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit browser</tspan></text>
+</g>
+<g id="f59" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit browser</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f60" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit browser</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo e</tspan></text>
+</g>
+<g id="f61" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit browser</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod</tspan></text>
+</g>
+<g id="f62" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit browser</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit</tspan></text>
+</g>
+<g id="f63" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit browser</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --sec</tspan></text>
+</g>
+<g id="f64" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit browser</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --security</tspan></text>
+</g>
+<g id="f65" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit browser</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --security -c exa</tspan></text>
+</g>
+<g id="f66" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit browser</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --security -c examples</tspan></text>
+</g>
+<g id="f67" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit browser</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --security -c examples/brow</tspan></text>
+</g>
+<g id="f68" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit browser</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --security -c examples/browser-wa</tspan></text>
+</g>
+<g id="f69" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit browser</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --security -c examples/browser-wayland</tspan></text>
+</g>
+<g id="f70" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit browser</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --security -c examples/browser-wayland.yaml</tspan></text>
+</g>
+<g id="f71" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit browser</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --security -c examples/browser-wayland.yaml</tspan></text>
+</g>
+<g id="f72" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit browser</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --security -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f73" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit browser</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --security -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo e</tspan></text>
+</g>
+<g id="f74" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit browser</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --security -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod</tspan></text>
+</g>
+<g id="f75" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit browser</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --security -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod rollb</tspan></text>
+</g>
+<g id="f76" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit browser</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --security -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod rollback b</tspan></text>
+</g>
+<g id="f77" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit browser</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --security -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod rollback browser</tspan></text>
+</g>
+<g id="f78" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit browser</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --security -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod rollback browser</tspan></text>
+</g>
+<g id="f79" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets | grep browser</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">cat examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init browser -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform</tspan><tspan fill="#ff3366">=</tspan><tspan fill="#c0caf5">wayland https://youtube.com</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff browser</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit browser</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit --security -c examples/browser-wayland.yaml</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod rollback browser</tspan></text>
+<text x="12" y="278.0"><tspan fill="#c0caf5" opacity="0.5">                                                                                                      md2cast</tspan></text>
+</g>
+</svg></div>
   <div class="code-copy">
     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
     <pre><code class="language-bash">envpod presets | grep browser
@@ -262,21 +1287,7 @@ function copyCode(btn) {
     setTimeout(function() { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
   });
 }
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('.player[data-cast-src]').forEach(function(el) {
-    AsciinemaPlayer.create(el.dataset.castSrc, el, {
-      theme: el.dataset.theme,
-      fontFamily: el.dataset.font,
-      fontSize: el.dataset.fontSize + 'px',
-      idleTimeLimit: parseInt(el.dataset.idle),
-      cols: parseInt(el.dataset.cols),
-      rows: parseInt(el.dataset.rows),
-      fit: 'width',
-      autoPlay: false,
-      preload: true
-    });
-  });
-});
+
 </script>
 <footer style="margin-top:4rem;padding:1.5rem 0 0.5rem;text-align:center;font-size:0.75rem;color:var(--muted);opacity:0.6;">
   Made with <a href="https://github.com/markamo/md2cast" style="color:var(--accent);text-decoration:none;">md2cast</a>

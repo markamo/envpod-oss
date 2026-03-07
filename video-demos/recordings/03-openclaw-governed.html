@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Demo 3: &quot;OpenClaw — Messaging Agent, Finally Governed&quot;</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/asciinema-player@3.8.0/dist/bundle/asciinema-player.css">
+<!-- SVG mode: no external JS/CSS needed -->
 <style>
   :root {
     --bg: #1a1b26;
@@ -56,6 +56,16 @@
     border-radius: 8px;
     overflow: hidden;
     border: 1px solid var(--border);
+  }
+  .svg-player {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .svg-player svg {
+    display: block;
+    width: 100%;
+    height: auto;
   }
   details {
     margin-top: 0.5rem;
@@ -114,7 +124,7 @@
   /* Asciinema player overrides */
   .ap-wrapper { border-radius: 8px !important; }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/asciinema-player@3.8.0/dist/bundle/asciinema-player.min.js" defer></script>
+<!-- SVG mode -->
 </head>
 <body>
 <h1>Demo 3: &quot;OpenClaw — Messaging Agent, Finally Governed&quot;</h1>
@@ -127,13 +137,50 @@
 <p>[0:00] Narration: &quot;OpenClaw connects to WhatsApp, Telegram, Discord — and talks to LLMs on your behalf. That's a lot of power. Let's govern it.&quot;</p>
 <p>[0:12] Show the interactive wizard:</p>
 <div class="cast-block">
-  <div id="player-1" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogOCwgInRpdGxlIjogIlNjcmlwdCIsICJ0aW1lc3RhbXAiOiAxNzcyODIxMzU3LCAiZW52IjogeyJURVJNIjogInh0ZXJtLTI1NmNvbG9yIiwgIlRIRU1FIjogIm1vbm9rYWkiLCAiRk9OVF9GQU1JTFkiOiAiSmV0QnJhaW5zIE1vbm8sIEZpcmEgQ29kZSwgTWVubG8sIG1vbm9zcGFjZSIsICJGT05UX1NJWkUiOiAiMTYifSwgImlkbGVfdGltZV9saW1pdCI6IDN9ClswLjMsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAiXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAicyJdClswLjMzLCAibyIsICJ1Il0KWzAuMzYsICJvIiwgImQiXQpbMC4zOSwgIm8iLCAibyJdClswLjQyLCAibyIsICIgIl0KWzAuNDUsICJvIiwgImUiXQpbMC40OCwgIm8iLCAibiJdClswLjUxLCAibyIsICJ2Il0KWzAuNTQsICJvIiwgInAiXQpbMC41NywgIm8iLCAibyJdClswLjYsICJvIiwgImQiXQpbMC42MywgIm8iLCAiICJdClswLjY2LCAibyIsICJpIl0KWzAuNjksICJvIiwgIm4iXQpbMC43MiwgIm8iLCAiaSJdClswLjc1LCAibyIsICJ0Il0KWzAuNzgsICJvIiwgIiAiXQpbMC44MSwgIm8iLCAibyJdClswLjg0LCAibyIsICJwIl0KWzAuODcsICJvIiwgImUiXQpbMC45LCAibyIsICJuIl0KWzAuOTMsICJvIiwgImMiXQpbMC45NiwgIm8iLCAibCJdClswLjk5LCAibyIsICJhIl0KWzEuMDIsICJvIiwgInciXQpbMS4wNSwgIm8iLCAiXHUwMDFiWzBtIl0KWzEuMDUsICJvIiwgIlxyXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG1cdTAwMWJbMzg7NTsxNW1zdWRvXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZW52cG9kXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtaW5pdFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bW9wZW5jbGF3XHUwMDFiWzM5bVx1MDAxYlswbSJdClsxLjg1LCAibyIsICJcclxuIl0KWzMuMzUsICJvIiwgIlx1MDAxYls4OzFIIl0KWzMuMzUsICJvIiwgIlx1MDAxYlsybSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG1kMmNhc3RcdTAwMWJbMG0iXQo="
-       data-theme="monokai"
-       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
-       data-font-size="16"
-       data-idle="3"
-       data-cols="110"
-       data-rows="6"></div>
+  <div class="svg-player"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 948 168" style="width:100%;max-width:948px;border-radius:8px;background:#1a1b26">
+<style>
+.t{font-family:JetBrains Mono, Fira Code, Cascadia Code, monospace;font-size:14px;white-space:pre}
+.f{opacity:0}
+@keyframes s{0%,100%{opacity:1}}
+#f0{animation:s 0.120s step-end 0.300s none}
+#f1{animation:s 0.120s step-end 0.420s none}
+#f2{animation:s 0.120s step-end 0.540s none}
+#f3{animation:s 0.120s step-end 0.660s none}
+#f4{animation:s 0.120s step-end 0.780s none}
+#f5{animation:s 0.120s step-end 0.900s none}
+#f6{animation:s 0.830s step-end 1.020s none}
+#f7{animation:s 1.500s step-end 1.850s none}
+#f8{animation:s 2.000s step-end 3.350s forwards}
+</style>
+<g id="f0" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f1" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo</tspan></text>
+</g>
+<g id="f2" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envp</tspan></text>
+</g>
+<g id="f3" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod i</tspan></text>
+</g>
+<g id="f4" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init</tspan></text>
+</g>
+<g id="f5" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init open</tspan></text>
+</g>
+<g id="f6" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+</g>
+<g id="f7" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+</g>
+<g id="f8" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#c0caf5" opacity="0.5">                                                                                                      md2cast</tspan></text>
+</g>
+</svg></div>
   <div class="code-copy">
     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
     <pre><code class="language-bash">sudo envpod init openclaw</code></pre>
@@ -143,13 +190,32 @@
 <p>Narration: &quot;Don't know config files? The interactive wizard lets you pick a preset, customize CPU and memory, and go.&quot;</p>
 <p>[0:30] Customize in the wizard:</p>
 <div class="cast-block">
-  <div id="player-2" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogMTIsICJ0aXRsZSI6ICJTY3JpcHQiLCAidGltZXN0YW1wIjogMTc3MjgyMTM1NywgImVudiI6IHsiVEVSTSI6ICJ4dGVybS0yNTZjb2xvciIsICJUSEVNRSI6ICJtb25va2FpIiwgIkZPTlRfRkFNSUxZIjogIkpldEJyYWlucyBNb25vLCBGaXJhIENvZGUsIE1lbmxvLCBtb25vc3BhY2UiLCAiRk9OVF9TSVpFIjogIjE2In0sICJpZGxlX3RpbWVfbGltaXQiOiAzfQpbMC4zLCAibyIsICJcdTAwMWJbMG0gIENQVSBjb3JlcyBbMi4wXTogMlx1MDAxYlswbVxyXG4iXQpbMC4zLCAibyIsICJcdTAwMWJbMG0gIE1lbW9yeSBbMUdCXTogMkdCXHUwMDFiWzBtXHJcbiJdClswLjMsICJvIiwgIlx1MDAxYlswbSAgTmVlZCBHUFU/IFt5L05dOiBuXHUwMDFiWzBtXHJcbiJdClswLjMsICJvIiwgIlx1MDAxYlswbVx1MDAxYlswbVxyXG4iXQpbMC4zLCAibyIsICJcdTAwMWJbMG0gIFx1MjcxMyBDcmVhdGVkIHBvZCAnb3BlbmNsYXcnIChvcGVuY2xhdyBwcmVzZXQsIDIgY29yZXMsIDJHQilcdTAwMWJbMG1cclxuIl0KWzEuOCwgIm8iLCAiXHUwMDFiWzEyOzFIIl0KWzEuOCwgIm8iLCAiXHUwMDFiWzJtICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbWQyY2FzdFx1MDAxYlswbSJdCg=="
-       data-theme="monokai"
-       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
-       data-font-size="16"
-       data-idle="3"
-       data-cols="110"
-       data-rows="10"></div>
+  <div class="svg-player"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 948 240" style="width:100%;max-width:948px;border-radius:8px;background:#1a1b26">
+<style>
+.t{font-family:JetBrains Mono, Fira Code, Cascadia Code, monospace;font-size:14px;white-space:pre}
+.f{opacity:0}
+@keyframes s{0%,100%{opacity:1}}
+#f0{animation:s 1.500s step-end 0.300s none}
+#f1{animation:s 0.000s step-end 1.800s none}
+#f2{animation:s 2.000s step-end 1.800s forwards}
+</style>
+<g id="f0" class="f t">
+<text x="12" y="26.0"><tspan fill="#c0caf5">  CPU cores [2.0]: 2</tspan></text>
+</g>
+<g id="f1" class="f t">
+<text x="12" y="26.0"><tspan fill="#c0caf5">  CPU cores [2.0]: 2</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  Memory [1GB]: 2GB</tspan></text>
+<text x="12" y="62.0"><tspan fill="#c0caf5">  Need GPU? [y/N]: n</tspan></text>
+<text x="12" y="98.0"><tspan fill="#c0caf5">  ✓ Created pod 'openclaw' (openclaw preset, 2 cores, 2GB)</tspan></text>
+</g>
+<g id="f2" class="f t">
+<text x="12" y="26.0"><tspan fill="#c0caf5">  CPU cores [2.0]: 2</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  Memory [1GB]: 2GB</tspan></text>
+<text x="12" y="62.0"><tspan fill="#c0caf5">  Need GPU? [y/N]: n</tspan></text>
+<text x="12" y="98.0"><tspan fill="#c0caf5">  ✓ Created pod 'openclaw' (openclaw preset, 2 cores, 2GB)</tspan></text>
+<text x="12" y="224.0"><tspan fill="#c0caf5" opacity="0.5">                                                                                                      md2cast</tspan></text>
+</g>
+</svg></div>
   <div class="code-copy">
     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
     <pre><code class="language-text">  CPU cores [2.0]: 2
@@ -162,13 +228,109 @@
 <p>Narration: &quot;Setup installs Node.js 22 and OpenClaw — all inside the overlay. Takes a minute.&quot;</p>
 <p>[0:50] Store credentials:</p>
 <div class="cast-block">
-  <div id="player-3" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogOSwgInRpdGxlIjogIlNjcmlwdCIsICJ0aW1lc3RhbXAiOiAxNzcyODIxMzU3LCAiZW52IjogeyJURVJNIjogInh0ZXJtLTI1NmNvbG9yIiwgIlRIRU1FIjogIm1vbm9rYWkiLCAiRk9OVF9GQU1JTFkiOiAiSmV0QnJhaW5zIE1vbm8sIEZpcmEgQ29kZSwgTWVubG8sIG1vbm9zcGFjZSIsICJGT05UX1NJWkUiOiAiMTYifSwgImlkbGVfdGltZV9saW1pdCI6IDN9ClswLjMsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAiXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAicyJdClswLjMyLCAibyIsICJ1Il0KWzAuMzQsICJvIiwgImQiXQpbMC4zNiwgIm8iLCAibyJdClswLjM4LCAibyIsICIgIl0KWzAuNCwgIm8iLCAiZSJdClswLjQyLCAibyIsICJuIl0KWzAuNDQsICJvIiwgInYiXQpbMC40NiwgIm8iLCAicCJdClswLjQ4LCAibyIsICJvIl0KWzAuNSwgIm8iLCAiZCJdClswLjUyLCAibyIsICIgIl0KWzAuNTQsICJvIiwgInYiXQpbMC41NiwgIm8iLCAiYSJdClswLjU4LCAibyIsICJ1Il0KWzAuNiwgIm8iLCAibCJdClswLjYyLCAibyIsICJ0Il0KWzAuNjQsICJvIiwgIiAiXQpbMC42NiwgIm8iLCAibyJdClswLjY4LCAibyIsICJwIl0KWzAuNywgIm8iLCAiZSJdClswLjcyLCAibyIsICJuIl0KWzAuNzQsICJvIiwgImMiXQpbMC43NiwgIm8iLCAibCJdClswLjc4LCAibyIsICJhIl0KWzAuOCwgIm8iLCAidyJdClswLjgyLCAibyIsICIgIl0KWzAuODQsICJvIiwgInMiXQpbMC44NiwgIm8iLCAiZSJdClswLjg4LCAibyIsICJ0Il0KWzAuOSwgIm8iLCAiICJdClswLjkyLCAibyIsICJBIl0KWzAuOTQsICJvIiwgIk4iXQpbMC45NiwgIm8iLCAiVCJdClswLjk4LCAibyIsICJIIl0KWzEuMCwgIm8iLCAiUiJdClsxLjAyLCAibyIsICJPIl0KWzEuMDQsICJvIiwgIlAiXQpbMS4wNiwgIm8iLCAiSSJdClsxLjA4LCAibyIsICJDIl0KWzEuMSwgIm8iLCAiXyJdClsxLjEyLCAibyIsICJBIl0KWzEuMTQsICJvIiwgIlAiXQpbMS4xNiwgIm8iLCAiSSJdClsxLjE4LCAibyIsICJfIl0KWzEuMiwgIm8iLCAiSyJdClsxLjIyLCAibyIsICJFIl0KWzEuMjQsICJvIiwgIlkiXQpbMS4yNiwgIm8iLCAiXHUwMDFiWzBtIl0KWzEuMjYsICJvIiwgIlxyXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG1cdTAwMWJbMzg7NTsxNW1zdWRvXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZW52cG9kXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtdmF1bHRcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1vcGVuY2xhd1x1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bXNldFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bUFOVEhST1BJQ19BUElfS0VZXHUwMDFiWzM5bVx1MDAxYlswbSJdClsyLjA2LCAibyIsICJcclxuIl0KWzMuNTYsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzMuNTYsICJvIiwgIlx1MDAxYlswbSJdClszLjU2LCAibyIsICJzIl0KWzMuNTgsICJvIiwgInUiXQpbMy42LCAibyIsICJkIl0KWzMuNjIsICJvIiwgIm8iXQpbMy42NCwgIm8iLCAiICJdClszLjY2LCAibyIsICJlIl0KWzMuNjgsICJvIiwgIm4iXQpbMy43LCAibyIsICJ2Il0KWzMuNzIsICJvIiwgInAiXQpbMy43NCwgIm8iLCAibyJdClszLjc2LCAibyIsICJkIl0KWzMuNzgsICJvIiwgIiAiXQpbMy44LCAibyIsICJ2Il0KWzMuODIsICJvIiwgImEiXQpbMy44NCwgIm8iLCAidSJdClszLjg2LCAibyIsICJsIl0KWzMuODgsICJvIiwgInQiXQpbMy45LCAibyIsICIgIl0KWzMuOTIsICJvIiwgIm8iXQpbMy45NCwgIm8iLCAicCJdClszLjk2LCAibyIsICJlIl0KWzMuOTgsICJvIiwgIm4iXQpbNC4wLCAibyIsICJjIl0KWzQuMDIsICJvIiwgImwiXQpbNC4wNCwgIm8iLCAiYSJdCls0LjA2LCAibyIsICJ3Il0KWzQuMDgsICJvIiwgIiAiXQpbNC4xLCAibyIsICJzIl0KWzQuMTIsICJvIiwgImUiXQpbNC4xNCwgIm8iLCAidCJdCls0LjE2LCAibyIsICIgIl0KWzQuMTgsICJvIiwgIk8iXQpbNC4yLCAibyIsICJQIl0KWzQuMjIsICJvIiwgIkUiXQpbNC4yNCwgIm8iLCAiTiJdCls0LjI2LCAibyIsICJBIl0KWzQuMjgsICJvIiwgIkkiXQpbNC4zLCAibyIsICJfIl0KWzQuMzIsICJvIiwgIkEiXQpbNC4zNCwgIm8iLCAiUCJdCls0LjM2LCAibyIsICJJIl0KWzQuMzgsICJvIiwgIl8iXQpbNC40LCAibyIsICJLIl0KWzQuNDIsICJvIiwgIkUiXQpbNC40NCwgIm8iLCAiWSJdCls0LjQ2LCAibyIsICJcdTAwMWJbMG0iXQpbNC40NiwgIm8iLCAiXHJcdTAwMWJbMDszMm0kIFx1MDAxYlswbVx1MDAxYlszODs1OzE1bXN1ZG9cdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1lbnZwb2RcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW12YXVsdFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bW9wZW5jbGF3XHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtc2V0XHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtT1BFTkFJX0FQSV9LRVlcdTAwMWJbMzltXHUwMDFiWzBtIl0KWzUuMjYsICJvIiwgIlxyXG4iXQpbNi43NiwgIm8iLCAiXHUwMDFiWzk7MUgiXQpbNi43NiwgIm8iLCAiXHUwMDFiWzJtICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbWQyY2FzdFx1MDAxYlswbSJdCg=="
-       data-theme="monokai"
-       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
-       data-font-size="16"
-       data-idle="3"
-       data-cols="110"
-       data-rows="7"></div>
+  <div class="svg-player"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 948 186" style="width:100%;max-width:948px;border-radius:8px;background:#1a1b26">
+<style>
+.t{font-family:JetBrains Mono, Fira Code, Cascadia Code, monospace;font-size:14px;white-space:pre}
+.f{opacity:0}
+@keyframes s{0%,100%{opacity:1}}
+#f0{animation:s 0.100s step-end 0.300s none}
+#f1{animation:s 0.120s step-end 0.400s none}
+#f2{animation:s 0.120s step-end 0.520s none}
+#f3{animation:s 0.120s step-end 0.640s none}
+#f4{animation:s 0.120s step-end 0.760s none}
+#f5{animation:s 0.120s step-end 0.880s none}
+#f6{animation:s 0.100s step-end 1.000s none}
+#f7{animation:s 0.120s step-end 1.100s none}
+#f8{animation:s 0.840s step-end 1.220s none}
+#f9{animation:s 1.500s step-end 2.060s none}
+#f10{animation:s 0.100s step-end 3.560s none}
+#f11{animation:s 0.120s step-end 3.660s none}
+#f12{animation:s 0.100s step-end 3.780s none}
+#f13{animation:s 0.100s step-end 3.880s none}
+#f14{animation:s 0.100s step-end 3.980s none}
+#f15{animation:s 0.120s step-end 4.080s none}
+#f16{animation:s 0.120s step-end 4.200s none}
+#f17{animation:s 0.120s step-end 4.320s none}
+#f18{animation:s 0.820s step-end 4.440s none}
+#f19{animation:s 1.500s step-end 5.260s none}
+#f20{animation:s 2.000s step-end 6.760s forwards}
+</style>
+<g id="f0" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f1" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo e</tspan></text>
+</g>
+<g id="f2" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod</tspan></text>
+</g>
+<g id="f3" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault</tspan></text>
+</g>
+<g id="f4" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault opencl</tspan></text>
+</g>
+<g id="f5" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set</tspan></text>
+</g>
+<g id="f6" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHR</tspan></text>
+</g>
+<g id="f7" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_</tspan></text>
+</g>
+<g id="f8" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KE</tspan></text>
+</g>
+<g id="f9" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+</g>
+<g id="f10" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f11" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo e</tspan></text>
+</g>
+<g id="f12" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod</tspan></text>
+</g>
+<g id="f13" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault</tspan></text>
+</g>
+<g id="f14" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault open</tspan></text>
+</g>
+<g id="f15" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw</tspan></text>
+</g>
+<g id="f16" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OP</tspan></text>
+</g>
+<g id="f17" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_A</tspan></text>
+</g>
+<g id="f18" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+</g>
+<g id="f19" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+</g>
+<g id="f20" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="170.0"><tspan fill="#c0caf5" opacity="0.5">                                                                                                      md2cast</tspan></text>
+</g>
+</svg></div>
   <div class="code-copy">
     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
     <pre><code class="language-bash">sudo envpod vault openclaw set ANTHROPIC_API_KEY
@@ -178,13 +340,62 @@ sudo envpod vault openclaw set OPENAI_API_KEY</code></pre>
 <p>Narration: &quot;Each key encrypted separately. The agent gets them at runtime — never sees them in config files or env dumps.&quot;</p>
 <p>[1:05] Launch:</p>
 <div class="cast-block">
-  <div id="player-4" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogOCwgInRpdGxlIjogIlNjcmlwdCIsICJ0aW1lc3RhbXAiOiAxNzcyODIxMzU3LCAiZW52IjogeyJURVJNIjogInh0ZXJtLTI1NmNvbG9yIiwgIlRIRU1FIjogIm1vbm9rYWkiLCAiRk9OVF9GQU1JTFkiOiAiSmV0QnJhaW5zIE1vbm8sIEZpcmEgQ29kZSwgTWVubG8sIG1vbm9zcGFjZSIsICJGT05UX1NJWkUiOiAiMTYifSwgImlkbGVfdGltZV9saW1pdCI6IDN9ClswLjMsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAiXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAicyJdClswLjMzLCAibyIsICJ1Il0KWzAuMzYsICJvIiwgImQiXQpbMC4zOSwgIm8iLCAibyJdClswLjQyLCAibyIsICIgIl0KWzAuNDUsICJvIiwgImUiXQpbMC40OCwgIm8iLCAibiJdClswLjUxLCAibyIsICJ2Il0KWzAuNTQsICJvIiwgInAiXQpbMC41NywgIm8iLCAibyJdClswLjYsICJvIiwgImQiXQpbMC42MywgIm8iLCAiICJdClswLjY2LCAibyIsICJyIl0KWzAuNjksICJvIiwgInUiXQpbMC43MiwgIm8iLCAibiJdClswLjc1LCAibyIsICIgIl0KWzAuNzgsICJvIiwgIm8iXQpbMC44MSwgIm8iLCAicCJdClswLjg0LCAibyIsICJlIl0KWzAuODcsICJvIiwgIm4iXQpbMC45LCAibyIsICJjIl0KWzAuOTMsICJvIiwgImwiXQpbMC45NiwgIm8iLCAiYSJdClswLjk5LCAibyIsICJ3Il0KWzEuMDIsICJvIiwgIiAiXQpbMS4wNSwgIm8iLCAiLSJdClsxLjA4LCAibyIsICItIl0KWzEuMTEsICJvIiwgIiAiXQpbMS4xNCwgIm8iLCAibyJdClsxLjE3LCAibyIsICJwIl0KWzEuMiwgIm8iLCAiZSJdClsxLjIzLCAibyIsICJuIl0KWzEuMjYsICJvIiwgImMiXQpbMS4yOSwgIm8iLCAibCJdClsxLjMyLCAibyIsICJhIl0KWzEuMzUsICJvIiwgInciXQpbMS4zOCwgIm8iLCAiXHUwMDFiWzBtIl0KWzEuMzgsICJvIiwgIlxyXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG1cdTAwMWJbMzg7NTsxNW1zdWRvXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZW52cG9kXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtcnVuXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtb3BlbmNsYXdcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0tLVx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bW9wZW5jbGF3XHUwMDFiWzM5bVx1MDAxYlswbSJdClsyLjE4LCAibyIsICJcclxuIl0KWzMuNjgsICJvIiwgIlx1MDAxYls4OzFIIl0KWzMuNjgsICJvIiwgIlx1MDAxYlsybSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG1kMmNhc3RcdTAwMWJbMG0iXQo="
-       data-theme="monokai"
-       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
-       data-font-size="16"
-       data-idle="3"
-       data-cols="110"
-       data-rows="6"></div>
+  <div class="svg-player"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 948 168" style="width:100%;max-width:948px;border-radius:8px;background:#1a1b26">
+<style>
+.t{font-family:JetBrains Mono, Fira Code, Cascadia Code, monospace;font-size:14px;white-space:pre}
+.f{opacity:0}
+@keyframes s{0%,100%{opacity:1}}
+#f0{animation:s 0.120s step-end 0.300s none}
+#f1{animation:s 0.120s step-end 0.420s none}
+#f2{animation:s 0.120s step-end 0.540s none}
+#f3{animation:s 0.120s step-end 0.660s none}
+#f4{animation:s 0.120s step-end 0.780s none}
+#f5{animation:s 0.120s step-end 0.900s none}
+#f6{animation:s 0.120s step-end 1.020s none}
+#f7{animation:s 0.120s step-end 1.140s none}
+#f8{animation:s 0.120s step-end 1.260s none}
+#f9{animation:s 0.800s step-end 1.380s none}
+#f10{animation:s 1.500s step-end 2.180s none}
+#f11{animation:s 2.000s step-end 3.680s forwards}
+</style>
+<g id="f0" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f1" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo</tspan></text>
+</g>
+<g id="f2" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envp</tspan></text>
+</g>
+<g id="f3" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod r</tspan></text>
+</g>
+<g id="f4" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run o</tspan></text>
+</g>
+<g id="f5" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openc</tspan></text>
+</g>
+<g id="f6" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw</tspan></text>
+</g>
+<g id="f7" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- o</tspan></text>
+</g>
+<g id="f8" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openc</tspan></text>
+</g>
+<g id="f9" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+</g>
+<g id="f10" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+</g>
+<g id="f11" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#c0caf5" opacity="0.5">                                                                                                      md2cast</tspan></text>
+</g>
+</svg></div>
   <div class="code-copy">
     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
     <pre><code class="language-bash">sudo envpod run openclaw -- openclaw</code></pre>
@@ -193,13 +404,50 @@ sudo envpod vault openclaw set OPENAI_API_KEY</code></pre>
 <p>Show OpenClaw starting, connecting to messaging platforms.</p>
 <p>[1:25] Second terminal — live audit:</p>
 <div class="cast-block">
-  <div id="player-5" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogOCwgInRpdGxlIjogIlNjcmlwdCIsICJ0aW1lc3RhbXAiOiAxNzcyODIxMzU3LCAiZW52IjogeyJURVJNIjogInh0ZXJtLTI1NmNvbG9yIiwgIlRIRU1FIjogIm1vbm9rYWkiLCAiRk9OVF9GQU1JTFkiOiAiSmV0QnJhaW5zIE1vbm8sIEZpcmEgQ29kZSwgTWVubG8sIG1vbm9zcGFjZSIsICJGT05UX1NJWkUiOiAiMTYifSwgImlkbGVfdGltZV9saW1pdCI6IDN9ClswLjMsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAiXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAicyJdClswLjMzLCAibyIsICJ1Il0KWzAuMzYsICJvIiwgImQiXQpbMC4zOSwgIm8iLCAibyJdClswLjQyLCAibyIsICIgIl0KWzAuNDUsICJvIiwgImUiXQpbMC40OCwgIm8iLCAibiJdClswLjUxLCAibyIsICJ2Il0KWzAuNTQsICJvIiwgInAiXQpbMC41NywgIm8iLCAibyJdClswLjYsICJvIiwgImQiXQpbMC42MywgIm8iLCAiICJdClswLjY2LCAibyIsICJhIl0KWzAuNjksICJvIiwgInUiXQpbMC43MiwgIm8iLCAiZCJdClswLjc1LCAibyIsICJpIl0KWzAuNzgsICJvIiwgInQiXQpbMC44MSwgIm8iLCAiICJdClswLjg0LCAibyIsICJvIl0KWzAuODcsICJvIiwgInAiXQpbMC45LCAibyIsICJlIl0KWzAuOTMsICJvIiwgIm4iXQpbMC45NiwgIm8iLCAiYyJdClswLjk5LCAibyIsICJsIl0KWzEuMDIsICJvIiwgImEiXQpbMS4wNSwgIm8iLCAidyJdClsxLjA4LCAibyIsICJcdTAwMWJbMG0iXQpbMS4wOCwgIm8iLCAiXHJcdTAwMWJbMDszMm0kIFx1MDAxYlswbVx1MDAxYlszODs1OzE1bXN1ZG9cdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1lbnZwb2RcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1hdWRpdFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bW9wZW5jbGF3XHUwMDFiWzM5bVx1MDAxYlswbSJdClsxLjg4LCAibyIsICJcclxuIl0KWzMuMzgsICJvIiwgIlx1MDAxYls4OzFIIl0KWzMuMzgsICJvIiwgIlx1MDAxYlsybSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG1kMmNhc3RcdTAwMWJbMG0iXQo="
-       data-theme="monokai"
-       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
-       data-font-size="16"
-       data-idle="3"
-       data-cols="110"
-       data-rows="6"></div>
+  <div class="svg-player"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 948 168" style="width:100%;max-width:948px;border-radius:8px;background:#1a1b26">
+<style>
+.t{font-family:JetBrains Mono, Fira Code, Cascadia Code, monospace;font-size:14px;white-space:pre}
+.f{opacity:0}
+@keyframes s{0%,100%{opacity:1}}
+#f0{animation:s 0.120s step-end 0.300s none}
+#f1{animation:s 0.120s step-end 0.420s none}
+#f2{animation:s 0.120s step-end 0.540s none}
+#f3{animation:s 0.120s step-end 0.660s none}
+#f4{animation:s 0.120s step-end 0.780s none}
+#f5{animation:s 0.120s step-end 0.900s none}
+#f6{animation:s 0.860s step-end 1.020s none}
+#f7{animation:s 1.500s step-end 1.880s none}
+#f8{animation:s 2.000s step-end 3.380s forwards}
+</style>
+<g id="f0" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f1" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo</tspan></text>
+</g>
+<g id="f2" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envp</tspan></text>
+</g>
+<g id="f3" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod a</tspan></text>
+</g>
+<g id="f4" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit</tspan></text>
+</g>
+<g id="f5" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit ope</tspan></text>
+</g>
+<g id="f6" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit opencla</tspan></text>
+</g>
+<g id="f7" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+</g>
+<g id="f8" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#c0caf5" opacity="0.5">                                                                                                      md2cast</tspan></text>
+</g>
+</svg></div>
   <div class="code-copy">
     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
     <pre><code class="language-bash">sudo envpod audit openclaw</code></pre>
@@ -208,13 +456,50 @@ sudo envpod vault openclaw set OPENAI_API_KEY</code></pre>
 <p>Narration: &quot;Every API call, every message sent, every LLM invocation — logged.&quot;</p>
 <p>[1:40] Show the diff (files OpenClaw created/modified):</p>
 <div class="cast-block">
-  <div id="player-6" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogOCwgInRpdGxlIjogIlNjcmlwdCIsICJ0aW1lc3RhbXAiOiAxNzcyODIxMzU3LCAiZW52IjogeyJURVJNIjogInh0ZXJtLTI1NmNvbG9yIiwgIlRIRU1FIjogIm1vbm9rYWkiLCAiRk9OVF9GQU1JTFkiOiAiSmV0QnJhaW5zIE1vbm8sIEZpcmEgQ29kZSwgTWVubG8sIG1vbm9zcGFjZSIsICJGT05UX1NJWkUiOiAiMTYifSwgImlkbGVfdGltZV9saW1pdCI6IDN9ClswLjMsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAiXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAicyJdClswLjMzLCAibyIsICJ1Il0KWzAuMzYsICJvIiwgImQiXQpbMC4zOSwgIm8iLCAibyJdClswLjQyLCAibyIsICIgIl0KWzAuNDUsICJvIiwgImUiXQpbMC40OCwgIm8iLCAibiJdClswLjUxLCAibyIsICJ2Il0KWzAuNTQsICJvIiwgInAiXQpbMC41NywgIm8iLCAibyJdClswLjYsICJvIiwgImQiXQpbMC42MywgIm8iLCAiICJdClswLjY2LCAibyIsICJkIl0KWzAuNjksICJvIiwgImkiXQpbMC43MiwgIm8iLCAiZiJdClswLjc1LCAibyIsICJmIl0KWzAuNzgsICJvIiwgIiAiXQpbMC44MSwgIm8iLCAibyJdClswLjg0LCAibyIsICJwIl0KWzAuODcsICJvIiwgImUiXQpbMC45LCAibyIsICJuIl0KWzAuOTMsICJvIiwgImMiXQpbMC45NiwgIm8iLCAibCJdClswLjk5LCAibyIsICJhIl0KWzEuMDIsICJvIiwgInciXQpbMS4wNSwgIm8iLCAiXHUwMDFiWzBtIl0KWzEuMDUsICJvIiwgIlxyXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG1cdTAwMWJbMzg7NTsxNW1zdWRvXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZW52cG9kXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZGlmZlx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bW9wZW5jbGF3XHUwMDFiWzM5bVx1MDAxYlswbSJdClsxLjg1LCAibyIsICJcclxuIl0KWzMuMzUsICJvIiwgIlx1MDAxYls4OzFIIl0KWzMuMzUsICJvIiwgIlx1MDAxYlsybSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG1kMmNhc3RcdTAwMWJbMG0iXQo="
-       data-theme="monokai"
-       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
-       data-font-size="16"
-       data-idle="3"
-       data-cols="110"
-       data-rows="6"></div>
+  <div class="svg-player"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 948 168" style="width:100%;max-width:948px;border-radius:8px;background:#1a1b26">
+<style>
+.t{font-family:JetBrains Mono, Fira Code, Cascadia Code, monospace;font-size:14px;white-space:pre}
+.f{opacity:0}
+@keyframes s{0%,100%{opacity:1}}
+#f0{animation:s 0.120s step-end 0.300s none}
+#f1{animation:s 0.120s step-end 0.420s none}
+#f2{animation:s 0.120s step-end 0.540s none}
+#f3{animation:s 0.120s step-end 0.660s none}
+#f4{animation:s 0.120s step-end 0.780s none}
+#f5{animation:s 0.120s step-end 0.900s none}
+#f6{animation:s 0.830s step-end 1.020s none}
+#f7{animation:s 1.500s step-end 1.850s none}
+#f8{animation:s 2.000s step-end 3.350s forwards}
+</style>
+<g id="f0" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f1" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo</tspan></text>
+</g>
+<g id="f2" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envp</tspan></text>
+</g>
+<g id="f3" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod d</tspan></text>
+</g>
+<g id="f4" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff</tspan></text>
+</g>
+<g id="f5" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff open</tspan></text>
+</g>
+<g id="f6" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+</g>
+<g id="f7" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+</g>
+<g id="f8" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#c0caf5" opacity="0.5">                                                                                                      md2cast</tspan></text>
+</g>
+</svg></div>
   <div class="code-copy">
     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
     <pre><code class="language-bash">sudo envpod diff openclaw</code></pre>
@@ -222,13 +507,98 @@ sudo envpod vault openclaw set OPENAI_API_KEY</code></pre>
 </div>
 <p>[1:55] Show snapshots — checkpoint the state:</p>
 <div class="cast-block">
-  <div id="player-7" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogOSwgInRpdGxlIjogIlNjcmlwdCIsICJ0aW1lc3RhbXAiOiAxNzcyODIxMzU3LCAiZW52IjogeyJURVJNIjogInh0ZXJtLTI1NmNvbG9yIiwgIlRIRU1FIjogIm1vbm9rYWkiLCAiRk9OVF9GQU1JTFkiOiAiSmV0QnJhaW5zIE1vbm8sIEZpcmEgQ29kZSwgTWVubG8sIG1vbm9zcGFjZSIsICJGT05UX1NJWkUiOiAiMTYifSwgImlkbGVfdGltZV9saW1pdCI6IDN9ClswLjMsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAiXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAicyJdClswLjMyLCAibyIsICJ1Il0KWzAuMzQsICJvIiwgImQiXQpbMC4zNiwgIm8iLCAibyJdClswLjM4LCAibyIsICIgIl0KWzAuNCwgIm8iLCAiZSJdClswLjQyLCAibyIsICJuIl0KWzAuNDQsICJvIiwgInYiXQpbMC40NiwgIm8iLCAicCJdClswLjQ4LCAibyIsICJvIl0KWzAuNSwgIm8iLCAiZCJdClswLjUyLCAibyIsICIgIl0KWzAuNTQsICJvIiwgInMiXQpbMC41NiwgIm8iLCAibiJdClswLjU4LCAibyIsICJhIl0KWzAuNiwgIm8iLCAicCJdClswLjYyLCAibyIsICJzIl0KWzAuNjQsICJvIiwgImgiXQpbMC42NiwgIm8iLCAibyJdClswLjY4LCAibyIsICJ0Il0KWzAuNywgIm8iLCAiICJdClswLjcyLCAibyIsICJvIl0KWzAuNzQsICJvIiwgInAiXQpbMC43NiwgIm8iLCAiZSJdClswLjc4LCAibyIsICJuIl0KWzAuOCwgIm8iLCAiYyJdClswLjgyLCAibyIsICJsIl0KWzAuODQsICJvIiwgImEiXQpbMC44NiwgIm8iLCAidyJdClswLjg4LCAibyIsICIgIl0KWzAuOSwgIm8iLCAiYyJdClswLjkyLCAibyIsICJyIl0KWzAuOTQsICJvIiwgImUiXQpbMC45NiwgIm8iLCAiYSJdClswLjk4LCAibyIsICJ0Il0KWzEuMCwgIm8iLCAiZSJdClsxLjAyLCAibyIsICIgIl0KWzEuMDQsICJvIiwgIi0iXQpbMS4wNiwgIm8iLCAibiJdClsxLjA4LCAibyIsICIgIl0KWzEuMSwgIm8iLCAiXCIiXQpbMS4xMiwgIm8iLCAiYSJdClsxLjE0LCAibyIsICJmIl0KWzEuMTYsICJvIiwgInQiXQpbMS4xOCwgIm8iLCAiZSJdClsxLjIsICJvIiwgInIiXQpbMS4yMiwgIm8iLCAiLSJdClsxLjI0LCAibyIsICJzIl0KWzEuMjYsICJvIiwgImUiXQpbMS4yOCwgIm8iLCAidCJdClsxLjMsICJvIiwgInUiXQpbMS4zMiwgIm8iLCAicCJdClsxLjM0LCAibyIsICJcIiJdClsxLjM2LCAibyIsICJcdTAwMWJbMG0iXQpbMS4zNiwgIm8iLCAiXHJcdTAwMWJbMDszMm0kIFx1MDAxYlswbVx1MDAxYlszODs1OzE1bXN1ZG9cdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1lbnZwb2RcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1zbmFwc2hvdFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bW9wZW5jbGF3XHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtY3JlYXRlXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtLW5cdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxODZtXCJhZnRlci1zZXR1cFwiXHUwMDFiWzM5bVx1MDAxYlswbSJdClsyLjE2LCAibyIsICJcclxuIl0KWzMuNjYsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzMuNjYsICJvIiwgIlx1MDAxYlswbSJdClszLjY2LCAibyIsICJzIl0KWzMuNjgsICJvIiwgInUiXQpbMy43LCAibyIsICJkIl0KWzMuNzIsICJvIiwgIm8iXQpbMy43NCwgIm8iLCAiICJdClszLjc2LCAibyIsICJlIl0KWzMuNzgsICJvIiwgIm4iXQpbMy44LCAibyIsICJ2Il0KWzMuODIsICJvIiwgInAiXQpbMy44NCwgIm8iLCAibyJdClszLjg2LCAibyIsICJkIl0KWzMuODgsICJvIiwgIiAiXQpbMy45LCAibyIsICJzIl0KWzMuOTIsICJvIiwgIm4iXQpbMy45NCwgIm8iLCAiYSJdClszLjk2LCAibyIsICJwIl0KWzMuOTgsICJvIiwgInMiXQpbNC4wLCAibyIsICJoIl0KWzQuMDIsICJvIiwgIm8iXQpbNC4wNCwgIm8iLCAidCJdCls0LjA2LCAibyIsICIgIl0KWzQuMDgsICJvIiwgIm8iXQpbNC4xLCAibyIsICJwIl0KWzQuMTIsICJvIiwgImUiXQpbNC4xNCwgIm8iLCAibiJdCls0LjE2LCAibyIsICJjIl0KWzQuMTgsICJvIiwgImwiXQpbNC4yLCAibyIsICJhIl0KWzQuMjIsICJvIiwgInciXQpbNC4yNCwgIm8iLCAiICJdCls0LjI2LCAibyIsICJsIl0KWzQuMjgsICJvIiwgInMiXQpbNC4zLCAibyIsICJcdTAwMWJbMG0iXQpbNC4zLCAibyIsICJcclx1MDAxYlswOzMybSQgXHUwMDFiWzBtXHUwMDFiWzM4OzU7MTVtc3Vkb1x1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWVudnBvZFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bXNuYXBzaG90XHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtb3BlbmNsYXdcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1sc1x1MDAxYlszOW1cdTAwMWJbMG0iXQpbNS4xLCAibyIsICJcclxuIl0KWzYuNiwgIm8iLCAiXHUwMDFiWzk7MUgiXQpbNi42LCAibyIsICJcdTAwMWJbMm0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBtZDJjYXN0XHUwMDFiWzBtIl0K"
-       data-theme="monokai"
-       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
-       data-font-size="16"
-       data-idle="3"
-       data-cols="110"
-       data-rows="7"></div>
+  <div class="svg-player"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 948 186" style="width:100%;max-width:948px;border-radius:8px;background:#1a1b26">
+<style>
+.t{font-family:JetBrains Mono, Fira Code, Cascadia Code, monospace;font-size:14px;white-space:pre}
+.f{opacity:0}
+@keyframes s{0%,100%{opacity:1}}
+#f0{animation:s 0.100s step-end 0.300s none}
+#f1{animation:s 0.120s step-end 0.400s none}
+#f2{animation:s 0.120s step-end 0.520s none}
+#f3{animation:s 0.120s step-end 0.640s none}
+#f4{animation:s 0.120s step-end 0.760s none}
+#f5{animation:s 0.120s step-end 0.880s none}
+#f6{animation:s 0.100s step-end 1.000s none}
+#f7{animation:s 0.120s step-end 1.100s none}
+#f8{animation:s 0.100s step-end 1.220s none}
+#f9{animation:s 0.840s step-end 1.320s none}
+#f10{animation:s 1.500s step-end 2.160s none}
+#f11{animation:s 0.120s step-end 3.660s none}
+#f12{animation:s 0.100s step-end 3.780s none}
+#f13{animation:s 0.100s step-end 3.880s none}
+#f14{animation:s 0.100s step-end 3.980s none}
+#f15{animation:s 0.120s step-end 4.080s none}
+#f16{animation:s 0.900s step-end 4.200s none}
+#f17{animation:s 1.500s step-end 5.100s none}
+#f18{animation:s 2.000s step-end 6.600s forwards}
+</style>
+<g id="f0" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f1" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo e</tspan></text>
+</g>
+<g id="f2" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod</tspan></text>
+</g>
+<g id="f3" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapsh</tspan></text>
+</g>
+<g id="f4" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot ope</tspan></text>
+</g>
+<g id="f5" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw</tspan></text>
+</g>
+<g id="f6" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create</tspan></text>
+</g>
+<g id="f7" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n &quot;</tspan></text>
+</g>
+<g id="f8" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n &quot;after-</tspan></text>
+</g>
+<g id="f9" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n &quot;after-setup</tspan></text>
+</g>
+<g id="f10" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+</g>
+<g id="f11" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f12" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo en</tspan></text>
+</g>
+<g id="f13" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod</tspan></text>
+</g>
+<g id="f14" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snaps</tspan></text>
+</g>
+<g id="f15" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot o</tspan></text>
+</g>
+<g id="f16" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot opencla</tspan></text>
+</g>
+<g id="f17" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw ls</tspan></text>
+</g>
+<g id="f18" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw ls</tspan></text>
+<text x="12" y="170.0"><tspan fill="#c0caf5" opacity="0.5">                                                                                                      md2cast</tspan></text>
+</g>
+</svg></div>
   <div class="code-copy">
     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
     <pre><code class="language-bash">sudo envpod snapshot openclaw create -n &quot;after-setup&quot;
@@ -238,13 +608,91 @@ sudo envpod snapshot openclaw ls</code></pre>
 <p>Narration: &quot;Snapshot the overlay at any point. Restore later if something breaks.&quot;</p>
 <p>[2:10] Freeze and resume:</p>
 <div class="cast-block">
-  <div id="player-8" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogMTAsICJ0aXRsZSI6ICJTY3JpcHQiLCAidGltZXN0YW1wIjogMTc3MjgyMTM1NywgImVudiI6IHsiVEVSTSI6ICJ4dGVybS0yNTZjb2xvciIsICJUSEVNRSI6ICJtb25va2FpIiwgIkZPTlRfRkFNSUxZIjogIkpldEJyYWlucyBNb25vLCBGaXJhIENvZGUsIE1lbmxvLCBtb25vc3BhY2UiLCAiRk9OVF9TSVpFIjogIjE2In0sICJpZGxlX3RpbWVfbGltaXQiOiAzfQpbMC4zLCAibyIsICJcdTAwMWJbMDszMm0kIFx1MDAxYlswbSJdClswLjMsICJvIiwgIlx1MDAxYlswbSJdClswLjMsICJvIiwgInMiXQpbMC4zMiwgIm8iLCAidSJdClswLjM0LCAibyIsICJkIl0KWzAuMzYsICJvIiwgIm8iXQpbMC4zOCwgIm8iLCAiICJdClswLjQsICJvIiwgImUiXQpbMC40MiwgIm8iLCAibiJdClswLjQ0LCAibyIsICJ2Il0KWzAuNDYsICJvIiwgInAiXQpbMC40OCwgIm8iLCAibyJdClswLjUsICJvIiwgImQiXQpbMC41MiwgIm8iLCAiICJdClswLjU0LCAibyIsICJmIl0KWzAuNTYsICJvIiwgInIiXQpbMC41OCwgIm8iLCAiZSJdClswLjYsICJvIiwgImUiXQpbMC42MiwgIm8iLCAieiJdClswLjY0LCAibyIsICJlIl0KWzAuNjYsICJvIiwgIiAiXQpbMC42OCwgIm8iLCAibyJdClswLjcsICJvIiwgInAiXQpbMC43MiwgIm8iLCAiZSJdClswLjc0LCAibyIsICJuIl0KWzAuNzYsICJvIiwgImMiXQpbMC43OCwgIm8iLCAibCJdClswLjgsICJvIiwgImEiXQpbMC44MiwgIm8iLCAidyJdClswLjg0LCAibyIsICJcdTAwMWJbMG0iXQpbMC44NCwgIm8iLCAiXHJcdTAwMWJbMDszMm0kIFx1MDAxYlswbVx1MDAxYlszODs1OzE1bXN1ZG9cdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1lbnZwb2RcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1mcmVlemVcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1vcGVuY2xhd1x1MDAxYlszOW1cdTAwMWJbMG0iXQpbMS42NCwgIm8iLCAiXHJcbiJdClszLjE0LCAibyIsICIgIFx1MDAxYlsybSMgLi4uIGluc3BlY3QgLi4uXHUwMDFiWzBtXHJcbiJdClszLjQ0LCAibyIsICJcdTAwMWJbMDszMm0kIFx1MDAxYlswbSJdClszLjQ0LCAibyIsICJcdTAwMWJbMG0iXQpbMy40NCwgIm8iLCAicyJdClszLjQ2LCAibyIsICJ1Il0KWzMuNDgsICJvIiwgImQiXQpbMy41LCAibyIsICJvIl0KWzMuNTIsICJvIiwgIiAiXQpbMy41NCwgIm8iLCAiZSJdClszLjU2LCAibyIsICJuIl0KWzMuNTgsICJvIiwgInYiXQpbMy42LCAibyIsICJwIl0KWzMuNjIsICJvIiwgIm8iXQpbMy42NCwgIm8iLCAiZCJdClszLjY2LCAibyIsICIgIl0KWzMuNjgsICJvIiwgInIiXQpbMy43LCAibyIsICJlIl0KWzMuNzIsICJvIiwgInMiXQpbMy43NCwgIm8iLCAidSJdClszLjc2LCAibyIsICJtIl0KWzMuNzgsICJvIiwgImUiXQpbMy44LCAibyIsICIgIl0KWzMuODIsICJvIiwgIm8iXQpbMy44NCwgIm8iLCAicCJdClszLjg2LCAibyIsICJlIl0KWzMuODgsICJvIiwgIm4iXQpbMy45LCAibyIsICJjIl0KWzMuOTIsICJvIiwgImwiXQpbMy45NCwgIm8iLCAiYSJdClszLjk2LCAibyIsICJ3Il0KWzMuOTgsICJvIiwgIlx1MDAxYlswbSJdClszLjk4LCAibyIsICJcclx1MDAxYlswOzMybSQgXHUwMDFiWzBtXHUwMDFiWzM4OzU7MTVtc3Vkb1x1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWVudnBvZFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bXJlc3VtZVx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bW9wZW5jbGF3XHUwMDFiWzM5bVx1MDAxYlswbSJdCls0Ljc4LCAibyIsICJcclxuIl0KWzYuMjgsICJvIiwgIlx1MDAxYlsxMDsxSCJdCls2LjI4LCAibyIsICJcdTAwMWJbMm0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBtZDJjYXN0XHUwMDFiWzBtIl0K"
-       data-theme="monokai"
-       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
-       data-font-size="16"
-       data-idle="3"
-       data-cols="110"
-       data-rows="8"></div>
+  <div class="svg-player"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 948 204" style="width:100%;max-width:948px;border-radius:8px;background:#1a1b26">
+<style>
+.t{font-family:JetBrains Mono, Fira Code, Cascadia Code, monospace;font-size:14px;white-space:pre}
+.f{opacity:0}
+@keyframes s{0%,100%{opacity:1}}
+#f0{animation:s 0.100s step-end 0.300s none}
+#f1{animation:s 0.120s step-end 0.400s none}
+#f2{animation:s 0.120s step-end 0.520s none}
+#f3{animation:s 0.120s step-end 0.640s none}
+#f4{animation:s 0.880s step-end 0.760s none}
+#f5{animation:s 1.500s step-end 1.640s none}
+#f6{animation:s 0.300s step-end 3.140s none}
+#f7{animation:s 0.100s step-end 3.440s none}
+#f8{animation:s 0.100s step-end 3.540s none}
+#f9{animation:s 0.100s step-end 3.640s none}
+#f10{animation:s 0.120s step-end 3.740s none}
+#f11{animation:s 0.100s step-end 3.860s none}
+#f12{animation:s 0.820s step-end 3.960s none}
+#f13{animation:s 1.500s step-end 4.780s none}
+#f14{animation:s 2.000s step-end 6.280s forwards}
+</style>
+<g id="f0" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f1" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo e</tspan></text>
+</g>
+<g id="f2" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod</tspan></text>
+</g>
+<g id="f3" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod freeze</tspan></text>
+</g>
+<g id="f4" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod freeze openc</tspan></text>
+</g>
+<g id="f5" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod freeze openclaw</tspan></text>
+</g>
+<g id="f6" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod freeze openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># ... inspect ...</tspan></text>
+</g>
+<g id="f7" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod freeze openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># ... inspect ...</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f8" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod freeze openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># ... inspect ...</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo e</tspan></text>
+</g>
+<g id="f9" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod freeze openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># ... inspect ...</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod</tspan></text>
+</g>
+<g id="f10" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod freeze openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># ... inspect ...</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod resu</tspan></text>
+</g>
+<g id="f11" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod freeze openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># ... inspect ...</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod resume ope</tspan></text>
+</g>
+<g id="f12" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod freeze openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># ... inspect ...</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod resume openclaw</tspan></text>
+</g>
+<g id="f13" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod freeze openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># ... inspect ...</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod resume openclaw</tspan></text>
+</g>
+<g id="f14" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod freeze openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># ... inspect ...</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod resume openclaw</tspan></text>
+<text x="12" y="188.0"><tspan fill="#c0caf5" opacity="0.5">                                                                                                      md2cast</tspan></text>
+</g>
+</svg></div>
   <div class="code-copy">
     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
     <pre><code class="language-bash">sudo envpod freeze openclaw
@@ -257,13 +705,737 @@ sudo envpod resume openclaw</code></pre>
 <hr>
 <h2>Commands (copy-paste)</h2>
 <div class="cast-block">
-  <div id="player-9" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogMTgsICJ0aXRsZSI6ICJDb21tYW5kcyAoY29weS1wYXN0ZSkiLCAidGltZXN0YW1wIjogMTc3MjgyMTM1NywgImVudiI6IHsiVEVSTSI6ICJ4dGVybS0yNTZjb2xvciIsICJUSEVNRSI6ICJtb25va2FpIiwgIkZPTlRfRkFNSUxZIjogIkpldEJyYWlucyBNb25vLCBGaXJhIENvZGUsIE1lbmxvLCBtb25vc3BhY2UiLCAiRk9OVF9TSVpFIjogIjE2In0sICJpZGxlX3RpbWVfbGltaXQiOiAzfQpbMC4zLCAibyIsICJcdTAwMWJbMDszMm0kIFx1MDAxYlswbSJdClswLjMsICJvIiwgIlx1MDAxYlswbSJdClswLjMsICJvIiwgInMiXQpbMC4zMiwgIm8iLCAidSJdClswLjM0LCAibyIsICJkIl0KWzAuMzYsICJvIiwgIm8iXQpbMC4zOCwgIm8iLCAiICJdClswLjQsICJvIiwgImUiXQpbMC40MiwgIm8iLCAibiJdClswLjQ0LCAibyIsICJ2Il0KWzAuNDYsICJvIiwgInAiXQpbMC40OCwgIm8iLCAibyJdClswLjUsICJvIiwgImQiXQpbMC41MiwgIm8iLCAiICJdClswLjU0LCAibyIsICJpIl0KWzAuNTYsICJvIiwgIm4iXQpbMC41OCwgIm8iLCAiaSJdClswLjYsICJvIiwgInQiXQpbMC42MiwgIm8iLCAiICJdClswLjY0LCAibyIsICJvIl0KWzAuNjYsICJvIiwgInAiXQpbMC42OCwgIm8iLCAiZSJdClswLjcsICJvIiwgIm4iXQpbMC43MiwgIm8iLCAiYyJdClswLjc0LCAibyIsICJsIl0KWzAuNzYsICJvIiwgImEiXQpbMC43OCwgIm8iLCAidyJdClswLjgsICJvIiwgIlx1MDAxYlswbSJdClswLjgsICJvIiwgIlxyXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG1cdTAwMWJbMzg7NTsxNW1zdWRvXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZW52cG9kXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtaW5pdFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bW9wZW5jbGF3XHUwMDFiWzM5bVx1MDAxYlswbSJdClsxLjYsICJvIiwgIlxyXG4iXQpbMy4xLCAibyIsICIgIFx1MDAxYlsybSMgKHNlbGVjdCBvcGVuY2xhdyBmcm9tIHdpemFyZCwgY3VzdG9taXplIHJlc291cmNlcylcdTAwMWJbMG1cclxuIl0KWzMuNCwgIm8iLCAiXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG0iXQpbMy40LCAibyIsICJcdTAwMWJbMG0iXQpbMy40LCAibyIsICJzIl0KWzMuNDIsICJvIiwgInUiXQpbMy40NCwgIm8iLCAiZCJdClszLjQ2LCAibyIsICJvIl0KWzMuNDgsICJvIiwgIiAiXQpbMy41LCAibyIsICJlIl0KWzMuNTIsICJvIiwgIm4iXQpbMy41NCwgIm8iLCAidiJdClszLjU2LCAibyIsICJwIl0KWzMuNTgsICJvIiwgIm8iXQpbMy42LCAibyIsICJkIl0KWzMuNjIsICJvIiwgIiAiXQpbMy42NCwgIm8iLCAidiJdClszLjY2LCAibyIsICJhIl0KWzMuNjgsICJvIiwgInUiXQpbMy43LCAibyIsICJsIl0KWzMuNzIsICJvIiwgInQiXQpbMy43NCwgIm8iLCAiICJdClszLjc2LCAibyIsICJvIl0KWzMuNzgsICJvIiwgInAiXQpbMy44LCAibyIsICJlIl0KWzMuODIsICJvIiwgIm4iXQpbMy44NCwgIm8iLCAiYyJdClszLjg2LCAibyIsICJsIl0KWzMuODgsICJvIiwgImEiXQpbMy45LCAibyIsICJ3Il0KWzMuOTIsICJvIiwgIiAiXQpbMy45NCwgIm8iLCAicyJdClszLjk2LCAibyIsICJlIl0KWzMuOTgsICJvIiwgInQiXQpbNC4wLCAibyIsICIgIl0KWzQuMDIsICJvIiwgIkEiXQpbNC4wNCwgIm8iLCAiTiJdCls0LjA2LCAibyIsICJUIl0KWzQuMDgsICJvIiwgIkgiXQpbNC4xLCAibyIsICJSIl0KWzQuMTIsICJvIiwgIk8iXQpbNC4xNCwgIm8iLCAiUCJdCls0LjE2LCAibyIsICJJIl0KWzQuMTgsICJvIiwgIkMiXQpbNC4yLCAibyIsICJfIl0KWzQuMjIsICJvIiwgIkEiXQpbNC4yNCwgIm8iLCAiUCJdCls0LjI2LCAibyIsICJJIl0KWzQuMjgsICJvIiwgIl8iXQpbNC4zLCAibyIsICJLIl0KWzQuMzIsICJvIiwgIkUiXQpbNC4zNCwgIm8iLCAiWSJdCls0LjM2LCAibyIsICJcdTAwMWJbMG0iXQpbNC4zNiwgIm8iLCAiXHJcdTAwMWJbMDszMm0kIFx1MDAxYlswbVx1MDAxYlszODs1OzE1bXN1ZG9cdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1lbnZwb2RcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW12YXVsdFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bW9wZW5jbGF3XHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtc2V0XHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtQU5USFJPUElDX0FQSV9LRVlcdTAwMWJbMzltXHUwMDFiWzBtIl0KWzUuMTYsICJvIiwgIlxyXG4iXQpbNi42NiwgIm8iLCAiXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG0iXQpbNi42NiwgIm8iLCAiXHUwMDFiWzBtIl0KWzYuNjYsICJvIiwgInMiXQpbNi42OCwgIm8iLCAidSJdCls2LjcsICJvIiwgImQiXQpbNi43MiwgIm8iLCAibyJdCls2Ljc0LCAibyIsICIgIl0KWzYuNzYsICJvIiwgImUiXQpbNi43OCwgIm8iLCAibiJdCls2LjgsICJvIiwgInYiXQpbNi44MiwgIm8iLCAicCJdCls2Ljg0LCAibyIsICJvIl0KWzYuODYsICJvIiwgImQiXQpbNi44OCwgIm8iLCAiICJdCls2LjksICJvIiwgInYiXQpbNi45MiwgIm8iLCAiYSJdCls2Ljk0LCAibyIsICJ1Il0KWzYuOTYsICJvIiwgImwiXQpbNi45OCwgIm8iLCAidCJdCls3LjAsICJvIiwgIiAiXQpbNy4wMiwgIm8iLCAibyJdCls3LjA0LCAibyIsICJwIl0KWzcuMDYsICJvIiwgImUiXQpbNy4wOCwgIm8iLCAibiJdCls3LjEsICJvIiwgImMiXQpbNy4xMiwgIm8iLCAibCJdCls3LjE0LCAibyIsICJhIl0KWzcuMTYsICJvIiwgInciXQpbNy4xOCwgIm8iLCAiICJdCls3LjIsICJvIiwgInMiXQpbNy4yMiwgIm8iLCAiZSJdCls3LjI0LCAibyIsICJ0Il0KWzcuMjYsICJvIiwgIiAiXQpbNy4yOCwgIm8iLCAiTyJdCls3LjMsICJvIiwgIlAiXQpbNy4zMiwgIm8iLCAiRSJdCls3LjM0LCAibyIsICJOIl0KWzcuMzYsICJvIiwgIkEiXQpbNy4zOCwgIm8iLCAiSSJdCls3LjQsICJvIiwgIl8iXQpbNy40MiwgIm8iLCAiQSJdCls3LjQ0LCAibyIsICJQIl0KWzcuNDYsICJvIiwgIkkiXQpbNy40OCwgIm8iLCAiXyJdCls3LjUsICJvIiwgIksiXQpbNy41MiwgIm8iLCAiRSJdCls3LjU0LCAibyIsICJZIl0KWzcuNTYsICJvIiwgIlx1MDAxYlswbSJdCls3LjU2LCAibyIsICJcclx1MDAxYlswOzMybSQgXHUwMDFiWzBtXHUwMDFiWzM4OzU7MTVtc3Vkb1x1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWVudnBvZFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bXZhdWx0XHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtb3BlbmNsYXdcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1zZXRcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1PUEVOQUlfQVBJX0tFWVx1MDAxYlszOW1cdTAwMWJbMG0iXQpbOC4zNiwgIm8iLCAiXHJcbiJdCls5Ljg2LCAibyIsICJcdTAwMWJbMDszMm0kIFx1MDAxYlswbSJdCls5Ljg2LCAibyIsICJcdTAwMWJbMG0iXQpbOS44NiwgIm8iLCAicyJdCls5Ljg4LCAibyIsICJ1Il0KWzkuOSwgIm8iLCAiZCJdCls5LjkyLCAibyIsICJvIl0KWzkuOTQsICJvIiwgIiAiXQpbOS45NiwgIm8iLCAiZSJdCls5Ljk4LCAibyIsICJuIl0KWzEwLjAsICJvIiwgInYiXQpbMTAuMDIsICJvIiwgInAiXQpbMTAuMDQsICJvIiwgIm8iXQpbMTAuMDYsICJvIiwgImQiXQpbMTAuMDgsICJvIiwgIiAiXQpbMTAuMSwgIm8iLCAiciJdClsxMC4xMiwgIm8iLCAidSJdClsxMC4xNCwgIm8iLCAibiJdClsxMC4xNiwgIm8iLCAiICJdClsxMC4xOCwgIm8iLCAibyJdClsxMC4yLCAibyIsICJwIl0KWzEwLjIyLCAibyIsICJlIl0KWzEwLjI0LCAibyIsICJuIl0KWzEwLjI2LCAibyIsICJjIl0KWzEwLjI4LCAibyIsICJsIl0KWzEwLjMsICJvIiwgImEiXQpbMTAuMzIsICJvIiwgInciXQpbMTAuMzQsICJvIiwgIiAiXQpbMTAuMzYsICJvIiwgIi0iXQpbMTAuMzgsICJvIiwgIi0iXQpbMTAuNCwgIm8iLCAiICJdClsxMC40MiwgIm8iLCAibyJdClsxMC40NCwgIm8iLCAicCJdClsxMC40NiwgIm8iLCAiZSJdClsxMC40OCwgIm8iLCAibiJdClsxMC41LCAibyIsICJjIl0KWzEwLjUyLCAibyIsICJsIl0KWzEwLjU0LCAibyIsICJhIl0KWzEwLjU2LCAibyIsICJ3Il0KWzEwLjU4LCAibyIsICJcdTAwMWJbMG0iXQpbMTAuNTgsICJvIiwgIlxyXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG1cdTAwMWJbMzg7NTsxNW1zdWRvXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZW52cG9kXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtcnVuXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtb3BlbmNsYXdcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0tLVx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bW9wZW5jbGF3XHUwMDFiWzM5bVx1MDAxYlswbSJdClsxMS4zOCwgIm8iLCAiXHJcbiJdClsxMi44OCwgIm8iLCAiXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG0iXQpbMTIuODgsICJvIiwgIlx1MDAxYlswbSJdClsxMi44OCwgIm8iLCAicyJdClsxMi45LCAibyIsICJ1Il0KWzEyLjkyLCAibyIsICJkIl0KWzEyLjk0LCAibyIsICJvIl0KWzEyLjk2LCAibyIsICIgIl0KWzEyLjk4LCAibyIsICJlIl0KWzEzLjAsICJvIiwgIm4iXQpbMTMuMDIsICJvIiwgInYiXQpbMTMuMDQsICJvIiwgInAiXQpbMTMuMDYsICJvIiwgIm8iXQpbMTMuMDgsICJvIiwgImQiXQpbMTMuMSwgIm8iLCAiICJdClsxMy4xMiwgIm8iLCAiYSJdClsxMy4xNCwgIm8iLCAidSJdClsxMy4xNiwgIm8iLCAiZCJdClsxMy4xOCwgIm8iLCAiaSJdClsxMy4yLCAibyIsICJ0Il0KWzEzLjIyLCAibyIsICIgIl0KWzEzLjI0LCAibyIsICJvIl0KWzEzLjI2LCAibyIsICJwIl0KWzEzLjI4LCAibyIsICJlIl0KWzEzLjMsICJvIiwgIm4iXQpbMTMuMzIsICJvIiwgImMiXQpbMTMuMzQsICJvIiwgImwiXQpbMTMuMzYsICJvIiwgImEiXQpbMTMuMzgsICJvIiwgInciXQpbMTMuNCwgIm8iLCAiXHUwMDFiWzBtIl0KWzEzLjQsICJvIiwgIlxyXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG1cdTAwMWJbMzg7NTsxNW1zdWRvXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZW52cG9kXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtYXVkaXRcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1vcGVuY2xhd1x1MDAxYlszOW1cdTAwMWJbMG0iXQpbMTQuMiwgIm8iLCAiXHJcbiJdClsxNS43LCAibyIsICJcdTAwMWJbMDszMm0kIFx1MDAxYlswbSJdClsxNS43LCAibyIsICJcdTAwMWJbMG0iXQpbMTUuNywgIm8iLCAicyJdClsxNS43MiwgIm8iLCAidSJdClsxNS43NCwgIm8iLCAiZCJdClsxNS43NiwgIm8iLCAibyJdClsxNS43OCwgIm8iLCAiICJdClsxNS44LCAibyIsICJlIl0KWzE1LjgyLCAibyIsICJuIl0KWzE1Ljg0LCAibyIsICJ2Il0KWzE1Ljg2LCAibyIsICJwIl0KWzE1Ljg4LCAibyIsICJvIl0KWzE1LjksICJvIiwgImQiXQpbMTUuOTIsICJvIiwgIiAiXQpbMTUuOTQsICJvIiwgImQiXQpbMTUuOTYsICJvIiwgImkiXQpbMTUuOTgsICJvIiwgImYiXQpbMTYuMCwgIm8iLCAiZiJdClsxNi4wMiwgIm8iLCAiICJdClsxNi4wNCwgIm8iLCAibyJdClsxNi4wNiwgIm8iLCAicCJdClsxNi4wOCwgIm8iLCAiZSJdClsxNi4xLCAibyIsICJuIl0KWzE2LjEyLCAibyIsICJjIl0KWzE2LjE0LCAibyIsICJsIl0KWzE2LjE2LCAibyIsICJhIl0KWzE2LjE4LCAibyIsICJ3Il0KWzE2LjIsICJvIiwgIlx1MDAxYlswbSJdClsxNi4yLCAibyIsICJcclx1MDAxYlswOzMybSQgXHUwMDFiWzBtXHUwMDFiWzM4OzU7MTVtc3Vkb1x1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWVudnBvZFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWRpZmZcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1vcGVuY2xhd1x1MDAxYlszOW1cdTAwMWJbMG0iXQpbMTcuMCwgIm8iLCAiXHJcbiJdClsxOC41LCAibyIsICJcdTAwMWJbMDszMm0kIFx1MDAxYlswbSJdClsxOC41LCAibyIsICJcdTAwMWJbMG0iXQpbMTguNSwgIm8iLCAicyJdClsxOC41MiwgIm8iLCAidSJdClsxOC41NCwgIm8iLCAiZCJdClsxOC41NiwgIm8iLCAibyJdClsxOC41OCwgIm8iLCAiICJdClsxOC42LCAibyIsICJlIl0KWzE4LjYyLCAibyIsICJuIl0KWzE4LjY0LCAibyIsICJ2Il0KWzE4LjY2LCAibyIsICJwIl0KWzE4LjY4LCAibyIsICJvIl0KWzE4LjcsICJvIiwgImQiXQpbMTguNzIsICJvIiwgIiAiXQpbMTguNzQsICJvIiwgInMiXQpbMTguNzYsICJvIiwgIm4iXQpbMTguNzgsICJvIiwgImEiXQpbMTguOCwgIm8iLCAicCJdClsxOC44MiwgIm8iLCAicyJdClsxOC44NCwgIm8iLCAiaCJdClsxOC44NiwgIm8iLCAibyJdClsxOC44OCwgIm8iLCAidCJdClsxOC45LCAibyIsICIgIl0KWzE4LjkyLCAibyIsICJvIl0KWzE4Ljk0LCAibyIsICJwIl0KWzE4Ljk2LCAibyIsICJlIl0KWzE4Ljk4LCAibyIsICJuIl0KWzE5LjAsICJvIiwgImMiXQpbMTkuMDIsICJvIiwgImwiXQpbMTkuMDQsICJvIiwgImEiXQpbMTkuMDYsICJvIiwgInciXQpbMTkuMDgsICJvIiwgIiAiXQpbMTkuMSwgIm8iLCAiYyJdClsxOS4xMiwgIm8iLCAiciJdClsxOS4xNCwgIm8iLCAiZSJdClsxOS4xNiwgIm8iLCAiYSJdClsxOS4xOCwgIm8iLCAidCJdClsxOS4yLCAibyIsICJlIl0KWzE5LjIyLCAibyIsICIgIl0KWzE5LjI0LCAibyIsICItIl0KWzE5LjI2LCAibyIsICJuIl0KWzE5LjI4LCAibyIsICIgIl0KWzE5LjMsICJvIiwgIlwiIl0KWzE5LjMyLCAibyIsICJhIl0KWzE5LjM0LCAibyIsICJmIl0KWzE5LjM2LCAibyIsICJ0Il0KWzE5LjM4LCAibyIsICJlIl0KWzE5LjQsICJvIiwgInIiXQpbMTkuNDIsICJvIiwgIi0iXQpbMTkuNDQsICJvIiwgInMiXQpbMTkuNDYsICJvIiwgImUiXQpbMTkuNDgsICJvIiwgInQiXQpbMTkuNSwgIm8iLCAidSJdClsxOS41MiwgIm8iLCAicCJdClsxOS41NCwgIm8iLCAiXCIiXQpbMTkuNTYsICJvIiwgIlx1MDAxYlswbSJdClsxOS41NiwgIm8iLCAiXHJcdTAwMWJbMDszMm0kIFx1MDAxYlswbVx1MDAxYlszODs1OzE1bXN1ZG9cdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1lbnZwb2RcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1zbmFwc2hvdFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bW9wZW5jbGF3XHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtY3JlYXRlXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtLW5cdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxODZtXCJhZnRlci1zZXR1cFwiXHUwMDFiWzM5bVx1MDAxYlswbSJdClsyMC4zNiwgIm8iLCAiXHJcbiJdClsyMS44NiwgIm8iLCAiXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG0iXQpbMjEuODYsICJvIiwgIlx1MDAxYlswbSJdClsyMS44NiwgIm8iLCAicyJdClsyMS44OCwgIm8iLCAidSJdClsyMS45LCAibyIsICJkIl0KWzIxLjkyLCAibyIsICJvIl0KWzIxLjk0LCAibyIsICIgIl0KWzIxLjk2LCAibyIsICJlIl0KWzIxLjk4LCAibyIsICJuIl0KWzIyLjAsICJvIiwgInYiXQpbMjIuMDIsICJvIiwgInAiXQpbMjIuMDQsICJvIiwgIm8iXQpbMjIuMDYsICJvIiwgImQiXQpbMjIuMDgsICJvIiwgIiAiXQpbMjIuMSwgIm8iLCAicyJdClsyMi4xMiwgIm8iLCAibiJdClsyMi4xNCwgIm8iLCAiYSJdClsyMi4xNiwgIm8iLCAicCJdClsyMi4xOCwgIm8iLCAicyJdClsyMi4yLCAibyIsICJoIl0KWzIyLjIyLCAibyIsICJvIl0KWzIyLjI0LCAibyIsICJ0Il0KWzIyLjI2LCAibyIsICIgIl0KWzIyLjI4LCAibyIsICJvIl0KWzIyLjMsICJvIiwgInAiXQpbMjIuMzIsICJvIiwgImUiXQpbMjIuMzQsICJvIiwgIm4iXQpbMjIuMzYsICJvIiwgImMiXQpbMjIuMzgsICJvIiwgImwiXQpbMjIuNCwgIm8iLCAiYSJdClsyMi40MiwgIm8iLCAidyJdClsyMi40NCwgIm8iLCAiICJdClsyMi40NiwgIm8iLCAibCJdClsyMi40OCwgIm8iLCAicyJdClsyMi41LCAibyIsICJcdTAwMWJbMG0iXQpbMjIuNSwgIm8iLCAiXHJcdTAwMWJbMDszMm0kIFx1MDAxYlswbVx1MDAxYlszODs1OzE1bXN1ZG9cdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1lbnZwb2RcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1zbmFwc2hvdFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bW9wZW5jbGF3XHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtbHNcdTAwMWJbMzltXHUwMDFiWzBtIl0KWzIzLjMsICJvIiwgIlxyXG4iXQpbMjQuOCwgIm8iLCAiXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG0iXQpbMjQuOCwgIm8iLCAiXHUwMDFiWzBtIl0KWzI0LjgsICJvIiwgInMiXQpbMjQuODIsICJvIiwgInUiXQpbMjQuODQsICJvIiwgImQiXQpbMjQuODYsICJvIiwgIm8iXQpbMjQuODgsICJvIiwgIiAiXQpbMjQuOSwgIm8iLCAiZSJdClsyNC45MiwgIm8iLCAibiJdClsyNC45NCwgIm8iLCAidiJdClsyNC45NiwgIm8iLCAicCJdClsyNC45OCwgIm8iLCAibyJdClsyNS4wLCAibyIsICJkIl0KWzI1LjAyLCAibyIsICIgIl0KWzI1LjA0LCAibyIsICJmIl0KWzI1LjA2LCAibyIsICJyIl0KWzI1LjA4LCAibyIsICJlIl0KWzI1LjEsICJvIiwgImUiXQpbMjUuMTIsICJvIiwgInoiXQpbMjUuMTQsICJvIiwgImUiXQpbMjUuMTYsICJvIiwgIiAiXQpbMjUuMTgsICJvIiwgIm8iXQpbMjUuMiwgIm8iLCAicCJdClsyNS4yMiwgIm8iLCAiZSJdClsyNS4yNCwgIm8iLCAibiJdClsyNS4yNiwgIm8iLCAiYyJdClsyNS4yOCwgIm8iLCAibCJdClsyNS4zLCAibyIsICJhIl0KWzI1LjMyLCAibyIsICJ3Il0KWzI1LjM0LCAibyIsICJcdTAwMWJbMG0iXQpbMjUuMzQsICJvIiwgIlxyXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG1cdTAwMWJbMzg7NTsxNW1zdWRvXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZW52cG9kXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZnJlZXplXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtb3BlbmNsYXdcdTAwMWJbMzltXHUwMDFiWzBtIl0KWzI2LjE0LCAibyIsICJcclxuIl0KWzI3LjY0LCAibyIsICJcdTAwMWJbMDszMm0kIFx1MDAxYlswbSJdClsyNy42NCwgIm8iLCAiXHUwMDFiWzBtIl0KWzI3LjY0LCAibyIsICJzIl0KWzI3LjY2LCAibyIsICJ1Il0KWzI3LjY4LCAibyIsICJkIl0KWzI3LjcsICJvIiwgIm8iXQpbMjcuNzIsICJvIiwgIiAiXQpbMjcuNzQsICJvIiwgImUiXQpbMjcuNzYsICJvIiwgIm4iXQpbMjcuNzgsICJvIiwgInYiXQpbMjcuOCwgIm8iLCAicCJdClsyNy44MiwgIm8iLCAibyJdClsyNy44NCwgIm8iLCAiZCJdClsyNy44NiwgIm8iLCAiICJdClsyNy44OCwgIm8iLCAiciJdClsyNy45LCAibyIsICJlIl0KWzI3LjkyLCAibyIsICJzIl0KWzI3Ljk0LCAibyIsICJ1Il0KWzI3Ljk2LCAibyIsICJtIl0KWzI3Ljk4LCAibyIsICJlIl0KWzI4LjAsICJvIiwgIiAiXQpbMjguMDIsICJvIiwgIm8iXQpbMjguMDQsICJvIiwgInAiXQpbMjguMDYsICJvIiwgImUiXQpbMjguMDgsICJvIiwgIm4iXQpbMjguMSwgIm8iLCAiYyJdClsyOC4xMiwgIm8iLCAibCJdClsyOC4xNCwgIm8iLCAiYSJdClsyOC4xNiwgIm8iLCAidyJdClsyOC4xOCwgIm8iLCAiXHUwMDFiWzBtIl0KWzI4LjE4LCAibyIsICJcclx1MDAxYlswOzMybSQgXHUwMDFiWzBtXHUwMDFiWzM4OzU7MTVtc3Vkb1x1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWVudnBvZFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bXJlc3VtZVx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bW9wZW5jbGF3XHUwMDFiWzM5bVx1MDAxYlswbSJdClsyOC45OCwgIm8iLCAiXHJcbiJdClszMC40OCwgIm8iLCAiXHUwMDFiWzE4OzFIIl0KWzMwLjQ4LCAibyIsICJcdTAwMWJbMm0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBtZDJjYXN0XHUwMDFiWzBtIl0K"
-       data-theme="monokai"
-       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
-       data-font-size="16"
-       data-idle="3"
-       data-cols="110"
-       data-rows="16"></div>
+  <div class="svg-player"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 948 348" style="width:100%;max-width:948px;border-radius:8px;background:#1a1b26">
+<style>
+.t{font-family:JetBrains Mono, Fira Code, Cascadia Code, monospace;font-size:14px;white-space:pre}
+.f{opacity:0}
+@keyframes s{0%,100%{opacity:1}}
+#f0{animation:s 0.100s step-end 0.300s none}
+#f1{animation:s 0.120s step-end 0.400s none}
+#f2{animation:s 0.120s step-end 0.520s none}
+#f3{animation:s 0.120s step-end 0.640s none}
+#f4{animation:s 0.840s step-end 0.760s none}
+#f5{animation:s 1.500s step-end 1.600s none}
+#f6{animation:s 0.300s step-end 3.100s none}
+#f7{animation:s 0.100s step-end 3.400s none}
+#f8{animation:s 0.100s step-end 3.500s none}
+#f9{animation:s 0.100s step-end 3.600s none}
+#f10{animation:s 0.120s step-end 3.700s none}
+#f11{animation:s 0.100s step-end 3.820s none}
+#f12{animation:s 0.120s step-end 3.920s none}
+#f13{animation:s 0.120s step-end 4.040s none}
+#f14{animation:s 0.120s step-end 4.160s none}
+#f15{animation:s 0.880s step-end 4.280s none}
+#f16{animation:s 1.500s step-end 5.160s none}
+#f17{animation:s 0.120s step-end 6.660s none}
+#f18{animation:s 0.120s step-end 6.780s none}
+#f19{animation:s 0.120s step-end 6.900s none}
+#f20{animation:s 0.100s step-end 7.020s none}
+#f21{animation:s 0.120s step-end 7.120s none}
+#f22{animation:s 0.120s step-end 7.240s none}
+#f23{animation:s 0.120s step-end 7.360s none}
+#f24{animation:s 0.880s step-end 7.480s none}
+#f25{animation:s 1.500s step-end 8.360s none}
+#f26{animation:s 0.100s step-end 9.860s none}
+#f27{animation:s 0.120s step-end 9.960s none}
+#f28{animation:s 0.120s step-end 10.080s none}
+#f29{animation:s 0.100s step-end 10.200s none}
+#f30{animation:s 0.120s step-end 10.300s none}
+#f31{animation:s 0.120s step-end 10.420s none}
+#f32{animation:s 0.840s step-end 10.540s none}
+#f33{animation:s 1.500s step-end 11.380s none}
+#f34{animation:s 0.120s step-end 12.880s none}
+#f35{animation:s 0.120s step-end 13.000s none}
+#f36{animation:s 0.100s step-end 13.120s none}
+#f37{animation:s 0.120s step-end 13.220s none}
+#f38{animation:s 0.860s step-end 13.340s none}
+#f39{animation:s 1.500s step-end 14.200s none}
+#f40{animation:s 0.100s step-end 15.700s none}
+#f41{animation:s 0.120s step-end 15.800s none}
+#f42{animation:s 0.120s step-end 15.920s none}
+#f43{animation:s 0.100s step-end 16.040s none}
+#f44{animation:s 0.860s step-end 16.140s none}
+#f45{animation:s 1.500s step-end 17.000s none}
+#f46{animation:s 0.100s step-end 18.500s none}
+#f47{animation:s 0.120s step-end 18.600s none}
+#f48{animation:s 0.100s step-end 18.720s none}
+#f49{animation:s 0.100s step-end 18.820s none}
+#f50{animation:s 0.120s step-end 18.920s none}
+#f51{animation:s 0.100s step-end 19.040s none}
+#f52{animation:s 0.120s step-end 19.140s none}
+#f53{animation:s 0.120s step-end 19.260s none}
+#f54{animation:s 0.100s step-end 19.380s none}
+#f55{animation:s 0.880s step-end 19.480s none}
+#f56{animation:s 1.500s step-end 20.360s none}
+#f57{animation:s 0.100s step-end 21.860s none}
+#f58{animation:s 0.120s step-end 21.960s none}
+#f59{animation:s 0.100s step-end 22.080s none}
+#f60{animation:s 0.100s step-end 22.180s none}
+#f61{animation:s 0.120s step-end 22.280s none}
+#f62{animation:s 0.100s step-end 22.400s none}
+#f63{animation:s 0.800s step-end 22.500s none}
+#f64{animation:s 1.500s step-end 23.300s none}
+#f65{animation:s 0.120s step-end 24.800s none}
+#f66{animation:s 0.120s step-end 24.920s none}
+#f67{animation:s 0.100s step-end 25.040s none}
+#f68{animation:s 0.120s step-end 25.140s none}
+#f69{animation:s 0.880s step-end 25.260s none}
+#f70{animation:s 1.500s step-end 26.140s none}
+#f71{animation:s 0.120s step-end 27.640s none}
+#f72{animation:s 0.120s step-end 27.760s none}
+#f73{animation:s 0.100s step-end 27.880s none}
+#f74{animation:s 0.120s step-end 27.980s none}
+#f75{animation:s 0.880s step-end 28.100s none}
+#f76{animation:s 1.500s step-end 28.980s none}
+#f77{animation:s 2.000s step-end 30.480s forwards}
+</style>
+<g id="f0" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f1" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo e</tspan></text>
+</g>
+<g id="f2" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod</tspan></text>
+</g>
+<g id="f3" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init o</tspan></text>
+</g>
+<g id="f4" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init opencla</tspan></text>
+</g>
+<g id="f5" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+</g>
+<g id="f6" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+</g>
+<g id="f7" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f8" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo e</tspan></text>
+</g>
+<g id="f9" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod</tspan></text>
+</g>
+<g id="f10" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vaul</tspan></text>
+</g>
+<g id="f11" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault open</tspan></text>
+</g>
+<g id="f12" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw</tspan></text>
+</g>
+<g id="f13" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set AN</tspan></text>
+</g>
+<g id="f14" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPI</tspan></text>
+</g>
+<g id="f15" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_</tspan></text>
+</g>
+<g id="f16" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+</g>
+<g id="f17" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f18" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo en</tspan></text>
+</g>
+<g id="f19" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod v</tspan></text>
+</g>
+<g id="f20" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault o</tspan></text>
+</g>
+<g id="f21" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault opencl</tspan></text>
+</g>
+<g id="f22" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set</tspan></text>
+</g>
+<g id="f23" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENA</tspan></text>
+</g>
+<g id="f24" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_</tspan></text>
+</g>
+<g id="f25" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+</g>
+<g id="f26" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f27" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo e</tspan></text>
+</g>
+<g id="f28" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod</tspan></text>
+</g>
+<g id="f29" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run op</tspan></text>
+</g>
+<g id="f30" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run opencla</tspan></text>
+</g>
+<g id="f31" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- o</tspan></text>
+</g>
+<g id="f32" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- opencla</tspan></text>
+</g>
+<g id="f33" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+</g>
+<g id="f34" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f35" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo en</tspan></text>
+</g>
+<g id="f36" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod a</tspan></text>
+</g>
+<g id="f37" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit</tspan></text>
+</g>
+<g id="f38" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit opencl</tspan></text>
+</g>
+<g id="f39" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+</g>
+<g id="f40" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f41" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo e</tspan></text>
+</g>
+<g id="f42" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod</tspan></text>
+</g>
+<g id="f43" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff o</tspan></text>
+</g>
+<g id="f44" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff opencl</tspan></text>
+</g>
+<g id="f45" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+</g>
+<g id="f46" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f47" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo e</tspan></text>
+</g>
+<g id="f48" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod</tspan></text>
+</g>
+<g id="f49" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snaps</tspan></text>
+</g>
+<g id="f50" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot o</tspan></text>
+</g>
+<g id="f51" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot opencla</tspan></text>
+</g>
+<g id="f52" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw cre</tspan></text>
+</g>
+<g id="f53" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n</tspan></text>
+</g>
+<g id="f54" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n &quot;afte</tspan></text>
+</g>
+<g id="f55" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n &quot;after-set</tspan></text>
+</g>
+<g id="f56" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+</g>
+<g id="f57" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="170.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f58" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="170.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo e</tspan></text>
+</g>
+<g id="f59" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="170.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod</tspan></text>
+</g>
+<g id="f60" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="170.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snaps</tspan></text>
+</g>
+<g id="f61" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="170.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot o</tspan></text>
+</g>
+<g id="f62" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="170.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot opencla</tspan></text>
+</g>
+<g id="f63" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="170.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw ls</tspan></text>
+</g>
+<g id="f64" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="170.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw ls</tspan></text>
+</g>
+<g id="f65" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="170.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw ls</tspan></text>
+<text x="12" y="188.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f66" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="170.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw ls</tspan></text>
+<text x="12" y="188.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo en</tspan></text>
+</g>
+<g id="f67" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="170.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw ls</tspan></text>
+<text x="12" y="188.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod f</tspan></text>
+</g>
+<g id="f68" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="170.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw ls</tspan></text>
+<text x="12" y="188.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod freeze</tspan></text>
+</g>
+<g id="f69" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="170.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw ls</tspan></text>
+<text x="12" y="188.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod freeze openc</tspan></text>
+</g>
+<g id="f70" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="170.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw ls</tspan></text>
+<text x="12" y="188.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod freeze openclaw</tspan></text>
+</g>
+<g id="f71" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="170.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw ls</tspan></text>
+<text x="12" y="188.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod freeze openclaw</tspan></text>
+<text x="12" y="206.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f72" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="170.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw ls</tspan></text>
+<text x="12" y="188.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod freeze openclaw</tspan></text>
+<text x="12" y="206.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo en</tspan></text>
+</g>
+<g id="f73" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="170.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw ls</tspan></text>
+<text x="12" y="188.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod freeze openclaw</tspan></text>
+<text x="12" y="206.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod r</tspan></text>
+</g>
+<g id="f74" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="170.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw ls</tspan></text>
+<text x="12" y="188.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod freeze openclaw</tspan></text>
+<text x="12" y="206.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod resume</tspan></text>
+</g>
+<g id="f75" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="170.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw ls</tspan></text>
+<text x="12" y="188.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod freeze openclaw</tspan></text>
+<text x="12" y="206.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod resume openc</tspan></text>
+</g>
+<g id="f76" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="170.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw ls</tspan></text>
+<text x="12" y="188.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod freeze openclaw</tspan></text>
+<text x="12" y="206.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod resume openclaw</tspan></text>
+</g>
+<g id="f77" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init openclaw</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># (select openclaw from wizard, customize resources)</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set ANTHROPIC_API_KEY</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod vault openclaw set OPENAI_API_KEY</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run openclaw -- openclaw</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit openclaw</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff openclaw</tspan></text>
+<text x="12" y="152.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw create -n </tspan><tspan fill="#cccc66">&quot;after-setup&quot;</tspan></text>
+<text x="12" y="170.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod snapshot openclaw ls</tspan></text>
+<text x="12" y="188.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod freeze openclaw</tspan></text>
+<text x="12" y="206.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod resume openclaw</tspan></text>
+<text x="12" y="332.0"><tspan fill="#c0caf5" opacity="0.5">                                                                                                      md2cast</tspan></text>
+</g>
+</svg></div>
   <div class="code-copy">
     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
     <pre><code class="language-bash">sudo envpod init openclaw
@@ -288,21 +1460,7 @@ function copyCode(btn) {
     setTimeout(function() { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
   });
 }
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('.player[data-cast-src]').forEach(function(el) {
-    AsciinemaPlayer.create(el.dataset.castSrc, el, {
-      theme: el.dataset.theme,
-      fontFamily: el.dataset.font,
-      fontSize: el.dataset.fontSize + 'px',
-      idleTimeLimit: parseInt(el.dataset.idle),
-      cols: parseInt(el.dataset.cols),
-      rows: parseInt(el.dataset.rows),
-      fit: 'width',
-      autoPlay: false,
-      preload: true
-    });
-  });
-});
+
 </script>
 <footer style="margin-top:4rem;padding:1.5rem 0 0.5rem;text-align:center;font-size:0.75rem;color:var(--muted);opacity:0.6;">
   Made with <a href="https://github.com/markamo/md2cast" style="color:var(--accent);text-decoration:none;">md2cast</a>

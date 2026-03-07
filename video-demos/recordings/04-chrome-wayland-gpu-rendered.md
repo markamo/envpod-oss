@@ -14,7 +14,7 @@
 
 **[0:08]** Show the preset and config:
 <!-- no-exec -->
-![Script](assets/01-script.gif)
+![Script](assets/01-script.svg)
 
 ```bash
 envpod presets | grep browser
@@ -22,7 +22,7 @@ envpod presets | grep browser
 *Highlight: 3 browser presets — browser, browser-use, playwright.*
 
 <!-- no-exec -->
-![Script](assets/02-script.gif)
+![Script](assets/02-script.svg)
 
 ```bash
 cat examples/browser-wayland.yaml
@@ -31,7 +31,7 @@ cat examples/browser-wayland.yaml
 
 **[0:22]** Init with the config:
 <!-- no-exec -->
-![Script](assets/03-script.gif)
+![Script](assets/03-script.svg)
 
 ```bash
 sudo envpod init browser -c examples/browser-wayland.yaml
@@ -40,7 +40,7 @@ sudo envpod init browser -c examples/browser-wayland.yaml
 **[0:30]** Launch Chrome inside the pod with display and audio forwarding:
 <!-- no-exec -->
 <!-- type-delay 0.02 -->
-![Script](assets/04-script.gif)
+![Script](assets/04-script.svg)
 
 ```bash
 sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform=wayland https://youtube.com
@@ -52,7 +52,7 @@ sudo envpod run browser -d -a -- google-chrome --no-sandbox --ozone-platform=way
 **[0:55]** Show what's different from Docker:
 <!-- no-exec -->
 <!-- type-delay 0.02 -->
-![Script](assets/05-script.gif)
+![Script](assets/05-script.svg)
 
 ```bash
 sudo envpod diff browser
@@ -63,7 +63,7 @@ sudo envpod audit browser
 
 **[1:10]** Show security comparison:
 <!-- no-exec -->
-![Script](assets/06-script.gif)
+![Script](assets/06-script.svg)
 
 ```bash
 sudo envpod audit --security -c examples/browser-wayland.yaml
@@ -73,7 +73,7 @@ sudo envpod audit --security -c examples/browser-wayland.yaml
 
 **[1:25]** Rollback everything:
 <!-- no-exec -->
-![Script](assets/07-script.gif)
+![Script](assets/07-script.svg)
 
 ```bash
 sudo envpod rollback browser
@@ -88,7 +88,7 @@ sudo envpod rollback browser
 
 <!-- no-exec -->
 <!-- type-delay 0.02 -->
-![Commands (copy-paste)](assets/08-commands-copy-paste.gif)
+![Commands (copy-paste)](assets/08-commands-copy-paste.svg)
 
 ```bash
 envpod presets | grep browser

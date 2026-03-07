@@ -16,7 +16,7 @@
 
 **[0:12]** Paste and run:
 <!-- no-exec -->
-![Script](assets/01-script.gif)
+![Script](assets/01-script.svg)
 
 ```bash
 curl -fsSL https://envpod.dev/install.sh | sh
@@ -25,7 +25,7 @@ curl -fsSL https://envpod.dev/install.sh | sh
 
 **[0:20]** Show available presets:
 <!-- no-exec -->
-![Script](assets/02-script.gif)
+![Script](assets/02-script.svg)
 
 ```bash
 envpod presets
@@ -34,7 +34,7 @@ envpod presets
 
 **[0:26]** Create a pod with a preset:
 <!-- no-exec -->
-![Script](assets/03-script.gif)
+![Script](assets/03-script.svg)
 
 ```bash
 sudo envpod init hello --preset devbox
@@ -44,7 +44,7 @@ sudo envpod init hello --preset devbox
 **[0:32]** Run the agent — it writes a file:
 <!-- no-exec -->
 <!-- type-delay 0.02 -->
-![Script](assets/04-script.gif)
+![Script](assets/04-script.svg)
 
 ```bash
 sudo envpod run hello -- bash -c "echo 'the agent wrote this' > /home/agent/hello.txt && echo 'done'"
@@ -53,7 +53,7 @@ sudo envpod run hello -- bash -c "echo 'the agent wrote this' > /home/agent/hell
 
 **[0:40]** Show the diff:
 <!-- no-exec -->
-![Script](assets/05-script.gif)
+![Script](assets/05-script.svg)
 
 ```bash
 sudo envpod diff hello
@@ -64,7 +64,7 @@ sudo envpod diff hello
 **[0:48]** Commit or rollback:
 <!-- no-exec -->
 <!-- type-delay 0.02 -->
-![Script](assets/06-script.gif)
+![Script](assets/06-script.svg)
 
 ```bash
 sudo envpod commit hello
@@ -74,7 +74,7 @@ sudo envpod commit hello
 
 **[0:54]** Show the audit log:
 <!-- no-exec -->
-![Script](assets/07-script.gif)
+![Script](assets/07-script.svg)
 
 ```bash
 sudo envpod audit hello
@@ -90,7 +90,7 @@ sudo envpod audit hello
 
 <!-- no-exec -->
 <!-- type-delay 0.02 -->
-![Commands (copy-paste)](assets/08-commands-copy-paste.gif)
+![Commands (copy-paste)](assets/08-commands-copy-paste.svg)
 
 ```bash
 curl -fsSL https://envpod.dev/install.sh | sh

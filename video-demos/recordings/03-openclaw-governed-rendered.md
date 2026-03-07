@@ -14,7 +14,7 @@
 
 **[0:12]** Show the interactive wizard:
 <!-- no-exec -->
-![Script](assets/01-script.gif)
+![Script](assets/01-script.svg)
 
 ```bash
 sudo envpod init openclaw
@@ -25,7 +25,7 @@ sudo envpod init openclaw
 
 **[0:30]** Customize in the wizard:
 <!-- output -->
-![Script](assets/02-script.gif)
+![Script](assets/02-script.svg)
 
 ```
   CPU cores [2.0]: 2
@@ -40,7 +40,7 @@ sudo envpod init openclaw
 **[0:50]** Store credentials:
 <!-- no-exec -->
 <!-- type-delay 0.02 -->
-![Script](assets/03-script.gif)
+![Script](assets/03-script.svg)
 
 ```bash
 sudo envpod vault openclaw set ANTHROPIC_API_KEY
@@ -50,7 +50,7 @@ sudo envpod vault openclaw set OPENAI_API_KEY
 
 **[1:05]** Launch:
 <!-- no-exec -->
-![Script](assets/04-script.gif)
+![Script](assets/04-script.svg)
 
 ```bash
 sudo envpod run openclaw -- openclaw
@@ -59,7 +59,7 @@ sudo envpod run openclaw -- openclaw
 
 **[1:25]** Second terminal — live audit:
 <!-- no-exec -->
-![Script](assets/05-script.gif)
+![Script](assets/05-script.svg)
 
 ```bash
 sudo envpod audit openclaw
@@ -69,7 +69,7 @@ sudo envpod audit openclaw
 
 **[1:40]** Show the diff (files OpenClaw created/modified):
 <!-- no-exec -->
-![Script](assets/06-script.gif)
+![Script](assets/06-script.svg)
 
 ```bash
 sudo envpod diff openclaw
@@ -79,7 +79,7 @@ sudo envpod diff openclaw
 **[1:55]** Show snapshots — checkpoint the state:
 <!-- no-exec -->
 <!-- type-delay 0.02 -->
-![Script](assets/07-script.gif)
+![Script](assets/07-script.svg)
 
 ```bash
 sudo envpod snapshot openclaw create -n "after-setup"
@@ -91,7 +91,7 @@ sudo envpod snapshot openclaw ls
 **[2:10]** Freeze and resume:
 <!-- no-exec -->
 <!-- type-delay 0.02 -->
-![Script](assets/08-script.gif)
+![Script](assets/08-script.svg)
 
 ```bash
 sudo envpod freeze openclaw
@@ -108,7 +108,7 @@ sudo envpod resume openclaw
 
 <!-- no-exec -->
 <!-- type-delay 0.02 -->
-![Commands (copy-paste)](assets/09-commands-copy-paste.gif)
+![Commands (copy-paste)](assets/09-commands-copy-paste.svg)
 
 ```bash
 sudo envpod init openclaw

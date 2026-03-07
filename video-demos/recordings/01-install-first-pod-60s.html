@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Demo 1: &quot;Install to First Pod in 60 Seconds&quot;</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/asciinema-player@3.8.0/dist/bundle/asciinema-player.css">
+<!-- SVG mode: no external JS/CSS needed -->
 <style>
   :root {
     --bg: #1a1b26;
@@ -56,6 +56,16 @@
     border-radius: 8px;
     overflow: hidden;
     border: 1px solid var(--border);
+  }
+  .svg-player {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .svg-player svg {
+    display: block;
+    width: 100%;
+    height: auto;
   }
   details {
     margin-top: 0.5rem;
@@ -114,7 +124,7 @@
   /* Asciinema player overrides */
   .ap-wrapper { border-radius: 8px !important; }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/asciinema-player@3.8.0/dist/bundle/asciinema-player.min.js" defer></script>
+<!-- SVG mode -->
 </head>
 <body>
 <h1>Demo 1: &quot;Install to First Pod in 60 Seconds&quot;</h1>
@@ -128,13 +138,70 @@
 <p>[0:08] Click &quot;Copy&quot; on the install one-liner. Switch to terminal.</p>
 <p>[0:12] Paste and run:</p>
 <div class="cast-block">
-  <div id="player-1" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogOCwgInRpdGxlIjogIlNjcmlwdCIsICJ0aW1lc3RhbXAiOiAxNzcyODIxMzU3LCAiZW52IjogeyJURVJNIjogInh0ZXJtLTI1NmNvbG9yIiwgIlRIRU1FIjogIm1vbm9rYWkiLCAiRk9OVF9GQU1JTFkiOiAiSmV0QnJhaW5zIE1vbm8sIEZpcmEgQ29kZSwgTWVubG8sIG1vbm9zcGFjZSIsICJGT05UX1NJWkUiOiAiMTYifSwgImlkbGVfdGltZV9saW1pdCI6IDN9ClswLjMsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAiXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAiYyJdClswLjMzLCAibyIsICJ1Il0KWzAuMzYsICJvIiwgInIiXQpbMC4zOSwgIm8iLCAibCJdClswLjQyLCAibyIsICIgIl0KWzAuNDUsICJvIiwgIi0iXQpbMC40OCwgIm8iLCAiZiJdClswLjUxLCAibyIsICJzIl0KWzAuNTQsICJvIiwgIlMiXQpbMC41NywgIm8iLCAiTCJdClswLjYsICJvIiwgIiAiXQpbMC42MywgIm8iLCAiaCJdClswLjY2LCAibyIsICJ0Il0KWzAuNjksICJvIiwgInQiXQpbMC43MiwgIm8iLCAicCJdClswLjc1LCAibyIsICJzIl0KWzAuNzgsICJvIiwgIjoiXQpbMC44MSwgIm8iLCAiLyJdClswLjg0LCAibyIsICIvIl0KWzAuODcsICJvIiwgImUiXQpbMC45LCAibyIsICJuIl0KWzAuOTMsICJvIiwgInYiXQpbMC45NiwgIm8iLCAicCJdClswLjk5LCAibyIsICJvIl0KWzEuMDIsICJvIiwgImQiXQpbMS4wNSwgIm8iLCAiLiJdClsxLjA4LCAibyIsICJkIl0KWzEuMTEsICJvIiwgImUiXQpbMS4xNCwgIm8iLCAidiJdClsxLjE3LCAibyIsICIvIl0KWzEuMiwgIm8iLCAiaSJdClsxLjIzLCAibyIsICJuIl0KWzEuMjYsICJvIiwgInMiXQpbMS4yOSwgIm8iLCAidCJdClsxLjMyLCAibyIsICJhIl0KWzEuMzUsICJvIiwgImwiXQpbMS4zOCwgIm8iLCAibCJdClsxLjQxLCAibyIsICIuIl0KWzEuNDQsICJvIiwgInMiXQpbMS40NywgIm8iLCAiaCJdClsxLjUsICJvIiwgIiAiXQpbMS41MywgIm8iLCAifCJdClsxLjU2LCAibyIsICIgIl0KWzEuNTksICJvIiwgInMiXQpbMS42MiwgIm8iLCAiaCJdClsxLjY1LCAibyIsICJcdTAwMWJbMG0iXQpbMS42NSwgIm8iLCAiXHJcdTAwMWJbMDszMm0kIFx1MDAxYlswbVx1MDAxYlszODs1OzE1bWN1cmxcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0tZnNTTFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWh0dHBzOi8vZW52cG9kLmRldi9pbnN0YWxsLnNoXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtfFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bXNoXHUwMDFiWzM5bVx1MDAxYlswbSJdClsyLjQ1LCAibyIsICJcclxuIl0KWzMuOTUsICJvIiwgIlx1MDAxYls4OzFIIl0KWzMuOTUsICJvIiwgIlx1MDAxYlsybSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG1kMmNhc3RcdTAwMWJbMG0iXQo="
-       data-theme="monokai"
-       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
-       data-font-size="16"
-       data-idle="3"
-       data-cols="110"
-       data-rows="6"></div>
+  <div class="svg-player"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 948 168" style="width:100%;max-width:948px;border-radius:8px;background:#1a1b26">
+<style>
+.t{font-family:JetBrains Mono, Fira Code, Cascadia Code, monospace;font-size:14px;white-space:pre}
+.f{opacity:0}
+@keyframes s{0%,100%{opacity:1}}
+#f0{animation:s 0.120s step-end 0.300s none}
+#f1{animation:s 0.120s step-end 0.420s none}
+#f2{animation:s 0.120s step-end 0.540s none}
+#f3{animation:s 0.120s step-end 0.660s none}
+#f4{animation:s 0.120s step-end 0.780s none}
+#f5{animation:s 0.120s step-end 0.900s none}
+#f6{animation:s 0.120s step-end 1.020s none}
+#f7{animation:s 0.120s step-end 1.140s none}
+#f8{animation:s 0.120s step-end 1.260s none}
+#f9{animation:s 0.120s step-end 1.380s none}
+#f10{animation:s 0.120s step-end 1.500s none}
+#f11{animation:s 0.830s step-end 1.620s none}
+#f12{animation:s 1.500s step-end 2.450s none}
+#f13{animation:s 2.000s step-end 3.950s forwards}
+</style>
+<g id="f0" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f1" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl</tspan></text>
+</g>
+<g id="f2" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsS</tspan></text>
+</g>
+<g id="f3" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL ht</tspan></text>
+</g>
+<g id="f4" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https:</tspan></text>
+</g>
+<g id="f5" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://en</tspan></text>
+</g>
+<g id="f6" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod</tspan></text>
+</g>
+<g id="f7" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev</tspan></text>
+</g>
+<g id="f8" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/ins</tspan></text>
+</g>
+<g id="f9" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install</tspan></text>
+</g>
+<g id="f10" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh</tspan></text>
+</g>
+<g id="f11" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+</g>
+<g id="f12" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+</g>
+<g id="f13" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="152.0"><tspan fill="#c0caf5" opacity="0.5">                                                                                                      md2cast</tspan></text>
+</g>
+</svg></div>
   <div class="code-copy">
     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
     <pre><code class="language-bash">curl -fsSL https://envpod.dev/install.sh | sh</code></pre>
@@ -143,13 +210,38 @@
 <p>Narration: &quot;Single binary, 5 megs, no dependencies. x86 and ARM64.&quot;</p>
 <p>[0:20] Show available presets:</p>
 <div class="cast-block">
-  <div id="player-2" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogOCwgInRpdGxlIjogIlNjcmlwdCIsICJ0aW1lc3RhbXAiOiAxNzcyODIxMzU3LCAiZW52IjogeyJURVJNIjogInh0ZXJtLTI1NmNvbG9yIiwgIlRIRU1FIjogIm1vbm9rYWkiLCAiRk9OVF9GQU1JTFkiOiAiSmV0QnJhaW5zIE1vbm8sIEZpcmEgQ29kZSwgTWVubG8sIG1vbm9zcGFjZSIsICJGT05UX1NJWkUiOiAiMTYifSwgImlkbGVfdGltZV9saW1pdCI6IDN9ClswLjMsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAiXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAiZSJdClswLjMzLCAibyIsICJuIl0KWzAuMzYsICJvIiwgInYiXQpbMC4zOSwgIm8iLCAicCJdClswLjQyLCAibyIsICJvIl0KWzAuNDUsICJvIiwgImQiXQpbMC40OCwgIm8iLCAiICJdClswLjUxLCAibyIsICJwIl0KWzAuNTQsICJvIiwgInIiXQpbMC41NywgIm8iLCAiZSJdClswLjYsICJvIiwgInMiXQpbMC42MywgIm8iLCAiZSJdClswLjY2LCAibyIsICJ0Il0KWzAuNjksICJvIiwgInMiXQpbMC43MiwgIm8iLCAiXHUwMDFiWzBtIl0KWzAuNzIsICJvIiwgIlxyXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG1cdTAwMWJbMzg7NTsxNW1lbnZwb2RcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1wcmVzZXRzXHUwMDFiWzM5bVx1MDAxYlswbSJdClsxLjUyLCAibyIsICJcclxuIl0KWzMuMDIsICJvIiwgIlx1MDAxYls4OzFIIl0KWzMuMDIsICJvIiwgIlx1MDAxYlsybSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG1kMmNhc3RcdTAwMWJbMG0iXQo="
-       data-theme="monokai"
-       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
-       data-font-size="16"
-       data-idle="3"
-       data-cols="110"
-       data-rows="6"></div>
+  <div class="svg-player"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 948 168" style="width:100%;max-width:948px;border-radius:8px;background:#1a1b26">
+<style>
+.t{font-family:JetBrains Mono, Fira Code, Cascadia Code, monospace;font-size:14px;white-space:pre}
+.f{opacity:0}
+@keyframes s{0%,100%{opacity:1}}
+#f0{animation:s 0.120s step-end 0.300s none}
+#f1{animation:s 0.120s step-end 0.420s none}
+#f2{animation:s 0.120s step-end 0.540s none}
+#f3{animation:s 0.860s step-end 0.660s none}
+#f4{animation:s 1.500s step-end 1.520s none}
+#f5{animation:s 2.000s step-end 3.020s forwards}
+</style>
+<g id="f0" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f1" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpo</tspan></text>
+</g>
+<g id="f2" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod pr</tspan></text>
+</g>
+<g id="f3" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod preset</tspan></text>
+</g>
+<g id="f4" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+</g>
+<g id="f5" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="152.0"><tspan fill="#c0caf5" opacity="0.5">                                                                                                      md2cast</tspan></text>
+</g>
+</svg></div>
   <div class="code-copy">
     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
     <pre><code class="language-bash">envpod presets</code></pre>
@@ -158,13 +250,62 @@
 <p>Narration: &quot;18 built-in presets — coding agents, browsers, frameworks, environments.&quot;</p>
 <p>[0:26] Create a pod with a preset:</p>
 <div class="cast-block">
-  <div id="player-3" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogOCwgInRpdGxlIjogIlNjcmlwdCIsICJ0aW1lc3RhbXAiOiAxNzcyODIxMzU3LCAiZW52IjogeyJURVJNIjogInh0ZXJtLTI1NmNvbG9yIiwgIlRIRU1FIjogIm1vbm9rYWkiLCAiRk9OVF9GQU1JTFkiOiAiSmV0QnJhaW5zIE1vbm8sIEZpcmEgQ29kZSwgTWVubG8sIG1vbm9zcGFjZSIsICJGT05UX1NJWkUiOiAiMTYifSwgImlkbGVfdGltZV9saW1pdCI6IDN9ClswLjMsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAiXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAicyJdClswLjMzLCAibyIsICJ1Il0KWzAuMzYsICJvIiwgImQiXQpbMC4zOSwgIm8iLCAibyJdClswLjQyLCAibyIsICIgIl0KWzAuNDUsICJvIiwgImUiXQpbMC40OCwgIm8iLCAibiJdClswLjUxLCAibyIsICJ2Il0KWzAuNTQsICJvIiwgInAiXQpbMC41NywgIm8iLCAibyJdClswLjYsICJvIiwgImQiXQpbMC42MywgIm8iLCAiICJdClswLjY2LCAibyIsICJpIl0KWzAuNjksICJvIiwgIm4iXQpbMC43MiwgIm8iLCAiaSJdClswLjc1LCAibyIsICJ0Il0KWzAuNzgsICJvIiwgIiAiXQpbMC44MSwgIm8iLCAiaCJdClswLjg0LCAibyIsICJlIl0KWzAuODcsICJvIiwgImwiXQpbMC45LCAibyIsICJsIl0KWzAuOTMsICJvIiwgIm8iXQpbMC45NiwgIm8iLCAiICJdClswLjk5LCAibyIsICItIl0KWzEuMDIsICJvIiwgIi0iXQpbMS4wNSwgIm8iLCAicCJdClsxLjA4LCAibyIsICJyIl0KWzEuMTEsICJvIiwgImUiXQpbMS4xNCwgIm8iLCAicyJdClsxLjE3LCAibyIsICJlIl0KWzEuMiwgIm8iLCAidCJdClsxLjIzLCAibyIsICIgIl0KWzEuMjYsICJvIiwgImQiXQpbMS4yOSwgIm8iLCAiZSJdClsxLjMyLCAibyIsICJ2Il0KWzEuMzUsICJvIiwgImIiXQpbMS4zOCwgIm8iLCAibyJdClsxLjQxLCAibyIsICJ4Il0KWzEuNDQsICJvIiwgIlx1MDAxYlswbSJdClsxLjQ0LCAibyIsICJcclx1MDAxYlswOzMybSQgXHUwMDFiWzBtXHUwMDFiWzM4OzU7MTVtc3Vkb1x1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWVudnBvZFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWluaXRcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1oZWxsb1x1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bS0tcHJlc2V0XHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZGV2Ym94XHUwMDFiWzM5bVx1MDAxYlswbSJdClsyLjI0LCAibyIsICJcclxuIl0KWzMuNzQsICJvIiwgIlx1MDAxYls4OzFIIl0KWzMuNzQsICJvIiwgIlx1MDAxYlsybSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG1kMmNhc3RcdTAwMWJbMG0iXQo="
-       data-theme="monokai"
-       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
-       data-font-size="16"
-       data-idle="3"
-       data-cols="110"
-       data-rows="6"></div>
+  <div class="svg-player"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 948 168" style="width:100%;max-width:948px;border-radius:8px;background:#1a1b26">
+<style>
+.t{font-family:JetBrains Mono, Fira Code, Cascadia Code, monospace;font-size:14px;white-space:pre}
+.f{opacity:0}
+@keyframes s{0%,100%{opacity:1}}
+#f0{animation:s 0.120s step-end 0.300s none}
+#f1{animation:s 0.120s step-end 0.420s none}
+#f2{animation:s 0.120s step-end 0.540s none}
+#f3{animation:s 0.120s step-end 0.660s none}
+#f4{animation:s 0.120s step-end 0.780s none}
+#f5{animation:s 0.120s step-end 0.900s none}
+#f6{animation:s 0.120s step-end 1.020s none}
+#f7{animation:s 0.120s step-end 1.140s none}
+#f8{animation:s 0.120s step-end 1.260s none}
+#f9{animation:s 0.860s step-end 1.380s none}
+#f10{animation:s 1.500s step-end 2.240s none}
+#f11{animation:s 2.000s step-end 3.740s forwards}
+</style>
+<g id="f0" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f1" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo</tspan></text>
+</g>
+<g id="f2" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envp</tspan></text>
+</g>
+<g id="f3" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod i</tspan></text>
+</g>
+<g id="f4" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init</tspan></text>
+</g>
+<g id="f5" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hell</tspan></text>
+</g>
+<g id="f6" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --</tspan></text>
+</g>
+<g id="f7" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --pres</tspan></text>
+</g>
+<g id="f8" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset d</tspan></text>
+</g>
+<g id="f9" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbo</tspan></text>
+</g>
+<g id="f10" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+</g>
+<g id="f11" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="152.0"><tspan fill="#c0caf5" opacity="0.5">                                                                                                      md2cast</tspan></text>
+</g>
+</svg></div>
   <div class="code-copy">
     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
     <pre><code class="language-bash">sudo envpod init hello --preset devbox</code></pre>
@@ -173,13 +314,98 @@
 <p>Narration: &quot;One command. Pick a preset. Pod created.&quot;</p>
 <p>[0:32] Run the agent — it writes a file:</p>
 <div class="cast-block">
-  <div id="player-4" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogOCwgInRpdGxlIjogIlNjcmlwdCIsICJ0aW1lc3RhbXAiOiAxNzcyODIxMzU3LCAiZW52IjogeyJURVJNIjogInh0ZXJtLTI1NmNvbG9yIiwgIlRIRU1FIjogIm1vbm9rYWkiLCAiRk9OVF9GQU1JTFkiOiAiSmV0QnJhaW5zIE1vbm8sIEZpcmEgQ29kZSwgTWVubG8sIG1vbm9zcGFjZSIsICJGT05UX1NJWkUiOiAiMTYifSwgImlkbGVfdGltZV9saW1pdCI6IDN9ClswLjMsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAiXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAicyJdClswLjMyLCAibyIsICJ1Il0KWzAuMzQsICJvIiwgImQiXQpbMC4zNiwgIm8iLCAibyJdClswLjM4LCAibyIsICIgIl0KWzAuNCwgIm8iLCAiZSJdClswLjQyLCAibyIsICJuIl0KWzAuNDQsICJvIiwgInYiXQpbMC40NiwgIm8iLCAicCJdClswLjQ4LCAibyIsICJvIl0KWzAuNSwgIm8iLCAiZCJdClswLjUyLCAibyIsICIgIl0KWzAuNTQsICJvIiwgInIiXQpbMC41NiwgIm8iLCAidSJdClswLjU4LCAibyIsICJuIl0KWzAuNiwgIm8iLCAiICJdClswLjYyLCAibyIsICJoIl0KWzAuNjQsICJvIiwgImUiXQpbMC42NiwgIm8iLCAibCJdClswLjY4LCAibyIsICJsIl0KWzAuNywgIm8iLCAibyJdClswLjcyLCAibyIsICIgIl0KWzAuNzQsICJvIiwgIi0iXQpbMC43NiwgIm8iLCAiLSJdClswLjc4LCAibyIsICIgIl0KWzAuOCwgIm8iLCAiYiJdClswLjgyLCAibyIsICJhIl0KWzAuODQsICJvIiwgInMiXQpbMC44NiwgIm8iLCAiaCJdClswLjg4LCAibyIsICIgIl0KWzAuOSwgIm8iLCAiLSJdClswLjkyLCAibyIsICJjIl0KWzAuOTQsICJvIiwgIiAiXQpbMC45NiwgIm8iLCAiXCIiXQpbMC45OCwgIm8iLCAiZSJdClsxLjAsICJvIiwgImMiXQpbMS4wMiwgIm8iLCAiaCJdClsxLjA0LCAibyIsICJvIl0KWzEuMDYsICJvIiwgIiAiXQpbMS4wOCwgIm8iLCAiJyJdClsxLjEsICJvIiwgInQiXQpbMS4xMiwgIm8iLCAiaCJdClsxLjE0LCAibyIsICJlIl0KWzEuMTYsICJvIiwgIiAiXQpbMS4xOCwgIm8iLCAiYSJdClsxLjIsICJvIiwgImciXQpbMS4yMiwgIm8iLCAiZSJdClsxLjI0LCAibyIsICJuIl0KWzEuMjYsICJvIiwgInQiXQpbMS4yOCwgIm8iLCAiICJdClsxLjMsICJvIiwgInciXQpbMS4zMiwgIm8iLCAiciJdClsxLjM0LCAibyIsICJvIl0KWzEuMzYsICJvIiwgInQiXQpbMS4zOCwgIm8iLCAiZSJdClsxLjQsICJvIiwgIiAiXQpbMS40MiwgIm8iLCAidCJdClsxLjQ0LCAibyIsICJoIl0KWzEuNDYsICJvIiwgImkiXQpbMS40OCwgIm8iLCAicyJdClsxLjUsICJvIiwgIiciXQpbMS41MiwgIm8iLCAiICJdClsxLjU0LCAibyIsICI+Il0KWzEuNTYsICJvIiwgIiAiXQpbMS41OCwgIm8iLCAiLyJdClsxLjYsICJvIiwgImgiXQpbMS42MiwgIm8iLCAibyJdClsxLjY0LCAibyIsICJtIl0KWzEuNjYsICJvIiwgImUiXQpbMS42OCwgIm8iLCAiLyJdClsxLjcsICJvIiwgImEiXQpbMS43MiwgIm8iLCAiZyJdClsxLjc0LCAibyIsICJlIl0KWzEuNzYsICJvIiwgIm4iXQpbMS43OCwgIm8iLCAidCJdClsxLjgsICJvIiwgIi8iXQpbMS44MiwgIm8iLCAiaCJdClsxLjg0LCAibyIsICJlIl0KWzEuODYsICJvIiwgImwiXQpbMS44OCwgIm8iLCAibCJdClsxLjksICJvIiwgIm8iXQpbMS45MiwgIm8iLCAiLiJdClsxLjk0LCAibyIsICJ0Il0KWzEuOTYsICJvIiwgIngiXQpbMS45OCwgIm8iLCAidCJdClsyLjAsICJvIiwgIiAiXQpbMi4wMiwgIm8iLCAiJiJdClsyLjA0LCAibyIsICImIl0KWzIuMDYsICJvIiwgIiAiXQpbMi4wOCwgIm8iLCAiZSJdClsyLjEsICJvIiwgImMiXQpbMi4xMiwgIm8iLCAiaCJdClsyLjE0LCAibyIsICJvIl0KWzIuMTYsICJvIiwgIiAiXQpbMi4xOCwgIm8iLCAiJyJdClsyLjIsICJvIiwgImQiXQpbMi4yMiwgIm8iLCAibyJdClsyLjI0LCAibyIsICJuIl0KWzIuMjYsICJvIiwgImUiXQpbMi4yOCwgIm8iLCAiJyJdClsyLjMsICJvIiwgIlwiIl0KWzIuMzIsICJvIiwgIlx1MDAxYlswbSJdClsyLjMyLCAibyIsICJcclx1MDAxYlswOzMybSQgXHUwMDFiWzBtXHUwMDFiWzM4OzU7MTVtc3Vkb1x1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWVudnBvZFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bXJ1blx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWhlbGxvXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtLS1cdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1iYXNoXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtLWNcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxODZtXCJlY2hvICd0aGUgYWdlbnQgd3JvdGUgdGhpcycgPiAvaG9tZS9hZ2VudC9oZWxsby50eHQgJiYgZWNobyAnZG9uZSdcIlx1MDAxYlszOW1cdTAwMWJbMG0iXQpbMy4xMiwgIm8iLCAiXHJcbiJdCls0LjYyLCAibyIsICJcdTAwMWJbODsxSCJdCls0LjYyLCAibyIsICJcdTAwMWJbMm0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBtZDJjYXN0XHUwMDFiWzBtIl0K"
-       data-theme="monokai"
-       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
-       data-font-size="16"
-       data-idle="3"
-       data-cols="110"
-       data-rows="6"></div>
+  <div class="svg-player"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 948 168" style="width:100%;max-width:948px;border-radius:8px;background:#1a1b26">
+<style>
+.t{font-family:JetBrains Mono, Fira Code, Cascadia Code, monospace;font-size:14px;white-space:pre}
+.f{opacity:0}
+@keyframes s{0%,100%{opacity:1}}
+#f0{animation:s 0.100s step-end 0.300s none}
+#f1{animation:s 0.120s step-end 0.400s none}
+#f2{animation:s 0.120s step-end 0.520s none}
+#f3{animation:s 0.120s step-end 0.640s none}
+#f4{animation:s 0.120s step-end 0.760s none}
+#f5{animation:s 0.120s step-end 0.880s none}
+#f6{animation:s 0.100s step-end 1.000s none}
+#f7{animation:s 0.120s step-end 1.100s none}
+#f8{animation:s 0.100s step-end 1.220s none}
+#f9{animation:s 0.120s step-end 1.320s none}
+#f10{animation:s 0.100s step-end 1.440s none}
+#f11{animation:s 0.120s step-end 1.540s none}
+#f12{animation:s 0.100s step-end 1.660s none}
+#f13{animation:s 0.100s step-end 1.760s none}
+#f14{animation:s 0.120s step-end 1.860s none}
+#f15{animation:s 0.100s step-end 1.980s none}
+#f16{animation:s 0.100s step-end 2.080s none}
+#f17{animation:s 0.120s step-end 2.180s none}
+#f18{animation:s 0.820s step-end 2.300s none}
+#f19{animation:s 1.500s step-end 3.120s none}
+#f20{animation:s 2.000s step-end 4.620s forwards}
+</style>
+<g id="f0" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f1" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo e</tspan></text>
+</g>
+<g id="f2" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod</tspan></text>
+</g>
+<g id="f3" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run he</tspan></text>
+</g>
+<g id="f4" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello --</tspan></text>
+</g>
+<g id="f5" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash</tspan></text>
+</g>
+<g id="f6" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c &quot;ec</tspan></text>
+</g>
+<g id="f7" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c &quot;echo 't</tspan></text>
+</g>
+<g id="f8" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c &quot;echo 'the age</tspan></text>
+</g>
+<g id="f9" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c &quot;echo 'the agent wr</tspan></text>
+</g>
+<g id="f10" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c &quot;echo 'the agent wrote th</tspan></text>
+</g>
+<g id="f11" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c &quot;echo 'the agent wrote this' &gt;</tspan></text>
+</g>
+<g id="f12" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c &quot;echo 'the agent wrote this' &gt; /home</tspan></text>
+</g>
+<g id="f13" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c &quot;echo 'the agent wrote this' &gt; /home/agen</tspan></text>
+</g>
+<g id="f14" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c &quot;echo 'the agent wrote this' &gt; /home/agent/hel</tspan></text>
+</g>
+<g id="f15" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c &quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt</tspan></text>
+</g>
+<g id="f16" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c &quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp; e</tspan></text>
+</g>
+<g id="f17" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c &quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp; echo '</tspan></text>
+</g>
+<g id="f18" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c &quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp; echo 'done'&quot;</tspan></text>
+</g>
+<g id="f19" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c </tspan><tspan fill="#cccc66">&quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp; echo 'done'&quot;</tspan></text>
+</g>
+<g id="f20" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c </tspan><tspan fill="#cccc66">&quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp; echo 'done'&quot;</tspan></text>
+<text x="12" y="152.0"><tspan fill="#c0caf5" opacity="0.5">                                                                                                      md2cast</tspan></text>
+</g>
+</svg></div>
   <div class="code-copy">
     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
     <pre><code class="language-bash">sudo envpod run hello -- bash -c &quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp; echo 'done'&quot;</code></pre>
@@ -188,13 +414,46 @@
 <p>Narration: &quot;The agent thinks it wrote to your filesystem. It didn't.&quot;</p>
 <p>[0:40] Show the diff:</p>
 <div class="cast-block">
-  <div id="player-5" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogOCwgInRpdGxlIjogIlNjcmlwdCIsICJ0aW1lc3RhbXAiOiAxNzcyODIxMzU3LCAiZW52IjogeyJURVJNIjogInh0ZXJtLTI1NmNvbG9yIiwgIlRIRU1FIjogIm1vbm9rYWkiLCAiRk9OVF9GQU1JTFkiOiAiSmV0QnJhaW5zIE1vbm8sIEZpcmEgQ29kZSwgTWVubG8sIG1vbm9zcGFjZSIsICJGT05UX1NJWkUiOiAiMTYifSwgImlkbGVfdGltZV9saW1pdCI6IDN9ClswLjMsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAiXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAicyJdClswLjMzLCAibyIsICJ1Il0KWzAuMzYsICJvIiwgImQiXQpbMC4zOSwgIm8iLCAibyJdClswLjQyLCAibyIsICIgIl0KWzAuNDUsICJvIiwgImUiXQpbMC40OCwgIm8iLCAibiJdClswLjUxLCAibyIsICJ2Il0KWzAuNTQsICJvIiwgInAiXQpbMC41NywgIm8iLCAibyJdClswLjYsICJvIiwgImQiXQpbMC42MywgIm8iLCAiICJdClswLjY2LCAibyIsICJkIl0KWzAuNjksICJvIiwgImkiXQpbMC43MiwgIm8iLCAiZiJdClswLjc1LCAibyIsICJmIl0KWzAuNzgsICJvIiwgIiAiXQpbMC44MSwgIm8iLCAiaCJdClswLjg0LCAibyIsICJlIl0KWzAuODcsICJvIiwgImwiXQpbMC45LCAibyIsICJsIl0KWzAuOTMsICJvIiwgIm8iXQpbMC45NiwgIm8iLCAiXHUwMDFiWzBtIl0KWzAuOTYsICJvIiwgIlxyXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG1cdTAwMWJbMzg7NTsxNW1zdWRvXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZW52cG9kXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtZGlmZlx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWhlbGxvXHUwMDFiWzM5bVx1MDAxYlswbSJdClsxLjc2LCAibyIsICJcclxuIl0KWzMuMjYsICJvIiwgIlx1MDAxYls4OzFIIl0KWzMuMjYsICJvIiwgIlx1MDAxYlsybSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG1kMmNhc3RcdTAwMWJbMG0iXQo="
-       data-theme="monokai"
-       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
-       data-font-size="16"
-       data-idle="3"
-       data-cols="110"
-       data-rows="6"></div>
+  <div class="svg-player"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 948 168" style="width:100%;max-width:948px;border-radius:8px;background:#1a1b26">
+<style>
+.t{font-family:JetBrains Mono, Fira Code, Cascadia Code, monospace;font-size:14px;white-space:pre}
+.f{opacity:0}
+@keyframes s{0%,100%{opacity:1}}
+#f0{animation:s 0.120s step-end 0.300s none}
+#f1{animation:s 0.120s step-end 0.420s none}
+#f2{animation:s 0.120s step-end 0.540s none}
+#f3{animation:s 0.120s step-end 0.660s none}
+#f4{animation:s 0.120s step-end 0.780s none}
+#f5{animation:s 0.860s step-end 0.900s none}
+#f6{animation:s 1.500s step-end 1.760s none}
+#f7{animation:s 2.000s step-end 3.260s forwards}
+</style>
+<g id="f0" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f1" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo</tspan></text>
+</g>
+<g id="f2" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envp</tspan></text>
+</g>
+<g id="f3" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod d</tspan></text>
+</g>
+<g id="f4" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff</tspan></text>
+</g>
+<g id="f5" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff hell</tspan></text>
+</g>
+<g id="f6" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff hello</tspan></text>
+</g>
+<g id="f7" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff hello</tspan></text>
+<text x="12" y="152.0"><tspan fill="#c0caf5" opacity="0.5">                                                                                                      md2cast</tspan></text>
+</g>
+</svg></div>
   <div class="code-copy">
     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
     <pre><code class="language-bash">sudo envpod diff hello</code></pre>
@@ -203,13 +462,48 @@
 <p>Narration: &quot;Every change goes to a copy-on-write overlay. You review before anything touches the host.&quot;</p>
 <p>[0:48] Commit or rollback:</p>
 <div class="cast-block">
-  <div id="player-6" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogOSwgInRpdGxlIjogIlNjcmlwdCIsICJ0aW1lc3RhbXAiOiAxNzcyODIxMzU3LCAiZW52IjogeyJURVJNIjogInh0ZXJtLTI1NmNvbG9yIiwgIlRIRU1FIjogIm1vbm9rYWkiLCAiRk9OVF9GQU1JTFkiOiAiSmV0QnJhaW5zIE1vbm8sIEZpcmEgQ29kZSwgTWVubG8sIG1vbm9zcGFjZSIsICJGT05UX1NJWkUiOiAiMTYifSwgImlkbGVfdGltZV9saW1pdCI6IDN9ClswLjMsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAiXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAicyJdClswLjMyLCAibyIsICJ1Il0KWzAuMzQsICJvIiwgImQiXQpbMC4zNiwgIm8iLCAibyJdClswLjM4LCAibyIsICIgIl0KWzAuNCwgIm8iLCAiZSJdClswLjQyLCAibyIsICJuIl0KWzAuNDQsICJvIiwgInYiXQpbMC40NiwgIm8iLCAicCJdClswLjQ4LCAibyIsICJvIl0KWzAuNSwgIm8iLCAiZCJdClswLjUyLCAibyIsICIgIl0KWzAuNTQsICJvIiwgImMiXQpbMC41NiwgIm8iLCAibyJdClswLjU4LCAibyIsICJtIl0KWzAuNiwgIm8iLCAibSJdClswLjYyLCAibyIsICJpIl0KWzAuNjQsICJvIiwgInQiXQpbMC42NiwgIm8iLCAiICJdClswLjY4LCAibyIsICJoIl0KWzAuNywgIm8iLCAiZSJdClswLjcyLCAibyIsICJsIl0KWzAuNzQsICJvIiwgImwiXQpbMC43NiwgIm8iLCAibyJdClswLjc4LCAibyIsICJcdTAwMWJbMG0iXQpbMC43OCwgIm8iLCAiXHJcdTAwMWJbMDszMm0kIFx1MDAxYlswbVx1MDAxYlszODs1OzE1bXN1ZG9cdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1lbnZwb2RcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1jb21taXRcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1oZWxsb1x1MDAxYlszOW1cdTAwMWJbMG0iXQpbMS41OCwgIm8iLCAiXHJcbiJdClszLjA4LCAibyIsICIgIFx1MDAxYlsybSMgb3I6IHN1ZG8gZW52cG9kIHJvbGxiYWNrIGhlbGxvXHUwMDFiWzBtXHJcbiJdClszLjM4LCAibyIsICJcdTAwMWJbOTsxSCJdClszLjM4LCAibyIsICJcdTAwMWJbMm0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBtZDJjYXN0XHUwMDFiWzBtIl0K"
-       data-theme="monokai"
-       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
-       data-font-size="16"
-       data-idle="3"
-       data-cols="110"
-       data-rows="7"></div>
+  <div class="svg-player"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 948 186" style="width:100%;max-width:948px;border-radius:8px;background:#1a1b26">
+<style>
+.t{font-family:JetBrains Mono, Fira Code, Cascadia Code, monospace;font-size:14px;white-space:pre}
+.f{opacity:0}
+@keyframes s{0%,100%{opacity:1}}
+#f0{animation:s 0.100s step-end 0.300s none}
+#f1{animation:s 0.120s step-end 0.400s none}
+#f2{animation:s 0.120s step-end 0.520s none}
+#f3{animation:s 0.120s step-end 0.640s none}
+#f4{animation:s 0.820s step-end 0.760s none}
+#f5{animation:s 1.500s step-end 1.580s none}
+#f6{animation:s 0.300s step-end 3.080s none}
+#f7{animation:s 2.000s step-end 3.380s forwards}
+</style>
+<g id="f0" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f1" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo e</tspan></text>
+</g>
+<g id="f2" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod</tspan></text>
+</g>
+<g id="f3" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod commit</tspan></text>
+</g>
+<g id="f4" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod commit hello</tspan></text>
+</g>
+<g id="f5" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod commit hello</tspan></text>
+</g>
+<g id="f6" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod commit hello</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># or: sudo envpod rollback hello</tspan></text>
+</g>
+<g id="f7" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod commit hello</tspan></text>
+<text x="12" y="44.0"><tspan fill="#c0caf5">  </tspan><tspan fill="#c0caf5" opacity="0.5"># or: sudo envpod rollback hello</tspan></text>
+<text x="12" y="170.0"><tspan fill="#c0caf5" opacity="0.5">                                                                                                      md2cast</tspan></text>
+</g>
+</svg></div>
   <div class="code-copy">
     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
     <pre><code class="language-bash">sudo envpod commit hello
@@ -219,13 +513,46 @@
 <p>Narration: &quot;Commit what you want. Roll back the rest. That's governance.&quot;</p>
 <p>[0:54] Show the audit log:</p>
 <div class="cast-block">
-  <div id="player-7" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogOCwgInRpdGxlIjogIlNjcmlwdCIsICJ0aW1lc3RhbXAiOiAxNzcyODIxMzU3LCAiZW52IjogeyJURVJNIjogInh0ZXJtLTI1NmNvbG9yIiwgIlRIRU1FIjogIm1vbm9rYWkiLCAiRk9OVF9GQU1JTFkiOiAiSmV0QnJhaW5zIE1vbm8sIEZpcmEgQ29kZSwgTWVubG8sIG1vbm9zcGFjZSIsICJGT05UX1NJWkUiOiAiMTYifSwgImlkbGVfdGltZV9saW1pdCI6IDN9ClswLjMsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAiXHUwMDFiWzBtIl0KWzAuMywgIm8iLCAicyJdClswLjMzLCAibyIsICJ1Il0KWzAuMzYsICJvIiwgImQiXQpbMC4zOSwgIm8iLCAibyJdClswLjQyLCAibyIsICIgIl0KWzAuNDUsICJvIiwgImUiXQpbMC40OCwgIm8iLCAibiJdClswLjUxLCAibyIsICJ2Il0KWzAuNTQsICJvIiwgInAiXQpbMC41NywgIm8iLCAibyJdClswLjYsICJvIiwgImQiXQpbMC42MywgIm8iLCAiICJdClswLjY2LCAibyIsICJhIl0KWzAuNjksICJvIiwgInUiXQpbMC43MiwgIm8iLCAiZCJdClswLjc1LCAibyIsICJpIl0KWzAuNzgsICJvIiwgInQiXQpbMC44MSwgIm8iLCAiICJdClswLjg0LCAibyIsICJoIl0KWzAuODcsICJvIiwgImUiXQpbMC45LCAibyIsICJsIl0KWzAuOTMsICJvIiwgImwiXQpbMC45NiwgIm8iLCAibyJdClswLjk5LCAibyIsICJcdTAwMWJbMG0iXQpbMC45OSwgIm8iLCAiXHJcdTAwMWJbMDszMm0kIFx1MDAxYlswbVx1MDAxYlszODs1OzE1bXN1ZG9cdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1lbnZwb2RcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1hdWRpdFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWhlbGxvXHUwMDFiWzM5bVx1MDAxYlswbSJdClsxLjc5LCAibyIsICJcclxuIl0KWzMuMjksICJvIiwgIlx1MDAxYls4OzFIIl0KWzMuMjksICJvIiwgIlx1MDAxYlsybSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG1kMmNhc3RcdTAwMWJbMG0iXQo="
-       data-theme="monokai"
-       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
-       data-font-size="16"
-       data-idle="3"
-       data-cols="110"
-       data-rows="6"></div>
+  <div class="svg-player"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 948 168" style="width:100%;max-width:948px;border-radius:8px;background:#1a1b26">
+<style>
+.t{font-family:JetBrains Mono, Fira Code, Cascadia Code, monospace;font-size:14px;white-space:pre}
+.f{opacity:0}
+@keyframes s{0%,100%{opacity:1}}
+#f0{animation:s 0.120s step-end 0.300s none}
+#f1{animation:s 0.120s step-end 0.420s none}
+#f2{animation:s 0.120s step-end 0.540s none}
+#f3{animation:s 0.120s step-end 0.660s none}
+#f4{animation:s 0.120s step-end 0.780s none}
+#f5{animation:s 0.890s step-end 0.900s none}
+#f6{animation:s 1.500s step-end 1.790s none}
+#f7{animation:s 2.000s step-end 3.290s forwards}
+</style>
+<g id="f0" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f1" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo</tspan></text>
+</g>
+<g id="f2" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envp</tspan></text>
+</g>
+<g id="f3" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod a</tspan></text>
+</g>
+<g id="f4" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit</tspan></text>
+</g>
+<g id="f5" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit hel</tspan></text>
+</g>
+<g id="f6" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit hello</tspan></text>
+</g>
+<g id="f7" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit hello</tspan></text>
+<text x="12" y="152.0"><tspan fill="#c0caf5" opacity="0.5">                                                                                                      md2cast</tspan></text>
+</g>
+</svg></div>
   <div class="code-copy">
     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
     <pre><code class="language-bash">sudo envpod audit hello</code></pre>
@@ -236,13 +563,415 @@
 <hr>
 <h2>Commands (copy-paste)</h2>
 <div class="cast-block">
-  <div id="player-8" class="player" data-cast-src="data:application/json;base64,eyJ2ZXJzaW9uIjogMiwgIndpZHRoIjogMTEwLCAiaGVpZ2h0IjogMTQsICJ0aXRsZSI6ICJDb21tYW5kcyAoY29weS1wYXN0ZSkiLCAidGltZXN0YW1wIjogMTc3MjgyMTM1NywgImVudiI6IHsiVEVSTSI6ICJ4dGVybS0yNTZjb2xvciIsICJUSEVNRSI6ICJtb25va2FpIiwgIkZPTlRfRkFNSUxZIjogIkpldEJyYWlucyBNb25vLCBGaXJhIENvZGUsIE1lbmxvLCBtb25vc3BhY2UiLCAiRk9OVF9TSVpFIjogIjE2In0sICJpZGxlX3RpbWVfbGltaXQiOiAzfQpbMC4zLCAibyIsICJcdTAwMWJbMDszMm0kIFx1MDAxYlswbSJdClswLjMsICJvIiwgIlx1MDAxYlswbSJdClswLjMsICJvIiwgImMiXQpbMC4zMiwgIm8iLCAidSJdClswLjM0LCAibyIsICJyIl0KWzAuMzYsICJvIiwgImwiXQpbMC4zOCwgIm8iLCAiICJdClswLjQsICJvIiwgIi0iXQpbMC40MiwgIm8iLCAiZiJdClswLjQ0LCAibyIsICJzIl0KWzAuNDYsICJvIiwgIlMiXQpbMC40OCwgIm8iLCAiTCJdClswLjUsICJvIiwgIiAiXQpbMC41MiwgIm8iLCAiaCJdClswLjU0LCAibyIsICJ0Il0KWzAuNTYsICJvIiwgInQiXQpbMC41OCwgIm8iLCAicCJdClswLjYsICJvIiwgInMiXQpbMC42MiwgIm8iLCAiOiJdClswLjY0LCAibyIsICIvIl0KWzAuNjYsICJvIiwgIi8iXQpbMC42OCwgIm8iLCAiZSJdClswLjcsICJvIiwgIm4iXQpbMC43MiwgIm8iLCAidiJdClswLjc0LCAibyIsICJwIl0KWzAuNzYsICJvIiwgIm8iXQpbMC43OCwgIm8iLCAiZCJdClswLjgsICJvIiwgIi4iXQpbMC44MiwgIm8iLCAiZCJdClswLjg0LCAibyIsICJlIl0KWzAuODYsICJvIiwgInYiXQpbMC44OCwgIm8iLCAiLyJdClswLjksICJvIiwgImkiXQpbMC45MiwgIm8iLCAibiJdClswLjk0LCAibyIsICJzIl0KWzAuOTYsICJvIiwgInQiXQpbMC45OCwgIm8iLCAiYSJdClsxLjAsICJvIiwgImwiXQpbMS4wMiwgIm8iLCAibCJdClsxLjA0LCAibyIsICIuIl0KWzEuMDYsICJvIiwgInMiXQpbMS4wOCwgIm8iLCAiaCJdClsxLjEsICJvIiwgIiAiXQpbMS4xMiwgIm8iLCAifCJdClsxLjE0LCAibyIsICIgIl0KWzEuMTYsICJvIiwgInMiXQpbMS4xOCwgIm8iLCAiaCJdClsxLjIsICJvIiwgIlx1MDAxYlswbSJdClsxLjIsICJvIiwgIlxyXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG1cdTAwMWJbMzg7NTsxNW1jdXJsXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtLWZzU0xcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1odHRwczovL2VudnBvZC5kZXYvaW5zdGFsbC5zaFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bXxcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1zaFx1MDAxYlszOW1cdTAwMWJbMG0iXQpbMi4wLCAibyIsICJcclxuIl0KWzMuNSwgIm8iLCAiXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG0iXQpbMy41LCAibyIsICJcdTAwMWJbMG0iXQpbMy41LCAibyIsICJlIl0KWzMuNTIsICJvIiwgIm4iXQpbMy41NCwgIm8iLCAidiJdClszLjU2LCAibyIsICJwIl0KWzMuNTgsICJvIiwgIm8iXQpbMy42LCAibyIsICJkIl0KWzMuNjIsICJvIiwgIiAiXQpbMy42NCwgIm8iLCAicCJdClszLjY2LCAibyIsICJyIl0KWzMuNjgsICJvIiwgImUiXQpbMy43LCAibyIsICJzIl0KWzMuNzIsICJvIiwgImUiXQpbMy43NCwgIm8iLCAidCJdClszLjc2LCAibyIsICJzIl0KWzMuNzgsICJvIiwgIlx1MDAxYlswbSJdClszLjc4LCAibyIsICJcclx1MDAxYlswOzMybSQgXHUwMDFiWzBtXHUwMDFiWzM4OzU7MTVtZW52cG9kXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtcHJlc2V0c1x1MDAxYlszOW1cdTAwMWJbMG0iXQpbNC41OCwgIm8iLCAiXHJcbiJdCls2LjA4LCAibyIsICJcdTAwMWJbMDszMm0kIFx1MDAxYlswbSJdCls2LjA4LCAibyIsICJcdTAwMWJbMG0iXQpbNi4wOCwgIm8iLCAicyJdCls2LjEsICJvIiwgInUiXQpbNi4xMiwgIm8iLCAiZCJdCls2LjE0LCAibyIsICJvIl0KWzYuMTYsICJvIiwgIiAiXQpbNi4xOCwgIm8iLCAiZSJdCls2LjIsICJvIiwgIm4iXQpbNi4yMiwgIm8iLCAidiJdCls2LjI0LCAibyIsICJwIl0KWzYuMjYsICJvIiwgIm8iXQpbNi4yOCwgIm8iLCAiZCJdCls2LjMsICJvIiwgIiAiXQpbNi4zMiwgIm8iLCAiaSJdCls2LjM0LCAibyIsICJuIl0KWzYuMzYsICJvIiwgImkiXQpbNi4zOCwgIm8iLCAidCJdCls2LjQsICJvIiwgIiAiXQpbNi40MiwgIm8iLCAiaCJdCls2LjQ0LCAibyIsICJlIl0KWzYuNDYsICJvIiwgImwiXQpbNi40OCwgIm8iLCAibCJdCls2LjUsICJvIiwgIm8iXQpbNi41MiwgIm8iLCAiICJdCls2LjU0LCAibyIsICItIl0KWzYuNTYsICJvIiwgIi0iXQpbNi41OCwgIm8iLCAicCJdCls2LjYsICJvIiwgInIiXQpbNi42MiwgIm8iLCAiZSJdCls2LjY0LCAibyIsICJzIl0KWzYuNjYsICJvIiwgImUiXQpbNi42OCwgIm8iLCAidCJdCls2LjcsICJvIiwgIiAiXQpbNi43MiwgIm8iLCAiZCJdCls2Ljc0LCAibyIsICJlIl0KWzYuNzYsICJvIiwgInYiXQpbNi43OCwgIm8iLCAiYiJdCls2LjgsICJvIiwgIm8iXQpbNi44MiwgIm8iLCAieCJdCls2Ljg0LCAibyIsICJcdTAwMWJbMG0iXQpbNi44NCwgIm8iLCAiXHJcdTAwMWJbMDszMm0kIFx1MDAxYlswbVx1MDAxYlszODs1OzE1bXN1ZG9cdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1lbnZwb2RcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1pbml0XHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtaGVsbG9cdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0tLXByZXNldFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWRldmJveFx1MDAxYlszOW1cdTAwMWJbMG0iXQpbNy42NCwgIm8iLCAiXHJcbiJdCls5LjE0LCAibyIsICJcdTAwMWJbMDszMm0kIFx1MDAxYlswbSJdCls5LjE0LCAibyIsICJcdTAwMWJbMG0iXQpbOS4xNCwgIm8iLCAicyJdCls5LjE2LCAibyIsICJ1Il0KWzkuMTgsICJvIiwgImQiXQpbOS4yLCAibyIsICJvIl0KWzkuMjIsICJvIiwgIiAiXQpbOS4yNCwgIm8iLCAiZSJdCls5LjI2LCAibyIsICJuIl0KWzkuMjgsICJvIiwgInYiXQpbOS4zLCAibyIsICJwIl0KWzkuMzIsICJvIiwgIm8iXQpbOS4zNCwgIm8iLCAiZCJdCls5LjM2LCAibyIsICIgIl0KWzkuMzgsICJvIiwgInIiXQpbOS40LCAibyIsICJ1Il0KWzkuNDIsICJvIiwgIm4iXQpbOS40NCwgIm8iLCAiICJdCls5LjQ2LCAibyIsICJoIl0KWzkuNDgsICJvIiwgImUiXQpbOS41LCAibyIsICJsIl0KWzkuNTIsICJvIiwgImwiXQpbOS41NCwgIm8iLCAibyJdCls5LjU2LCAibyIsICIgIl0KWzkuNTgsICJvIiwgIi0iXQpbOS42LCAibyIsICItIl0KWzkuNjIsICJvIiwgIiAiXQpbOS42NCwgIm8iLCAiYiJdCls5LjY2LCAibyIsICJhIl0KWzkuNjgsICJvIiwgInMiXQpbOS43LCAibyIsICJoIl0KWzkuNzIsICJvIiwgIiAiXQpbOS43NCwgIm8iLCAiLSJdCls5Ljc2LCAibyIsICJjIl0KWzkuNzgsICJvIiwgIiAiXQpbOS44LCAibyIsICJcIiJdCls5LjgyLCAibyIsICJlIl0KWzkuODQsICJvIiwgImMiXQpbOS44NiwgIm8iLCAiaCJdCls5Ljg4LCAibyIsICJvIl0KWzkuOSwgIm8iLCAiICJdCls5LjkyLCAibyIsICInIl0KWzkuOTQsICJvIiwgInQiXQpbOS45NiwgIm8iLCAiaCJdCls5Ljk4LCAibyIsICJlIl0KWzEwLjAsICJvIiwgIiAiXQpbMTAuMDIsICJvIiwgImEiXQpbMTAuMDQsICJvIiwgImciXQpbMTAuMDYsICJvIiwgImUiXQpbMTAuMDgsICJvIiwgIm4iXQpbMTAuMSwgIm8iLCAidCJdClsxMC4xMiwgIm8iLCAiICJdClsxMC4xNCwgIm8iLCAidyJdClsxMC4xNiwgIm8iLCAiciJdClsxMC4xOCwgIm8iLCAibyJdClsxMC4yLCAibyIsICJ0Il0KWzEwLjIyLCAibyIsICJlIl0KWzEwLjI0LCAibyIsICIgIl0KWzEwLjI2LCAibyIsICJ0Il0KWzEwLjI4LCAibyIsICJoIl0KWzEwLjMsICJvIiwgImkiXQpbMTAuMzIsICJvIiwgInMiXQpbMTAuMzQsICJvIiwgIiciXQpbMTAuMzYsICJvIiwgIiAiXQpbMTAuMzgsICJvIiwgIj4iXQpbMTAuNCwgIm8iLCAiICJdClsxMC40MiwgIm8iLCAiLyJdClsxMC40NCwgIm8iLCAiaCJdClsxMC40NiwgIm8iLCAibyJdClsxMC40OCwgIm8iLCAibSJdClsxMC41LCAibyIsICJlIl0KWzEwLjUyLCAibyIsICIvIl0KWzEwLjU0LCAibyIsICJhIl0KWzEwLjU2LCAibyIsICJnIl0KWzEwLjU4LCAibyIsICJlIl0KWzEwLjYsICJvIiwgIm4iXQpbMTAuNjIsICJvIiwgInQiXQpbMTAuNjQsICJvIiwgIi8iXQpbMTAuNjYsICJvIiwgImgiXQpbMTAuNjgsICJvIiwgImUiXQpbMTAuNywgIm8iLCAibCJdClsxMC43MiwgIm8iLCAibCJdClsxMC43NCwgIm8iLCAibyJdClsxMC43NiwgIm8iLCAiLiJdClsxMC43OCwgIm8iLCAidCJdClsxMC44LCAibyIsICJ4Il0KWzEwLjgyLCAibyIsICJ0Il0KWzEwLjg0LCAibyIsICIgIl0KWzEwLjg2LCAibyIsICImIl0KWzEwLjg4LCAibyIsICImIl0KWzEwLjksICJvIiwgIiAiXQpbMTAuOTIsICJvIiwgImUiXQpbMTAuOTQsICJvIiwgImMiXQpbMTAuOTYsICJvIiwgImgiXQpbMTAuOTgsICJvIiwgIm8iXQpbMTEuMCwgIm8iLCAiICJdClsxMS4wMiwgIm8iLCAiJyJdClsxMS4wNCwgIm8iLCAiZCJdClsxMS4wNiwgIm8iLCAibyJdClsxMS4wOCwgIm8iLCAibiJdClsxMS4xLCAibyIsICJlIl0KWzExLjEyLCAibyIsICInIl0KWzExLjE0LCAibyIsICJcIiJdClsxMS4xNiwgIm8iLCAiXHUwMDFiWzBtIl0KWzExLjE2LCAibyIsICJcclx1MDAxYlswOzMybSQgXHUwMDFiWzBtXHUwMDFiWzM4OzU7MTVtc3Vkb1x1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWVudnBvZFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bXJ1blx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWhlbGxvXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtLS1cdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1iYXNoXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtLWNcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxODZtXCJlY2hvICd0aGUgYWdlbnQgd3JvdGUgdGhpcycgPiAvaG9tZS9hZ2VudC9oZWxsby50eHQgJiYgZWNobyAnZG9uZSdcIlx1MDAxYlszOW1cdTAwMWJbMG0iXQpbMTEuOTYsICJvIiwgIlxyXG4iXQpbMTMuNDYsICJvIiwgIlx1MDAxYlswOzMybSQgXHUwMDFiWzBtIl0KWzEzLjQ2LCAibyIsICJcdTAwMWJbMG0iXQpbMTMuNDYsICJvIiwgInMiXQpbMTMuNDgsICJvIiwgInUiXQpbMTMuNSwgIm8iLCAiZCJdClsxMy41MiwgIm8iLCAibyJdClsxMy41NCwgIm8iLCAiICJdClsxMy41NiwgIm8iLCAiZSJdClsxMy41OCwgIm8iLCAibiJdClsxMy42LCAibyIsICJ2Il0KWzEzLjYyLCAibyIsICJwIl0KWzEzLjY0LCAibyIsICJvIl0KWzEzLjY2LCAibyIsICJkIl0KWzEzLjY4LCAibyIsICIgIl0KWzEzLjcsICJvIiwgImQiXQpbMTMuNzIsICJvIiwgImkiXQpbMTMuNzQsICJvIiwgImYiXQpbMTMuNzYsICJvIiwgImYiXQpbMTMuNzgsICJvIiwgIiAiXQpbMTMuOCwgIm8iLCAiaCJdClsxMy44MiwgIm8iLCAiZSJdClsxMy44NCwgIm8iLCAibCJdClsxMy44NiwgIm8iLCAibCJdClsxMy44OCwgIm8iLCAibyJdClsxMy45LCAibyIsICJcdTAwMWJbMG0iXQpbMTMuOSwgIm8iLCAiXHJcdTAwMWJbMDszMm0kIFx1MDAxYlswbVx1MDAxYlszODs1OzE1bXN1ZG9cdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1lbnZwb2RcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1kaWZmXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bSBcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtaGVsbG9cdTAwMWJbMzltXHUwMDFiWzBtIl0KWzE0LjcsICJvIiwgIlxyXG4iXQpbMTYuMiwgIm8iLCAiXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG0iXQpbMTYuMiwgIm8iLCAiXHUwMDFiWzBtIl0KWzE2LjIsICJvIiwgInMiXQpbMTYuMjIsICJvIiwgInUiXQpbMTYuMjQsICJvIiwgImQiXQpbMTYuMjYsICJvIiwgIm8iXQpbMTYuMjgsICJvIiwgIiAiXQpbMTYuMywgIm8iLCAiZSJdClsxNi4zMiwgIm8iLCAibiJdClsxNi4zNCwgIm8iLCAidiJdClsxNi4zNiwgIm8iLCAicCJdClsxNi4zOCwgIm8iLCAibyJdClsxNi40LCAibyIsICJkIl0KWzE2LjQyLCAibyIsICIgIl0KWzE2LjQ0LCAibyIsICJjIl0KWzE2LjQ2LCAibyIsICJvIl0KWzE2LjQ4LCAibyIsICJtIl0KWzE2LjUsICJvIiwgIm0iXQpbMTYuNTIsICJvIiwgImkiXQpbMTYuNTQsICJvIiwgInQiXQpbMTYuNTYsICJvIiwgIiAiXQpbMTYuNTgsICJvIiwgImgiXQpbMTYuNiwgIm8iLCAiZSJdClsxNi42MiwgIm8iLCAibCJdClsxNi42NCwgIm8iLCAibCJdClsxNi42NiwgIm8iLCAibyJdClsxNi42OCwgIm8iLCAiXHUwMDFiWzBtIl0KWzE2LjY4LCAibyIsICJcclx1MDAxYlswOzMybSQgXHUwMDFiWzBtXHUwMDFiWzM4OzU7MTVtc3Vkb1x1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWVudnBvZFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWNvbW1pdFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWhlbGxvXHUwMDFiWzM5bVx1MDAxYlswbSJdClsxNy40OCwgIm8iLCAiXHJcbiJdClsxOC45OCwgIm8iLCAiXHUwMDFiWzA7MzJtJCBcdTAwMWJbMG0iXQpbMTguOTgsICJvIiwgIlx1MDAxYlswbSJdClsxOC45OCwgIm8iLCAicyJdClsxOS4wLCAibyIsICJ1Il0KWzE5LjAyLCAibyIsICJkIl0KWzE5LjA0LCAibyIsICJvIl0KWzE5LjA2LCAibyIsICIgIl0KWzE5LjA4LCAibyIsICJlIl0KWzE5LjEsICJvIiwgIm4iXQpbMTkuMTIsICJvIiwgInYiXQpbMTkuMTQsICJvIiwgInAiXQpbMTkuMTYsICJvIiwgIm8iXQpbMTkuMTgsICJvIiwgImQiXQpbMTkuMiwgIm8iLCAiICJdClsxOS4yMiwgIm8iLCAiYSJdClsxOS4yNCwgIm8iLCAidSJdClsxOS4yNiwgIm8iLCAiZCJdClsxOS4yOCwgIm8iLCAiaSJdClsxOS4zLCAibyIsICJ0Il0KWzE5LjMyLCAibyIsICIgIl0KWzE5LjM0LCAibyIsICJoIl0KWzE5LjM2LCAibyIsICJlIl0KWzE5LjM4LCAibyIsICJsIl0KWzE5LjQsICJvIiwgImwiXQpbMTkuNDIsICJvIiwgIm8iXQpbMTkuNDQsICJvIiwgIlx1MDAxYlswbSJdClsxOS40NCwgIm8iLCAiXHJcdTAwMWJbMDszMm0kIFx1MDAxYlswbVx1MDAxYlszODs1OzE1bXN1ZG9cdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1lbnZwb2RcdTAwMWJbMzltXHUwMDFiWzM4OzU7MTVtIFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW1hdWRpdFx1MDAxYlszOW1cdTAwMWJbMzg7NTsxNW0gXHUwMDFiWzM5bVx1MDAxYlszODs1OzE1bWhlbGxvXHUwMDFiWzM5bVx1MDAxYlswbSJdClsyMC4yNCwgIm8iLCAiXHJcbiJdClsyMS43NCwgIm8iLCAiXHUwMDFiWzE0OzFIIl0KWzIxLjc0LCAibyIsICJcdTAwMWJbMm0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBtZDJjYXN0XHUwMDFiWzBtIl0K"
-       data-theme="monokai"
-       data-font="JetBrains Mono, Fira Code, Menlo, monospace"
-       data-font-size="16"
-       data-idle="3"
-       data-cols="110"
-       data-rows="12"></div>
+  <div class="svg-player"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 948 276" style="width:100%;max-width:948px;border-radius:8px;background:#1a1b26">
+<style>
+.t{font-family:JetBrains Mono, Fira Code, Cascadia Code, monospace;font-size:14px;white-space:pre}
+.f{opacity:0}
+@keyframes s{0%,100%{opacity:1}}
+#f0{animation:s 0.100s step-end 0.300s none}
+#f1{animation:s 0.120s step-end 0.400s none}
+#f2{animation:s 0.120s step-end 0.520s none}
+#f3{animation:s 0.120s step-end 0.640s none}
+#f4{animation:s 0.120s step-end 0.760s none}
+#f5{animation:s 0.120s step-end 0.880s none}
+#f6{animation:s 0.100s step-end 1.000s none}
+#f7{animation:s 0.900s step-end 1.100s none}
+#f8{animation:s 1.500s step-end 2.000s none}
+#f9{animation:s 0.100s step-end 3.500s none}
+#f10{animation:s 0.100s step-end 3.600s none}
+#f11{animation:s 0.880s step-end 3.700s none}
+#f12{animation:s 1.500s step-end 4.580s none}
+#f13{animation:s 0.120s step-end 6.080s none}
+#f14{animation:s 0.120s step-end 6.200s none}
+#f15{animation:s 0.120s step-end 6.320s none}
+#f16{animation:s 0.120s step-end 6.440s none}
+#f17{animation:s 0.100s step-end 6.560s none}
+#f18{animation:s 0.120s step-end 6.660s none}
+#f19{animation:s 0.860s step-end 6.780s none}
+#f20{animation:s 1.500s step-end 7.640s none}
+#f21{animation:s 0.120s step-end 9.140s none}
+#f22{animation:s 0.120s step-end 9.260s none}
+#f23{animation:s 0.120s step-end 9.380s none}
+#f24{animation:s 0.120s step-end 9.500s none}
+#f25{animation:s 0.100s step-end 9.620s none}
+#f26{animation:s 0.120s step-end 9.720s none}
+#f27{animation:s 0.120s step-end 9.840s none}
+#f28{animation:s 0.120s step-end 9.960s none}
+#f29{animation:s 0.120s step-end 10.080s none}
+#f30{animation:s 0.100s step-end 10.200s none}
+#f31{animation:s 0.120s step-end 10.300s none}
+#f32{animation:s 0.120s step-end 10.420s none}
+#f33{animation:s 0.100s step-end 10.540s none}
+#f34{animation:s 0.120s step-end 10.640s none}
+#f35{animation:s 0.120s step-end 10.760s none}
+#f36{animation:s 0.120s step-end 10.880s none}
+#f37{animation:s 0.120s step-end 11.000s none}
+#f38{animation:s 0.840s step-end 11.120s none}
+#f39{animation:s 1.500s step-end 11.960s none}
+#f40{animation:s 0.120s step-end 13.460s none}
+#f41{animation:s 0.120s step-end 13.580s none}
+#f42{animation:s 0.100s step-end 13.700s none}
+#f43{animation:s 0.900s step-end 13.800s none}
+#f44{animation:s 1.500s step-end 14.700s none}
+#f45{animation:s 0.100s step-end 16.200s none}
+#f46{animation:s 0.120s step-end 16.300s none}
+#f47{animation:s 0.120s step-end 16.420s none}
+#f48{animation:s 0.100s step-end 16.540s none}
+#f49{animation:s 0.840s step-end 16.640s none}
+#f50{animation:s 1.500s step-end 17.480s none}
+#f51{animation:s 0.120s step-end 18.980s none}
+#f52{animation:s 0.120s step-end 19.100s none}
+#f53{animation:s 0.100s step-end 19.220s none}
+#f54{animation:s 0.100s step-end 19.320s none}
+#f55{animation:s 0.820s step-end 19.420s none}
+#f56{animation:s 1.500s step-end 20.240s none}
+#f57{animation:s 2.000s step-end 21.740s forwards}
+</style>
+<g id="f0" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f1" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -</tspan></text>
+</g>
+<g id="f2" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL h</tspan></text>
+</g>
+<g id="f3" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https:/</tspan></text>
+</g>
+<g id="f4" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpo</tspan></text>
+</g>
+<g id="f5" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/</tspan></text>
+</g>
+<g id="f6" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/instal</tspan></text>
+</g>
+<g id="f7" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh</tspan></text>
+</g>
+<g id="f8" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+</g>
+<g id="f9" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f10" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod</tspan></text>
+</g>
+<g id="f11" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod pres</tspan></text>
+</g>
+<g id="f12" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+</g>
+<g id="f13" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f14" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo en</tspan></text>
+</g>
+<g id="f15" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod i</tspan></text>
+</g>
+<g id="f16" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init he</tspan></text>
+</g>
+<g id="f17" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --</tspan></text>
+</g>
+<g id="f18" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --prese</tspan></text>
+</g>
+<g id="f19" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devb</tspan></text>
+</g>
+<g id="f20" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+</g>
+<g id="f21" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f22" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo en</tspan></text>
+</g>
+<g id="f23" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod r</tspan></text>
+</g>
+<g id="f24" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hel</tspan></text>
+</g>
+<g id="f25" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello --</tspan></text>
+</g>
+<g id="f26" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash</tspan></text>
+</g>
+<g id="f27" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c &quot;ec</tspan></text>
+</g>
+<g id="f28" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c &quot;echo 'th</tspan></text>
+</g>
+<g id="f29" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c &quot;echo 'the agen</tspan></text>
+</g>
+<g id="f30" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c &quot;echo 'the agent wrot</tspan></text>
+</g>
+<g id="f31" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c &quot;echo 'the agent wrote thi</tspan></text>
+</g>
+<g id="f32" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c &quot;echo 'the agent wrote this' &gt; /</tspan></text>
+</g>
+<g id="f33" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c &quot;echo 'the agent wrote this' &gt; /home/a</tspan></text>
+</g>
+<g id="f34" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c &quot;echo 'the agent wrote this' &gt; /home/agent/</tspan></text>
+</g>
+<g id="f35" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c &quot;echo 'the agent wrote this' &gt; /home/agent/hello.</tspan></text>
+</g>
+<g id="f36" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c &quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp;</tspan></text>
+</g>
+<g id="f37" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c &quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp; echo</tspan></text>
+</g>
+<g id="f38" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c &quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp; echo 'done'</tspan></text>
+</g>
+<g id="f39" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c </tspan><tspan fill="#cccc66">&quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp; echo 'done'&quot;</tspan></text>
+</g>
+<g id="f40" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c </tspan><tspan fill="#cccc66">&quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp; echo 'done'&quot;</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f41" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c </tspan><tspan fill="#cccc66">&quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp; echo 'done'&quot;</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo en</tspan></text>
+</g>
+<g id="f42" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c </tspan><tspan fill="#cccc66">&quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp; echo 'done'&quot;</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod d</tspan></text>
+</g>
+<g id="f43" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c </tspan><tspan fill="#cccc66">&quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp; echo 'done'&quot;</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff h</tspan></text>
+</g>
+<g id="f44" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c </tspan><tspan fill="#cccc66">&quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp; echo 'done'&quot;</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff hello</tspan></text>
+</g>
+<g id="f45" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c </tspan><tspan fill="#cccc66">&quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp; echo 'done'&quot;</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff hello</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f46" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c </tspan><tspan fill="#cccc66">&quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp; echo 'done'&quot;</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff hello</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo e</tspan></text>
+</g>
+<g id="f47" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c </tspan><tspan fill="#cccc66">&quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp; echo 'done'&quot;</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff hello</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod</tspan></text>
+</g>
+<g id="f48" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c </tspan><tspan fill="#cccc66">&quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp; echo 'done'&quot;</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff hello</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod commit</tspan></text>
+</g>
+<g id="f49" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c </tspan><tspan fill="#cccc66">&quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp; echo 'done'&quot;</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff hello</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod commit hell</tspan></text>
+</g>
+<g id="f50" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c </tspan><tspan fill="#cccc66">&quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp; echo 'done'&quot;</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff hello</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod commit hello</tspan></text>
+</g>
+<g id="f51" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c </tspan><tspan fill="#cccc66">&quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp; echo 'done'&quot;</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff hello</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod commit hello</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$</tspan></text>
+</g>
+<g id="f52" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c </tspan><tspan fill="#cccc66">&quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp; echo 'done'&quot;</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff hello</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod commit hello</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo en</tspan></text>
+</g>
+<g id="f53" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c </tspan><tspan fill="#cccc66">&quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp; echo 'done'&quot;</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff hello</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod commit hello</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod a</tspan></text>
+</g>
+<g id="f54" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c </tspan><tspan fill="#cccc66">&quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp; echo 'done'&quot;</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff hello</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod commit hello</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit</tspan></text>
+</g>
+<g id="f55" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c </tspan><tspan fill="#cccc66">&quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp; echo 'done'&quot;</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff hello</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod commit hello</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit hello</tspan></text>
+</g>
+<g id="f56" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c </tspan><tspan fill="#cccc66">&quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp; echo 'done'&quot;</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff hello</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod commit hello</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit hello</tspan></text>
+</g>
+<g id="f57" class="f t">
+<text x="12" y="26.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">curl -fsSL https://envpod.dev/install.sh | sh</tspan></text>
+<text x="12" y="44.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">envpod presets</tspan></text>
+<text x="12" y="62.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod init hello --preset devbox</tspan></text>
+<text x="12" y="80.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod run hello -- bash -c </tspan><tspan fill="#cccc66">&quot;echo 'the agent wrote this' &gt; /home/agent/hello.txt &amp;&amp; echo 'done'&quot;</tspan></text>
+<text x="12" y="98.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod diff hello</tspan></text>
+<text x="12" y="116.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod commit hello</tspan></text>
+<text x="12" y="134.0"><tspan fill="#9ece6a">$ </tspan><tspan fill="#c0caf5">sudo envpod audit hello</tspan></text>
+<text x="12" y="260.0"><tspan fill="#c0caf5" opacity="0.5">                                                                                                      md2cast</tspan></text>
+</g>
+</svg></div>
   <div class="code-copy">
     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
     <pre><code class="language-bash">curl -fsSL https://envpod.dev/install.sh | sh
@@ -263,21 +992,7 @@ function copyCode(btn) {
     setTimeout(function() { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
   });
 }
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('.player[data-cast-src]').forEach(function(el) {
-    AsciinemaPlayer.create(el.dataset.castSrc, el, {
-      theme: el.dataset.theme,
-      fontFamily: el.dataset.font,
-      fontSize: el.dataset.fontSize + 'px',
-      idleTimeLimit: parseInt(el.dataset.idle),
-      cols: parseInt(el.dataset.cols),
-      rows: parseInt(el.dataset.rows),
-      fit: 'width',
-      autoPlay: false,
-      preload: true
-    });
-  });
-});
+
 </script>
 <footer style="margin-top:4rem;padding:1.5rem 0 0.5rem;text-align:center;font-size:0.75rem;color:var(--muted);opacity:0.6;">
   Made with <a href="https://github.com/markamo/md2cast" style="color:var(--accent);text-decoration:none;">md2cast</a>

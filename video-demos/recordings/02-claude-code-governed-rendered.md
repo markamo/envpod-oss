@@ -14,7 +14,7 @@
 
 **[0:15]** Show the preset (no config file needed):
 <!-- no-exec -->
-![Script](assets/01-script.gif)
+![Script](assets/01-script.svg)
 
 ```bash
 envpod presets
@@ -23,7 +23,7 @@ envpod presets
 
 **[0:30]** Init with preset:
 <!-- no-exec -->
-![Script](assets/02-script.gif)
+![Script](assets/02-script.svg)
 
 ```bash
 sudo envpod init claude-code --preset claude-code
@@ -32,7 +32,7 @@ sudo envpod init claude-code --preset claude-code
 
 **[0:50]** Store the API key in the vault:
 <!-- no-exec -->
-![Script](assets/03-script.gif)
+![Script](assets/03-script.svg)
 
 ```bash
 sudo envpod vault claude-code set ANTHROPIC_API_KEY
@@ -42,7 +42,7 @@ sudo envpod vault claude-code set ANTHROPIC_API_KEY
 
 **[1:05]** Run Claude Code:
 <!-- no-exec -->
-![Script](assets/04-script.gif)
+![Script](assets/04-script.svg)
 
 ```bash
 sudo envpod run claude-code -- claude
@@ -51,7 +51,7 @@ sudo envpod run claude-code -- claude
 
 **[1:35]** While Claude works, open a second terminal. Show live monitoring:
 <!-- no-exec -->
-![Script](assets/05-script.gif)
+![Script](assets/05-script.svg)
 
 ```bash
 sudo envpod audit claude-code
@@ -61,7 +61,7 @@ sudo envpod audit claude-code
 
 **[1:50]** Claude finishes. Review the diff:
 <!-- no-exec -->
-![Script](assets/06-script.gif)
+![Script](assets/06-script.svg)
 
 ```bash
 sudo envpod diff claude-code
@@ -71,7 +71,7 @@ sudo envpod diff claude-code
 
 **[2:10]** Commit the good changes:
 <!-- no-exec -->
-![Script](assets/07-script.gif)
+![Script](assets/07-script.svg)
 
 ```bash
 sudo envpod commit claude-code
@@ -80,7 +80,7 @@ sudo envpod commit claude-code
 
 **[2:25]** Show the security audit:
 <!-- no-exec -->
-![Script](assets/08-script.gif)
+![Script](assets/08-script.svg)
 
 ```bash
 sudo envpod audit claude-code --security
@@ -91,7 +91,7 @@ sudo envpod audit claude-code --security
 **[2:40]** Show cloning — spin up another instance instantly:
 <!-- no-exec -->
 <!-- type-delay 0.02 -->
-![Script](assets/09-script.gif)
+![Script](assets/09-script.svg)
 
 ```bash
 sudo envpod clone claude-code claude-code-2
@@ -107,7 +107,7 @@ sudo envpod run claude-code-2 -- echo "I'm a separate pod"
 
 <!-- no-exec -->
 <!-- type-delay 0.02 -->
-![Commands (copy-paste)](assets/10-commands-copy-paste.gif)
+![Commands (copy-paste)](assets/10-commands-copy-paste.svg)
 
 ```bash
 envpod presets
