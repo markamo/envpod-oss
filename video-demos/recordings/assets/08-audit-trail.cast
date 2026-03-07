@@ -1,4 +1,4 @@
-{"version": 2, "width": 110, "height": 13, "title": "Audit Trail", "timestamp": 1772821992, "env": {"TERM": "xterm-256color", "THEME": "monokai", "FONT_FAMILY": "JetBrains Mono, Fira Code, Menlo, monospace", "FONT_SIZE": "16"}, "idle_time_limit": 3}
+{"version": 2, "width": 110, "height": 13, "title": "Audit Trail", "timestamp": 1772864288, "env": {"TERM": "xterm-256color", "THEME": "monokai", "FONT_FAMILY": "JetBrains Mono, Fira Code, Menlo, monospace", "FONT_SIZE": "16"}, "idle_time_limit": 3}
 [0.3, "o", "\u001b[0;32m$ \u001b[0m"]
 [0.3, "o", "\u001b[0m"]
 [0.3, "o", "s"]
@@ -29,11 +29,11 @@
 [1.79, "o", "\r\n"]
 [1.79, "o", "\u001b[0mTIMESTAMP                ACTION       OK   DETAIL\u001b[0m\r\n"]
 [1.79, "o", "\u001b[0m------------------------------------------------------------------------\u001b[0m\r\n"]
-[1.79, "o", "\u001b[0m2026-03-06 18:33:11 UTC  create yes  backend=native\u001b[0m\r\n"]
-[1.79, "o", "\u001b[0m2026-03-06 18:33:12 UTC  start yes  pid=110842, cmd=bash -c echo 'the agent wrote this' > /home/agent/hello.txt && echo 'wrote /home/agent/hello.txt inside pod'\u001b[0m\r\n"]
-[1.79, "o", "\u001b[0m2026-03-06 18:33:12 UTC  diff yes  5 change(s)\u001b[0m\r\n"]
-[1.79, "o", "\u001b[0m2026-03-06 18:33:12 UTC  diff yes  5 change(s)\u001b[0m\r\n"]
-[1.79, "o", "\u001b[0m2026-03-06 18:33:12 UTC  commit yes  1 file(s)\u001b[0m\r\n"]
+[1.79, "o", "\u001b[0m2026-03-07 06:18:07 UTC  create yes  backend=native\u001b[0m\r\n"]
+[1.79, "o", "\u001b[0m2026-03-07 06:18:08 UTC  start yes  pid=547520, cmd=bash -c echo 'the agent wrote this' > /home/agent/hello.txt && echo 'wrote /home/agent/hello.txt inside pod'\u001b[0m\r\n"]
+[1.79, "o", "\u001b[0m2026-03-07 06:18:08 UTC  diff yes  5 change(s)\u001b[0m\r\n"]
+[1.79, "o", "\u001b[0m2026-03-07 06:18:08 UTC  diff yes  5 change(s)\u001b[0m\r\n"]
+[1.79, "o", "\u001b[0m2026-03-07 06:18:08 UTC  commit yes  1 file(s)\u001b[0m\r\n"]
 [1.79, "o", "\u001b[0m\u001b[0m\r\n"]
 [1.79, "o", "\u001b[0m5 entry(ies) for pod 'hello'\u001b[0m\r\n"]
 [3.29, "o", "\u001b[13;1H"]

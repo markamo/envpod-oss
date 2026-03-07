@@ -1,4 +1,4 @@
-{"version": 2, "width": 110, "height": 35, "title": "Install to First Pod in 60 Seconds", "timestamp": 1772822013, "env": {"TERM": "xterm-256color", "THEME": "monokai", "FONT_FAMILY": "JetBrains Mono, Fira Code, Menlo, monospace", "FONT_SIZE": "16"}, "idle_time_limit": 3}
+{"version": 2, "width": 110, "height": 35, "title": "Install to First Pod in 60 Seconds", "timestamp": 1772864286, "env": {"TERM": "xterm-256color", "THEME": "monokai", "FONT_FAMILY": "JetBrains Mono, Fira Code, Menlo, monospace", "FONT_SIZE": "16"}, "idle_time_limit": 3}
 [0.0, "o", "\u001b[2J\u001b[H"]
 [0.3, "o", "\r\n"]
 [0.3, "o", "  \u001b[0;36m\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\u001b[0m\r\n"]
@@ -487,11 +487,11 @@
 [51.93, "o", "\r\n"]
 [51.93, "o", "\u001b[0mTIMESTAMP                ACTION       OK   DETAIL\u001b[0m\r\n"]
 [51.93, "o", "\u001b[0m------------------------------------------------------------------------\u001b[0m\r\n"]
-[51.93, "o", "\u001b[0m2026-03-06 18:33:32 UTC  create yes  backend=native\u001b[0m\r\n"]
-[51.93, "o", "\u001b[0m2026-03-06 18:33:33 UTC  start yes  pid=111480, cmd=bash -c echo 'the agent wrote this' > /home/agent/hello.txt && echo 'wrote /home/agent/hello.txt inside pod'\u001b[0m\r\n"]
-[51.93, "o", "\u001b[0m2026-03-06 18:33:33 UTC  diff yes  5 change(s)\u001b[0m\r\n"]
-[51.93, "o", "\u001b[0m2026-03-06 18:33:33 UTC  diff yes  5 change(s)\u001b[0m\r\n"]
-[51.93, "o", "\u001b[0m2026-03-06 18:33:33 UTC  commit yes  1 file(s)\u001b[0m\r\n"]
+[51.93, "o", "\u001b[0m2026-03-07 06:18:05 UTC  create yes  backend=native\u001b[0m\r\n"]
+[51.93, "o", "\u001b[0m2026-03-07 06:18:06 UTC  start yes  pid=547293, cmd=bash -c echo 'the agent wrote this' > /home/agent/hello.txt && echo 'wrote /home/agent/hello.txt inside pod'\u001b[0m\r\n"]
+[51.93, "o", "\u001b[0m2026-03-07 06:18:06 UTC  diff yes  5 change(s)\u001b[0m\r\n"]
+[51.93, "o", "\u001b[0m2026-03-07 06:18:06 UTC  diff yes  5 change(s)\u001b[0m\r\n"]
+[51.93, "o", "\u001b[0m2026-03-07 06:18:06 UTC  commit yes  1 file(s)\u001b[0m\r\n"]
 [51.93, "o", "\u001b[0m\u001b[0m\r\n"]
 [51.93, "o", "\u001b[0m5 entry(ies) for pod 'hello'\u001b[0m\r\n"]
 [55.43, "o", "\u001b[2J\u001b[H"]

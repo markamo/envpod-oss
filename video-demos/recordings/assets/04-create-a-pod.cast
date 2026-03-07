@@ -1,4 +1,4 @@
-{"version": 2, "width": 110, "height": 26, "title": "Create a Pod", "timestamp": 1772821991, "env": {"TERM": "xterm-256color", "THEME": "monokai", "FONT_FAMILY": "JetBrains Mono, Fira Code, Menlo, monospace", "FONT_SIZE": "16"}, "idle_time_limit": 3}
+{"version": 2, "width": 110, "height": 26, "title": "Create a Pod", "timestamp": 1772864288, "env": {"TERM": "xterm-256color", "THEME": "monokai", "FONT_FAMILY": "JetBrains Mono, Fira Code, Menlo, monospace", "FONT_SIZE": "16"}, "idle_time_limit": 3}
 [0.3, "o", "\u001b[0;32m$ \u001b[0m"]
 [0.3, "o", "\u001b[0m"]
 [0.3, "o", "s"]
@@ -48,7 +48,7 @@
 [2.24, "o", "\u001b[0m  \u001b[1m\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\u001b[0m\u001b[0m\r\n"]
 [2.24, "o", "\u001b[0m\u001b[0m\r\n"]
 [2.24, "o", "\u001b[0m  \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u001b[0m\r\n"]
-[2.24, "o", "\u001b[0m  Pod Created \u00b7 hello  1.1s\u001b[0m\r\n"]
+[2.24, "o", "\u001b[0m  Pod Created \u00b7 hello  994ms\u001b[0m\r\n"]
 [2.24, "o", "\u001b[0m  \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u001b[0m\r\n"]
 [2.24, "o", "\u001b[0m\u001b[0m\r\n"]
 [2.24, "o", "\u001b[0m  Backend  native\u001b[0m\r\n"]
