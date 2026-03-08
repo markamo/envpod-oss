@@ -199,6 +199,7 @@
       <div class="feature-card"><div class="feature-icon">🔒</div><div class="feature-title">Process Isolation</div><div class="feature-desc">PID + UTS + user namespace. cgroups v2 CPU/memory/IO/PID limits. Seccomp-BPF syscall filtering. A runaway agent cannot starve the host. A compromised agent cannot see host processes.</div></div>
       <div class="feature-card"><div class="feature-icon">⚡</div><div class="feature-title">Base Pods &amp; Fast Cloning</div><div class="feature-desc">Run <code>envpod init</code> once. That becomes a base. Clone from it in ~130ms — 10× faster. Spin up 50 identical agents in seconds, each with its own isolated overlay.</div></div>
       <div class="feature-card"><div class="feature-icon">📡</div><div class="feature-title">Display, Audio &amp; GPU</div><div class="feature-desc">Governed Wayland forwarding with per-window isolation. PipeWire/PulseAudio support. NVIDIA and AMD GPUs work out of the box — no toolkit, no drivers. ARM64: Raspberry Pi, Jetson Orin.</div></div>
+      <div class="feature-card"><div class="feature-icon">🖥️</div><div class="feature-title">Web Display (noVNC)</div><div class="feature-desc">Access a pod's graphical desktop from any browser. No X11 or Wayland forwarding needed — the display stack runs inside the pod. Open <code>localhost:6080</code> and you're in.</div></div>
     </div>
   </div>
 </section>
@@ -443,14 +444,14 @@
 <section class="section-tinted reveal" id="pricing">
   <div class="wrap">
     <div class="section-label">Pricing</div>
-    <h2 style="text-align:center">Free to use. Pro coming soon.</h2>
+    <h2 style="text-align:center">Free to use. Pro when you need it.</h2>
     <p class="section-sub" style="text-align:center;margin:0 auto 56px">The full governance stack is free and self-hosted. Pro adds advanced security features for teams running agents in production.</p>
 
     <div class="pricing-grid">
 
       <!-- Free / CE -->
       <div class="pricing-card">
-        <div class="pricing-badge" style="background:var(--green-glow);color:var(--green);border-color:rgba(34,197,94,0.2)">envpod CE</div>
+        <div class="pricing-badge" style="background:var(--green-glow);color:var(--green);border-color:rgba(34,197,94,0.2)">Available now</div>
         <div class="pricing-tier">Free</div>
         <div class="pricing-price">$0</div>
         <div class="pricing-period">forever · self-hosted · AGPL v3</div>
@@ -466,6 +467,7 @@
           <li>Web dashboard — fleet overview, live stats, diff from browser</li>
           <li>Base pods + fast cloning (~130ms)</li>
           <li>GPU, display &amp; audio passthrough</li>
+          <li>Web display (noVNC) — browser-based pod desktop</li>
           <li>Pod-to-pod discovery (envpod-dns daemon)</li>
           <li>25+ example configs</li>
         </ul>
@@ -476,7 +478,7 @@
 
       <!-- Pro -->
       <div class="pricing-card pricing-card-pro">
-        <div class="pricing-badge">Coming August 2026</div>
+        <div class="pricing-badge">Coming soon</div>
         <div class="pricing-tier">Pro</div>
         <div class="pricing-price">$49<span> / seat / mo</span></div>
         <div class="pricing-period">per seat · self-hosted · billed monthly</div>
