@@ -566,6 +566,38 @@ impl NativeBackend {
             })
             .unwrap_or_default();
 
+        // Auto-mount host apps (filesystem.apps)
+        if let Some(config) = pod_config {
+            for app_name in &config.filesystem.apps {
+                match crate::app_resolver::resolve_app(app_name) {
+                    Ok(resolved) => {
+                        for path in &resolved.paths {
+                            if path.exists() && !mount_entries.iter().any(|(h, _, _)| h == path) {
+                                mount_entries.push((path.clone(), path.clone(), true));
+                            }
+                        }
+                    }
+                    Err(e) => {
+                        tracing::warn!(app = %app_name, error = %e, "failed to resolve app");
+                    }
+                }
+            }
+        }
+
+        // Clone host user directory mounts
+        if let Some(config) = pod_config {
+            if config.host_user.clone_host {
+                if let Ok(user) = crate::user_clone::get_host_user() {
+                    let user_mounts = crate::user_clone::user_dir_mounts(&user, &config.host_user);
+                    for (host_path, pod_path, readonly) in user_mounts {
+                        if host_path.exists() && !mount_entries.iter().any(|(h, _, _)| h == &host_path) {
+                            mount_entries.push((host_path, pod_path, readonly));
+                        }
+                    }
+                }
+            }
+        }
+
         // Append auto-mount entries from devices config (display/audio)
         if devices.display {
             use crate::config::DisplayProtocol;
@@ -835,6 +867,20 @@ impl IsolationBackend for NativeBackend {
         // Create minimal rootfs (overlay lower layer — not the full host FS)
         overlay::create_rootfs(&pod_dir)
             .context("create rootfs")?;
+
+        // Clone host user into rootfs if configured
+        if config.host_user.clone_host {
+            let rootfs = pod_dir.join("rootfs");
+            match crate::user_clone::setup_cloned_user(&rootfs, &config.host_user) {
+                Ok(user) => {
+                    tracing::info!(username = %user.username, "cloned host user into pod");
+                }
+                Err(e) => {
+                    tracing::warn!(error = %e, "failed to clone host user — falling back to agent");
+                    eprintln!("warning: failed to clone host user: {e:#}");
+                }
+            }
+        }
 
         // Create cgroup for resource control
         let cgroup_path = match cgroup::create(&id.to_string()) {

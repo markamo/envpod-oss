@@ -1674,7 +1674,7 @@ async fn cmd_run(store: &PodStore, base_dir: &std::path::Path, name: &str, comma
     }
 
     let state = NativeState::from_handle(&handle)?;
-    let pod_config = state.load_config()?;
+    let mut pod_config = state.load_config()?;
 
     // Resolve effective display/audio protocols from pod config
     let devices = pod_config.as_ref()
@@ -1816,6 +1816,15 @@ async fn cmd_run(store: &PodStore, base_dir: &std::path::Path, name: &str, comma
     } else {
         None
     };
+
+    // Override user with cloned host user when clone_host is true
+    if let Some(ref mut cfg) = pod_config {
+        if cfg.host_user.clone_host {
+            if let Ok(host_user) = envpod_core::user_clone::get_host_user() {
+                cfg.user = host_user.username;
+            }
+        }
+    }
 
     // Resolve effective user: CLI --user > CLI --root > pod.yaml user > default "agent"
     // --user root is equivalent to --root

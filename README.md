@@ -47,6 +47,10 @@ Existing sandboxes (Docker, E2B, Firecrackers) provide isolation but zero govern
 
 **Display + Audio Forwarding** — GPU passthrough, Wayland/X11 display forwarding, PipeWire/PulseAudio audio forwarding for GUI agents.
 
+**Host App Auto-Mount** — List apps in `pod.yaml` and envpod resolves binaries, shared libraries, and data directories via `which` + `ldd`, then bind-mounts them read-only. No reinstalling Chrome, Python, or Node inside every pod — instant, zero disk overhead.
+
+**Clone Host User** — `host_user: { clone_host: true }` clones your username, shell, dotfiles, and workspace directories into the pod with COW isolation. The agent works in your real environment — your files, your tools, your config — but every change is staged for review. Sensitive paths (`.ssh`, `.gnupg`, `.aws`) excluded by default.
+
 ## Quick Start
 
 ```bash
@@ -286,6 +290,8 @@ The interactive wizard also lets you customize CPU cores, memory, and GPU after 
 | [`jetson-orin.yaml`](examples/jetson-orin.yaml) | NVIDIA Jetson Orin (ARM64) |
 | [`raspberry-pi.yaml`](examples/raspberry-pi.yaml) | Raspberry Pi 4/5 (ARM64) |
 | [`web-display-novnc.yaml`](examples/web-display-novnc.yaml) | noVNC web display |
+| [`host-apps.yaml`](examples/host-apps.yaml) | Auto-mount host apps (Chrome, Python, Node) |
+| [`clone-user.yaml`](examples/clone-user.yaml) | Clone host user environment |
 
 ## Performance
 

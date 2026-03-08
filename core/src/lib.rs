@@ -3,6 +3,7 @@
 
 pub mod actions;
 pub mod action_types;
+pub mod app_resolver;
 pub mod audit;
 pub mod backend;
 pub mod config;
@@ -15,6 +16,7 @@ pub mod remote;
 pub mod store;
 pub mod types;
 pub mod undo;
+pub mod user_clone;
 pub mod vault;
 pub mod web_display;
 pub mod snapshot;

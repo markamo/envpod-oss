@@ -30,6 +30,7 @@ pub struct PodConfig {
     pub snapshots: SnapshotConfig,
     pub queue: QueueConfig,
     pub web_display: WebDisplayConfig,
+    pub host_user: HostUserConfig,
 
     /// Default user to run commands as inside the pod.
     /// Defaults to "agent" (non-root, UID 60000) for full pod boundary protection.
@@ -68,6 +69,7 @@ impl Default for PodConfig {
             snapshots: SnapshotConfig::default(),
             queue: QueueConfig::default(),
             web_display: WebDisplayConfig::default(),
+            host_user: HostUserConfig::default(),
             user: default_user(),
             setup: Vec::new(),
             setup_script: None,
@@ -189,6 +191,8 @@ pub struct FilesystemConfig {
     pub workspace: Option<PathBuf>,
     pub tracking: TrackingConfig,
     pub system_access: SystemAccess,
+    #[serde(default)]
+    pub apps: Vec<String>,
 }
 
 /// Controls which paths appear in `envpod diff` and `envpod commit` by default.
@@ -527,6 +531,17 @@ impl Default for WebDisplayConfig {
             codec: "vp8".into(),
         }
     }
+}
+
+// -- Host User ----------------------------------------------------------------
+
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+#[serde(default)]
+pub struct HostUserConfig {
+    pub clone_host: bool,
+    pub dirs: Vec<String>,
+    pub exclude: Vec<String>,
+    pub include_dotfiles: Vec<String>,
 }
 
 #[cfg(test)]
