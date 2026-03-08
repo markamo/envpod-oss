@@ -1645,7 +1645,8 @@ fn cmd_run_background(base_dir: &std::path::Path, name: &str, command: &[String]
                 .chain(args.iter().map(|a| std::ffi::CString::new(a.as_bytes()).unwrap()))
                 .collect();
             nix::unistd::execv(&c_exe, &c_args).expect("execv failed");
-            unreachable!()
+            #[allow(unreachable_code)]
+            Ok(())
         }
         Err(e) => {
             anyhow::bail!("failed to fork background daemon: {e}");

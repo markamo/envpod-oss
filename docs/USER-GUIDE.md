@@ -3,7 +3,7 @@
 
 > **EnvPod v0.1.0** — Zero-trust governance environments for AI agents
 > Author: Mark Amoboateng · mark@envpod.dev
-> Copyright 2026 Xtellix Inc. · Licensed under Apache-2.0
+> Copyright 2026 Xtellix Inc. · Licensed under AGPL-3.0
 
 ---
 
@@ -72,6 +72,8 @@ A pod is a self-contained execution environment with four isolation walls and a 
 └──────────────┴─────────────┴─────────────┴──────────────┘
 ```
 
+<!-- pause 2 -->
+
 ### Lifecycle
 
 <!-- output -->
@@ -90,7 +92,6 @@ init  →  run  →  diff  →  commit  or  rollback  →  destroy
 
 ### Pod Types
 
-<!-- output -->
 | Type | Description |
 |------|-------------|
 | `standard` | Balanced isolation and functionality (default) |
@@ -160,7 +161,6 @@ All commands require root (`sudo`). Override the state directory with `--dir <pa
 
 Create a new pod. Three ways to configure:
 
-<!-- output -->
 | Option | Description |
 |--------|-------------|
 | `<name>` | Pod name (required) |
@@ -193,7 +193,6 @@ List all built-in presets by category (Coding Agents, Frameworks, Browser Agents
 
 Run a command inside a pod. Press **Ctrl+Z** to detach (pod continues in background). Use `envpod fg` to reattach.
 
-<!-- output -->
 | Option | Description |
 |--------|-------------|
 | `--root` | Run as root inside the pod (default is non-root `agent` user). Prints a security warning. |
@@ -261,7 +260,6 @@ sudo envpod destroy my-agent --base             # also remove the base pod
 sudo envpod destroy my-agent --full             # also clean up iptables immediately
 ```
 
-<!-- output -->
 | Option | Description |
 |--------|-------------|
 | `--base` | Also remove the base pod (only with a single name) |
@@ -284,14 +282,12 @@ Clean up all orphaned resources left by destroyed pods or unclean shutdowns. Whe
 <!-- no-exec -->
 ```bash
 sudo envpod gc
-```
-
-<!-- output -->
-```
 # Removed 15 stale iptables rules
 # Removed 2 orphaned network namespaces
 # Removed 3 orphaned cgroups
 ```
+
+<!-- pause 2 -->
 
 Run periodically on hosts that create and destroy many pods, or after a system crash.
 
@@ -302,6 +298,7 @@ Run periodically on hosts that create and destroy many pods, or after a system c
 Clone a pod or base pod. Cloning is ~10x faster than `envpod init` (~130ms vs ~1.3s) because it symlinks the rootfs instead of rebuilding it.
 
 <!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # Clone from base snapshot (after init+setup, before agent changes)
 sudo envpod clone my-agent clone-1
@@ -313,7 +310,6 @@ sudo envpod clone my-agent clone-2 --current
 sudo envpod clone python-base worker-1
 ```
 
-<!-- output -->
 | Option | Description |
 |--------|-------------|
 | `<source>` | Source pod or base pod name (required) |
@@ -332,7 +328,6 @@ sudo envpod base create python-base -c examples/python-env.yaml
 sudo envpod base create browser-base -c examples/browser.yaml -v
 ```
 
-<!-- output -->
 | Option | Description |
 |--------|-------------|
 | `<name>` | Base pod name (required) |
@@ -359,7 +354,6 @@ sudo envpod base destroy python-base
 sudo envpod base destroy python-base --force   # even if pods still reference it
 ```
 
-<!-- output -->
 | Option | Description |
 |--------|-------------|
 | `--force` | Force removal even if pods still reference this base |
@@ -381,6 +375,7 @@ sudo envpod diff my-agent
   Modified /etc/hosts                (156 bytes)
   Deleted  /opt/old-file.txt
 ```
+
 <!-- pause 2 -->
 
 <!-- no-exec -->
@@ -411,7 +406,6 @@ sudo envpod commit my-agent --output /tmp/agent-output
 sudo envpod commit my-agent --include-system
 ```
 
-<!-- output -->
 | Option | Description |
 |--------|-------------|
 | `paths...` | Specific paths to commit (default: all) |
@@ -453,6 +447,7 @@ CPU:      45.2%
 Memory:   256 MB / 4096 MB
 Network:  10.200.1.2 (envpod-a1b2c3d4)
 ```
+
 <!-- pause 2 -->
 
 #### `envpod ls [--json]`
@@ -475,7 +470,6 @@ browser-pod   native   2026-02-27T09:30:00Z
 
 Show pod stdout/stderr output.
 
-<!-- output -->
 | Option | Description |
 |--------|-------------|
 | `-f`, `--follow` | Follow log output (like `tail -f`) |
@@ -508,11 +502,13 @@ TIME                 ACTION           DETAILS
 2026-02-27T10:05:00  diff             3 change(s)
 2026-02-27T10:05:01  commit
 ```
+
 <!-- pause 2 -->
 
 **Security audit** (works on created pods or raw YAML files):
 
 <!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # Audit a created pod
 sudo envpod audit my-agent --security
@@ -524,7 +520,8 @@ sudo envpod audit --security -c examples/browser.yaml
 sudo envpod audit --security --json -c examples/coding-agent.yaml
 ```
 
-<!-- output -->
+<!-- pause 2 -->
+
 | Option | Description |
 |--------|-------------|
 | `--json` | Output as JSON |
@@ -539,7 +536,6 @@ See [Security Report](SECURITY.md) for a full audit of all example configs and a
 
 Bind-mount a host path into a running pod.
 
-<!-- output -->
 | Option | Description |
 |--------|-------------|
 | `<host_path>` | Host filesystem path (required) |
@@ -634,7 +630,6 @@ sudo envpod queue my-agent
 
 Submit an action to the queue.
 
-<!-- output -->
 | Tier | Behavior |
 |------|----------|
 | `immediate` | Execute now, COW overlay protects |
@@ -733,7 +728,6 @@ sudo envpod monitor my-agent alerts
 
 Send a control command to a running pod.
 
-<!-- output -->
 | Command | Description |
 |---------|-------------|
 | `freeze` | Pause all processes |
@@ -759,6 +753,7 @@ sudo envpod remote my-agent status
 Generate tab completions for your shell.
 
 <!-- no-exec -->
+<!-- type-delay 0.02 -->
 ```bash
 # Bash
 sudo envpod completions bash > /etc/bash_completion.d/envpod
@@ -779,6 +774,7 @@ Pods are configured via YAML files. All sections are optional — secure default
 ### Complete Schema
 
 <!-- output -->
+<!-- type-delay 0.02 -->
 ```yaml
 # ─── Identity ─────────────────────────────────────────────
 name: my-agent                           # Pod name (required)
@@ -872,11 +868,12 @@ setup:                                   # Shell commands run during init (alway
 setup_script: ~/my-project/setup.sh      # Host script injected + executed after setup commands
 ```
 
+<!-- pause 2 -->
+
 ### Secure Defaults
 
 When a section is omitted, the most restrictive option applies:
 
-<!-- output -->
 | Setting | Default |
 |---------|---------|
 | User | `agent` (non-root, UID 60000) |
@@ -894,7 +891,6 @@ When a section is omitted, the most restrictive option applies:
 | Tools allowed | Empty (all commands allowed) |
 | Subnet base | `10.200` (pods get `10.200.{idx}.0/30`) |
 | Setup script | `None` (no host script) |
-<!-- pause 2 -->
 
 ---
 
@@ -1017,7 +1013,6 @@ Pods with the same subnet base share an IP range, enabling pod-to-pod communicat
 
 ### Network Modes
 
-<!-- output -->
 | Mode | Description |
 |------|-------------|
 | `Isolated` | Full isolation. DNS filtered + iptables rules enforce it. Default. |
@@ -1026,7 +1021,6 @@ Pods with the same subnet base share an IP range, enabling pod-to-pod communicat
 
 ### DNS Modes
 
-<!-- output -->
 | Mode | Description |
 |------|-------------|
 | `Whitelist` | Only explicitly allowed domains resolve. Everything else returns NXDOMAIN. Default. |
@@ -1077,7 +1071,6 @@ sudo envpod dns my-agent --remove-allow old-domain.com
 
 Expose pod services to the host or other pods. Three scopes — choose based on who needs access:
 
-<!-- output -->
 | Key | CLI | Format | Scope |
 |-----|-----|--------|-------|
 | `ports` | `-p` | `host:container[/proto]` | Localhost only (`127.0.0.1`) |
@@ -1149,7 +1142,6 @@ sudo envpod dns-daemon
 Each pod's DNS server forwards `*.pods.local` queries to the daemon. The daemon enforces both sides: `api-pod.allow_discovery == true` AND the querying pod appears in its `allow_pods` list. Both conditions must hold; otherwise → NXDOMAIN.
 
 Agent in client pod:
-
 <!-- no-exec -->
 ```bash
 curl http://api-pod.pods.local:3000/status   # resolves and connects
@@ -1212,7 +1204,6 @@ The pod's `/proc/1/` has `root`, `cwd`, and `environ` individually masked (bind-
 
 Syscall filtering restricts which kernel operations the agent can perform:
 
-<!-- output -->
 | Profile | Description |
 |---------|-------------|
 | `default` | ~130 safe syscalls. Blocks `ptrace`, `mount`, `reboot`, `kexec`, etc. |
@@ -1246,7 +1237,6 @@ By default, pods see a minimal `/dev` with only essential pseudo-devices. GPU an
 
 Every pod gets these essential devices:
 
-<!-- output -->
 | Device | Purpose |
 |--------|---------|
 | `/dev/null` | Discard output |
@@ -1432,7 +1422,6 @@ When `allowed_commands` is empty (default), all commands are allowed. When popul
 
 Envpod layers multiple isolation mechanisms:
 
-<!-- output -->
 | Layer | Mechanism | Protects Against |
 |-------|-----------|-----------------|
 | Mount namespace | OverlayFS | Host filesystem modification |
@@ -1447,6 +1436,7 @@ Envpod layers multiple isolation mechanisms:
 | Coredump prevention | prctl + rlimit | Memory disclosure |
 | UTS namespace | Pod hostname | Host identity disclosure |
 | Vault encryption | ChaCha20-Poly1305 AEAD | Secret exfiltration from pod dir |
+
 <!-- pause 2 -->
 
 ### Jailbreak Test Script
@@ -1464,7 +1454,6 @@ sudo envpod run my-agent -- bash /path/to/examples/jailbreak-test.sh
 
 The script tests **8 categories** with **48 individual probes**:
 
-<!-- output -->
 | Category | Tests | What It Probes |
 |----------|-------|----------------|
 | Filesystem (F-01 to F-10) | 10 | Overlay escape, mount/unmount, /sys write, mknod, device access |
@@ -1475,7 +1464,6 @@ The script tests **8 categories** with **48 individual probes**:
 | Cgroups (C-01 to C-03) | 3 | Memory limit, CPU limit, PID limit |
 | Info Leakage (I-01 to I-06) | 6 | /proc/cpuinfo, /proc/meminfo, /proc/stat, hostname, kernel version, GPU |
 | Advanced (A-01 to A-05) | 5 | Symlink traversal, /proc/self/exe, fd passing, TOCTOU, /dev/mem |
-<!-- pause 2 -->
 
 **Options:**
 
@@ -1494,12 +1482,12 @@ jailbreak-test.sh --category seccomp
 
 **Known gaps (v0.1):** The script will surface these expected limitations:
 
-<!-- output -->
 | Test | Gap | Severity | Applies When |
 |------|-----|----------|--------------|
 | N-05 | Pod root can `iptables -F` (no user namespace) | CRITICAL | `--root` only |
 | N-06 | Raw sockets available (root, no user namespace) | HIGH | `--root` only |
 | I-03 | /proc/stat leaks host CPU counters | MEDIUM | Always |
+
 <!-- pause 2 -->
 
 N-05 and N-06 only affect pods running as root (`--root` flag or `user: root` in pod.yaml). The default non-root `agent` user is immune — 17/17 pod boundary tests pass. IPv6 DNS bypass (N-04) is blocked since v0.1 (IPv6 is disabled in the pod network namespace); full ip6tables rules are planned for v0.2.
@@ -1595,6 +1583,8 @@ vault:
 - Per-pod ephemeral CA means compromising one pod's trust store doesn't affect others
 - Security audit (`envpod audit --security`) checks for misconfigurations: V-01 (bindings without proxy), V-02 (proxy with unsafe network), V-03 (bound domain not in DNS allow list)
 
+<!-- pause 2 -->
+
 **Managing bindings:**
 
 <!-- no-exec -->
@@ -1611,7 +1601,6 @@ See [Pod Configuration Reference — Vault](POD-CONFIG.md#vault) for full detail
 
 ### Action Tiers
 
-<!-- output -->
 | Tier | Behavior | Example |
 |------|----------|---------|
 | `immediate` | Execute now, overlay protects | File modifications |
@@ -1657,6 +1646,7 @@ sudo envpod undo my-agent --all
 Install a monitoring policy to detect anomalous behavior:
 
 <!-- output -->
+<!-- type-delay 0.02 -->
 ```yaml
 # monitoring-policy.yaml
 check_interval_secs: 5
@@ -1694,6 +1684,8 @@ rules:
       type: freeze
 ```
 
+<!-- pause 2 -->
+
 <!-- no-exec -->
 ```bash
 sudo envpod monitor my-agent set-policy monitoring-policy.yaml
@@ -1725,7 +1717,6 @@ sudo envpod remote my-agent restrict --payload '{"cpu_cores": 0.5, "memory_bytes
 
 Every action inside a pod is logged to `{pod_dir}/audit.jsonl`. The audit log is append-only and records:
 
-<!-- output -->
 | Field | Description |
 |-------|-------------|
 | `timestamp` | ISO 8601 timestamp |
@@ -1736,7 +1727,6 @@ Every action inside a pod is logged to `{pod_dir}/audit.jsonl`. The audit log is
 
 ### Audit Actions
 
-<!-- output -->
 | Action | Description |
 |--------|-------------|
 | `create` | Pod created |
@@ -1763,7 +1753,6 @@ Every action inside a pod is logged to `{pod_dir}/audit.jsonl`. The audit log is
 | `monitor_freeze` | Pod frozen by monitor agent |
 | `undo` | Action undone |
 | `restore` | Pod state restored after host reboot |
-<!-- pause 2 -->
 
 ---
 
@@ -1771,7 +1760,6 @@ Every action inside a pod is logged to `{pod_dir}/audit.jsonl`. The audit log is
 
 All isolation walls are dynamically mutable during execution without restart or state loss:
 
-<!-- output -->
 | Mutation | Command |
 |----------|---------|
 | Mount/unmount paths | `envpod mount` / `envpod unmount` |
@@ -1802,7 +1790,6 @@ sudo envpod init my-agent                          # interactive wizard
 
 **Coding Agents**
 
-<!-- output -->
 | Preset | Description | Network | Setup |
 |--------|-------------|---------|-------|
 | `claude-code` | Anthropic Claude Code CLI | Monitored, Claude + GitHub | `curl` installer |
@@ -1814,7 +1801,6 @@ sudo envpod init my-agent                          # interactive wizard
 
 **Frameworks**
 
-<!-- output -->
 | Preset | Description | Network | Setup |
 |--------|-------------|---------|-------|
 | `langgraph` | LangGraph workflows | Monitored, LLM + PyPI | `pip install langgraph langchain-openai` |
@@ -1823,7 +1809,6 @@ sudo envpod init my-agent                          # interactive wizard
 
 **Browser Agents**
 
-<!-- output -->
 | Preset | Description | Network | Setup |
 |--------|-------------|---------|-------|
 | `browser-use` | Browser-use web automation | Monitored, Blacklist | `pip install browser-use playwright` + Chromium |
@@ -1832,7 +1817,6 @@ sudo envpod init my-agent                          # interactive wizard
 
 **Environments**
 
-<!-- output -->
 | Preset | Description | Network | Setup |
 |--------|-------------|---------|-------|
 | `devbox` | General dev sandbox | Monitored, Blacklist | None |
@@ -1846,7 +1830,6 @@ sudo envpod init my-agent                          # interactive wizard
 
 34 example configs total in `examples/` — the 18 presets above plus configs for specialized use cases:
 
-<!-- output -->
 | Config | Description |
 |--------|-------------|
 | `basic-cli.yaml` | Minimal CLI sandbox, no network |
@@ -1863,13 +1846,9 @@ sudo envpod init my-agent                          # interactive wizard
 | `jetson-orin.yaml` | NVIDIA Jetson Orin (ARM64) |
 | `raspberry-pi.yaml` | Raspberry Pi 4/5 (ARM64) |
 | `web-display-novnc.yaml` | noVNC web display |
-| `web-display-webrtc.yaml` | WebRTC web display |
-| `remote-desktop.yaml` | Remote desktop |
-| `tailscale-pod.yaml` | Tailscale VPN integration |
 
 ### Security Testing
 
-<!-- output -->
 | Script | Description |
 |--------|-------------|
 | `jailbreak-test.sh` | 48-test isolation probe script (see [Jailbreak Test Script](#jailbreak-test-script)) |
@@ -1908,27 +1887,24 @@ sudo envpod <command>
 ### Pod Cannot Reach the Internet
 
 1. Check DNS mode — `Whitelist` with an empty allow list blocks everything:
-
 <!-- no-exec -->
-```bash
+   ```bash
    sudo envpod dns my-agent --allow api.example.com
-```
+   ```
 
 2. Verify IP forwarding is enabled:
-
 <!-- no-exec -->
-```bash
+   ```bash
    cat /proc/sys/net/ipv4/ip_forward    # should be 1
    sudo sysctl -w net.ipv4.ip_forward=1
-```
+   ```
 
 3. Check iptables rules:
-
 <!-- no-exec -->
-```bash
+   ```bash
    sudo iptables -L -n -v
    sudo iptables -t nat -L -n -v
-```
+   ```
 
 ### Host Internet Breaks After Creating a Pod
 

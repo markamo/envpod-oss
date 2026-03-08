@@ -286,9 +286,6 @@ The interactive wizard also lets you customize CPU cores, memory, and GPU after 
 | [`jetson-orin.yaml`](examples/jetson-orin.yaml) | NVIDIA Jetson Orin (ARM64) |
 | [`raspberry-pi.yaml`](examples/raspberry-pi.yaml) | Raspberry Pi 4/5 (ARM64) |
 | [`web-display-novnc.yaml`](examples/web-display-novnc.yaml) | noVNC web display |
-| [`web-display-webrtc.yaml`](examples/web-display-webrtc.yaml) | WebRTC web display |
-| [`remote-desktop.yaml`](examples/remote-desktop.yaml) | Remote desktop |
-| [`tailscale-pod.yaml`](examples/tailscale-pod.yaml) | Tailscale VPN integration |
 
 ## Performance
 
@@ -382,7 +379,7 @@ Docker 29.2.1, Podman 4.9.3, envpod on Ubuntu 24.04:
 | Destroy all 50 | 1.2s | 2.4s | **1.6s** | — | — |
 | **Full lifecycle** | **19.0s** | **36.2s** | **9.5s** | **2x faster** | **3.8x faster** |
 
-Envpod creation is **15x faster** than Docker because `envpod clone` copies only a symlink + empty dirs (~1 KB per clone), while `docker create` allocates a full container layer. Envpod uses a **two-phase destroy**: `envpod destroy` is fast (deletes veth + netns, skips iptables), then `envpod gc` cleans up stale iptables rules in one batch. Dead rules are harmless — they reference non-existent interfaces. See [Benchmarks](docs/BENCHMARKS.md#fast-destroy--gc) for details.
+Envpod creation is **15x faster** than Docker because `envpod clone` copies only a symlink + empty dirs (~1 KB per clone), while `docker create` allocates a full container layer. Envpod uses a **two-phase destroy**: `envpod destroy` is fast (deletes veth + netns, skips iptables), then `envpod gc` cleans up stale iptables rules in one batch. Dead rules are harmless — they reference non-existent interfaces. See [Benchmarks](docs/BENCHMARKS.md) for details.
 
 Run the benchmarks yourself:
 ```bash

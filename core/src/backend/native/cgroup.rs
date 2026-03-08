@@ -168,6 +168,7 @@ const DISPLAY_PROCESS_NAMES: &[&str] = &["Xvfb", "x11vnc", "websockify", "gst-la
 ///
 /// Resource limits stay on the parent cgroup (cap both subcgroups).
 /// `app/` holds the agent process (freezable), `guardian/` holds display services.
+#[allow(dead_code)]
 pub fn create_guardian(cgroup: &Path) -> Result<()> {
     // Enable controllers on the pod cgroup so subcgroups inherit them
     let subtree = cgroup.join("cgroup.subtree_control");
@@ -236,6 +237,7 @@ pub fn has_guardian(cgroup: &Path) -> bool {
 
 /// Destroy guardian subcgroups (before removing parent).
 /// Processes must already be dead or moved out.
+#[allow(dead_code)]
 pub fn destroy_guardian(cgroup: &Path) -> Result<()> {
     let app = cgroup.join("app");
     let guardian = cgroup.join("guardian");

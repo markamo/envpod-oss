@@ -3,8 +3,8 @@
 # build-release.sh — Build envpod and assemble self-contained release folders.
 #
 # Output:
-#   release/envpod-0.2.0-linux-x86_64/    (x86_64 release, default)
-#   release/envpod-0.2.0-linux-aarch64/   (ARM64: Raspberry Pi / Jetson Orin)
+#   release/envpod-0.1.0-linux-x86_64/    (x86_64 release, default)
+#   release/envpod-0.1.0-linux-aarch64/   (ARM64: Raspberry Pi / Jetson Orin)
 #
 # Usage:
 #   ./build-release.sh              # x86_64 only (default)
@@ -22,7 +22,7 @@
 #
 set -euo pipefail
 
-VERSION="0.2.0"
+VERSION="0.1.0"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # ---------------------------------------------------------------------------
@@ -158,7 +158,7 @@ build_arch() {
 #
 set -euo pipefail
 
-ENVPOD_VERSION="0.2.0"
+ENVPOD_VERSION="0.1.0"
 INSTALL_DIR="/usr/local/bin"
 STATE_DIR="/var/lib/envpod"
 EXAMPLES_DIR="/usr/local/share/envpod/examples"
