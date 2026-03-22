@@ -67,7 +67,7 @@ Envpod lets the agent work with real local context through a copy-on-write layer
 
 **Credential Vault** — Secrets stored encrypted (ChaCha20-Poly1305), injected as environment variables at runtime. **Vault proxy injection** (v0.2) goes further: a transparent HTTPS proxy intercepts API requests, strips dummy auth headers, and injects real credentials at the transport layer — the agent never has access to real API keys in env vars, memory, or config files.
 
-**Web Dashboard** — Browser-based fleet management UI (`envpod dashboard`). Real-time pod overview with resource monitoring, audit trail viewer, filesystem diff inspector, and one-click commit/rollback/freeze/resume actions.
+**Web Dashboard** — Browser-based fleet management UI (`envpod dashboard`). Real-time pod overview with resource monitoring, audit trail viewer, filesystem diff inspector, and one-click commit/rollback/freeze/resume actions. Create, destroy, and clone pods from the browser. Session-token authenticated — blocks CSRF and local process attacks. See [Dashboard Guide](docs/DASHBOARD.md).
 
 <p align="center">
   <img src="assets/demos/06-fleet.gif" alt="envpod web dashboard — fleet management" width="800">
@@ -212,7 +212,7 @@ Auto-installs the envpod binary on first use. 44 methods with full CLI parity.
 
 ## Documentation
 
-See [Installation](docs/INSTALL.md), [Quickstart](docs/QUICKSTART.md), [Pod Config](docs/POD-CONFIG.md), [Setup Patterns](docs/SETUP-PATTERNS.md), [Platform Support](docs/PLATFORMS.md), [SDK Reference](docs/SDK.md), [Screening](docs/SCREENING.md), [Tutorials](docs/TUTORIALS.md), [Action Catalog](docs/ACTION-CATALOG.md), [CLI Black Book](docs/CLI-BLACKBOOK.md), [Capabilities](docs/CAPABILITIES.md), [Features](docs/FEATURES.md), [Compare vs Docker](docs/COMPARE-DOCKER.md), [Benchmarks](docs/BENCHMARKS.md), [Security](docs/SECURITY.md), [Licensing](docs/LICENSING.md), [FAQ](docs/FAQ.md), [Changelog](CHANGELOG.md), and [Contributing](CONTRIBUTING.md) for more.
+See [Installation](docs/INSTALL.md), [Quickstart](docs/QUICKSTART.md), [Pod Config](docs/POD-CONFIG.md), [Setup Patterns](docs/SETUP-PATTERNS.md), [Platform Support](docs/PLATFORMS.md), [SDK Reference](docs/SDK.md), [Screening](docs/SCREENING.md), [Dashboard](docs/DASHBOARD.md), [Tutorials](docs/TUTORIALS.md), [Action Catalog](docs/ACTION-CATALOG.md), [CLI Black Book](docs/CLI-BLACKBOOK.md), [Capabilities](docs/CAPABILITIES.md), [Features](docs/FEATURES.md), [Compare vs Docker](docs/COMPARE-DOCKER.md), [Benchmarks](docs/BENCHMARKS.md), [Security](docs/SECURITY.md), [Licensing](docs/LICENSING.md), [FAQ](docs/FAQ.md), [Changelog](CHANGELOG.md), and [Contributing](CONTRIBUTING.md) for more.
 
 ## Architecture
 
