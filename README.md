@@ -398,7 +398,7 @@ The interactive wizard also lets you customize CPU cores, memory, and GPU after 
 
 ## Additional Examples
 
-42 example configs total in `examples/` — the 18 presets above plus:
+55 example configs total in `examples/` — the 18 presets above plus:
 
 | Example | Description |
 |---------|-------------|
@@ -426,6 +426,20 @@ The interactive wizard also lets you customize CPU cores, memory, and GPU after 
 | [`workstation-full.yaml`](examples/workstation-full.yaml) | Full workstation (desktop, GPU, audio) |
 | [`workstation-gpu.yaml`](examples/workstation-gpu.yaml) | GPU-focused workstation |
 | [`gimp.yaml`](examples/gimp.yaml) | GIMP image editor in desktop pod |
+| [`github-repo.yaml`](examples/github-repo.yaml) | GitHub repo workflow — clone, work, review, push |
+| [`github-swarm.yaml`](examples/github-swarm.yaml) | Autonomous coding swarm — code never touches host |
+| [`mcp-server.yaml`](examples/mcp-server.yaml) | MCP server in governed pod (filesystem, GitHub) |
+| [`mcp-client.yaml`](examples/mcp-client.yaml) | Agent connecting to MCP servers, fully governed |
+| [`rl-training.yaml`](examples/rl-training.yaml) | Reinforcement learning (DQN CartPole, GPU) |
+| [`sealed-workspace.yaml`](examples/sealed-workspace.yaml) | Zero host access — data in overlay only |
+| [`experiment-swarm.yaml`](examples/experiment-swarm.yaml) | Parallel experiments from one base, results governed |
+| [`ollama-host.yaml`](examples/ollama-host.yaml) | Ollama with host models — private AI, nothing leaves machine |
+| [`ollama.yaml`](examples/ollama.yaml) | Ollama self-contained — fully isolated local LLM |
+| [`ollama-desktop.yaml`](examples/ollama-desktop.yaml) | Ollama + VS Code desktop via noVNC |
+| [`nanoclaw.yaml`](examples/nanoclaw.yaml) | NanoClaw messaging agent (WhatsApp, Telegram) |
+| [`code-interpreter.yaml`](examples/code-interpreter.yaml) | Multi-language code execution (Python, Node.js) |
+| [`kimi-cli.yaml`](examples/kimi-cli.yaml) | Kimi CLI (Moonshot AI) coding agent |
+| [`iflow-cli.yaml`](examples/iflow-cli.yaml) | iFlow CLI (Alibaba/Qwen) coding agent |
 
 ## Performance
 
