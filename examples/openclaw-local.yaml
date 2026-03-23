@@ -1,0 +1,122 @@
+# OpenClaw + Ollama — self-contained local agent, no cloud, no Docker
+#
+# Runs NVIDIA's OpenClaw agent framework with Ollama for local inference.
+# No NemoClaw stack, no OpenShell gateway, no k3s, no API key.
+# Everything governed: filesystem, network, credentials, audit.
+#
+# Models to try:
+#   nemotron-mini    — NVIDIA's small model, fast on CPU/GPU (~4GB)
+#   llama3.2         — Meta's compact model (~2GB)
+#   qwen2.5-coder    — Alibaba's coding model (~4GB)
+#   deepseek-coder   — DeepSeek coding model (~7GB)
+#
+# Usage:
+#   sudo envpod init openclaw -c examples/openclaw-local.yaml
+#   sudo envpod run openclaw --root -- bash
+#
+#   # Inside (Ollama starts automatically, model already pulled):
+#   python3 /workspace/agent.py "Write a fibonacci function in Python"
+#
+# No API key. No Docker. No gateway. One governed pod.
+
+name: openclaw-local
+type: standard
+
+filesystem:
+  system_access: advanced
+  workspace: /workspace
+  mount_cwd: false
+  tracking:
+    watch: [/workspace, /root]
+    ignore: [/var/cache, /var/lib/apt, /tmp, /run, /usr/share/ollama]
+
+network:
+  mode: Monitored
+  dns:
+    mode: Allowlist
+    allow:
+      - registry.ollama.ai
+      - "*.ollama.ai"
+      - "*.ollama.com"
+      - pypi.org
+      - "*.pypi.org"
+      - files.pythonhosted.org
+      - registry.npmjs.org
+      - "*.npmjs.org"
+      - deb.nodesource.com
+      - github.com
+      - "*.github.com"
+      - "*.githubusercontent.com"
+
+processor:
+  cores: 8.0
+  memory: "16GB"
+  max_pids: 512
+
+devices:
+  gpu: true
+
+budget:
+  max_duration: "8h"
+
+audit:
+  action_log: true
+
+setup:
+  # Ollama
+  - "curl -fsSL https://ollama.com/install.sh | sh"
+
+  # Python + OpenClaw
+  - "apt-get update && apt-get install -y --no-install-recommends python3 python3-pip curl git"
+  - "pip install openclaw openai requests"
+
+  # Pull model (change to llama3.2 or deepseek-coder if preferred)
+  - "ollama serve &"
+  - "sleep 5 && ollama pull nemotron-mini"
+
+  # Create a simple agent script that uses Ollama's OpenAI-compatible API
+  - |
+    cat > /workspace/agent.py << 'AGENT'
+    #!/usr/bin/env python3
+    """Simple OpenClaw-style agent using local Ollama inference."""
+    import sys
+    import json
+    import requests
+
+    MODEL = "nemotron-mini"
+    OLLAMA_URL = "http://localhost:11434"
+
+    def chat(prompt, system="You are a helpful AI coding agent."):
+        resp = requests.post(f"{OLLAMA_URL}/api/chat", json={
+            "model": MODEL,
+            "messages": [
+                {"role": "system", "content": system},
+                {"role": "user", "content": prompt},
+            ],
+            "stream": False,
+        })
+        return resp.json()["message"]["content"]
+
+    def main():
+        if len(sys.argv) < 2:
+            print("Usage: python3 agent.py 'your prompt here'")
+            sys.exit(1)
+
+        prompt = " ".join(sys.argv[1:])
+        print(f"\n--- Agent ({MODEL}) ---\n")
+        response = chat(prompt)
+        print(response)
+
+        # Save to workspace for governance (diff/commit)
+        with open("/workspace/agent_output.md", "a") as f:
+            f.write(f"\n## Prompt\n{prompt}\n\n## Response\n{response}\n\n---\n")
+        print(f"\nOutput saved to /workspace/agent_output.md")
+        print("Review: envpod diff openclaw")
+        print("Accept: envpod commit openclaw /workspace/agent_output.md")
+
+    if __name__ == "__main__":
+        main()
+    AGENT
+    chmod +x /workspace/agent.py
+
+start_command: ["bash", "-c", "ollama serve & sleep 3 && exec bash"]
