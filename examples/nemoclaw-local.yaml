@@ -1,0 +1,78 @@
+# NemoClaw + Ollama — fully self-contained, no API key, no cloud
+#
+# Runs NemoClaw with Ollama inside a single governed pod.
+# Everything local — no data leaves the machine. GPU recommended.
+#
+# Usage:
+#   sudo envpod init nemo -c examples/nemoclaw-local.yaml
+#   sudo envpod run nemo --root -- bash
+#
+#   # Inside the pod (services auto-start, wait ~30s for model pull):
+#   nemoclaw-start openclaw agent --agent main --local -m 'hello' --session-id test
+#
+# No API key needed. No Docker. No k3s. No gateway. One pod.
+
+name: nemoclaw-local
+type: standard
+
+filesystem:
+  system_access: advanced
+  workspace: /workspace
+  tracking:
+    watch: [/workspace, /root]
+    ignore: [/var/cache, /var/lib/apt, /tmp, /run, /usr/share/ollama]
+
+network:
+  mode: Monitored
+  dns:
+    mode: Allowlist
+    allow:
+      # Ollama model downloads
+      - registry.ollama.ai
+      - "*.ollama.ai"
+      - "*.ollama.com"
+      # NemoClaw / OpenClaw install
+      - registry.npmjs.org
+      - "*.npmjs.org"
+      - deb.nodesource.com
+      - github.com
+      - "*.github.com"
+      - "*.githubusercontent.com"
+      - pypi.org
+      - "*.pypi.org"
+      - files.pythonhosted.org
+
+processor:
+  cores: 8.0
+  memory: "16GB"
+  max_pids: 512
+
+devices:
+  gpu: true
+
+budget:
+  max_duration: "8h"
+
+audit:
+  action_log: true
+
+setup:
+  # Ollama
+  - "curl -fsSL https://ollama.com/install.sh | sh"
+
+  # Node.js 22
+  - "curl -fsSL https://deb.nodesource.com/setup_22.x | bash -"
+  - "apt-get install -y nodejs git python3 python3-pip curl"
+
+  # NemoClaw
+  - "git clone https://github.com/NVIDIA/NemoClaw.git /opt/nemoclaw"
+  - "cd /opt/nemoclaw && npm install -g ."
+
+  # OpenClaw
+  - "pip install openclaw"
+
+  # Pull a small model for local inference
+  - "ollama serve &"
+  - "sleep 5 && ollama pull llama3.2"
+
+start_command: ["bash", "-c", "ollama serve & sleep 3 && exec bash"]
