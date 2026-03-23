@@ -709,16 +709,18 @@ base.<span class="ta">initWithBase</span>();
         <div class="pricing-period">per seat · self-hosted · billed monthly</div>
         <div class="pricing-desc">Everything in Free, plus identity, policy, fleet orchestration, and advanced security.</div>
         <ul class="pricing-features">
-          <li class="pro-feature"><strong>Agent Identity (Ed25519 + JWT)</strong> — per-pod keypair, per-agent UUID &amp; tokens, identity-scoped vault access</li>
-          <li class="pro-feature"><strong>AuthZ / OPA Policy Engine</strong> — 6 Rego decision points: queue tier, vault, commit, DNS, L7 HTTP, MCP tool calls</li>
-          <li class="pro-feature"><strong>Vault Proxy Injection</strong> — transparent HTTPS MITM — agent never sees real API keys. L7 method+path filtering</li>
-          <li class="pro-feature"><strong>Infrastructure as Code</strong> — envpod apply fleet.yaml — declarative pods, vault, network, policies. Namespace isolation</li>
-          <li class="pro-feature"><strong>Parallel Clone + Scale</strong> — --parallel N, CPU affinity, envpod scale, wave-based batch executor</li>
-          <li class="pro-feature"><strong>Sealed Mode</strong> — zero host visibility — agent cannot see the host filesystem</li>
-          <li class="pro-feature"><strong>Tailscale Mesh</strong> — per-pod tailnet identity — access dashboard, desktop, SSH from anywhere</li>
-          <li class="pro-feature"><strong>Monitoring</strong> — pre-built Grafana dashboards — fleet overview, pod detail, security events</li>
-          <li class="pro-feature"><strong>DoH Blocking</strong> — block DNS-over-HTTPS bypass to known resolvers</li>
-          <li class="pro-feature"><strong>Priority support</strong> — direct line to the team</li>
+          <li>Everything in Free, plus:</li>
+          <li>Agent identity — Ed25519 keypair per pod, JWT tokens, per-agent vault scoping</li>
+          <li>OPA policy engine — 6 Rego decision points across queue, vault, commit, DNS, HTTP, MCP</li>
+          <li>Vault proxy — transparent HTTPS MITM, agent never sees real API keys</li>
+          <li>L7 network policy — HTTP method and path filtering per agent</li>
+          <li>Infrastructure as Code — declarative fleet manifests with namespace isolation</li>
+          <li>Parallel clone + scale — CPU affinity distribution, wave-based batch executor</li>
+          <li>Sealed mode — zero host visibility, agent cannot see the host filesystem</li>
+          <li>Tailscale mesh — per-pod tailnet identity, remote access from anywhere</li>
+          <li>Grafana monitoring — pre-built dashboards for fleet, pod detail, security</li>
+          <li>DoH blocking — prevent DNS-over-HTTPS bypass to known resolvers</li>
+          <li>Priority support — direct line to the team</li>
         </ul>
         <div class="pricing-cta">
           <a href="mailto:mark@envpod.dev?subject=envpod%20Premium" class="btn-s" style="width:100%;justify-content:center">Get Premium →</a>
