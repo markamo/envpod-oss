@@ -662,8 +662,8 @@ base.<span class="ta">initWithBase</span>();
 <section class="section-tinted reveal" id="pricing">
   <div class="wrap">
     <div class="section-label">Pricing</div>
-    <h2 style="text-align:center">Free to use. Pro when you need it.</h2>
-    <p class="section-sub" style="text-align:center;margin:0 auto 56px">The full governance stack is free and self-hosted. Pro adds advanced security features for teams running agents in production.</p>
+    <h2 style="text-align:center">Free to use. Premium when you need more.</h2>
+    <p class="section-sub" style="text-align:center;margin:0 auto 56px">The full governance stack is free and self-hosted. Premium adds identity, OPA policy, fleet orchestration, and advanced security for production.</p>
 
     <div class="pricing-grid">
 
@@ -694,35 +694,36 @@ base.<span class="ta">initWithBase</span>();
           <li>Pod-to-pod discovery (envpod-dns daemon)</li>
           <li>Budget enforcement — auto-kill after max_duration</li>
           <li>Jailbreak test — built-in security boundary probe</li>
-          <li>42 example configs</li>
+          <li>55+ example configs</li>
         </ul>
         <div class="pricing-cta">
           <a href="#install" class="btn-p" style="width:100%;justify-content:center">Install now →</a>
         </div>
       </div>
 
-      <!-- Pro -->
+      <!-- Premium -->
       <div class="pricing-card pricing-card-pro">
-        <div class="pricing-badge">Coming soon</div>
-        <div class="pricing-tier">Pro</div>
+        <div class="pricing-badge" style="background:var(--blue-glow);color:var(--blue);border-color:rgba(88,166,255,0.2)">Available now</div>
+        <div class="pricing-tier">Premium</div>
         <div class="pricing-price">$149<span> / seat / mo</span></div>
         <div class="pricing-period">per seat · self-hosted · billed monthly</div>
-        <div class="pricing-desc">Everything in Free, plus advanced features for production agent deployments.</div>
+        <div class="pricing-desc">Everything in Free, plus identity, policy, fleet orchestration, and advanced security.</div>
         <ul class="pricing-features">
-          <li class="pro-feature"><strong>Vault proxy injection</strong> — API keys never visible to the agent, not even in env vars. Transparent HTTPS interception.</li>
-          <li class="pro-feature"><strong>Base pod export / import</strong> — portable environment snapshots across machines</li>
-          <li class="pro-feature"><strong>Advanced diff dashboard</strong> — per-line staging, side-by-side view, per-hunk approval</li>
-          <li class="pro-feature"><strong>Prompt &amp; instruction screening</strong> — detect jailbreak attempts before execution</li>
-          <li class="pro-feature"><strong>TLS packet inspection</strong> — see exactly what the agent is sending over HTTPS</li>
+          <li class="pro-feature"><strong>Agent Identity (Ed25519 + JWT)</strong> — per-pod keypair, per-agent UUID &amp; tokens, identity-scoped vault access</li>
+          <li class="pro-feature"><strong>AuthZ / OPA Policy Engine</strong> — 6 Rego decision points: queue tier, vault, commit, DNS, L7 HTTP, MCP tool calls</li>
+          <li class="pro-feature"><strong>Vault Proxy Injection</strong> — transparent HTTPS MITM — agent never sees real API keys. L7 method+path filtering</li>
+          <li class="pro-feature"><strong>Infrastructure as Code</strong> — <code>envpod apply fleet.yaml</code> — declarative pods, vault, network, policies. Namespace isolation</li>
+          <li class="pro-feature"><strong>Parallel Clone + Scale</strong> — <code>--parallel N</code>, CPU affinity, <code>envpod scale</code>, wave-based batch executor</li>
+          <li class="pro-feature"><strong>Sealed Mode</strong> — zero host visibility — agent cannot see the host filesystem</li>
+          <li class="pro-feature"><strong>Tailscale Mesh</strong> — per-pod tailnet identity — access dashboard, desktop, SSH from anywhere</li>
+          <li class="pro-feature"><strong>Monitoring</strong> — pre-built Grafana dashboards — fleet overview, pod detail, security events</li>
+          <li class="pro-feature"><strong>DoH Blocking</strong> — block DNS-over-HTTPS bypass to known resolvers</li>
           <li class="pro-feature"><strong>Priority support</strong> — direct line to the team</li>
         </ul>
         <div class="pricing-cta">
-          <a href="/waitlist.html" class="btn-s" style="width:100%;justify-content:center">Join the waitlist →</a>
-          <p style="font-size:12px;color:var(--dim);text-align:center;margin-top:12px">No spam. One email when Pro launches.</p>
+          <a href="mailto:mark@envpod.dev?subject=envpod%20Premium" class="btn-s" style="width:100%;justify-content:center">Get Premium →</a>
         </div>
       </div>
-
-    </div>
 
     <p style="text-align:center;margin-top:40px;font-size:14px;color:var(--dim)">
       Need fleet-scale governance, SSO, or compliance reporting?
