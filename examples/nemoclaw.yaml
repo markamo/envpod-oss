@@ -1,0 +1,78 @@
+# NemoClaw / OpenClaw — run NVIDIA's agent framework in a governed pod
+#
+# Replaces the NemoClaw stack (Docker + OpenShell + k3s + gateway) with
+# a single envpod pod. No Docker daemon config changes, no cgroup hacks,
+# no gateway containers, no k3s. Just the agent, governed.
+#
+# Prerequisites:
+#   - NVIDIA API key from build.nvidia.com
+#   - envpod vault my-agent set NVIDIA_API_KEY "nvapi-..."
+#
+# Usage:
+#   sudo envpod init nemoclaw -c examples/nemoclaw.yaml
+#   sudo envpod vault nemoclaw set NVIDIA_API_KEY "nvapi-..."
+#   sudo envpod run nemoclaw --root -- bash
+#   # Inside: nemoclaw-start openclaw agent --agent main --local -m 'hello'
+#
+# Compare:
+#   NemoClaw stack: Docker + OpenShell + k3s + gateway + sandbox = 6 layers, 2.6GB image, cgroup hacks
+#   envpod:         1 pod, 15MB binary, kernel isolation, zero Docker dependency
+
+name: nemoclaw
+type: standard
+
+filesystem:
+  system_access: advanced
+  workspace: /workspace
+  tracking:
+    watch: [/workspace, /home, /root]
+    ignore: [/var/cache, /var/lib/apt, /tmp, /run]
+
+network:
+  mode: Monitored
+  dns:
+    mode: Allowlist
+    allow:
+      - build.nvidia.com
+      - "*.nvidia.com"
+      - "*.ngc.nvidia.com"
+      - api.nvidia.com
+      - registry.npmjs.org
+      - "*.npmjs.org"
+      - deb.nodesource.com
+      - github.com
+      - "*.github.com"
+      - "*.githubusercontent.com"
+      - pypi.org
+      - "*.pypi.org"
+      - files.pythonhosted.org
+
+processor:
+  cores: 4.0
+  memory: "8GB"
+  max_pids: 512
+
+devices:
+  gpu: true
+
+vault:
+  env:
+    - NVIDIA_API_KEY
+
+budget:
+  max_duration: "8h"
+
+audit:
+  action_log: true
+
+setup:
+  # Node.js 22
+  - "curl -fsSL https://deb.nodesource.com/setup_22.x | bash -"
+  - "apt-get install -y nodejs git python3 python3-pip curl"
+
+  # NemoClaw
+  - "git clone https://github.com/NVIDIA/NemoClaw.git /opt/nemoclaw"
+  - "cd /opt/nemoclaw && npm install -g ."
+
+  # OpenClaw (the actual agent)
+  - "pip install openclaw"
