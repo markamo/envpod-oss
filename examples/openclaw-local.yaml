@@ -38,6 +38,7 @@ network:
       - registry.ollama.ai
       - "*.ollama.ai"
       - "*.ollama.com"
+      - "*.r2.cloudflarestorage.com"
       - pypi.org
       - "*.pypi.org"
       - files.pythonhosted.org
@@ -63,19 +64,23 @@ audit:
   action_log: true
 
 setup:
-  # Ollama
-  - "curl -fsSL https://ollama.com/install.sh | sh"
+  # Ollama (manual install — avoids tar permission errors in overlay)
+  - |
+    ARCH=$(uname -m)
+    curl -fsSL "https://ollama.com/download/ollama-linux-${ARCH}.tgz" -o /tmp/ollama.tgz
+    tar --no-same-permissions -xzf /tmp/ollama.tgz -C /usr/local
+    rm -f /tmp/ollama.tgz
 
   # Python + OpenClaw
   - "apt-get update && apt-get install -y --no-install-recommends python3 python3-pip curl git"
   - "pip install openclaw openai requests"
 
   # Pull model (change to llama3.2 or deepseek-coder if preferred)
-  - "ollama serve &"
-  - "sleep 5 && ollama pull nemotron-mini"
+  - "ollama serve & sleep 5 && ollama pull tinyllama; kill %1 2>/dev/null; true"
 
   # Create a simple agent script that uses Ollama's OpenAI-compatible API
   - |
+    mkdir -p /workspace
     cat > /workspace/agent.py << 'AGENT'
     #!/usr/bin/env python3
     """Simple OpenClaw-style agent using local Ollama inference."""
@@ -83,7 +88,7 @@ setup:
     import json
     import requests
 
-    MODEL = "nemotron-mini"
+    MODEL = "tinyllama"
     OLLAMA_URL = "http://localhost:11434"
 
     def chat(prompt, system="You are a helpful AI coding agent."):

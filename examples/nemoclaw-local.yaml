@@ -31,6 +31,7 @@ network:
       - registry.ollama.ai
       - "*.ollama.ai"
       - "*.ollama.com"
+      - "*.r2.cloudflarestorage.com"
       # NemoClaw / OpenClaw install
       - registry.npmjs.org
       - "*.npmjs.org"
@@ -57,8 +58,12 @@ audit:
   action_log: true
 
 setup:
-  # Ollama
-  - "curl -fsSL https://ollama.com/install.sh | sh"
+  # Ollama (manual install — avoids tar permission errors in overlay)
+  - |
+    ARCH=$(uname -m)
+    curl -fsSL "https://ollama.com/download/ollama-linux-${ARCH}.tgz" -o /tmp/ollama.tgz
+    tar --no-same-permissions -xzf /tmp/ollama.tgz -C /usr/local
+    rm -f /tmp/ollama.tgz
 
   # Node.js 22
   - "curl -fsSL https://deb.nodesource.com/setup_22.x | bash -"
@@ -72,7 +77,6 @@ setup:
   - "pip install openclaw"
 
   # Pull a small model for local inference
-  - "ollama serve &"
-  - "sleep 5 && ollama pull llama3.2"
+  - "ollama serve & sleep 5 && ollama pull llama3.2; kill %1 2>/dev/null; true"
 
 start_command: ["bash", "-c", "ollama serve & sleep 3 && exec bash"]
