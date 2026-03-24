@@ -1,4 +1,4 @@
-# OpenClaw + Ollama — self-contained local agent, no cloud, no Docker
+# Ollama Agent — self-contained local agent, no cloud, no Docker
 #
 # Runs NVIDIA's OpenClaw agent framework with Ollama for local inference.
 # No NemoClaw stack, no OpenShell gateway, no k3s, no API key.
@@ -19,7 +19,7 @@
 #
 # No API key. No Docker. No gateway. One governed pod.
 
-name: openclaw-local
+name: ollama-agent
 type: standard
 
 filesystem:
@@ -83,7 +83,7 @@ setup:
     mkdir -p /workspace
     cat > /workspace/agent.py << 'AGENT'
     #!/usr/bin/env python3
-    """Simple OpenClaw-style agent using local Ollama inference."""
+    """Simple local AI agent using local Ollama inference."""
     import sys
     import json
     import requests
