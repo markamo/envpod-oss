@@ -711,9 +711,12 @@ base.<span class="ta">initWithBase</span>();
         <ul class="pricing-features">
           <li>Everything in Free, plus:</li>
           <li>Agent identity — Ed25519 keypair per pod, JWT tokens, per-agent vault scoping</li>
-          <li>OPA policy engine — 6 Rego decision points across queue, vault, commit, DNS, HTTP, MCP</li>
+          <li>OPA policy engine — 7 Rego decision points: queue, vault, commit, DNS, L7, MCP, pod-to-pod</li>
+          <li>L7 pod-to-pod governance — HTTP method, path, and capability checks on inter-pod traffic</li>
           <li>Vault proxy — transparent HTTPS MITM, agent never sees real API keys</li>
           <li>L7 network policy — HTTP method and path filtering per agent</li>
+          <li>OIDC / SSO — Okta, Azure AD, Google, Keycloak. Three identity layers: human, pod, agent</li>
+          <li>Privilege escalation — agents request elevated access, scoped grants (one-time, session, permanent)</li>
           <li>Infrastructure as Code — declarative fleet manifests with namespace isolation</li>
           <li>Parallel clone + scale — CPU affinity distribution, wave-based batch executor</li>
           <li>Sealed mode — zero host visibility, agent cannot see the host filesystem</li>
