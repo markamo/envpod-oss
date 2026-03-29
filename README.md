@@ -212,7 +212,7 @@ Auto-installs the envpod binary on first use. 44 methods with full CLI parity.
 
 ## Documentation
 
-See [Installation](docs/INSTALL.md), [Quickstart](docs/QUICKSTART.md), [Pod Config](docs/POD-CONFIG.md), [Setup Patterns](docs/SETUP-PATTERNS.md), [Platform Support](docs/PLATFORMS.md), [SDK Reference](docs/SDK.md), [Screening](docs/SCREENING.md), [Dashboard](docs/DASHBOARD.md), [Tutorials](docs/TUTORIALS.md), [Action Catalog](docs/ACTION-CATALOG.md), [CLI Black Book](docs/CLI-BLACKBOOK.md), [Capabilities](docs/CAPABILITIES.md), [Features](docs/FEATURES.md), [Compare vs Docker](docs/COMPARE-DOCKER.md), [Benchmarks](docs/BENCHMARKS.md), [Security](docs/SECURITY.md), [Licensing](docs/LICENSING.md), [FAQ](docs/FAQ.md), [Changelog](CHANGELOG.md), and [Contributing](CONTRIBUTING.md) for more.
+See [Installation](docs/INSTALL.md), [Quickstart](docs/QUICKSTART.md), [Pod Config](docs/POD-CONFIG.md), [Setup Patterns](docs/SETUP-PATTERNS.md), [Platform Support](docs/PLATFORMS.md), [SDK Reference](docs/SDK.md), [Screening](docs/SCREENING.md), [Dashboard](docs/DASHBOARD.md), [Tutorials](docs/TUTORIALS.md), [Action Catalog](docs/ACTION-CATALOG.md), [CLI Black Book](docs/CLI-BLACKBOOK.md), [Capabilities](docs/CAPABILITIES.md), [Features](docs/FEATURES.md), [OWASP Agentic Security](docs/OWASP-AGENTIC.md), [Device Passthrough](docs/DEVICES.md), [Compare vs Docker](docs/COMPARE-DOCKER.md), [Benchmarks](docs/BENCHMARKS.md), [Security](docs/SECURITY.md), [Licensing](docs/LICENSING.md), [FAQ](docs/FAQ.md), [Changelog](CHANGELOG.md), and [Contributing](CONTRIBUTING.md) for more.
 
 ## Architecture
 
