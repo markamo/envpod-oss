@@ -233,12 +233,16 @@ Every OWASP risk is addressed by multiple layers. Compromising one layer does no
 
 ## Comparison: Application vs Kernel Governance
 
-| | Application-level | Kernel-level (envpod) |
-|---|---|---|
-| Enforcement | In-process middleware | Linux kernel (namespaces, cgroups, seccomp) |
-| Bypassable | Yes — agent runs in same process | No — enforced outside agent's control |
-| Kill switch | Signal handler (catchable) | SIGKILL (uncatchable) + cgroup freeze |
-| Network isolation | None — shares host network | Network namespace — separate stack |
-| Filesystem isolation | None — shares host filesystem | OverlayFS — separate view |
-| Memory isolation | None — shares address space | Namespace — separate memory |
-| Performance overhead | In-process — minimal | Namespace — near-zero |
+| | Application-level | Kernel-level (envpod CE) | envpod Premium |
+|---|---|---|---|
+| Enforcement | In-process middleware | Linux kernel | Kernel + OPA policy |
+| Bypassable | Yes — agent runs in same process | No — enforced by kernel | No |
+| Kill switch | Signal handler (catchable) | SIGKILL + cgroup freeze | + Scorecard auto-freeze |
+| Network isolation | None | Network namespace + DNS | + L7 OPA + Tailscale |
+| Filesystem isolation | None | OverlayFS COW | + OPA commit policy |
+| Memory isolation | None | Namespace separation | + Sealed mode |
+| Identity | In-process tokens | Pod namespace isolation | Ed25519 + JWT + OIDC |
+| Scoring | Single number (0-1000) | Audit trail (raw) | Governance scorecard (7 dimensions) |
+| Circuit breakers | Binary (open/closed) | Monitoring + auto-freeze | Per-dimension auto-governance |
+
+**envpod Premium** adds depth to every OWASP risk: OPA policy engine (7 decision points), per-agent identity (Ed25519/JWT/OIDC), governance scorecard with auto-governance, privilege escalation with scoped grants, L7 pod-to-pod governance, OpenTelemetry export, and Grafana dashboards. [Learn more](https://envpod.dev/#pricing)
