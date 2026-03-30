@@ -35,6 +35,8 @@ network:
       - github.com
       - "*.github.com"
       - "*.githubusercontent.com"
+  expose:
+    - 8080
 
 processor:
   cores: 1.0

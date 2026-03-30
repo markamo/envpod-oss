@@ -28,6 +28,8 @@ network:
   dns:
     mode: Denylist
     deny: []
+  expose:
+    - 3000
 
 processor:
   cores: 2.0

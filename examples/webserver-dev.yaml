@@ -25,6 +25,8 @@ network:
   dns:
     mode: Denylist
     deny: []
+  expose:
+    - 8080
 
 processor:
   cores: 1.0
