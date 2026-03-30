@@ -263,6 +263,9 @@
         <div class="feature-card"><div class="feature-icon">📊</div><div class="feature-title">Audit Trail &amp; Security Scan</div><div class="feature-desc">Append-only JSONL. Every action, approval, vault access, DNS query — timestamped. <code>envpod audit --security</code> for static analysis. Runtime monitoring with auto-freeze.</div></div>
         <div class="feature-card"><div class="feature-icon">🛡️</div><div class="feature-title">Prompt Screening</div><div class="feature-desc">Screen prompts for injection, credential exposure, PII, and exfiltration. Updatable pattern list. Supports Anthropic, OpenAI, Gemini, Ollama API formats. Free for all users. <code>envpod screen</code></div></div>
         <div class="feature-card"><div class="feature-icon">🔒</div><div class="feature-title">Process Isolation</div><div class="feature-desc">PID + UTS + user namespaces. cgroups v2 limits. Seccomp-BPF syscall filtering. NO_NEW_PRIVS prevents privilege escalation. /proc masked to prevent host fingerprinting.</div></div>
+        <div class="feature-card"><div class="feature-icon">💓</div><div class="feature-title">Health Checks</div><div class="feature-desc">HTTP endpoint or command-based liveness monitoring. Auto-restart, freeze, or alert on failure. Graceful shutdown with configurable grace period. Full audit trail.</div></div>
+        <div class="feature-card"><div class="feature-icon">🚪</div><div class="feature-title">Port Exposure Firewall</div><div class="feature-desc">Only declared ports are reachable on the pod IP. Everything else dropped. <code>envpod expose --add 8080</code> for live mutation. Default-secure.</div></div>
+        <div class="feature-card"><div class="feature-icon">🔄</div><div class="feature-title">Service Registration</div><div class="feature-desc"><code>envpod service register my-pod</code> — auto-start on boot, restart on crash via systemd. No Docker daemon needed.</div></div>
       </div>
     </div>
     <div id="ftab-context" style="display:none">
@@ -692,9 +695,12 @@ base.<span class="ta">initWithBase</span>();
           <li>Host app auto-mount — which + ldd, zero reinstall</li>
           <li>Clone host user — your files, tools, dotfiles in the pod</li>
           <li>Pod-to-pod discovery (envpod-dns daemon)</li>
+          <li>Health checks — auto-restart on failure, graceful shutdown</li>
+          <li>Port exposure firewall — only declared ports reachable on pod IP</li>
+          <li>Service registration — <code>envpod service register</code> for auto-start on boot</li>
           <li>Budget enforcement — auto-kill after max_duration</li>
           <li>Jailbreak test — built-in security boundary probe</li>
-          <li>55+ example configs</li>
+          <li>68 example configs (web servers, AI agents, desktops, ML, security)</li>
         </ul>
         <div class="pricing-cta">
           <a href="#install" class="btn-p" style="width:100%;justify-content:center">Install now →</a>
