@@ -7,8 +7,9 @@
 #   cd my-react-app
 #   sudo envpod init dev -c examples/webserver-node-dev.yaml
 #   sudo envpod start dev
-#   # Open http://<pod-ip>:3000
-#   # Expose: ngrok http <pod-ip>:3000
+#   sudo envpod ls                         # shows pod IP (e.g., 10.200.1.2)
+#   curl http://10.200.1.2:3000            # access from host
+#   ngrok http 10.200.1.2:3000            # expose to internet
 #
 # Works with: React, Vue, Svelte, Next.js, Nuxt, Remix, Astro, Vite
 

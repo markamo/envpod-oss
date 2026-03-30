@@ -7,8 +7,9 @@
 #   cd my-project
 #   sudo envpod init dev -c examples/webserver-dev.yaml
 #   sudo envpod start dev
-#   # Open http://<pod-ip>:8080
-#   # Expose: ngrok http <pod-ip>:8080
+#   sudo envpod ls                         # shows pod IP (e.g., 10.200.1.2)
+#   curl http://10.200.1.2:8080            # access from host
+#   ngrok http 10.200.1.2:8080            # expose to internet
 #
 # For React/Vue/Svelte dev server, use webserver-node-dev.yaml instead.
 
