@@ -125,7 +125,7 @@ Premium adds identity, policy intelligence, fleet orchestration, and advanced mo
 | Monitoring agent (auto-freeze) | Yes | Yes |
 | Budget enforcement (auto-kill) | Yes | Yes |
 | Governance scorecard (7 dimensions, CWA grading) | — | Yes |
-| Adversarial verification (`envpod verify`) | — | Yes |
+| Automated security testing (`envpod verify`) | — | Yes |
 | OWASP ASI attestation (`envpod audit --owasp`) | — | Yes |
 | OpenTelemetry export (Grafana/Datadog/Splunk) | — | Yes |
 | Grafana dashboards | — | Yes |
