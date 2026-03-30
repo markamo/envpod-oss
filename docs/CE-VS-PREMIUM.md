@@ -16,7 +16,7 @@ Premium adds identity, policy intelligence, fleet orchestration, and advanced mo
 | **Networking** | DNS filtering, bilateral discovery | + L7 OPA, Tailscale, DoH blocking, sealed mode |
 | **Vault** | Encrypted secrets, env injection | + Vault proxy (agent never sees keys) |
 | **Fleet** | Manual pod management | + IaC, parallel clone, scale, batch executor |
-| **Verification** | jailbreak-test.sh (in-pod) | + `envpod verify` (host-side, stealth, randomized) |
+| **Security testing** | jailbreak-test.sh (8 categories) | + `envpod verify` (automated, 15+ tests) |
 | **Compliance** | OWASP 10/10 at kernel level | + OWASP attestation, NIST AI RMF mapping |
 
 ## Feature-by-Feature
