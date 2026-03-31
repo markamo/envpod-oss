@@ -345,6 +345,55 @@
   </div>
 </section>
 
+<!-- ═══ REPLACES ═══ -->
+<section class="section reveal" id="replaces">
+  <div class="wrap">
+    <h2 style="text-align:center">33 tools. 2,000 lines. 8 weeks.<br>Or one pod.yaml.</h2>
+    <p class="section-sub" style="text-align:center">Every enterprise security tool assumes deterministic code written by a human.<br>envpod is built for agents that decide what to do at runtime.</p>
+
+    <div style="overflow-x:auto;margin:40px 0">
+      <table style="width:100%;border-collapse:collapse;font-size:13px;line-height:1.6">
+        <thead>
+          <tr style="border-bottom:2px solid var(--border)">
+            <th style="text-align:left;padding:8px 12px;color:var(--dim)">Capability</th>
+            <th style="text-align:center;padding:8px 8px;color:var(--dim)">Prisma<br>Cloud</th>
+            <th style="text-align:center;padding:8px 8px;color:var(--dim)">Sysdig</th>
+            <th style="text-align:center;padding:8px 8px;color:var(--dim)">Wiz</th>
+            <th style="text-align:center;padding:8px 8px;color:var(--dim)">Vault</th>
+            <th style="text-align:center;padding:8px 8px;color:var(--dim)">Datadog</th>
+            <th style="text-align:center;padding:8px 8px;color:var(--dim)">Crowd<br>Strike</th>
+            <th style="text-align:center;padding:8px 8px;color:var(--green)"><strong>envpod</strong></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding:6px 12px">Container runtime + GPU</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--green)">✓</td></tr>
+          <tr><td style="padding:6px 12px">COW diff / commit / rollback</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--green)">✓</td></tr>
+          <tr><td style="padding:6px 12px">Encrypted vault + proxy injection</td><td style="text-align:center;color:var(--dim)">~</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--green)">✓</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--green)">✓</td></tr>
+          <tr><td style="padding:6px 12px">OPA/Rego policy (7 decision points)</td><td style="text-align:center;color:var(--dim)">~</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--green)">✓</td></tr>
+          <tr><td style="padding:6px 12px">Governance scorecard (A–F grades)</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--green)">✓</td></tr>
+          <tr><td style="padding:6px 12px">Kernel-level seccomp + namespace</td><td style="text-align:center;color:var(--dim)">~</td><td style="text-align:center;color:var(--green)">✓</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--green)">✓</td><td style="text-align:center;color:var(--green)">✓</td></tr>
+          <tr><td style="padding:6px 12px">DNS allowlist + L7 network policy</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">~</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--green)">✓</td></tr>
+          <tr><td style="padding:6px 12px">OpenTelemetry + Grafana native</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">~</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--green)">✓</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--green)">✓</td></tr>
+          <tr><td style="padding:6px 12px">Tamper-proof audit log</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--green)">✓</td></tr>
+          <tr><td style="padding:6px 12px">Health probe + per-service recovery</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">~</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--green)">✓</td></tr>
+          <tr><td style="padding:6px 12px">Desktop + audio (noVNC)</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--green)">✓</td></tr>
+          <tr><td style="padding:6px 12px">Agent-native governance (MCP, escalation)</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--dim)">—</td><td style="text-align:center;color:var(--green)">✓</td></tr>
+          <tr style="border-top:2px solid var(--border)">
+            <td style="padding:8px 12px;color:var(--dim)"><strong>Combined cost</strong></td>
+            <td colspan="6" style="text-align:center;padding:8px;color:var(--dim)">$155–281/host/month + engineering</td>
+            <td style="text-align:center;padding:8px;color:var(--green)"><strong>$0 (CE) or $349/seat</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p style="text-align:center;font-size:14px;color:var(--dim);margin-top:16px">
+      <strong>✓</strong> = native &nbsp;&nbsp; <strong>~</strong> = partial &nbsp;&nbsp; <strong>—</strong> = not available &nbsp;&nbsp;
+      <a href="https://github.com/markamo/envpod-ce/blob/main/docs/OWASP-AGENTIC.md" style="color:var(--blue)">Full OWASP coverage →</a>
+    </p>
+  </div>
+</section>
+
 <!-- ═══ HOW IT WORKS ═══ -->
 <section class="section reveal" id="workflow">
   <div class="wrap">
