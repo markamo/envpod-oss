@@ -786,7 +786,7 @@ base.<span class="ta">initWithBase</span>();
           <li>Priority support — direct line to the team</li>
         </ul>
         <div class="pricing-cta">
-          <a href="mailto:mark@envpod.dev?subject=envpod%20Premium" class="btn-s" style="width:100%;justify-content:center">Get Premium →</a>
+          <a href="#" onclick="stripeCheckout()" class="btn-s" style="width:100%;justify-content:center">Get Premium →</a>
         </div>
       </div>
 
@@ -949,6 +949,22 @@ document.addEventListener('click',(e)=>{
     toggle.classList.remove('active');
   }
 });
+</script>
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+function stripeCheckout() {
+  fetch('https://activate.envpod.dev/create-checkout', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({price_id: 'price_1THFUJG7nwsMoYNInZjI20gP'})
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.url) window.location.href = data.url;
+    else alert('Error creating checkout session');
+  })
+  .catch(() => alert('Error connecting to payment server'));
+}
 </script>
 </body>
 </html>
