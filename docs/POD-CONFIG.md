@@ -845,17 +845,20 @@ Controls resource and time budgets for the pod.
 ```yaml
 budget:
   max_duration: "4h"         # Maximum session duration
-  max_requests: 1000         # Maximum API requests
-  max_bandwidth: "1GB"       # Maximum bandwidth usage
+  warning: "30m"             # Warn 30 minutes before limit
+  grace_period: "30s"        # SIGTERM → wait 30s → SIGKILL
 ```
 
 ### Fields
 
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
-| `max_duration` | string | unlimited | Maximum time the pod can run. Supports: `30s`, `5m`, `2h`, `1h30m`, `2h15m30s`, or plain seconds (`3600`). |
-| `max_requests` | integer | unlimited | Maximum number of API requests (future enforcement). |
-| `max_bandwidth` | string | unlimited | Maximum total bandwidth usage (future enforcement). |
+| `max_duration` | string | unlimited | Maximum time the pod can run. Supports: `30s`, `5m`, `2h`, `30d`, `1h30m`, or plain seconds (`3600`). |
+| `warning` | string | 90% of limit | Warn before budget expires. E.g. `"30m"` warns 30 min before limit. |
+| `grace_period` | string | `"30s"` | Graceful shutdown: SIGTERM → wait → SIGKILL. |
+| `max_requests` | integer | unlimited | Maximum API requests (Premium). |
+| `max_bandwidth` | string | unlimited | Maximum bandwidth (Premium). |
+| `max_storage` | string | unlimited | Maximum overlay writes (Premium). |
 
 ### Duration examples
 
@@ -864,6 +867,7 @@ budget:
   max_duration: "5m"       # 5 minutes (quick sandbox)
   max_duration: "30m"      # 30 minutes (agent session)
   max_duration: "2h"       # 2 hours (coding session)
+  max_duration: "30d"      # 30 days (long-running service)
   max_duration: "1h30m"    # 1.5 hours (compound format)
   max_duration: "8h"       # 8 hours (ML training)
   max_duration: "3600"     # 3600 seconds (plain integer)
