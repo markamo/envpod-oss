@@ -793,6 +793,9 @@ base.<span class="ta">initWithBase</span>();
     <p style="text-align:center;margin-top:24px;font-size:14px;">
       <a href="https://github.com/markamo/envpod-ce/blob/main/docs/CE-VS-PREMIUM.md" style="color:var(--blue)">See full CE vs Premium feature comparison →</a>
     </p>
+    <p style="text-align:center;margin-top:12px;font-size:13px;color:var(--dim)">
+      Already a subscriber? <a href="#" onclick="openPortal()" style="color:var(--blue)">Manage your subscription →</a>
+    </p>
     <p style="text-align:center;margin-top:16px;font-size:14px;color:var(--dim)">
       Need fleet-scale governance, SSO, or compliance reporting?
       <a href="mailto:mark@envpod.dev">Talk to us about Enterprise →</a>
@@ -973,9 +976,10 @@ document.addEventListener('click',(e)=>{
         if (data.license_key) {
           el.innerHTML = '<p style="color:#4ade80;margin:16px 0 8px">Your license key:</p>'
             + '<textarea readonly id="lk-text" style="width:100%;height:80px;background:#111;color:#fff;border:1px solid #333;border-radius:6px;padding:8px;font-size:11px;resize:none">' + data.license_key + '</textarea>'
-            + '<button onclick="navigator.clipboard.writeText(document.getElementById(\'lk-text\').value)" style="margin-top:8px;padding:8px 16px;background:#4ade80;color:#000;border:none;border-radius:6px;cursor:pointer;font-weight:bold">Copy Key</button>'
+            + '<button onclick="navigator.clipboard.writeText(document.getElementById(\'lk-text\').value).then(function(){var b=event.target;b.textContent=\'Copied!\';setTimeout(function(){b.textContent=\'Copy Key\'},2000)})" style="margin-top:8px;padding:8px 16px;background:#4ade80;color:#000;border:none;border-radius:6px;cursor:pointer;font-weight:bold">Copy Key</button>'
             + '<p style="color:#aaa;margin-top:16px;font-size:13px">Install and activate:</p>'
-            + '<pre style="background:#111;padding:12px;border-radius:6px;font-size:12px;overflow-x:auto">curl -fsSL https://premium.envpod.dev/install.sh | sh\nenvpod license activate YOUR_KEY</pre>';
+            + '<pre style="background:#111;padding:12px;border-radius:6px;font-size:12px;overflow-x:auto">curl -fsSL https://premium.envpod.dev/install.sh | sh\nenvpod license activate YOUR_KEY</pre>'
+            + '<p style="margin-top:16px"><a href="#" onclick="openPortal(\'' + data.email + '\')" style="color:var(--blue);font-size:13px">Manage subscription (cancel, update payment, invoices) →</a></p>';
         } else {
           el.innerHTML = '<p style="color:#f97316">License key is being generated. Refresh in a few seconds or contact mark@envpod.dev</p>';
         }
@@ -985,6 +989,22 @@ document.addEventListener('click',(e)=>{
       });
   }
 })();
+
+function openPortal(email) {
+  if (!email) { email = prompt('Enter the email address used for your subscription:'); }
+  if (!email) return;
+  fetch('https://activate.envpod.dev/create-portal', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({email: email})
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.url) window.location.href = data.url;
+    else alert(data.error || 'Could not find subscription for this email');
+  })
+  .catch(() => alert('Error connecting to server'));
+}
 
 function stripeCheckout() {
   fetch('https://activate.envpod.dev/create-checkout', {
