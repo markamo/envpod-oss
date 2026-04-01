@@ -1,0 +1,93 @@
+# Claude Code in a Governed Pod
+#
+# Run Claude Code autonomously — every change tracked, DNS-filtered,
+# budget-limited, fully auditable. Review and commit from the CLI.
+#
+# Governance:
+#   ✓ COW filesystem — see every file Claude changed (envpod diff)
+#   ✓ DNS allowlist — only reaches APIs it needs
+#   ✓ Budget — auto-stops after 8 hours
+#   ✓ Audit — every command logged with timestamps
+#   ✓ Rollback — discard everything if it goes wrong
+#   ✓ Pod auth — Ed25519 identity per pod
+#
+# Remote control (Premium):
+#   ✓ Monitor from anywhere — diff, audit, status via HTTPS
+#   ✓ Freeze/resume from your phone
+#   ✓ Run commands remotely
+#   → Upgrade: envpod.dev/pricing
+#
+# Usage:
+#   echo -n "sk-ant-..." | sudo envpod vault claude-agent set ANTHROPIC_API_KEY
+#   sudo envpod init claude-agent -c examples/remote-claude-code.yaml
+#   sudo envpod run claude-agent -- claude
+#
+# After Claude is done:
+#   sudo envpod diff claude-agent          # see what changed
+#   sudo envpod audit claude-agent         # see what it did
+#   sudo envpod commit claude-agent src/   # keep the good parts
+#   sudo envpod rollback claude-agent      # discard the rest
+
+name: claude-agent
+type: standard
+
+filesystem:
+  system_access: advanced
+  workspace: /workspace
+  mount_cwd: true
+  tracking:
+    watch: [/workspace]
+    ignore: [/var/cache, /var/lib/apt, /tmp, /run, /opt/nvm, /root/.npm]
+
+network:
+  mode: Monitored
+  dns:
+    mode: Allowlist
+    allow:
+      # Claude API
+      - api.anthropic.com
+      - "*.anthropic.com"
+      # Claude Code telemetry
+      - statsigapi.net
+      - sentry.io
+      - "*.sentry.io"
+      # Package managers
+      - pypi.org
+      - "*.pypi.org"
+      - files.pythonhosted.org
+      - registry.npmjs.org
+      - "*.npmjs.org"
+      - deb.nodesource.com
+      # GitHub
+      - github.com
+      - "*.github.com"
+      - "*.githubusercontent.com"
+
+processor:
+  cores: 4.0
+  memory: "8GB"
+  max_pids: 256
+  tmp_size: "1GB"
+
+vault:
+  env:
+    - ANTHROPIC_API_KEY
+
+audit:
+  action_log: true
+
+budget:
+  max_duration: "8h"
+  warning: "1h"
+  grace_period: "1m"
+
+# Uncomment for remote control (Premium):
+# remote:
+#   enabled: true
+#   port: 9800
+#   relay: "wss://relay.envpod.dev/ws"
+
+setup:
+  - "apt-get install -y --no-install-recommends git curl wget python3 python3-pip build-essential"
+  - "curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && apt-get install -y nodejs"
+  - "npm install -g @anthropic-ai/claude-code"
