@@ -787,7 +787,7 @@ base.<span class="ta">initWithBase</span>();
         </ul>
         <div class="pricing-cta">
           <a href="#" onclick="stripeCheckout()" class="btn-s" style="width:100%;justify-content:center">Get Premium →</a>
-          <a href="#" onclick="openPortal()" style="display:block;text-align:center;margin-top:8px;font-size:12px;color:var(--dim)">Already subscribed? Manage subscription →</a>
+          <div style="text-align:center;margin-top:10px;font-size:12px"><a href="#" onclick="openPortal()" style="color:var(--dim)">Manage subscription</a> · <a href="#" onclick="retrieveKey()" style="color:var(--dim)">Lost your key?</a></div>
         </div>
       </div>
 
@@ -974,10 +974,14 @@ document.addEventListener('click',(e)=>{
         if (data.license_key) {
           el.innerHTML = '<p style="color:#4ade80;margin:16px 0 8px">Your license key:</p>'
             + '<textarea readonly id="lk-text" style="width:100%;height:80px;background:#111;color:#fff;border:1px solid #333;border-radius:6px;padding:8px;font-size:11px;resize:none">' + data.license_key + '</textarea>'
-            + '<button onclick="navigator.clipboard.writeText(document.getElementById(\'lk-text\').value).then(function(){var b=event.target;b.textContent=\'Copied!\';setTimeout(function(){b.textContent=\'Copy Key\'},2000)})" style="margin-top:8px;padding:8px 16px;background:#4ade80;color:#000;border:none;border-radius:6px;cursor:pointer;font-weight:bold">Copy Key</button>'
+            + '<div style="display:flex;gap:8px;margin-top:8px">'
+            + '<button onclick="navigator.clipboard.writeText(document.getElementById(\'lk-text\').value).then(function(){var b=event.target;b.textContent=\'Copied!\';setTimeout(function(){b.textContent=\'Copy Key\'},2000)})" style="padding:8px 16px;background:#4ade80;color:#000;border:none;border-radius:6px;cursor:pointer;font-weight:bold">Copy Key</button>'
+            + '<button onclick="downloadKey(document.getElementById(\'lk-text\').value)" style="padding:8px 16px;background:#333;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:bold">Download .key</button>'
+            + '</div>'
             + '<p style="color:#aaa;margin-top:16px;font-size:13px">Install and activate:</p>'
             + '<pre style="background:#111;padding:12px;border-radius:6px;font-size:12px;overflow-x:auto">curl -fsSL https://premium.envpod.dev/install.sh | sh\nenvpod license activate YOUR_KEY</pre>'
-            + '<p style="margin-top:16px"><a href="#" onclick="openPortal(\'' + data.email + '\')" style="color:var(--blue);font-size:13px">Manage subscription (cancel, update payment, invoices) →</a></p>';
+            + '<p style="margin-top:16px"><a href="#" onclick="openPortal(\'' + data.email + '\')" style="color:var(--blue);font-size:13px">Manage subscription →</a>'
+            + ' · <a href="#" onclick="event.preventDefault();retrieveKey(\'' + data.email + '\')" style="color:var(--dim);font-size:13px">Email me a copy</a></p>';
         } else {
           el.innerHTML = '<p style="color:#f97316">License key is being generated. Refresh in a few seconds or contact mark@envpod.dev</p>';
         }
@@ -987,6 +991,68 @@ document.addEventListener('click',(e)=>{
       });
   }
 })();
+
+function downloadKey(key) {
+  var blob = new Blob([key], {type: 'text/plain'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'envpod-premium.key';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function retrieveKey(email) {
+  if (email) { doRetrieve(email); return; }
+  var overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:9999;display:flex;align-items:center;justify-content:center';
+  overlay.innerHTML = '<div style="background:#1a1a2e;border-radius:12px;padding:40px;max-width:420px;width:90%;color:#fff;font-family:monospace">'
+    + '<h2 style="margin:0 0 8px;font-size:20px">Retrieve License Key</h2>'
+    + '<p style="color:#aaa;margin:0 0 20px;font-size:13px">Enter the email used at checkout to retrieve your key.</p>'
+    + '<input id="retrieve-email" type="email" placeholder="your@email.com" style="width:100%;padding:10px 12px;background:#111;color:#fff;border:1px solid #333;border-radius:6px;font-size:14px;font-family:monospace;box-sizing:border-box" />'
+    + '<div id="retrieve-error" style="color:#f97316;font-size:12px;margin-top:8px;min-height:18px"></div>'
+    + '<div id="retrieve-result" style="display:none;margin-top:12px"></div>'
+    + '<div id="retrieve-btns" style="display:flex;gap:10px;margin-top:12px">'
+    + '<button id="retrieve-btn" onclick="retrieveSubmit()" style="flex:1;padding:10px 16px;background:#4ade80;color:#000;border:none;border-radius:6px;cursor:pointer;font-weight:bold;font-size:14px">Retrieve Key</button>'
+    + '<button onclick="this.closest(\'div[style*=fixed]\').remove()" style="padding:10px 16px;background:#333;color:#aaa;border:none;border-radius:6px;cursor:pointer;font-size:14px">Close</button>'
+    + '</div></div>';
+  document.body.appendChild(overlay);
+  overlay.onclick = function(e) { if (e.target === overlay) overlay.remove(); };
+  setTimeout(function() { document.getElementById('retrieve-email').focus(); }, 100);
+  document.getElementById('retrieve-email').addEventListener('keydown', function(e) { if (e.key === 'Enter') retrieveSubmit(); });
+}
+function retrieveSubmit() {
+  var email = document.getElementById('retrieve-email').value.trim();
+  var err = document.getElementById('retrieve-error');
+  var btn = document.getElementById('retrieve-btn');
+  if (!email) { err.textContent = 'Please enter your email'; return; }
+  err.textContent = '';
+  btn.textContent = 'Looking up...';
+  btn.disabled = true;
+  doRetrieve(email, function(error) { btn.textContent = 'Retrieve Key'; btn.disabled = false; err.textContent = error; });
+}
+function doRetrieve(email, onError) {
+  fetch('https://activate.envpod.dev/retrieve', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({email: email})
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data.license_key) {
+      var res = document.getElementById('retrieve-result');
+      var btns = document.getElementById('retrieve-btns');
+      if (res) {
+        res.style.display = 'block';
+        res.innerHTML = '<p style="color:#4ade80;margin:0 0 8px;font-size:13px">Key found:</p>'
+          + '<textarea readonly id="rk-text" style="width:100%;height:70px;background:#111;color:#fff;border:1px solid #333;border-radius:6px;padding:8px;font-size:11px;resize:none;box-sizing:border-box">' + data.license_key + '</textarea>';
+        btns.innerHTML = '<button onclick="navigator.clipboard.writeText(document.getElementById(\'rk-text\').value).then(function(){var b=event.target;b.textContent=\'Copied!\';setTimeout(function(){b.textContent=\'Copy Key\'},2000)})" style="flex:1;padding:10px 16px;background:#4ade80;color:#000;border:none;border-radius:6px;cursor:pointer;font-weight:bold;font-size:14px">Copy Key</button>'
+          + '<button onclick="downloadKey(document.getElementById(\'rk-text\').value)" style="padding:10px 16px;background:#333;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:bold;font-size:14px">Download</button>'
+          + '<button onclick="this.closest(\'div[style*=fixed]\').remove()" style="padding:10px 16px;background:#333;color:#aaa;border:none;border-radius:6px;cursor:pointer;font-size:14px">Close</button>';
+      }
+    } else if (onError) { onError(data.error || 'No license found for this email'); }
+  })
+  .catch(function() { if (onError) onError('Error connecting to server'); });
+}
 
 function openPortal(email) {
   if (email) { portalFetch(email); return; }
