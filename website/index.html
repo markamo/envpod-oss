@@ -952,6 +952,40 @@ document.addEventListener('click',(e)=>{
 </script>
 <script src="https://js.stripe.com/v3/"></script>
 <script>
+// Show license key after successful payment
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('payment') === 'success' && params.get('session_id')) {
+    var sid = params.get('session_id');
+    var overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:9999;display:flex;align-items:center;justify-content:center';
+    overlay.innerHTML = '<div style="background:#1a1a2e;border-radius:12px;padding:40px;max-width:600px;width:90%;color:#fff;font-family:monospace">'
+      + '<h2 style="margin:0 0 16px">Payment successful!</h2>'
+      + '<p style="color:#aaa">Retrieving your license key...</p>'
+      + '<div id="license-result"></div></div>';
+    document.body.appendChild(overlay);
+    overlay.onclick = function(e) { if (e.target === overlay) overlay.remove(); };
+
+    fetch('https://activate.envpod.dev/license/' + sid)
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        var el = document.getElementById('license-result');
+        if (data.license_key) {
+          el.innerHTML = '<p style="color:#4ade80;margin:16px 0 8px">Your license key:</p>'
+            + '<textarea readonly id="lk-text" style="width:100%;height:80px;background:#111;color:#fff;border:1px solid #333;border-radius:6px;padding:8px;font-size:11px;resize:none">' + data.license_key + '</textarea>'
+            + '<button onclick="navigator.clipboard.writeText(document.getElementById(\'lk-text\').value)" style="margin-top:8px;padding:8px 16px;background:#4ade80;color:#000;border:none;border-radius:6px;cursor:pointer;font-weight:bold">Copy Key</button>'
+            + '<p style="color:#aaa;margin-top:16px;font-size:13px">Install and activate:</p>'
+            + '<pre style="background:#111;padding:12px;border-radius:6px;font-size:12px;overflow-x:auto">curl -fsSL https://premium.envpod.dev/install.sh | sh\nenvpod license activate YOUR_KEY</pre>';
+        } else {
+          el.innerHTML = '<p style="color:#f97316">License key is being generated. Refresh in a few seconds or contact mark@envpod.dev</p>';
+        }
+      })
+      .catch(function() {
+        document.getElementById('license-result').innerHTML = '<p style="color:#f97316">Could not retrieve license key. Contact mark@envpod.dev</p>';
+      });
+  }
+})();
+
 function stripeCheckout() {
   fetch('https://activate.envpod.dev/create-checkout', {
     method: 'POST',
