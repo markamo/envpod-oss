@@ -989,19 +989,49 @@ document.addEventListener('click',(e)=>{
 })();
 
 function openPortal(email) {
-  if (!email) { email = prompt('Enter the email address used for your subscription:'); }
-  if (!email) return;
+  if (email) { portalFetch(email); return; }
+  var overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:9999;display:flex;align-items:center;justify-content:center';
+  overlay.innerHTML = '<div style="background:#1a1a2e;border-radius:12px;padding:40px;max-width:420px;width:90%;color:#fff;font-family:monospace">'
+    + '<h2 style="margin:0 0 8px;font-size:20px">Manage Subscription</h2>'
+    + '<p style="color:#aaa;margin:0 0 20px;font-size:13px">Cancel, update payment method, or view invoices.</p>'
+    + '<input id="portal-email" type="email" placeholder="Email used at checkout" style="width:100%;padding:10px 12px;background:#111;color:#fff;border:1px solid #333;border-radius:6px;font-size:14px;font-family:monospace;box-sizing:border-box" />'
+    + '<div id="portal-error" style="color:#f97316;font-size:12px;margin-top:8px;min-height:18px"></div>'
+    + '<div style="display:flex;gap:10px;margin-top:12px">'
+    + '<button id="portal-btn" onclick="portalSubmit()" style="flex:1;padding:10px 16px;background:#58a6ff;color:#000;border:none;border-radius:6px;cursor:pointer;font-weight:bold;font-size:14px">Open Portal →</button>'
+    + '<button onclick="this.closest(\'div[style*=fixed]\').remove()" style="padding:10px 16px;background:#333;color:#aaa;border:none;border-radius:6px;cursor:pointer;font-size:14px">Cancel</button>'
+    + '</div></div>';
+  document.body.appendChild(overlay);
+  overlay.onclick = function(e) { if (e.target === overlay) overlay.remove(); };
+  setTimeout(function() { document.getElementById('portal-email').focus(); }, 100);
+  document.getElementById('portal-email').addEventListener('keydown', function(e) { if (e.key === 'Enter') portalSubmit(); });
+}
+function portalSubmit() {
+  var email = document.getElementById('portal-email').value.trim();
+  var err = document.getElementById('portal-error');
+  var btn = document.getElementById('portal-btn');
+  if (!email) { err.textContent = 'Please enter your email'; return; }
+  err.textContent = '';
+  btn.textContent = 'Loading...';
+  btn.disabled = true;
+  portalFetch(email, function(error) {
+    btn.textContent = 'Open Portal →';
+    btn.disabled = false;
+    err.textContent = error;
+  });
+}
+function portalFetch(email, onError) {
   fetch('https://activate.envpod.dev/create-portal', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({email: email})
   })
-  .then(r => r.json())
-  .then(data => {
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
     if (data.url) window.location.href = data.url;
-    else alert(data.error || 'Could not find subscription for this email');
+    else if (onError) onError(data.error || 'No subscription found for this email');
   })
-  .catch(() => alert('Error connecting to server'));
+  .catch(function() { if (onError) onError('Error connecting to server'); });
 }
 
 function stripeCheckout() {
