@@ -3,25 +3,59 @@
 #
 # Usage:
 #   cd /path/to/your/project
-#   bash examples/claude-code-dev-setup.sh
+#   bash claude-code-dev-setup.sh              # pod name from folder
+#   bash claude-code-dev-setup.sh my-pod       # custom pod name
 #
-# This creates a governed Claude Code session that uses your existing
-# git config, GitHub CLI auth, and Claude Code login from the host.
+# Each project gets its own pod. Running again reuses the existing pod.
 
 set -e
 
-POD_NAME="claude-dev"
-CONFIG="examples/claude-code-dev.yaml"
+# Pod name: argument > folder name > "claude-dev"
+PROJECT_DIR="$(pwd)"
+PROJECT_NAME="$(basename "$PROJECT_DIR")"
+POD_NAME="${1:-$PROJECT_NAME}"
 
-echo "=== Creating Claude Code dev pod ==="
-sudo envpod destroy "$POD_NAME" 2>/dev/null || true
+# Sanitize pod name (lowercase, replace spaces/dots/underscores with dashes)
+POD_NAME=$(echo "$POD_NAME" | tr '[:upper:]' '[:lower:]' | tr ' ._' '---' | sed 's/[^a-z0-9-]//g' | sed 's/--*/-/g' | sed 's/^-//;s/-$//')
+
+# Find config (check common locations)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CONFIG=""
+for path in \
+    "$SCRIPT_DIR/claude-code-dev.yaml" \
+    "$SCRIPT_DIR/../examples/claude-code-dev.yaml" \
+    "/home/$USER/apps/envpod-source/examples/claude-code-dev.yaml" \
+    "/usr/local/share/envpod/examples/claude-code-dev.yaml"; do
+    if [ -f "$path" ]; then
+        CONFIG="$path"
+        break
+    fi
+done
+
+if [ -z "$CONFIG" ]; then
+    echo "Error: claude-code-dev.yaml not found"
+    exit 1
+fi
+
+# Check if pod already exists
+if sudo envpod ls 2>/dev/null | grep -q "^${POD_NAME} "; then
+    echo "=== Pod '$POD_NAME' exists — starting ==="
+    sudo envpod start "$POD_NAME" 2>/dev/null || true
+    echo ""
+    echo "  Run Claude Code:"
+    echo "    sudo envpod run $POD_NAME -- bash -c 'cd /workspace/$PROJECT_NAME && claude'"
+    echo ""
+    exit 0
+fi
+
+echo "=== Creating pod: $POD_NAME (project: $PROJECT_NAME) ==="
 sudo envpod init "$POD_NAME" -c "$CONFIG"
 
 echo ""
 echo "=== Mounting host profiles ==="
 
-# Get the pod's overlay upper dir to inject host configs
-POD_DIR=$(sudo find /var/lib/envpod/pods -name "pod.yaml" -exec grep -l "claude-dev" {} \; | head -1 | xargs dirname)
+# Get the pod's overlay upper dir
+POD_DIR=$(sudo find /var/lib/envpod/pods -name "pod.yaml" -exec grep -l "$POD_NAME" {} \; | head -1 | xargs dirname 2>/dev/null)
 
 if [ -z "$POD_DIR" ]; then
     echo "Error: pod directory not found"
@@ -35,7 +69,7 @@ if [ -f "$HOME/.gitconfig" ]; then
     sudo mkdir -p "$UPPER/home/agent"
     sudo cp "$HOME/.gitconfig" "$UPPER/home/agent/.gitconfig"
     sudo chown 60000:60000 "$UPPER/home/agent/.gitconfig"
-    echo "  ✓ Git config copied"
+    echo "  ✓ Git config"
 fi
 
 # 2. GitHub CLI auth
@@ -43,7 +77,7 @@ if [ -d "$HOME/.config/gh" ]; then
     sudo mkdir -p "$UPPER/home/agent/.config/gh"
     sudo cp -r "$HOME/.config/gh/"* "$UPPER/home/agent/.config/gh/"
     sudo chown -R 60000:60000 "$UPPER/home/agent/.config"
-    echo "  ✓ GitHub CLI auth copied"
+    echo "  ✓ GitHub CLI"
 fi
 
 # 3. Claude Code credentials
@@ -51,10 +85,10 @@ if [ -d "$HOME/.claude" ]; then
     sudo mkdir -p "$UPPER/home/agent/.claude"
     sudo cp -r "$HOME/.claude/"* "$UPPER/home/agent/.claude/" 2>/dev/null || true
     sudo chown -R 60000:60000 "$UPPER/home/agent/.claude"
-    echo "  ✓ Claude Code credentials copied"
+    echo "  ✓ Claude Code"
 fi
 
-# 4. SSH keys (for git push)
+# 4. SSH keys
 if [ -d "$HOME/.ssh" ]; then
     sudo mkdir -p "$UPPER/home/agent/.ssh"
     sudo cp "$HOME/.ssh/id_"* "$UPPER/home/agent/.ssh/" 2>/dev/null || true
@@ -63,28 +97,26 @@ if [ -d "$HOME/.ssh" ]; then
     sudo chown -R 60000:60000 "$UPPER/home/agent/.ssh"
     sudo chmod 700 "$UPPER/home/agent/.ssh"
     sudo chmod 600 "$UPPER/home/agent/.ssh/"* 2>/dev/null || true
-    echo "  ✓ SSH keys copied"
+    echo "  ✓ SSH keys"
 fi
 
 # 5. Copy project into workspace (writable in overlay)
-PROJECT_DIR="$(pwd)"
-PROJECT_NAME="$(basename "$PROJECT_DIR")"
 sudo mkdir -p "$UPPER/workspace"
 sudo cp -a "$PROJECT_DIR" "$UPPER/workspace/$PROJECT_NAME"
 sudo chown -R 60000:60000 "$UPPER/workspace/$PROJECT_NAME"
-echo "  ✓ Project copied to /workspace/$PROJECT_NAME"
+echo "  ✓ Project → /workspace/$PROJECT_NAME"
 
 echo ""
-echo "=== Ready ==="
+echo "=== Ready: $POD_NAME ==="
 echo ""
 echo "  Run Claude Code:"
 echo "    sudo envpod run $POD_NAME -- bash -c 'cd /workspace/$PROJECT_NAME && claude'"
 echo ""
+echo "  Interactive shell:"
+echo "    sudo envpod run $POD_NAME -- bash"
+echo "    cd /workspace/$PROJECT_NAME"
+echo ""
 echo "  After work:"
 echo "    sudo envpod diff $POD_NAME"
-echo "    sudo envpod commit $POD_NAME /workspace/$PROJECT_NAME/ --output ."
+echo "    sudo envpod commit $POD_NAME /workspace/$PROJECT_NAME/ --output $PROJECT_DIR"
 echo "    sudo envpod rollback $POD_NAME"
-echo ""
-echo "  Project at /workspace/$PROJECT_NAME (writable, COW-isolated)."
-echo "  Host profiles (git, gh, claude, ssh) available inside the pod."
-echo "  Use 'envpod commit --output .' to export changes back to host."
