@@ -80,12 +80,16 @@ if [ -d "$HOME/.config/gh" ]; then
     echo "  ✓ GitHub CLI"
 fi
 
-# 3. Claude Code credentials
+# 3. Claude Code credentials (auth only, not sessions/backups)
 if [ -d "$HOME/.claude" ]; then
     sudo mkdir -p "$UPPER/home/agent/.claude"
-    sudo cp -r "$HOME/.claude/"* "$UPPER/home/agent/.claude/" 2>/dev/null || true
-    sudo chown -R 60000:60000 "$UPPER/home/agent/.claude"
-    echo "  ✓ Claude Code"
+    # Only copy auth files, not sessions or backups
+    for f in credentials.json settings.json statsig.json; do
+        [ -f "$HOME/.claude/$f" ] && sudo cp "$HOME/.claude/$f" "$UPPER/home/agent/.claude/" 2>/dev/null
+    done
+    [ -f "$HOME/.claude.json" ] && sudo cp "$HOME/.claude.json" "$UPPER/home/agent/.claude.json" 2>/dev/null
+    sudo chown -R 60000:60000 "$UPPER/home/agent/.claude" "$UPPER/home/agent/.claude.json" 2>/dev/null
+    echo "  ✓ Claude Code (auth only)"
 fi
 
 # 4. SSH keys
