@@ -88,8 +88,17 @@ if [ -d "$HOME/.claude" ]; then
         [ -f "$HOME/.claude/$f" ] && sudo cp "$HOME/.claude/$f" "$UPPER/home/agent/.claude/" 2>/dev/null
     done
     [ -f "$HOME/.claude.json" ] && sudo cp "$HOME/.claude.json" "$UPPER/home/agent/.claude.json" 2>/dev/null
+    # Copy project-specific memory (CLAUDE.md context, todos, session notes)
+    MEMORY_DIR="$HOME/.claude/projects/-$(echo "$PROJECT_DIR" | tr '/' '-')/memory"
+    if [ -d "$MEMORY_DIR" ]; then
+        AGENT_MEMORY="$UPPER/home/agent/.claude/projects/-$(echo "/workspace/$PROJECT_NAME" | tr '/' '-')/memory"
+        sudo mkdir -p "$AGENT_MEMORY"
+        sudo cp -r "$MEMORY_DIR/"* "$AGENT_MEMORY/" 2>/dev/null
+        echo "  ✓ Claude Code (auth + project memory)"
+    else
+        echo "  ✓ Claude Code (auth only)"
+    fi
     sudo chown -R 60000:60000 "$UPPER/home/agent/.claude" "$UPPER/home/agent/.claude.json" 2>/dev/null
-    echo "  ✓ Claude Code (auth only)"
 fi
 
 # 4. SSH keys
