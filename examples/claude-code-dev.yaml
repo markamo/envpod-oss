@@ -5,13 +5,16 @@
 #
 # Usage:
 #   cd /path/to/your/project
-#   sudo envpod init claude-dev -c examples/claude-code-dev.yaml
-#   sudo envpod run claude-dev -- claude
+#   bash examples/claude-code-dev-setup.sh     # creates pod + copies project + profiles
+#   sudo envpod run claude-dev -- bash -c 'cd /workspace/PROJECT && claude'
 #
 # After work:
-#   sudo envpod diff claude-dev          # review changes
-#   sudo envpod commit claude-dev src/   # keep what you want
-#   sudo envpod rollback claude-dev      # discard the rest
+#   sudo envpod diff claude-dev                             # review changes
+#   sudo envpod commit claude-dev /workspace/PROJECT/ --output .  # export back to host
+#   sudo envpod rollback claude-dev                         # discard everything
+#
+# Note: mount_cwd is off — project is copied into /workspace for writable COW access.
+# Direct mount_cwd gives read-only access (governance by design).
 
 name: claude-dev
 type: standard
@@ -19,7 +22,7 @@ type: standard
 filesystem:
   system_access: advanced
   workspace: /workspace
-  mount_cwd: true
+  mount_cwd: false
   tracking:
     watch: [/workspace]
     ignore: [/var/cache, /var/lib/apt, /tmp, /run, /root/.npm, /opt/nvm]
