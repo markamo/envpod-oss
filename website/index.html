@@ -64,7 +64,7 @@
         <span class="hero-install-cmd">curl -fsSL https://envpod.dev/install.sh | sh</span>
         <button class="hero-install-copy" onclick="copyHeroInstall(this)">Copy</button>
       </div>
-      <span class="hero-install-note">Linux · x86_64 or ARM64 · Windows WSL2 · macOS beta · ~12 MB</span>
+      <span class="hero-install-note">Linux · x86_64 or ARM64 · Windows WSL2 · macOS beta · ~9 MB</span>
     </div>
   </div>
   <div class="hero-right">
@@ -140,7 +140,7 @@
     <div class="number-item"><span class="num">39</span><span class="label">audited action types</span></div>
     <div class="number-item"><span class="num">8ms</span><span class="label">pod clone</span></div>
     <div class="number-item"><span class="num">0</span><span class="label">dependencies</span></div>
-    <div class="number-item"><span class="num">12MB</span><span class="label">static binary</span></div>
+    <div class="number-item"><span class="num">9MB</span><span class="label">static binary</span></div>
   </div>
 </div>
 
@@ -442,7 +442,7 @@
       </div>
       <div class="demo-card">
         <div class="demo-video"><iframe src="https://www.youtube.com/embed/M_zRl6vOiYg" title="Install" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-        <div class="demo-info"><h3>Install</h3><p>One curl command — single binary, no dependencies, 12MB.</p></div>
+        <div class="demo-info"><h3>Install</h3><p>One curl command — single binary, no dependencies, 9MB.</p></div>
       </div>
       <div class="demo-card">
         <div class="demo-video"><iframe src="https://www.youtube.com/embed/tHZYiP6_vjY" title="Pod Config" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
@@ -642,7 +642,7 @@ base.<span class="ta">initWithBase</span>();
       <thead><tr><th>Metric</th><th>Docker</th><th>envpod</th><th>Notes</th></tr></thead>
       <tbody>
         <tr><td>Daemon / runtime overhead</td><td class="bnum">~35 MB RSS</td><td class="bwin">0 MB</td><td class="bnote">no daemon process — runs in init process</td></tr>
-        <tr><td>Per-pod memory (idle)</td><td class="bnum">~12 MB</td><td class="bwin">~4 MB</td><td class="bnote">namespace + cgroup metadata only</td></tr>
+        <tr><td>Per-pod memory (idle)</td><td class="bnum">~9 MB</td><td class="bwin">~4 MB</td><td class="bnote">namespace + cgroup metadata only</td></tr>
         <tr><td>50-pod total overhead</td><td class="bnum">~635 MB</td><td class="bwin">~200 MB</td><td class="bnote">3× lower total footprint at fleet scale</td></tr>
         <tr><td>Disk per clone (COW)</td><td class="bnum">~240 MB (layer copy)</td><td class="bwin">~1 MB (COW diff)</td><td class="bnote">only writes are stored per-pod</td></tr>
       </tbody>
@@ -700,7 +700,7 @@ base.<span class="ta">initWithBase</span>();
     </div>
 
     <div class="req-box">
-      <strong>Requirements:</strong> Linux kernel 5.15+ · cgroups v2 · OverlayFS · root (for namespace setup) · ~12 MB disk<br>Windows: install <a href="https://learn.microsoft.com/en-us/windows/wsl/install">WSL2</a> with Ubuntu 24.04. macOS: install <a href="https://orbstack.dev">OrbStack</a> (lightweight Linux VM).
+      <strong>Requirements:</strong> Linux kernel 5.15+ · cgroups v2 · OverlayFS · root (for namespace setup) · ~9 MB disk<br>Windows: install <a href="https://learn.microsoft.com/en-us/windows/wsl/install">WSL2</a> with Ubuntu 24.04. macOS: install <a href="https://orbstack.dev">OrbStack</a> (lightweight Linux VM).
       <br><br>
       <a href="https://github.com/markamo/envpod-ce/blob/main/docs/INSTALL.md">Installation guide</a> ·
       <a href="https://github.com/markamo/envpod-ce/blob/main/docs/QUICKSTART.md">Quick start</a> ·
